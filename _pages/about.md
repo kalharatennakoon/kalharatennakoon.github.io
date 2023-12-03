@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-![3D image rendered with Microsoft Designer](/images/3d-image.jpeg){: .align-right with="300px"}
+![3D image rendered with Microsoft Designer](/images/3d-image.jpeg){: .align-right width="300px"}
 👨🏻‍💻 I'm a CS Undergraduate and a former Software Engineer Intern at [IFS](https://www.linkedin.com/company/ifs/).
 
 
