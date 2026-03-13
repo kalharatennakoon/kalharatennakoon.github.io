@@ -1,3 +1,5 @@
+import { FaAward } from 'react-icons/fa'
+
 function Certifications() {
   const certifications = [
     {
@@ -80,18 +82,18 @@ function Certifications() {
         <h2 className="text-5xl mb-8 text-center text-[var(--text-primary)] font-bold bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-clip-text text-transparent">
           Certifications
         </h2>
-        
+
         <div className="flex items-center justify-center gap-4 max-w-3xl mx-auto mb-12 px-8 py-4 bg-gradient-to-br from-[rgba(102,126,234,0.08)] to-[rgba(118,75,162,0.08)] rounded-full border-2 border-[rgba(102,126,234,0.2)] dark:from-[rgba(102,126,234,0.12)] dark:to-[rgba(118,75,162,0.12)] dark:border-[rgba(102,126,234,0.3)]">
-          <span className="text-2xl flex-shrink-0">🎓</span>
+          <FaAward className="text-2xl flex-shrink-0 text-[#667eea]" />
           <p className="m-0 text-base text-[var(--text-secondary)] font-medium text-center">
             Cloud Platforms • DevOps • Security • Modern Development
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {certifications.map((cert) => (
-            <div 
-              key={cert.title} 
+            <div
+              key={cert.title}
               className="group bg-[var(--card-bg)] p-8 rounded-2xl shadow-[0_4px_15px_var(--shadow)] transition-all duration-300 border-l-4 border-[#667eea] hover:-translate-y-3 hover:shadow-[0_12px_35px_rgba(102,126,234,0.25)] hover:border-[#764ba2] backdrop-blur-sm relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-[rgba(102,126,234,0.03)] to-[rgba(118,75,162,0.03)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -104,10 +106,10 @@ function Certifications() {
               <p className="text-sm text-[var(--text-secondary)] mb-4 relative z-10">
                 {cert.date}
               </p>
-              <a 
-                href={cert.credentialUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href={cert.credentialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-[#667eea] font-semibold text-sm transition-all hover:text-[#764ba2] group-hover:gap-2 relative z-10"
               >
                 View Credential
