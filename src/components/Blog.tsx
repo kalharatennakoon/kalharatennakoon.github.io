@@ -46,18 +46,10 @@ function Blog() {
     {
       title: 'iOS 26 Preview: A Closer Look at the New Phone and Messages Apps',
       excerpt: 'Exploring the new features and improvements in iOS 26\'s Phone and Messages applications.',
-      date: '2024',
+      date: '2025',
       readTime: '7 min read',
       url: 'https://kalharatennakoon.medium.com/ios-26-preview-a-closer-look-at-the-new-phone-and-messages-apps-e72c20ca4c84',
       tags: ['iOS', 'Apple', 'Mobile']
-    },
-    {
-      title: 'Latest Medium Post',
-      excerpt: 'Check out my latest thoughts and insights on technology, development, and more.',
-      date: '2024',
-      readTime: '5 min read',
-      url: 'https://kalharatennakoon.medium.com',
-      tags: ['Technology', 'Development']
     }
   ])
 
