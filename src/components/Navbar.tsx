@@ -9,6 +9,8 @@ const navLinks = [
   { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
   { label: 'Certifications', href: '#certifications' },
+  { label: 'Achievements', href: '#achievements' },
+  { label: 'Activities', href: '#activities' },
   { label: 'Blog', href: '#blog' },
   { label: 'Contact', href: '#contact' },
 ]
@@ -31,7 +33,7 @@ function Navbar() {
       className={`fixed top-0 left-0 right-0 z-[999] transition-all duration-300 ${
         scrolled
           ? 'bg-[var(--card-bg)]/95 backdrop-blur-md shadow-[0_2px_20px_var(--shadow)] border-b border-[var(--border-color)]'
-          : 'bg-transparent'
+          : 'bg-[var(--bg-primary)]/80 backdrop-blur-sm border-b border-[var(--border-color)]'
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -39,11 +41,7 @@ function Navbar() {
         <a
           href="#"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className={`text-lg font-bold tracking-tight transition-colors ${
-            scrolled
-              ? 'text-[var(--text-primary)]'
-              : 'text-white'
-          }`}
+          className="text-lg font-bold tracking-tight transition-colors bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-clip-text text-transparent"
         >
           KT
         </a>
@@ -54,9 +52,7 @@ function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-[rgba(102,126,234,0.1)] hover:text-[#667eea] ${
-                  scrolled ? 'text-[var(--text-secondary)]' : 'text-white/85 hover:text-white hover:bg-white/15'
-                }`}
+                className="px-3 py-2 rounded-lg text-sm font-medium transition-all text-[var(--text-secondary)] hover:bg-[rgba(102,126,234,0.1)] hover:text-[#667eea]"
               >
                 {link.label}
               </a>
@@ -70,11 +66,7 @@ function Navbar() {
             onClick={toggleTheme}
             aria-label="Toggle theme"
             title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-            className={`w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 ${
-              scrolled
-                ? 'bg-[rgba(102,126,234,0.1)] text-[#667eea] hover:bg-[rgba(102,126,234,0.2)]'
-                : 'bg-white/15 text-white hover:bg-white/25 border border-white/20'
-            }`}
+            className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 bg-[rgba(102,126,234,0.1)] text-[#667eea] hover:bg-[rgba(102,126,234,0.2)]"
           >
             {theme === 'light' ? <FaMoon /> : <FaSun />}
           </button>
@@ -83,11 +75,7 @@ function Navbar() {
           <button
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
-            className={`md:hidden w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-              scrolled
-                ? 'text-[var(--text-primary)] hover:bg-[rgba(102,126,234,0.1)]'
-                : 'text-white hover:bg-white/15'
-            }`}
+            className="md:hidden w-10 h-10 rounded-full flex items-center justify-center transition-all text-[var(--text-primary)] hover:bg-[rgba(102,126,234,0.1)]"
           >
             {menuOpen ? <FaTimes /> : <FaBars />}
           </button>
