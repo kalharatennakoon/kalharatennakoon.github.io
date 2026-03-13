@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { FaGithub, FaLinkedin, FaEnvelope, FaArrowDown } from 'react-icons/fa'
 
 const roles = [
   'Aspiring DevOps Engineer',
@@ -65,26 +66,28 @@ function Hero() {
             rel="noopener noreferrer"
             className="px-8 py-4 bg-white/15 rounded-xl text-white border-2 border-white/20 font-medium flex items-center gap-2 hover:bg-white/25 hover:-translate-y-1 hover:border-white/40 transition-all backdrop-blur-md"
           >
-            <span className="text-xl">💻</span> GitHub
+            <FaGithub className="text-xl" /> GitHub
           </a>
           <a
-            href="https://linkedin.com/in/kalharatennakoon"
+            href="https://www.linkedin.com/in/kalharatennakoon"
             target="_blank"
             rel="noopener noreferrer"
             className="px-8 py-4 bg-white/15 rounded-xl text-white border-2 border-white/20 font-medium flex items-center gap-2 hover:bg-white/25 hover:-translate-y-1 hover:border-white/40 transition-all backdrop-blur-md"
           >
-            <span className="text-xl">💼</span> LinkedIn
+            <FaLinkedin className="text-xl" /> LinkedIn
           </a>
           <a
             href="#contact"
             className="px-8 py-4 bg-white/15 rounded-xl text-white border-2 border-white/20 font-medium flex items-center gap-2 hover:bg-white/25 hover:-translate-y-1 hover:border-white/40 transition-all backdrop-blur-md"
           >
-            <span className="text-xl">📧</span> Contact
+            <FaEnvelope className="text-xl" /> Contact
           </a>
         </div>
       </div>
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-slow text-3xl opacity-70 cursor-pointer">
-        <a href="#about"><span>↓</span></a>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-slow opacity-70 cursor-pointer">
+        <a href="#about" className="text-white flex items-center justify-center">
+          <FaArrowDown className="text-3xl" />
+        </a>
       </div>
     </section>
   )

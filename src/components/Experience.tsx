@@ -1,3 +1,5 @@
+import { FaBriefcase, FaMapMarkerAlt, FaChevronRight } from 'react-icons/fa'
+
 function Experience() {
   const experiences = [
     {
@@ -32,17 +34,17 @@ function Experience() {
         <h2 className="text-5xl mb-8 text-center text-[var(--text-primary)] relative after:content-[''] after:absolute after:bottom-[-1rem] after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-gradient-to-r after:from-[#667eea] after:to-[#764ba2] after:rounded-sm">
           Work Experience
         </h2>
-        
+
         <div className="flex items-center justify-center gap-4 max-w-3xl mx-auto mb-12 px-8 py-4 bg-gradient-to-br from-[rgba(102,126,234,0.08)] to-[rgba(118,75,162,0.08)] rounded-full border-2 border-[rgba(102,126,234,0.2)] dark:from-[rgba(102,126,234,0.12)] dark:to-[rgba(118,75,162,0.12)] dark:border-[rgba(102,126,234,0.3)]">
-          <span className="text-2xl flex-shrink-0">💼</span>
+          <FaBriefcase className="text-2xl flex-shrink-0 text-[#667eea]" />
           <p className="m-0 text-base text-[var(--text-secondary)] font-medium text-center">
             Building scalable systems • CI/CD automation • Cloud security
           </p>
         </div>
-        
+
         <div className="space-y-8 max-w-4xl mx-auto">
           {experiences.map((exp, index) => (
-            <div 
+            <div
               key={index}
               className="bg-[var(--card-bg)] p-8 rounded-2xl shadow-[0_4px_15px_var(--shadow)] border-l-4 border-[#667eea] transition-all hover:-translate-y-1 hover:shadow-[0_8px_25px_var(--shadow)]"
             >
@@ -58,18 +60,18 @@ function Experience() {
                     {exp.period}
                   </p>
                 </div>
-                <p className="text-sm text-[var(--text-secondary)] mt-1 m-0">
-                  📍 {exp.location}
+                <p className="text-sm text-[var(--text-secondary)] mt-1 m-0 flex items-center gap-1">
+                  <FaMapMarkerAlt className="text-[#667eea]" /> {exp.location}
                 </p>
               </div>
-              
+
               <ul className="space-y-3 list-none pl-0">
                 {exp.achievements.map((achievement, idx) => (
-                  <li 
+                  <li
                     key={idx}
                     className="flex gap-3 text-[var(--text-secondary)] leading-relaxed"
                   >
-                    <span className="text-[#667eea] mt-1 flex-shrink-0">▪</span>
+                    <FaChevronRight className="text-[#667eea] text-xs mt-1.5 flex-shrink-0" />
                     <span>{achievement}</span>
                   </li>
                 ))}

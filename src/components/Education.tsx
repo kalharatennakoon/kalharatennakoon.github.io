@@ -1,10 +1,12 @@
+import { FaGraduationCap, FaMapMarkerAlt, FaChevronRight } from 'react-icons/fa'
+
 function Education() {
   const education = [
     {
-      degree: 'Bachelor of Science in Computer Science',
-      institution: 'University of Westminster',
+      degree: 'BSc(Hons) Computer Science (Software Engineering)',
+      institution: 'Kingston University',
       location: 'London, UK (via IIT Sri Lanka)',
-      period: '2021 – Present',
+      period: '2021 – September 2026 (Expected)',
       details: [
         'Specialising in software engineering, cloud computing, and data science',
         'Active member of the university computing society and open-source contributors group',
@@ -20,7 +22,7 @@ function Education() {
         </h2>
 
         <div className="flex items-center justify-center gap-4 max-w-3xl mx-auto mb-12 px-8 py-4 bg-gradient-to-br from-[rgba(102,126,234,0.08)] to-[rgba(118,75,162,0.08)] rounded-full border-2 border-[rgba(102,126,234,0.2)] dark:from-[rgba(102,126,234,0.12)] dark:to-[rgba(118,75,162,0.12)] dark:border-[rgba(102,126,234,0.3)]">
-          <span className="text-2xl flex-shrink-0">🎓</span>
+          <FaGraduationCap className="text-2xl flex-shrink-0 text-[#667eea]" />
           <p className="m-0 text-base text-[var(--text-secondary)] font-medium text-center">
             Computer Science • Software Engineering • Cloud Computing
           </p>
@@ -44,8 +46,8 @@ function Education() {
                     {edu.period}
                   </p>
                 </div>
-                <p className="text-sm text-[var(--text-secondary)] mt-1 m-0">
-                  📍 {edu.location}
+                <p className="text-sm text-[var(--text-secondary)] mt-1 m-0 flex items-center gap-1">
+                  <FaMapMarkerAlt className="text-[#667eea]" /> {edu.location}
                 </p>
               </div>
 
@@ -55,7 +57,7 @@ function Education() {
                     key={idx}
                     className="flex gap-3 text-[var(--text-secondary)] leading-relaxed"
                   >
-                    <span className="text-[#667eea] mt-1 flex-shrink-0">▪</span>
+                    <FaChevronRight className="text-[#667eea] text-xs mt-1.5 flex-shrink-0" />
                     <span>{detail}</span>
                   </li>
                 ))}
