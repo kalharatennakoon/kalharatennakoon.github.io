@@ -76,7 +76,20 @@ function Education() {
             <div className="space-y-3">
               <div>
                 <p className="text-sm font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-1">GCE Advanced Level</p>
-                <p className="text-sm text-[var(--text-secondary)]">Political Science — <strong className="text-[var(--text-primary)]">A</strong> &nbsp;|&nbsp; Information & Communication Technology — <strong className="text-[var(--text-primary)]">B</strong> &nbsp;|&nbsp; Logic & Scientific Method — <strong className="text-[var(--text-primary)]">C</strong> &nbsp;|&nbsp; General English — <strong className="text-[var(--text-primary)]">A</strong></p>
+                <ul className="space-y-1 list-none pl-0 mt-1">
+                  {[
+                    { subject: 'Political Science', grade: 'A' },
+                    { subject: 'Information & Communication Technology', grade: 'B' },
+                    { subject: 'Logic & Scientific Method', grade: 'C' },
+                    { subject: 'General English', grade: 'A' },
+                  ].map(({ subject, grade }) => (
+                    <li key={subject} className="flex items-center gap-3 text-sm text-[var(--text-secondary)]">
+                      <FaChevronRight className="text-[#764ba2] text-xs flex-shrink-0" />
+                      <span>{subject}</span>
+                      <span className="ml-auto font-bold text-[var(--text-primary)]">{grade}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
               <div>
                 <p className="text-sm font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-1">GCE Ordinary Level</p>
