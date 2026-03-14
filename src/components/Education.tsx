@@ -1,23 +1,10 @@
 import { FaGraduationCap, FaMapMarkerAlt, FaChevronRight } from 'react-icons/fa'
 
 function Education() {
-  const education = [
-    {
-      degree: 'BSc(Hons) Computer Science (Software Engineering)',
-      institution: 'Kingston University',
-      location: 'London, UK (via IIT Sri Lanka)',
-      period: '2021 – September 2026 (Expected)',
-      details: [
-        'Specialising in software engineering, cloud computing, and data science',
-        'Active member of the university computing society and open-source contributors group',
-      ],
-    },
-  ]
-
   return (
     <section id="education" className="py-20 bg-[var(--bg-secondary)] dark:bg-[var(--bg-primary)]">
       <div className="max-w-6xl mx-auto px-8">
-        <h2 className="text-5xl mb-8 text-center text-[var(--text-primary)] relative after:content-[''] after:absolute after:bottom-[-1rem] after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-gradient-to-r after:from-[#667eea] after:to-[#764ba2] after:rounded-sm">
+        <h2 className="text-5xl mb-8 text-center text-[var(--text-primary)] font-bold relative after:content-[''] after:absolute after:bottom-[-1rem] after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-gradient-to-r after:from-[#667eea] after:to-[#764ba2] after:rounded-sm">
           Education
         </h2>
 
@@ -29,41 +16,75 @@ function Education() {
         </div>
 
         <div className="space-y-8 max-w-4xl mx-auto">
-          {education.map((edu, index) => (
-            <div
-              key={index}
-              className="bg-[var(--card-bg)] p-8 rounded-2xl shadow-[0_4px_15px_var(--shadow)] border-l-4 border-[#667eea] transition-all hover:-translate-y-1 hover:shadow-[0_8px_25px_var(--shadow)]"
-            >
-              <div className="mb-4">
-                <h3 className="text-2xl font-semibold text-[var(--text-primary)] mb-2">
-                  {edu.degree}
-                </h3>
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-[var(--text-secondary)]">
-                  <p className="text-lg font-medium text-[#667eea] m-0">
-                    {edu.institution}
-                  </p>
-                  <p className="text-sm m-0">
-                    {edu.period}
-                  </p>
-                </div>
-                <p className="text-sm text-[var(--text-secondary)] mt-1 m-0 flex items-center gap-1">
-                  <FaMapMarkerAlt className="text-[#667eea]" /> {edu.location}
-                </p>
+          {/* Kingston University */}
+          <div className="bg-[var(--card-bg)] p-8 rounded-2xl shadow-[0_4px_15px_var(--shadow)] border-l-4 border-[#667eea] transition-all hover:-translate-y-1 hover:shadow-[0_8px_25px_var(--shadow)]">
+            <div className="mb-4">
+              <h3 className="text-2xl font-semibold text-[var(--text-primary)] mb-2">
+                BSc(Hons) Computer Science (Software Engineering)
+              </h3>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-[var(--text-secondary)]">
+                <p className="text-lg font-medium text-[#667eea] m-0">Kingston University, London, UK</p>
+                <p className="text-sm m-0">September 2021 – September 2026 (Expected)</p>
               </div>
+              <p className="text-sm text-[var(--text-secondary)] mt-1 m-0 flex items-center gap-1">
+                <FaMapMarkerAlt className="text-[#667eea]" /> Delivered via Informatics Institute of Technology (IIT), Sri Lanka
+              </p>
+            </div>
 
-              <ul className="space-y-3 list-none pl-0">
-                {edu.details.map((detail, idx) => (
-                  <li
-                    key={idx}
-                    className="flex gap-3 text-[var(--text-secondary)] leading-relaxed"
-                  >
-                    <FaChevronRight className="text-[#667eea] text-xs mt-1.5 flex-shrink-0" />
-                    <span>{detail}</span>
+            <div className="mb-4">
+              <p className="text-sm font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Concentrations</p>
+              <div className="flex flex-wrap gap-2">
+                {['Software Engineering', 'Web Application Development', 'Research & Data Analysis'].map((c) => (
+                  <span key={c} className="px-3 py-1 bg-[rgba(102,126,234,0.1)] text-[#667eea] rounded-full text-sm font-medium border border-[rgba(102,126,234,0.25)]">{c}</span>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="text-sm font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Key Coursework</p>
+              <ul className="space-y-1 list-none pl-0">
+                {[
+                  'Object-Oriented Programming',
+                  'Data Structures & Algorithms',
+                  'Network Security',
+                  'Database Design',
+                  'UX/UI Design',
+                ].map((item) => (
+                  <li key={item} className="flex gap-3 text-[var(--text-secondary)] text-sm">
+                    <FaChevronRight className="text-[#667eea] text-xs mt-1 flex-shrink-0" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
-          ))}
+          </div>
+
+          {/* Maliyadeva College */}
+          <div className="bg-[var(--card-bg)] p-8 rounded-2xl shadow-[0_4px_15px_var(--shadow)] border-l-4 border-[#764ba2] transition-all hover:-translate-y-1 hover:shadow-[0_8px_25px_var(--shadow)]">
+            <div className="mb-4">
+              <h3 className="text-2xl font-semibold text-[var(--text-primary)] mb-2">
+                Secondary Education
+              </h3>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-[var(--text-secondary)]">
+                <p className="text-lg font-medium text-[#764ba2] m-0">Maliyadeva College</p>
+                <p className="text-sm m-0">Completed 2020</p>
+              </div>
+              <p className="text-sm text-[var(--text-secondary)] mt-1 m-0 flex items-center gap-1">
+                <FaMapMarkerAlt className="text-[#764ba2]" /> Kurunegala, Sri Lanka
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <p className="text-sm font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-1">GCE Advanced Level</p>
+                <p className="text-sm text-[var(--text-secondary)]">Combined Mathematics — <strong className="text-[var(--text-primary)]">A</strong> &nbsp;|&nbsp; Physics — <strong className="text-[var(--text-primary)]">B</strong> &nbsp;|&nbsp; Chemistry — <strong className="text-[var(--text-primary)]">C</strong> &nbsp;|&nbsp; General English — <strong className="text-[var(--text-primary)]">A</strong></p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-1">GCE Ordinary Level</p>
+                <p className="text-sm text-[var(--text-secondary)]">9 A passes</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

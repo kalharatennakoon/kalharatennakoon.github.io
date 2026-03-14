@@ -13,7 +13,7 @@ function About() {
         <div className="max-w-4xl mx-auto mb-12 p-8 md:p-12 bg-gradient-to-br from-[rgba(102,126,234,0.1)] to-[rgba(118,75,162,0.1)] border-l-4 border-[#667eea] rounded-xl relative dark:from-[rgba(102,126,234,0.15)] dark:to-[rgba(118,75,162,0.15)]">
           <div className="absolute top-[-10px] left-5 text-6xl text-[#667eea] opacity-30 font-serif leading-none">"</div>
           <p className="text-lg leading-relaxed text-[var(--text-primary)] m-0 italic relative z-10">
-            Computer Science undergraduate and aspiring DevOps engineer with hands-on internship experience in CI/CD automation, containerization, and cloud-based deployments. Passionate about building reliable systems, continuous improvement, and sharing knowledge with the engineering community.
+            Results-driven aspiring DevOps Engineer with demonstrated success in automating CI/CD pipelines, streamlining deployment processes, and managing container orchestration. Certified in Microsoft Azure and proficient in cloud-native tools including Kubernetes, Docker, Tekton, and ArgoCD. Passionate about building reliable, scalable systems and sharing practical engineering insights through technical writing.
           </p>
         </div>
 
