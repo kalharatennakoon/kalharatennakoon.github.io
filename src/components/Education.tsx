@@ -24,10 +24,10 @@ function Education() {
               </h3>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-[var(--text-secondary)]">
                 <p className="text-lg font-medium text-[#667eea] m-0">Kingston University, London, UK</p>
-                <p className="text-sm m-0">September 2021 – September 2026 (Expected)</p>
+                <p className="text-sm m-0">September 2026 (Expected)</p>
               </div>
               <p className="text-sm text-[var(--text-secondary)] mt-1 m-0 flex items-center gap-1">
-                <FaMapMarkerAlt className="text-[#667eea]" /> Delivered via Informatics Institute of Technology (IIT), Sri Lanka
+                <FaMapMarkerAlt className="text-[#667eea]" /> Delivered via ESOFT UNI (ESU), Sri Lanka
               </p>
             </div>
 
@@ -63,11 +63,10 @@ function Education() {
           <div className="bg-[var(--card-bg)] p-8 rounded-2xl shadow-[0_4px_15px_var(--shadow)] border-l-4 border-[#764ba2] transition-all hover:-translate-y-1 hover:shadow-[0_8px_25px_var(--shadow)]">
             <div className="mb-4">
               <h3 className="text-2xl font-semibold text-[var(--text-primary)] mb-2">
-                Secondary Education
+                High School
               </h3>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-[var(--text-secondary)]">
                 <p className="text-lg font-medium text-[#764ba2] m-0">Maliyadeva College</p>
-                <p className="text-sm m-0">Completed 2020</p>
               </div>
               <p className="text-sm text-[var(--text-secondary)] mt-1 m-0 flex items-center gap-1">
                 <FaMapMarkerAlt className="text-[#764ba2]" /> Kurunegala, Sri Lanka
@@ -94,7 +93,7 @@ function Education() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-1">GCE Ordinary Level</p>
-                <p className="text-sm text-[var(--text-secondary)]">9 A passes</p>
+                <p className="text-sm text-[var(--text-secondary)]">9As</p>
               </div>
             </div>
           </div>
