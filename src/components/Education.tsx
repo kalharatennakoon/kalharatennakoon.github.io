@@ -83,10 +83,9 @@ function Education() {
                     { subject: 'Logic & Scientific Method', grade: 'C' },
                     { subject: 'General English', grade: 'A' },
                   ].map(({ subject, grade }) => (
-                    <li key={subject} className="flex items-center gap-3 text-sm text-[var(--text-secondary)]">
+                    <li key={subject} className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
                       <FaChevronRight className="text-[#764ba2] text-xs flex-shrink-0" />
-                      <span>{subject}</span>
-                      <span className="ml-auto font-bold text-[var(--text-primary)]">{grade}</span>
+                      <span>{subject} - <strong className="text-[var(--text-primary)]">{grade}</strong></span>
                     </li>
                   ))}
                 </ul>
