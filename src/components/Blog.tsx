@@ -8,6 +8,7 @@ interface BlogPost {
   readTime: string
   url: string
   tags: string[]
+  image?: string
 }
 
 function Blog() {
@@ -18,7 +19,7 @@ function Blog() {
       date: '2024',
       readTime: '12 min read',
       url: 'https://levelup.gitconnected.com/building-dockerizing-and-deploying-a-crud-api-in-go-on-kubernetes-9c25b01ad2e8',
-      tags: ['Go', 'Kubernetes', 'Docker', 'DevOps']
+      tags: ['Go', 'Kubernetes', 'Docker', 'DevOps'],
     },
     {
       title: 'Notion Automation with Apple Shortcuts',
@@ -26,7 +27,7 @@ function Blog() {
       date: '2024',
       readTime: '6 min read',
       url: 'https://kalharatennakoon.medium.com/notion-automation-with-apple-shortcuts-d3ccab993cc7',
-      tags: ['Productivity', 'Automation', 'Notion']
+      tags: ['Productivity', 'Automation', 'Notion'],
     },
     {
       title: 'Software Testing Processes for Beginners',
@@ -34,7 +35,7 @@ function Blog() {
       date: '2024',
       readTime: '8 min read',
       url: 'https://kalharatennakoon.medium.com/software-testing-processes-for-beginners-6ac5394c1d3d',
-      tags: ['Testing', 'QA', 'Software Engineering']
+      tags: ['Testing', 'QA', 'Software Engineering'],
     },
     {
       title: 'How to Reduce Your Screen Time',
@@ -42,15 +43,15 @@ function Blog() {
       date: '2024',
       readTime: '5 min read',
       url: 'https://kalharatennakoon.medium.com/how-to-reduce-screen-time-9ee6e4ed9037',
-      tags: ['Productivity', 'Health', 'Lifestyle']
+      tags: ['Productivity', 'Health', 'Lifestyle'],
     },
     {
       title: 'iOS 26 Preview: A Closer Look at the New Phone and Messages Apps',
-      excerpt: 'Exploring the new features and improvements in iOS 26\'s Phone and Messages applications.',
+      excerpt: "Exploring the new features and improvements in iOS 26's Phone and Messages applications.",
       date: '2025',
       readTime: '7 min read',
       url: 'https://kalharatennakoon.medium.com/ios-26-preview-a-closer-look-at-the-new-phone-and-messages-apps-e72c20ca4c84',
-      tags: ['iOS', 'Apple', 'Mobile']
+      tags: ['iOS', 'Apple', 'Mobile'],
     }
   ])
 
@@ -84,47 +85,62 @@ function Blog() {
           {blogPosts.map((post) => (
             <article
               key={post.title}
-              className="group bg-[var(--card-bg)] p-8 rounded-2xl shadow-[0_4px_15px_var(--shadow)] transition-all duration-300 flex flex-col hover:-translate-y-3 hover:shadow-[0_12px_35px_rgba(30,58,138,0.2)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] backdrop-blur-sm relative overflow-hidden"
+              className="group bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] transition-all duration-300 flex flex-col hover:-translate-y-2 hover:shadow-[0_12px_35px_rgba(30,58,138,0.2)] border border-[var(--border-color)] overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-[rgba(30,58,138,0.03)] to-[rgba(23,37,84,0.03)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="mb-4 relative z-10">
-                <h3 className="text-xl mb-2 leading-tight">
-                  <a
-                    href={post.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--text-primary)] font-semibold transition-all hover:bg-gradient-to-r hover:from-[#172554] hover:to-[#172554] hover:bg-clip-text hover:text-transparent"
-                  >
-                    {post.title}
-                  </a>
-                </h3>
-                <div className="flex gap-2 text-sm text-[var(--text-secondary)] relative z-10">
+              {/* Post image */}
+              <a href={post.url} target="_blank" rel="noopener noreferrer" className="block h-48 overflow-hidden bg-[rgba(30,58,138,0.06)] flex-shrink-0">
+                {post.image ? (
+                  <img
+                    src={post.image.startsWith('//') ? `https:${post.image}` : post.image}
+                    alt={post.title}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[rgba(30,58,138,0.1)] to-[rgba(23,37,84,0.15)]">
+                    <FaMedium className="text-5xl text-[rgba(30,58,138,0.3)]" />
+                  </div>
+                )}
+              </a>
+
+              {/* Card content */}
+              <div className="p-6 flex flex-col flex-grow">
+                <div className="flex gap-2 text-xs text-[var(--text-secondary)] mb-3">
                   <span>{post.date}</span>
                   <span>·</span>
                   <span>{post.readTime}</span>
                 </div>
-              </div>
-              <p className="leading-relaxed text-[var(--text-secondary)] mb-4 flex-grow relative z-10">
-                {post.excerpt}
-              </p>
-              <div className="flex flex-wrap gap-2 mb-4 relative z-10">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 bg-gradient-to-r from-[rgba(30,58,138,0.1)] to-[rgba(23,37,84,0.1)] rounded-full text-xs text-[#172554] font-semibold border border-[rgba(30,58,138,0.2)] hover:border-[rgba(30,58,138,0.4)] transition-colors"
+                <h3 className="text-lg font-semibold leading-snug mb-3 text-[var(--text-primary)]">
+                  <a
+                    href={post.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#172554] transition-colors"
                   >
-                    {tag}
-                  </span>
-                ))}
+                    {post.title}
+                  </a>
+                </h3>
+                <p className="text-sm leading-relaxed text-[var(--text-secondary)] mb-4 flex-grow">
+                  {post.excerpt}
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 bg-[rgba(30,58,138,0.08)] rounded-full text-xs text-[#172554] font-medium border border-[rgba(30,58,138,0.15)]"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href={post.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-[#172554] hover:gap-3 transition-all"
+                >
+                  <FaMedium /> Read on Medium
+                </a>
               </div>
-              <a
-                href={post.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#172554] font-semibold text-sm transition-all hover:text-[#172554] inline-flex items-center gap-2 group-hover:gap-3 relative z-10"
-              >
-                <FaMedium /> Read on Medium
-              </a>
             </article>
           ))}
         </div>
