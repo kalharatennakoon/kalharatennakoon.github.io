@@ -16,7 +16,8 @@ function About() {
             className="text-2xl leading-relaxed text-[var(--text-primary)] m-0 -mt-6 px-4"
             style={{ fontFamily: '"Handlee", cursive', fontWeight: 400 }}
           >
-            Results-driven aspiring DevOps Engineer with demonstrated success in automating CI/CD pipelines, streamlining deployment processes, and managing container orchestration. Certified in Microsoft Azure and proficient in cloud-native tools including Kubernetes, Docker, Tekton, and ArgoCD. Passionate about building reliable, scalable systems and sharing practical engineering insights through technical writing.
+            Results-driven aspiring DevOps Engineer with demonstrated success in automating CI/CD pipelines, streamlining deployment processes, and managing container orchestration. Certified in Microsoft Azure and proficient in cloud-native tools including Kubernetes, Docker, Tekton, and ArgoCD.
+            Passionate about building reliable, scalable systems and sharing practical engineering insights through technical writing.
           </p>
           <div className="text-8xl text-[var(--color-primary)] opacity-20 leading-none select-none rotate-180 inline-block" style={{ fontFamily: '"Handlee", cursive' }}>"</div>
         </div>
