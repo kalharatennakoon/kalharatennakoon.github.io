@@ -50,16 +50,12 @@ function Activities() {
   return (
     <section id="activities" className="py-20 bg-[var(--bg-secondary)] dark:bg-[var(--bg-primary)]">
       <div className="max-w-6xl mx-auto px-8">
-        <h2 className="text-5xl mb-8 text-center font-bold bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent">
-          Activities & Volunteering
+        <h2 className="text-5xl mb-10 text-center font-bold flex items-center justify-center gap-3">
+          <FaHandsHelping className="text-[var(--color-primary)] flex-shrink-0" />
+          <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent">
+            Activities & Volunteering
+          </span>
         </h2>
-
-        <div className="flex items-center justify-center gap-4 max-w-3xl mx-auto mb-12 px-8 py-4 bg-gradient-to-br from-[rgba(30,58,138,0.08)] to-[rgba(23,37,84,0.08)] rounded-full border-2 border-[rgba(30,58,138,0.2)] dark:from-[rgba(30,58,138,0.12)] dark:to-[rgba(23,37,84,0.12)] dark:border-[rgba(30,58,138,0.3)]">
-          <FaHandsHelping className="text-2xl flex-shrink-0 text-[var(--color-primary)]" />
-          <p className="m-0 text-base text-[var(--text-secondary)] font-medium text-center">
-            Writing • Community • Science • Sports
-          </p>
-        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {activities.map((activity) => (

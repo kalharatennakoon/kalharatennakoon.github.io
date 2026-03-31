@@ -117,18 +117,14 @@ const skillCategories: Category[] = [
 
 function Skills() {
   return (
-    <section id="skills" className="py-24 bg-[var(--bg-secondary)] dark:bg-[var(--bg-primary)]">
+    <section id="skills" className="py-20 bg-[var(--bg-secondary)] dark:bg-[var(--bg-primary)]">
       <div className="max-w-6xl mx-auto px-8">
-        <h2 className="text-5xl mb-8 text-center font-bold bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent">
-          Technical Expertise
+        <h2 className="text-5xl mb-10 text-center font-bold flex items-center justify-center gap-3">
+          <FaWrench className="text-[var(--color-primary)] flex-shrink-0" />
+          <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent">
+            Technical Expertise
+          </span>
         </h2>
-
-        <div className="flex items-center justify-center gap-4 max-w-3xl mx-auto mb-12 px-8 py-4 bg-gradient-to-br from-[rgba(30,58,138,0.08)] to-[rgba(23,37,84,0.08)] rounded-full border-2 border-[rgba(30,58,138,0.2)] dark:from-[rgba(30,58,138,0.12)] dark:to-[rgba(23,37,84,0.12)] dark:border-[rgba(30,58,138,0.3)]">
-          <FaWrench className="text-2xl flex-shrink-0 text-[var(--color-primary)]" />
-          <p className="m-0 text-base text-[var(--text-secondary)] font-medium text-center">
-            DevOps • Cloud-Native • Automation • Full-Stack • Data
-          </p>
-        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {skillCategories.map((category) => {
@@ -136,22 +132,33 @@ function Skills() {
             return (
               <div
                 key={category.title}
-                className="bg-[var(--card-bg)] p-6 rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.35)] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(30,58,138,0.12)] transition-all duration-300"
+                className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.35)] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(30,58,138,0.12)] transition-all duration-300 overflow-hidden"
               >
-                {/* Category header */}
-                <h3 className="text-sm font-bold text-[var(--text-primary)] mb-5 pb-3 border-b border-[var(--border-color)] flex items-center gap-2 uppercase tracking-wider">
-                  <CatIcon className="text-base text-[var(--color-primary)]" />
-                  {category.title}
-                </h3>
+                {/* Card header */}
+                <div className="px-6 pt-5 pb-4 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.05)] to-transparent">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-2)] flex items-center justify-center flex-shrink-0">
+                        <CatIcon className="text-white text-sm" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[var(--text-primary)] uppercase tracking-wider">
+                        {category.title}
+                      </h3>
+                    </div>
+                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.15)]">
+                      {category.skills.length} skills
+                    </span>
+                  </div>
+                </div>
 
-                {/* Skills list */}
-                <div className="space-y-3">
+                {/* Card body — skills list */}
+                <div className="px-6 py-5 space-y-3">
                   {category.skills.map((skill) => {
                     const Icon = skill.icon
                     return (
                       <div key={skill.name} className="flex items-center gap-3">
-                        {/* Icon */}
-                        <div className="w-6 flex-shrink-0 flex items-center justify-center">
+                        {/* Brand-colored icon */}
+                        <div className="w-5 flex-shrink-0 flex items-center justify-center">
                           <Icon style={{ color: skill.color }} className="text-base" />
                         </div>
 
@@ -170,7 +177,7 @@ function Skills() {
                           </div>
                           {/* Tooltip */}
                           <div
-                            className="absolute bottom-full mb-1.5 -translate-x-1/2 bg-[var(--card-bg)] border border-[var(--border-color)] text-[var(--text-primary)] text-xs font-medium px-2 py-0.5 rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10"
+                            className="absolute bottom-full mb-2 -translate-x-1/2 bg-[var(--card-bg)] border border-[var(--border-color)] text-[var(--text-primary)] text-xs font-semibold px-2 py-0.5 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10"
                             style={{ left: `${skill.level}%` }}
                           >
                             {skill.level}%
