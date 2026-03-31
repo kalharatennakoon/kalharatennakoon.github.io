@@ -43,6 +43,11 @@ function extractExcerpt(content, maxLength = 200) {
   return text.substring(0, maxLength).trim() + '...';
 }
 
+function extractImage(content) {
+  const match = content.match(/<img[^>]+src=["']([^"']+)["']/i);
+  return match ? match[1] : null;
+}
+
 async function updateBlogPosts() {
   try {
     console.log('Fetching Medium RSS feed...');
@@ -60,14 +65,15 @@ async function updateBlogPosts() {
       return {
         title: item.title[0],
         excerpt: extractExcerpt(content),
-        date: new Date(item.pubDate[0]).toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric' 
+        date: new Date(item.pubDate[0]).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
         }),
         readTime: estimateReadTime(content),
         url: item.link[0],
-        tags: categories.slice(0, 3)
+        tags: categories.slice(0, 3),
+        image: extractImage(content),
       };
     });
 

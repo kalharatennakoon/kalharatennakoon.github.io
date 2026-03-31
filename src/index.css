@@ -12,6 +12,8 @@
     --border-color: #e2e8f0;
     --shadow: rgba(0, 0, 0, 0.08);
     --card-bg: #ffffff;
+    --color-primary: #172554;
+    --color-primary-2: #1e3a8a;
   }
 
   :root[data-theme="dark"] {
@@ -23,6 +25,8 @@
     --border-color: #334155;
     --shadow: rgba(0, 0, 0, 0.4);
     --card-bg: #1e293b;
+    --color-primary: #93c5fd;
+    --color-primary-2: #60a5fa;
   }
 
   body {
@@ -39,6 +43,10 @@
     scroll-behavior: smooth;
   }
 
+  footer p {
+    margin: 0;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     line-height: 1.2;
@@ -48,7 +56,7 @@
   
   * {
     scrollbar-width: thin;
-    scrollbar-color: #667eea var(--bg-secondary);
+    scrollbar-color: #172554 var(--bg-secondary);
   }
   
   *::-webkit-scrollbar {
@@ -61,21 +69,23 @@
   }
   
   *::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(180deg, #172554 0%, #172554 100%);
     border-radius: 4px;
   }
   
   *::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #5568d3 0%, #653a8b 100%);
+    background: linear-gradient(180deg, #172554 0%, #172554 100%);
   }
 }
 
 @theme {
   --color-accent: #ffd700;
-  
+
   --animate-fade-in-up: fadeInUp 1s ease-out;
   --animate-bounce-slow: bounce 2s infinite;
   --animate-blink: blink 0.7s infinite;
+  --animate-spin-slow: spin-slow 8s linear infinite;
+  --animate-float: float 4s ease-in-out infinite;
 }
 
 @keyframes fadeInUp {
@@ -96,4 +106,14 @@
   51%, 100% {
     opacity: 0;
   }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
 }

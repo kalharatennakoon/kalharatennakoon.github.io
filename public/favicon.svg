@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=WindSong:wght@500&amp;display=swap');
+    </style>
+  </defs>
+  <rect width="100" height="100" fill="white"/>
+  <text
+    x="50"
+    y="78"
+    font-family="'WindSong', cursive"
+    font-size="78"
+    font-weight="500"
+    fill="black"
+    text-anchor="middle"
+  >K</text>
+</svg>

@@ -1,4 +1,4 @@
-import { FaAward } from 'react-icons/fa'
+import { FaAward, FaExternalLinkAlt } from 'react-icons/fa'
 
 interface Cert {
   title: string
@@ -112,45 +112,58 @@ const certGroups: { group: string; items: Cert[] }[] = [
 function Certifications() {
   return (
     <section id="certifications" className="py-20 bg-[var(--bg-secondary)] dark:bg-[var(--bg-primary)]">
-      <div className="max-w-6xl mx-auto px-8">
-        <h2 className="text-5xl mb-8 text-center font-bold bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-clip-text text-transparent">
-          Certifications
+      <div className="max-w-5xl mx-auto px-8">
+        <h2 className="text-5xl mb-10 text-center font-bold flex items-center justify-center gap-3">
+          <FaAward className="text-[var(--color-primary)] flex-shrink-0" />
+          <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent">
+            Certifications
+          </span>
         </h2>
 
-        <div className="flex items-center justify-center gap-4 max-w-3xl mx-auto mb-12 px-8 py-4 bg-gradient-to-br from-[rgba(102,126,234,0.08)] to-[rgba(118,75,162,0.08)] rounded-full border-2 border-[rgba(102,126,234,0.2)] dark:from-[rgba(102,126,234,0.12)] dark:to-[rgba(118,75,162,0.12)] dark:border-[rgba(102,126,234,0.3)]">
-          <FaAward className="text-2xl flex-shrink-0 text-[#667eea]" />
-          <p className="m-0 text-base text-[var(--text-secondary)] font-medium text-center">
-            Cloud Platforms • AI & Data • Cybersecurity • Software Development
-          </p>
-        </div>
-
-        <div className="space-y-10 max-w-5xl mx-auto">
+        <div className="space-y-10">
           {certGroups.map(({ group, items }) => (
             <div key={group}>
-              <h3 className="text-xl font-bold text-[var(--text-primary)] mb-4 pb-2 border-b-2 border-[rgba(102,126,234,0.25)] flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-gradient-to-r from-[#667eea] to-[#764ba2] inline-block flex-shrink-0"></span>
-                {group}
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {/* Group header */}
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] px-3 py-1 rounded-full border border-[rgba(30,58,138,0.2)]">
+                  {group}
+                </span>
+                <div className="flex-1 h-px bg-[var(--border-color)]" />
+              </div>
+
+              {/* Cert rows */}
+              <div className="space-y-3">
                 {items.map((cert) => (
                   <div
                     key={cert.title}
-                    className="group bg-[var(--card-bg)] p-6 rounded-2xl shadow-[0_4px_15px_var(--shadow)] transition-all duration-300 border-l-4 border-[#667eea] hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(102,126,234,0.2)] relative overflow-hidden"
+                    className="bg-[var(--card-bg)] rounded-xl border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.35)] px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(30,58,138,0.1)] overflow-hidden"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-[rgba(102,126,234,0.03)] to-[rgba(118,75,162,0.03)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <h4 className="text-base mb-2 text-[var(--text-primary)] font-semibold leading-snug relative z-10">
-                      {cert.title}
-                    </h4>
-                    <p className="text-sm text-[#667eea] font-medium mb-1 relative z-10">{cert.issuer}</p>
-                    <p className="text-xs text-[var(--text-secondary)] mb-3 relative z-10">{cert.date}</p>
-                    <a
-                      href={cert.credentialUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-[#667eea] font-semibold text-sm transition-all hover:text-[#764ba2] group-hover:gap-2 relative z-10"
-                    >
-                      View Credential →
-                    </a>
+                    {/* Icon */}
+                    <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[rgba(30,58,138,0.1)] to-[rgba(23,37,84,0.08)] flex items-center justify-center flex-shrink-0">
+                      <FaAward className="text-base text-[var(--color-primary)]" />
+                    </div>
+
+                    {/* Title + issuer */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-[var(--text-primary)] leading-snug m-0">{cert.title}</p>
+                      <p className="text-xs text-[var(--text-secondary)] m-0 mt-0.5">{cert.issuer}</p>
+                    </div>
+
+                    {/* Date + link */}
+                    <div className="flex items-center gap-3 flex-shrink-0">
+                      <span className="text-xs font-medium text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] px-2.5 py-1 rounded-full whitespace-nowrap border border-[rgba(30,58,138,0.15)]">
+                        {cert.date}
+                      </span>
+                      <a
+                        href={cert.credentialUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-8 h-8 rounded-lg flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--color-primary)] hover:bg-[rgba(30,58,138,0.08)] transition-all duration-200"
+                        title="View Credential"
+                      >
+                        <FaExternalLinkAlt className="text-xs" />
+                      </a>
+                    </div>
                   </div>
                 ))}
               </div>

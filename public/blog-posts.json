@@ -9,7 +9,8 @@
       "business",
       "quality-assurance",
       "software-development"
-    ]
+    ],
+    "image": "https://cdn-images-1.medium.com/max/2600/1*b5ru4NLJTHbRl6t6I8nEzw.jpeg"
   },
   {
     "title": "How to Reduce Your Screen Time",
@@ -21,7 +22,8 @@
       "digital-detox",
       "thoughts",
       "screentime"
-    ]
+    ],
+    "image": "https://cdn-images-1.medium.com/max/2600/1*nl4yUliriiTRC2dPDJoSTw.jpeg"
   },
   {
     "title": "iOS 26 Preview: A Closer Look at the New Phone and Messages Apps",
@@ -33,7 +35,8 @@
       "news",
       "features",
       "updates"
-    ]
+    ],
+    "image": "https://cdn-images-1.medium.com/max/2600/1*8_tq7T4WSOT8jXFliYUPcw.jpeg"
   },
   {
     "title": "Notion Automation with Apple Shortcuts",
@@ -45,7 +48,8 @@
       "shortcuts",
       "utilities",
       "apple"
-    ]
+    ],
+    "image": "https://cdn-images-1.medium.com/max/2600/1*iKJIo2QGa1g5IFamWKps9Q.jpeg"
   },
   {
     "title": "Building, Dockerizing, and Deploying a CRUD API in Go on Kubernetes",
@@ -57,7 +61,8 @@
       "software-engineering",
       "programming",
       "containerization"
-    ]
+    ],
+    "image": "https://cdn-images-1.medium.com/max/2600/1*BD4MIh6X3pcdtek0v16YPA.jpeg"
   },
   {
     "title": "The Importance of Writing Clean Code.",
@@ -69,6 +74,7 @@
       "best-practices",
       "software-engineering",
       "gui̇de"
-    ]
+    ],
+    "image": "https://cdn-images-1.medium.com/max/2600/1*PSG01XT8CtYseRF1DjnzCQ.jpeg"
   }
 ]
