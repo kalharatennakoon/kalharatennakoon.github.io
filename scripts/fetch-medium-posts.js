@@ -21,7 +21,14 @@ function fetchRSS(url) {
 }
 
 function extractExcerpt(content, maxLength = 200) {
-  const text = content.replace(/<[^>]*>/g, '').trim();
+  const text = content
+    .replace(/<[^>]*>/g, '')          // strip HTML tags
+    .replace(/Continue reading on .+?»/gi, '') // remove RSS "Continue reading" trailer
+    .replace(/&[a-z#0-9]+;/gi, (e) => { // decode common HTML entities
+      const entities = { '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#x2019;': '\u2019', '&#x2018;': '\u2018', '&nbsp;': ' ' };
+      return entities[e] ?? e;
+    })
+    .trim();
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength).trim() + '...';
 }

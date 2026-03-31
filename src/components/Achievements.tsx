@@ -9,29 +9,29 @@ interface Achievement {
 
 const achievements: Achievement[] = [
   {
-    title: 'Dan Kohn Scholarship — KubeCon + CloudNativeCon',
+    title: 'Dan Kohn Scholarship - KubeCon + CloudNativeCon',
     description: 'Awarded the CNCF Dan Kohn Scholarship to attend KubeCon + CloudNativeCon. Recognised for contributions and potential in the cloud-native ecosystem.',
     date: '2025 & 2022',
     highlight: true,
   },
   {
-    title: 'First Runner-Up — Hack:Bit Hackathon',
+    title: 'First Runner-Up - Hack:Bit Hackathon',
     description: 'Secured First Runner-Up at the Hack:Bit national-level hackathon, competing against university and school teams across Sri Lanka.',
     date: 'Jul 2019',
   },
   {
-    title: 'Top 15 Finalist — HaXmas Hackathon',
+    title: 'Top 15 Finalist - HaXmas Hackathon',
     description: 'Selected as one of the Top 15 finalists at the HaXmas Hackathon, a competitive coding and innovation challenge.',
     date: 'Jan 2018',
   },
   {
-    title: 'Finalist — Cisco Packet Riders',
+    title: 'Finalist - Cisco Packet Riders',
     description: 'Reached the national final of Cisco Packet Riders, a networking and troubleshooting competition open to students across Sri Lanka.',
     date: 'Jul 2018',
   },
   {
-    title: '4th in Sri Lanka & 118th in Asia Pacific — Cisco NetRiders',
-    description: 'Achieved 4th place in Sri Lanka and 118th in Asia Pacific at the Cisco NetRiders Skills Competition, a regional networking proficiency assessment.',
+    title: '4th in Sri Lanka & 118th in Asia Pacific - Cisco NetRiders',
+    description: 'Ranked 4th in Sri Lanka and 118th in Asia Pacific at the Cisco NetRiders competition.',
     date: 'Sep 2017',
   },
 ]

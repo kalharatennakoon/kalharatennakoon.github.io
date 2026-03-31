@@ -19,7 +19,7 @@ const certGroups: { group: string; items: Cert[] }[] = [
       },
       {
         title: 'Getting Started with Google Kubernetes Engine',
-        issuer: 'Google Cloud / Coursera',
+        issuer: 'Google Cloud (Coursera)',
         date: 'Jul 2020',
         credentialUrl: 'https://www.coursera.org/account/accomplishments/records/KHP2Z9NZ9FY7',
       },
@@ -46,6 +46,12 @@ const certGroups: { group: string; items: Cert[] }[] = [
   {
     group: 'AI & Data',
     items: [
+      {
+        title: 'Google AI Professional Certificate',
+        issuer: 'Google (Coursera)',
+        date: '2026',
+        credentialUrl: 'https://www.coursera.org/account/accomplishments/specialization/X5H7V3FBA2ZC',
+      },
       {
         title: 'Microsoft Certified: Azure AI Fundamentals (AI-900)',
         issuer: 'Microsoft',
@@ -101,7 +107,7 @@ const certGroups: { group: string; items: Cert[] }[] = [
       },
       {
         title: 'AWS Fundamentals: Going Cloud-Native',
-        issuer: 'AWS / Coursera',
+        issuer: 'AWS (Coursera)',
         date: '2022',
         credentialUrl: 'https://coursera.org/share/a527b8fa5b14962328c02a3c3e8b54f9',
       },
@@ -149,7 +155,7 @@ function Certifications() {
                       <p className="text-xs text-[var(--text-secondary)] m-0 mt-0.5">{cert.issuer}</p>
                     </div>
 
-                    {/* Date + link */}
+                    {/* Date + button */}
                     <div className="flex items-center gap-3 flex-shrink-0">
                       <span className="text-xs font-medium text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] px-2.5 py-1 rounded-full whitespace-nowrap border border-[rgba(30,58,138,0.15)]">
                         {cert.date}
@@ -158,10 +164,9 @@ function Certifications() {
                         href={cert.credentialUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-8 h-8 rounded-lg flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--color-primary)] hover:bg-[rgba(30,58,138,0.08)] transition-all duration-200"
-                        title="View Credential"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-2)] hover:shadow-[0_4px_12px_rgba(30,58,138,0.3)] hover:-translate-y-0.5 transition-all duration-200 whitespace-nowrap"
                       >
-                        <FaExternalLinkAlt className="text-xs" />
+                        <FaExternalLinkAlt className="text-[10px]" /> View
                       </a>
                     </div>
                   </div>

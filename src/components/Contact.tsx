@@ -1,10 +1,10 @@
 // import { useState } from 'react'
 import {
   FaEnvelope, FaGithub, FaLinkedin, FaMedium,
-  FaStackOverflow, FaGoogle, FaAward, FaHeart, FaCoffee
+  FaStackOverflow, FaHeart, FaCoffee
 } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
-import { SiBluesky, SiLinktree, SiGooglecloud } from 'react-icons/si'
+import { SiBluesky } from 'react-icons/si'
 
 const contactLinks = [
   { href: 'mailto:kalharatennakoonmck@gmail.com', icon: <FaEnvelope />, label: 'Email', external: false },
@@ -14,10 +14,6 @@ const contactLinks = [
   { href: 'https://x.com/_KalharaT', icon: <FaXTwitter />, label: 'X', external: true },
   { href: 'https://bsky.app/profile/kalharatennakoon.bsky.social', icon: <SiBluesky />, label: 'Bluesky', external: true },
   { href: 'https://stackoverflow.com/users/13018789/kalhara-tennakoon', icon: <FaStackOverflow />, label: 'Stack Overflow', external: true },
-  { href: 'https://linktr.ee/kalharatennakoon', icon: <SiLinktree />, label: 'Linktree', external: true },
-  { href: 'https://g.dev/TMKRBTennakoon', icon: <FaGoogle />, label: 'Google Dev', external: true },
-  { href: 'https://www.cloudskillsboost.google/public_profiles/e074e12f-53b1-4ccd-ae0f-c18216f147fd', icon: <SiGooglecloud />, label: 'Google Cloud', external: true },
-  { href: 'https://www.credly.com/users/kalharatennakoon', icon: <FaAward />, label: 'Credly', external: true },
 ]
 
 // type FormState = { name: string; email: string; message: string }

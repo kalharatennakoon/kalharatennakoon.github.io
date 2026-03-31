@@ -47,7 +47,7 @@ function Education() {
                     </span>
                     <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
                       <FaMapMarkerAlt className="text-[var(--color-primary)] text-xs" />
-                      Delivered via ESOFT UNI (ESU), Sri Lanka
+                      Delivered via ESU, Sri Lanka
                     </span>
                   </div>
                 </div>

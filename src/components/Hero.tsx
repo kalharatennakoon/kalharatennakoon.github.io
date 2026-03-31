@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import { FaArrowDown } from 'react-icons/fa'
 
 const roles = [
-  'Aspiring DevOps Engineer',
+  'DevOps Engineer',
+  'MLOps Engineer',
   'Cloud-Native Developer',
   'CI/CD Automation Engineer',
-  'Kubernetes & Containerization Engineer',
 ]
 
 function Hero() {

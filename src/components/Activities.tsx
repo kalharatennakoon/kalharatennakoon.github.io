@@ -12,7 +12,7 @@ interface Activity {
 
 const activities: Activity[] = [
   {
-    title: 'Medium — Technical Writer',
+    title: 'Medium - Technical Writer',
     role: 'Technical Author',
     period: 'Dec 2021 – Present',
     badge: 'Writing',
@@ -29,15 +29,15 @@ const activities: Activity[] = [
     icon: <FaHandsHelping />,
   },
   {
-    title: 'Senior Science Society — Maliyadeva College',
+    title: 'Senior Science Society - Maliyadeva College',
     role: 'Member',
     period: 'School Years',
     badge: 'Club',
-    description: 'Active member of the Senior Science Society, participating in science fairs, experiments, and inter-school competitions.',
+    description: 'Member of the Senior Science Society during school years, involved in science fairs, experiments, and inter-school competitions.',
     icon: <FaFlask />,
   },
   {
-    title: 'Badminton — School Team',
+    title: 'Badminton - School Team',
     role: 'Under-17 Player',
     period: 'School Years',
     badge: 'Sports',
