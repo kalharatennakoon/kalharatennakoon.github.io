@@ -41,7 +41,7 @@ function Navbar() {
         <a
           href="#"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="text-lg font-bold tracking-tight transition-colors bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-clip-text text-transparent"
+          className="text-lg font-bold tracking-tight transition-colors bg-gradient-to-r from-[#172554] to-[#172554] bg-clip-text text-transparent"
         >
           KT
         </a>
@@ -52,7 +52,7 @@ function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="px-3 py-2 rounded-lg text-sm font-medium transition-all text-[var(--text-secondary)] hover:bg-[rgba(102,126,234,0.1)] hover:text-[#667eea]"
+                className="px-3 py-2 rounded-lg text-sm font-medium transition-all text-[var(--text-secondary)] hover:bg-[rgba(30,58,138,0.1)] hover:text-[#172554]"
               >
                 {link.label}
               </a>
@@ -66,7 +66,7 @@ function Navbar() {
             onClick={toggleTheme}
             aria-label="Toggle theme"
             title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-            className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 bg-[rgba(102,126,234,0.1)] text-[#667eea] hover:bg-[rgba(102,126,234,0.2)]"
+            className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 bg-[rgba(30,58,138,0.1)] text-[#172554] hover:bg-[rgba(30,58,138,0.2)]"
           >
             {theme === 'light' ? <FaMoon /> : <FaSun />}
           </button>
@@ -75,7 +75,7 @@ function Navbar() {
           <button
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
-            className="md:hidden w-10 h-10 rounded-full flex items-center justify-center transition-all text-[var(--text-primary)] hover:bg-[rgba(102,126,234,0.1)]"
+            className="md:hidden w-10 h-10 rounded-full flex items-center justify-center transition-all text-[var(--text-primary)] hover:bg-[rgba(30,58,138,0.1)]"
           >
             {menuOpen ? <FaTimes /> : <FaBars />}
           </button>
@@ -90,7 +90,7 @@ function Navbar() {
               key={link.href}
               href={link.href}
               onClick={handleNavClick}
-              className="px-4 py-3 rounded-lg text-sm font-medium text-[var(--text-secondary)] hover:text-[#667eea] hover:bg-[rgba(102,126,234,0.08)] transition-all"
+              className="px-4 py-3 rounded-lg text-sm font-medium text-[var(--text-secondary)] hover:text-[#172554] hover:bg-[rgba(30,58,138,0.08)] transition-all"
             >
               {link.label}
             </a>

@@ -48,7 +48,7 @@
   
   * {
     scrollbar-width: thin;
-    scrollbar-color: #667eea var(--bg-secondary);
+    scrollbar-color: #172554 var(--bg-secondary);
   }
   
   *::-webkit-scrollbar {
@@ -61,12 +61,12 @@
   }
   
   *::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(180deg, #172554 0%, #172554 100%);
     border-radius: 4px;
   }
   
   *::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #5568d3 0%, #653a8b 100%);
+    background: linear-gradient(180deg, #172554 0%, #172554 100%);
   }
 }
 

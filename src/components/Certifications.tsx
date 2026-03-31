@@ -113,12 +113,12 @@ function Certifications() {
   return (
     <section id="certifications" className="py-20 bg-[var(--bg-secondary)] dark:bg-[var(--bg-primary)]">
       <div className="max-w-6xl mx-auto px-8">
-        <h2 className="text-5xl mb-8 text-center font-bold bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-clip-text text-transparent">
+        <h2 className="text-5xl mb-8 text-center font-bold bg-gradient-to-r from-[#172554] to-[#172554] bg-clip-text text-transparent">
           Certifications
         </h2>
 
-        <div className="flex items-center justify-center gap-4 max-w-3xl mx-auto mb-12 px-8 py-4 bg-gradient-to-br from-[rgba(102,126,234,0.08)] to-[rgba(118,75,162,0.08)] rounded-full border-2 border-[rgba(102,126,234,0.2)] dark:from-[rgba(102,126,234,0.12)] dark:to-[rgba(118,75,162,0.12)] dark:border-[rgba(102,126,234,0.3)]">
-          <FaAward className="text-2xl flex-shrink-0 text-[#667eea]" />
+        <div className="flex items-center justify-center gap-4 max-w-3xl mx-auto mb-12 px-8 py-4 bg-gradient-to-br from-[rgba(30,58,138,0.08)] to-[rgba(23,37,84,0.08)] rounded-full border-2 border-[rgba(30,58,138,0.2)] dark:from-[rgba(30,58,138,0.12)] dark:to-[rgba(23,37,84,0.12)] dark:border-[rgba(30,58,138,0.3)]">
+          <FaAward className="text-2xl flex-shrink-0 text-[#172554]" />
           <p className="m-0 text-base text-[var(--text-secondary)] font-medium text-center">
             Cloud Platforms • AI & Data • Cybersecurity • Software Development
           </p>
@@ -127,27 +127,27 @@ function Certifications() {
         <div className="space-y-10 max-w-5xl mx-auto">
           {certGroups.map(({ group, items }) => (
             <div key={group}>
-              <h3 className="text-xl font-bold text-[var(--text-primary)] mb-4 pb-2 border-b-2 border-[rgba(102,126,234,0.25)] flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-gradient-to-r from-[#667eea] to-[#764ba2] inline-block flex-shrink-0"></span>
+              <h3 className="text-xl font-bold text-[var(--text-primary)] mb-4 pb-2 border-b-2 border-[rgba(30,58,138,0.25)] flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-gradient-to-r from-[#172554] to-[#172554] inline-block flex-shrink-0"></span>
                 {group}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {items.map((cert) => (
                   <div
                     key={cert.title}
-                    className="group bg-[var(--card-bg)] p-6 rounded-2xl shadow-[0_4px_15px_var(--shadow)] transition-all duration-300 border-l-4 border-[#667eea] hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(102,126,234,0.2)] relative overflow-hidden"
+                    className="group bg-[var(--card-bg)] p-6 rounded-2xl shadow-[0_4px_15px_var(--shadow)] transition-all duration-300 border-l-4 border-[#172554] hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(30,58,138,0.2)] relative overflow-hidden"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-[rgba(102,126,234,0.03)] to-[rgba(118,75,162,0.03)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-[rgba(30,58,138,0.03)] to-[rgba(23,37,84,0.03)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <h4 className="text-base mb-2 text-[var(--text-primary)] font-semibold leading-snug relative z-10">
                       {cert.title}
                     </h4>
-                    <p className="text-sm text-[#667eea] font-medium mb-1 relative z-10">{cert.issuer}</p>
+                    <p className="text-sm text-[#172554] font-medium mb-1 relative z-10">{cert.issuer}</p>
                     <p className="text-xs text-[var(--text-secondary)] mb-3 relative z-10">{cert.date}</p>
                     <a
                       href={cert.credentialUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-[#667eea] font-semibold text-sm transition-all hover:text-[#764ba2] group-hover:gap-2 relative z-10"
+                      className="inline-flex items-center gap-1 text-[#172554] font-semibold text-sm transition-all hover:text-[#172554] group-hover:gap-2 relative z-10"
                     >
                       View Credential →
                     </a>

@@ -35,12 +35,12 @@ function Skills() {
   return (
     <section id="skills" className="py-24 bg-[var(--bg-secondary)] relative dark:bg-[var(--bg-primary)]">
       <div className="max-w-6xl mx-auto px-8">
-        <h2 className="text-5xl mb-8 text-center font-bold bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-clip-text text-transparent">
+        <h2 className="text-5xl mb-8 text-center font-bold bg-gradient-to-r from-[#172554] to-[#172554] bg-clip-text text-transparent">
           Technical Expertise
         </h2>
 
-        <div className="flex items-center justify-center gap-4 max-w-3xl mx-auto mb-12 px-8 py-4 bg-gradient-to-br from-[rgba(102,126,234,0.08)] to-[rgba(118,75,162,0.08)] rounded-full border-2 border-[rgba(102,126,234,0.2)] dark:from-[rgba(102,126,234,0.12)] dark:to-[rgba(118,75,162,0.12)] dark:border-[rgba(102,126,234,0.3)]">
-          <FaWrench className="text-2xl flex-shrink-0 text-[#667eea]" />
+        <div className="flex items-center justify-center gap-4 max-w-3xl mx-auto mb-12 px-8 py-4 bg-gradient-to-br from-[rgba(30,58,138,0.08)] to-[rgba(23,37,84,0.08)] rounded-full border-2 border-[rgba(30,58,138,0.2)] dark:from-[rgba(30,58,138,0.12)] dark:to-[rgba(23,37,84,0.12)] dark:border-[rgba(30,58,138,0.3)]">
+          <FaWrench className="text-2xl flex-shrink-0 text-[#172554]" />
           <p className="m-0 text-base text-[var(--text-secondary)] font-medium text-center">
             DevOps • Cloud-Native • Automation • Full-Stack • Data
           </p>
@@ -50,17 +50,17 @@ function Skills() {
           {skillCategories.map((category) => (
             <div
               key={category.title}
-              className="bg-[var(--card-bg)] p-6 rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(102,126,234,0.4)] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(102,126,234,0.15)] transition-all duration-300"
+              className="bg-[var(--card-bg)] p-6 rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(30,58,138,0.15)] transition-all duration-300"
             >
               <h3 className="text-base font-bold text-[var(--text-primary)] mb-4 pb-3 border-b border-[var(--border-color)] flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#667eea] to-[#764ba2] flex-shrink-0 inline-block"></span>
+                <span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#172554] to-[#172554] flex-shrink-0 inline-block"></span>
                 {category.title}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {category.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1.5 bg-gradient-to-r from-[rgba(102,126,234,0.1)] to-[rgba(118,75,162,0.1)] rounded-full text-sm text-[var(--text-primary)] font-medium border border-[rgba(102,126,234,0.2)] hover:border-[rgba(102,126,234,0.5)] hover:from-[rgba(102,126,234,0.18)] hover:to-[rgba(118,75,162,0.18)] transition-all cursor-default"
+                    className="px-3 py-1.5 bg-gradient-to-r from-[rgba(30,58,138,0.1)] to-[rgba(23,37,84,0.1)] rounded-full text-sm text-[var(--text-primary)] font-medium border border-[rgba(30,58,138,0.2)] hover:border-[rgba(30,58,138,0.5)] hover:from-[rgba(30,58,138,0.18)] hover:to-[rgba(23,37,84,0.18)] transition-all cursor-default"
                   >
                     {tag}
                   </span>

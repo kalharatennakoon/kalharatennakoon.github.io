@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { FaGithub, FaLinkedin, FaEnvelope, FaArrowDown } from 'react-icons/fa'
+import { FaArrowDown } from 'react-icons/fa'
 
 const roles = [
   'Aspiring DevOps Engineer',
@@ -40,52 +40,43 @@ function Hero() {
   }, [text, isDeleting, loopNum, typingSpeed])
 
   return (
-    <section className="min-h-screen flex items-center justify-center text-center bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]">
+    <section className="min-h-screen flex items-center bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]">
       {/* Decorative background gradients */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-[20%] w-1/2 h-1/2 bg-gradient-to-br from-[rgba(102,126,234,0.08)] to-[rgba(118,75,162,0.08)] rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-[20%] w-1/2 h-1/2 bg-gradient-to-br from-[rgba(118,75,162,0.08)] to-[rgba(102,126,234,0.08)] rounded-full blur-3xl"></div>
+        <div className="absolute top-0 left-[20%] w-1/2 h-1/2 bg-gradient-to-br from-[rgba(30,58,138,0.08)] to-[rgba(23,37,84,0.08)] rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-[20%] w-1/2 h-1/2 bg-gradient-to-br from-[rgba(23,37,84,0.08)] to-[rgba(30,58,138,0.08)] rounded-full blur-3xl"></div>
       </div>
 
-      <div className="relative z-10 animate-fade-in-up px-4">
-        <div className="text-2xl font-light mb-2 text-[var(--text-secondary)] tracking-[2px] uppercase">Hello, I'm</div>
-        <h1 className="text-6xl md:text-7xl mb-4 font-extrabold bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-clip-text text-transparent leading-tight">
-          Kalhara Tennakoon
-        </h1>
-        <h2 className="text-4xl font-normal mb-6 min-h-[3.5rem] flex items-center justify-center gap-1">
-          <span className="text-[#667eea] font-medium">{text}</span>
-          <span className="text-[#667eea] font-light animate-blink">|</span>
-        </h2>
-        <p className="text-xl mb-10 text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed px-4">
-          Automating delivery pipelines and building reliable systems with cloud-native technologies
-        </p>
-        <div className="flex gap-6 justify-center flex-wrap">
-          <a
-            href="https://github.com/kalharatennakoon"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-8 py-4 bg-gradient-to-r from-[#667eea] to-[#764ba2] rounded-xl text-white border-2 border-transparent font-medium flex items-center gap-2 hover:opacity-90 hover:-translate-y-1 hover:shadow-[0_8px_25px_rgba(102,126,234,0.4)] transition-all"
-          >
-            <FaGithub className="text-xl" /> GitHub
-          </a>
-          <a
-            href="https://www.linkedin.com/in/kalharatennakoon"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-8 py-4 rounded-xl text-[#667eea] border-2 border-[rgba(102,126,234,0.4)] font-medium flex items-center gap-2 hover:bg-[rgba(102,126,234,0.08)] hover:-translate-y-1 hover:border-[#667eea] transition-all"
-          >
-            <FaLinkedin className="text-xl" /> LinkedIn
-          </a>
-          <a
-            href="#contact"
-            className="px-8 py-4 rounded-xl text-[#667eea] border-2 border-[rgba(102,126,234,0.4)] font-medium flex items-center gap-2 hover:bg-[rgba(102,126,234,0.08)] hover:-translate-y-1 hover:border-[#667eea] transition-all"
-          >
-            <FaEnvelope className="text-xl" /> Contact
-          </a>
+      <div className="relative z-10 max-w-6xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between gap-12 py-32">
+        {/* Left: text */}
+        <div className="flex-1 animate-fade-in-up text-left">
+          <div className="text-lg font-light mb-2 text-[var(--text-secondary)] tracking-[2px] uppercase">Hello, I'm</div>
+          <h1 className="text-5xl md:text-6xl mb-4 font-extrabold bg-gradient-to-r from-[#172554] to-[#1e3a8a] bg-clip-text text-transparent leading-tight">
+            Kalhara Tennakoon
+          </h1>
+          <h2 className="text-3xl font-normal mb-6 min-h-[3rem] flex items-center gap-1">
+            <span className="text-[#172554] font-medium">{text}</span>
+            <span className="text-[#172554] font-light animate-blink">|</span>
+          </h2>
+          <p className="text-lg text-[var(--text-secondary)] max-w-xl leading-relaxed">
+            Automating delivery pipelines and building reliable systems with cloud-native technologies
+          </p>
+        </div>
+
+        {/* Right: profile photo */}
+        <div className="flex-shrink-0 animate-fade-in-up">
+          <div className="w-72 h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(30,58,138,0.25)] border-4 border-[rgba(30,58,138,0.15)]">
+            <img
+              src="/profile.jpg"
+              alt="Kalhara Tennakoon"
+              className="w-full h-full object-cover object-top"
+            />
+          </div>
         </div>
       </div>
+
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-slow opacity-70 cursor-pointer">
-        <a href="#about" className="text-[#667eea] flex items-center justify-center">
+        <a href="#about" className="text-[#172554] flex items-center justify-center">
           <FaArrowDown className="text-3xl" />
         </a>
       </div>

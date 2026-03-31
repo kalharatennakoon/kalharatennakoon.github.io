@@ -69,12 +69,12 @@ function Blog() {
   return (
     <section id="blog" className="py-20 bg-[var(--bg-primary)] dark:bg-[var(--bg-secondary)]">
       <div className="max-w-6xl mx-auto px-8">
-        <h2 className="text-5xl mb-4 text-center text-[var(--text-primary)] font-bold bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-clip-text text-transparent">
+        <h2 className="text-5xl mb-4 text-center text-[var(--text-primary)] font-bold bg-gradient-to-r from-[#172554] to-[#172554] bg-clip-text text-transparent">
           Blog Posts / Writing
         </h2>
 
-        <div className="flex items-center justify-center gap-4 max-w-3xl mx-auto mb-12 px-8 py-4 bg-gradient-to-br from-[rgba(102,126,234,0.08)] to-[rgba(118,75,162,0.08)] rounded-full border-2 border-[rgba(102,126,234,0.2)] dark:from-[rgba(102,126,234,0.12)] dark:to-[rgba(118,75,162,0.12)] dark:border-[rgba(102,126,234,0.3)]">
-          <FaPen className="text-xl flex-shrink-0 text-[#667eea]" />
+        <div className="flex items-center justify-center gap-4 max-w-3xl mx-auto mb-12 px-8 py-4 bg-gradient-to-br from-[rgba(30,58,138,0.08)] to-[rgba(23,37,84,0.08)] rounded-full border-2 border-[rgba(30,58,138,0.2)] dark:from-[rgba(30,58,138,0.12)] dark:to-[rgba(23,37,84,0.12)] dark:border-[rgba(30,58,138,0.3)]">
+          <FaPen className="text-xl flex-shrink-0 text-[#172554]" />
           <p className="m-0 text-base text-[var(--text-secondary)] font-medium text-center">
             DevOps • Cloud-Native • Engineering Insights
           </p>
@@ -84,16 +84,16 @@ function Blog() {
           {blogPosts.map((post) => (
             <article
               key={post.title}
-              className="group bg-[var(--card-bg)] p-8 rounded-2xl shadow-[0_4px_15px_var(--shadow)] transition-all duration-300 flex flex-col hover:-translate-y-3 hover:shadow-[0_12px_35px_rgba(102,126,234,0.2)] border border-[var(--border-color)] hover:border-[rgba(102,126,234,0.4)] backdrop-blur-sm relative overflow-hidden"
+              className="group bg-[var(--card-bg)] p-8 rounded-2xl shadow-[0_4px_15px_var(--shadow)] transition-all duration-300 flex flex-col hover:-translate-y-3 hover:shadow-[0_12px_35px_rgba(30,58,138,0.2)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] backdrop-blur-sm relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-[rgba(102,126,234,0.03)] to-[rgba(118,75,162,0.03)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-[rgba(30,58,138,0.03)] to-[rgba(23,37,84,0.03)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="mb-4 relative z-10">
                 <h3 className="text-xl mb-2 leading-tight">
                   <a
                     href={post.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[var(--text-primary)] font-semibold transition-all hover:bg-gradient-to-r hover:from-[#667eea] hover:to-[#764ba2] hover:bg-clip-text hover:text-transparent"
+                    className="text-[var(--text-primary)] font-semibold transition-all hover:bg-gradient-to-r hover:from-[#172554] hover:to-[#172554] hover:bg-clip-text hover:text-transparent"
                   >
                     {post.title}
                   </a>
@@ -111,7 +111,7 @@ function Blog() {
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 bg-gradient-to-r from-[rgba(102,126,234,0.1)] to-[rgba(118,75,162,0.1)] rounded-full text-xs text-[#667eea] font-semibold border border-[rgba(102,126,234,0.2)] hover:border-[rgba(102,126,234,0.4)] transition-colors"
+                    className="px-3 py-1 bg-gradient-to-r from-[rgba(30,58,138,0.1)] to-[rgba(23,37,84,0.1)] rounded-full text-xs text-[#172554] font-semibold border border-[rgba(30,58,138,0.2)] hover:border-[rgba(30,58,138,0.4)] transition-colors"
                   >
                     {tag}
                   </span>
@@ -121,7 +121,7 @@ function Blog() {
                 href={post.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#667eea] font-semibold text-sm transition-all hover:text-[#764ba2] inline-flex items-center gap-2 group-hover:gap-3 relative z-10"
+                className="text-[#172554] font-semibold text-sm transition-all hover:text-[#172554] inline-flex items-center gap-2 group-hover:gap-3 relative z-10"
               >
                 <FaMedium /> Read on Medium
               </a>
@@ -134,7 +134,7 @@ function Blog() {
             href="https://kalharatennakoon.medium.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-[0_8px_25px_rgba(102,126,234,0.4)] hover:-translate-y-1 hover:scale-105"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#172554] to-[#172554] text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-[0_8px_25px_rgba(30,58,138,0.4)] hover:-translate-y-1 hover:scale-105"
           >
             <FaMedium /> View All Posts on Medium
           </a>
