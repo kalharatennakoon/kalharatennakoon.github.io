@@ -5,8 +5,8 @@ function Education() {
     <section id="education" className="py-20 bg-[var(--bg-secondary)] dark:bg-[var(--bg-primary)]">
       <div className="max-w-6xl mx-auto px-8">
         <h2 className="text-5xl mb-10 text-center font-bold flex items-center justify-center gap-3">
-          <FaGraduationCap className="text-[var(--color-primary)] flex-shrink-0" />
-          <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent">
+          <FaGraduationCap className="text-4xl text-[var(--color-primary)] flex-shrink-0" />
+          <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent pb-1">
             Education
           </span>
         </h2>

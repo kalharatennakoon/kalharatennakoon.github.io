@@ -17,7 +17,7 @@ function Blog() {
       title: 'Building, Dockerizing, and Deploying a CRUD API in Go on Kubernetes',
       excerpt: 'A comprehensive guide on building a CRUD API in Go, containerizing it with Docker, and deploying it to Kubernetes.',
       date: '2024',
-      readTime: '12 min read',
+      readTime: '? min read',
       url: 'https://levelup.gitconnected.com/building-dockerizing-and-deploying-a-crud-api-in-go-on-kubernetes-9c25b01ad2e8',
       tags: ['Go', 'Kubernetes', 'Docker', 'DevOps'],
     },
@@ -25,7 +25,7 @@ function Blog() {
       title: 'Notion Automation with Apple Shortcuts',
       excerpt: 'Learn how to automate your Notion workflows using Apple Shortcuts for improved productivity.',
       date: '2024',
-      readTime: '6 min read',
+      readTime: '? min read',
       url: 'https://kalharatennakoon.medium.com/notion-automation-with-apple-shortcuts-d3ccab993cc7',
       tags: ['Productivity', 'Automation', 'Notion'],
     },
@@ -33,7 +33,7 @@ function Blog() {
       title: 'Software Testing Processes for Beginners',
       excerpt: 'A beginner-friendly guide to understanding software testing processes and methodologies.',
       date: '2024',
-      readTime: '8 min read',
+      readTime: '? min read',
       url: 'https://kalharatennakoon.medium.com/software-testing-processes-for-beginners-6ac5394c1d3d',
       tags: ['Testing', 'QA', 'Software Engineering'],
     },
@@ -41,7 +41,7 @@ function Blog() {
       title: 'How to Reduce Your Screen Time',
       excerpt: 'Practical tips and strategies to reduce screen time and maintain a healthier digital lifestyle.',
       date: '2024',
-      readTime: '5 min read',
+      readTime: '? min read',
       url: 'https://kalharatennakoon.medium.com/how-to-reduce-screen-time-9ee6e4ed9037',
       tags: ['Productivity', 'Health', 'Lifestyle'],
     },
@@ -49,7 +49,7 @@ function Blog() {
       title: 'iOS 26 Preview: A Closer Look at the New Phone and Messages Apps',
       excerpt: "Exploring the new features and improvements in iOS 26's Phone and Messages applications.",
       date: '2025',
-      readTime: '7 min read',
+      readTime: '? min read',
       url: 'https://kalharatennakoon.medium.com/ios-26-preview-a-closer-look-at-the-new-phone-and-messages-apps-e72c20ca4c84',
       tags: ['iOS', 'Apple', 'Mobile'],
     },
@@ -68,8 +68,8 @@ function Blog() {
     <section id="blog" className="py-20 bg-[var(--bg-primary)] dark:bg-[var(--bg-secondary)]">
       <div className="max-w-6xl mx-auto px-8">
         <h2 className="text-5xl mb-10 text-center font-bold flex items-center justify-center gap-3">
-          <FaPen className="text-[var(--color-primary)] flex-shrink-0" />
-          <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent">
+          <FaPen className="text-4xl text-[var(--color-primary)] flex-shrink-0" />
+          <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent pb-1">
             Blog Posts / Writing
           </span>
         </h2>
