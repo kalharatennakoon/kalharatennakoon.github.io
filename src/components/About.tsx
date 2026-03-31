@@ -10,11 +10,15 @@ function About() {
           About Me
         </h2>
 
-        <div className="max-w-4xl mx-auto mb-12 p-8 md:p-12 bg-gradient-to-br from-[rgba(30,58,138,0.1)] to-[rgba(23,37,84,0.1)] border-l-4 border-[var(--color-primary)] rounded-xl relative dark:from-[rgba(30,58,138,0.15)] dark:to-[rgba(23,37,84,0.15)]">
-          <div className="absolute top-[-10px] left-5 text-6xl text-[var(--color-primary)] opacity-30 font-serif leading-none">"</div>
-          <p className="text-lg leading-relaxed text-[var(--text-primary)] m-0 italic relative z-10">
+        <div className="max-w-5xl mx-auto mb-12 text-center relative">
+          <div className="text-8xl text-[var(--color-primary)] opacity-20 leading-none select-none" style={{ fontFamily: '"Handlee", cursive' }}>"</div>
+          <p
+            className="text-2xl leading-relaxed text-[var(--text-primary)] m-0 -mt-6 px-4"
+            style={{ fontFamily: '"Handlee", cursive', fontWeight: 400 }}
+          >
             Results-driven aspiring DevOps Engineer with demonstrated success in automating CI/CD pipelines, streamlining deployment processes, and managing container orchestration. Certified in Microsoft Azure and proficient in cloud-native tools including Kubernetes, Docker, Tekton, and ArgoCD. Passionate about building reliable, scalable systems and sharing practical engineering insights through technical writing.
           </p>
+          <div className="text-8xl text-[var(--color-primary)] opacity-20 leading-none select-none rotate-180 inline-block" style={{ fontFamily: '"Handlee", cursive' }}>"</div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
