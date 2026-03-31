@@ -59,13 +59,30 @@ function Hero() {
         </div>
 
         {/* Right: profile photo */}
-        <div className="flex-shrink-0 animate-fade-in-up">
-          <div className="w-72 h-72 md:w-80 md:h-80 rounded-full overflow-hidden">
-            <img
-              src="/profile.png"
-              alt="Kalhara Tennakoon"
-              className="w-full h-full object-cover object-top"
+        <div className="flex-shrink-0 animate-fade-in-up animate-float">
+          <div className="relative w-[300px] h-[300px] md:w-[336px] md:h-[336px]">
+            {/* Rotating conic-gradient ring */}
+            <div
+              className="absolute inset-0 rounded-full animate-spin-slow"
+              style={{
+                background: 'conic-gradient(from 0deg, transparent 0%, transparent 40%, var(--color-primary) 68%, var(--color-primary-2) 82%, transparent 100%)',
+              }}
             />
+            {/* Gap ring — matches hero bg */}
+            <div className="absolute inset-[3px] rounded-full bg-[var(--bg-primary)]" />
+            {/* Soft inner glow */}
+            <div
+              className="absolute inset-[6px] rounded-full"
+              style={{ boxShadow: 'inset 0 0 24px rgba(30,58,138,0.12)' }}
+            />
+            {/* Image */}
+            <div className="absolute inset-[6px] rounded-full overflow-hidden">
+              <img
+                src="/profile.png"
+                alt="Kalhara Tennakoon"
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
           </div>
         </div>
       </div>
