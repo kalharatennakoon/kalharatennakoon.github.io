@@ -132,18 +132,18 @@ function Certifications() {
                 <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] px-3 py-1 rounded-full border border-[rgba(30,58,138,0.2)]">
                   {group}
                 </span>
-                <div className="flex-1 h-px bg-[var(--border-color)]"></div>
+                <div className="flex-1 h-px bg-[var(--border-color)]" />
               </div>
 
-              {/* Cert cards */}
+              {/* Cert rows */}
               <div className="space-y-3">
                 {items.map((cert) => (
                   <div
                     key={cert.title}
-                    className="group bg-[var(--card-bg)] rounded-xl border border-[var(--border-color)] border-l-4 border-l-[var(--color-primary)] px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(30,58,138,0.12)]"
+                    className="bg-[var(--card-bg)] rounded-xl border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.35)] px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(30,58,138,0.1)] overflow-hidden"
                   >
                     {/* Icon */}
-                    <div className="w-9 h-9 rounded-lg bg-[rgba(30,58,138,0.08)] flex items-center justify-center flex-shrink-0">
+                    <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[rgba(30,58,138,0.1)] to-[rgba(23,37,84,0.08)] flex items-center justify-center flex-shrink-0">
                       <FaAward className="text-base text-[var(--color-primary)]" />
                     </div>
 
@@ -155,7 +155,7 @@ function Certifications() {
 
                     {/* Date + link */}
                     <div className="flex items-center gap-3 flex-shrink-0">
-                      <span className="text-xs font-medium text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] px-2.5 py-1 rounded-full whitespace-nowrap">
+                      <span className="text-xs font-medium text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] px-2.5 py-1 rounded-full whitespace-nowrap border border-[rgba(30,58,138,0.15)]">
                         {cert.date}
                       </span>
                       <a

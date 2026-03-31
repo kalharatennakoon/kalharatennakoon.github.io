@@ -25,157 +25,60 @@ const contactLinks = [
 
 function Contact() {
   const currentYear = new Date().getFullYear()
-  // const [form, setForm] = useState<FormState>({ name: '', email: '', message: '' })
-  // const [status, setStatus] = useState<Status>('idle')
-
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  //   setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
-  // }
-
-  // const handleSubmit = async (e: { preventDefault: () => void }) => {
-  //   e.preventDefault()
-  //   setStatus('sending')
-  //   try {
-  //     const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({
-  //         service_id: import.meta.env.VITE_EMAILJS_SERVICE_ID,
-  //         template_id: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-  //         user_id: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-  //         template_params: {
-  //           from_name: form.name,
-  //           from_email: form.email,
-  //           message: form.message,
-  //           to_email: 'kalharatennakoonmck@gmail.com',
-  //         },
-  //       }),
-  //     })
-  //     if (res.ok) {
-  //       setStatus('success')
-  //       setForm({ name: '', email: '', message: '' })
-  //     } else {
-  //       setStatus('error')
-  //     }
-  //   } catch {
-  //     setStatus('error')
-  //   }
-  // }
-
-  // const inputClass =
-  //   'w-full px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] text-sm outline-none focus:border-[var(--color-primary-2)] focus:ring-2 focus:ring-[rgba(30,58,138,0.15)] transition-all placeholder:text-[var(--text-secondary)]'
 
   return (
     <>
       <section id="contact" className="py-20 bg-[var(--bg-secondary)] dark:bg-[var(--bg-primary)]">
         <div className="max-w-6xl mx-auto px-8">
+          <h2 className="text-5xl mb-8 text-center font-bold bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent">
+            Get In Touch
+          </h2>
 
-          {/* Header */}
-          <div className="text-center mb-14">
-            <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent">
-              Get In Touch
-            </h2>
-            <p className="text-lg text-[var(--text-secondary)] max-w-xl mx-auto leading-relaxed">
-              I'm always open to new opportunities, collaborations, or just a good conversation. Drop me a message.
+          <div className="flex items-center justify-center gap-4 max-w-3xl mx-auto mb-12 px-8 py-4 bg-gradient-to-br from-[rgba(30,58,138,0.08)] to-[rgba(23,37,84,0.08)] rounded-full border-2 border-[rgba(30,58,138,0.2)] dark:from-[rgba(30,58,138,0.12)] dark:to-[rgba(23,37,84,0.12)] dark:border-[rgba(30,58,138,0.3)]">
+            <FaEnvelope className="text-xl flex-shrink-0 text-[var(--color-primary)]" />
+            <p className="m-0 text-base text-[var(--text-secondary)] font-medium text-center">
+              Open to opportunities, collaborations, or just a good conversation
             </p>
           </div>
 
-          {/* Full-width: info + social icons */}
-          <div className="flex flex-col items-center gap-8 text-center">
-              <div>
-                <h3 className="text-xl font-semibold text-[var(--text-primary)] mb-2">Let's connect</h3>
-                <p className="text-[var(--text-secondary)] text-sm leading-relaxed max-w-xl mx-auto">
-                  Whether you have a project in mind, want to collaborate, or just want to say hi, <br/>
-                  feel free to reach out through any of the platforms below.
-                </p>
-              </div>
-
-              {/* Social icons — single row with tooltips */}
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-[var(--text-secondary)] mb-4">Find me on</p>
-                <div className="flex flex-wrap justify-center gap-3">
-                  {contactLinks.map((link) => (
-                    <div key={link.label} className="relative group">
-                      <a
-                        href={link.href}
-                        {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                        className="w-11 h-11 rounded-xl flex items-center justify-center text-lg text-[var(--color-primary-2)] bg-white border border-[var(--border-color)] shadow-sm hover:bg-[#1e3a8a] hover:text-white hover:border-[var(--color-primary-2)] hover:shadow-md transition-all duration-200"
-                      >
-                        {link.icon}
-                      </a>
-                      {/* Tooltip */}
-                      <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs font-medium bg-[#172554] text-white rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg">
-                        {link.label}
-                        <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#172554]"></span>
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          {/* Social card */}
+          <div className="max-w-2xl mx-auto bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] overflow-hidden">
+            {/* Card header */}
+            <div className="px-8 pt-6 pb-5 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.05)] to-transparent">
+              <h3 className="text-base font-bold text-[var(--text-primary)] mb-1">Let's Connect</h3>
+              <p className="text-sm text-[var(--text-secondary)] m-0 leading-relaxed">
+                Feel free to reach out through any of the platforms below.
+              </p>
             </div>
 
-            {/* Right: contact form
-            <div className="bg-[var(--card-bg)] rounded-2xl p-8 shadow-[0_4px_30px_var(--shadow)] border border-[var(--border-color)]">
-              <h3 className="text-xl font-semibold text-[var(--text-primary)] mb-6">Send a message</h3>
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-1.5">Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    placeholder="Your name"
-                    value={form.name}
-                    onChange={handleChange}
-                    className={inputClass}
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-1.5">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    placeholder="your@email.com"
-                    value={form.email}
-                    onChange={handleChange}
-                    className={inputClass}
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-1.5">Message</label>
-                  <textarea
-                    name="message"
-                    required
-                    rows={5}
-                    placeholder="What's on your mind?"
-                    value={form.message}
-                    onChange={handleChange}
-                    className={`${inputClass} resize-none`}
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={status === 'sending'}
-                  className="mt-1 w-full py-3 px-6 bg-[#1e3a8a] hover:bg-[#172554] text-white font-semibold rounded-xl transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed hover:shadow-[0_6px_20px_rgba(30,58,138,0.4)] hover:-translate-y-0.5"
-                >
-                  {status === 'sending' ? 'Sending…' : 'Send Message'}
-                </button>
-
-                {status === 'success' && (
-                  <p className="text-center text-sm text-green-600 font-medium">
-                    Message sent! I'll get back to you soon.
-                  </p>
-                )}
-                {status === 'error' && (
-                  <p className="text-center text-sm text-red-500 font-medium">
-                    Something went wrong. Please try again or email me directly.
-                  </p>
-                )}
-              </form>
+            {/* Card body */}
+            <div className="px-8 py-6">
+              <p className="text-xs font-bold uppercase tracking-widest text-[var(--text-secondary)] mb-4">Find me on</p>
+              <div className="flex flex-wrap justify-center gap-3">
+                {contactLinks.map((link) => (
+                  <div key={link.label} className="relative group">
+                    <a
+                      href={link.href}
+                      {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      className="w-11 h-11 rounded-xl flex items-center justify-center text-lg text-[var(--color-primary)] bg-[rgba(30,58,138,0.06)] border border-[rgba(30,58,138,0.15)] hover:bg-[var(--color-primary)] hover:text-white hover:border-[var(--color-primary)] hover:shadow-[0_4px_12px_rgba(30,58,138,0.3)] transition-all duration-200"
+                    >
+                      {link.icon}
+                    </a>
+                    <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs font-medium bg-[var(--color-primary)] text-white rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg">
+                      {link.label}
+                      <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[var(--color-primary)]" />
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-            */}
+          </div>
+
+          {/*
+          <div className="bg-[var(--card-bg)] rounded-2xl p-8 shadow-[0_4px_30px_var(--shadow)] border border-[var(--border-color)]">
+            Send a message form (pending EmailJS setup)
+          </div>
+          */}
         </div>
       </section>
 
