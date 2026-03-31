@@ -40,12 +40,7 @@ function Hero() {
   }, [text, isDeleting, loopNum, typingSpeed])
 
   return (
-    <section className="min-h-screen flex items-center bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]">
-      {/* Decorative background gradients */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-[20%] w-1/2 h-1/2 bg-gradient-to-br from-[rgba(30,58,138,0.08)] to-[rgba(23,37,84,0.08)] rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-[20%] w-1/2 h-1/2 bg-gradient-to-br from-[rgba(23,37,84,0.08)] to-[rgba(30,58,138,0.08)] rounded-full blur-3xl"></div>
-      </div>
+    <section className="min-h-screen flex items-center bg-white relative overflow-hidden">
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between gap-12 py-32">
         {/* Left: text */}
@@ -65,9 +60,9 @@ function Hero() {
 
         {/* Right: profile photo */}
         <div className="flex-shrink-0 animate-fade-in-up">
-          <div className="w-72 h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(30,58,138,0.25)] border-4 border-[rgba(30,58,138,0.15)]">
+          <div className="w-72 h-72 md:w-80 md:h-80 rounded-full overflow-hidden">
             <img
-              src="/profile.jpg"
+              src="/profile.png"
               alt="Kalhara Tennakoon"
               className="w-full h-full object-cover object-top"
             />
