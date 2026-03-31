@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
-import { FaPen, FaMedium, FaCalendarAlt, FaClock } from 'react-icons/fa'
+import { FaPen, FaMedium, FaCalendarAlt } from 'react-icons/fa'
 
 interface BlogPost {
   title: string
   excerpt: string
   date: string
-  readTime: string
   url: string
   tags: string[]
   image?: string
@@ -17,7 +16,6 @@ function Blog() {
       title: 'Building, Dockerizing, and Deploying a CRUD API in Go on Kubernetes',
       excerpt: 'A comprehensive guide on building a CRUD API in Go, containerizing it with Docker, and deploying it to Kubernetes.',
       date: '2024',
-      readTime: '? min read',
       url: 'https://levelup.gitconnected.com/building-dockerizing-and-deploying-a-crud-api-in-go-on-kubernetes-9c25b01ad2e8',
       tags: ['Go', 'Kubernetes', 'Docker', 'DevOps'],
     },
@@ -25,7 +23,6 @@ function Blog() {
       title: 'Notion Automation with Apple Shortcuts',
       excerpt: 'Learn how to automate your Notion workflows using Apple Shortcuts for improved productivity.',
       date: '2024',
-      readTime: '? min read',
       url: 'https://kalharatennakoon.medium.com/notion-automation-with-apple-shortcuts-d3ccab993cc7',
       tags: ['Productivity', 'Automation', 'Notion'],
     },
@@ -33,7 +30,6 @@ function Blog() {
       title: 'Software Testing Processes for Beginners',
       excerpt: 'A beginner-friendly guide to understanding software testing processes and methodologies.',
       date: '2024',
-      readTime: '? min read',
       url: 'https://kalharatennakoon.medium.com/software-testing-processes-for-beginners-6ac5394c1d3d',
       tags: ['Testing', 'QA', 'Software Engineering'],
     },
@@ -41,7 +37,6 @@ function Blog() {
       title: 'How to Reduce Your Screen Time',
       excerpt: 'Practical tips and strategies to reduce screen time and maintain a healthier digital lifestyle.',
       date: '2024',
-      readTime: '? min read',
       url: 'https://kalharatennakoon.medium.com/how-to-reduce-screen-time-9ee6e4ed9037',
       tags: ['Productivity', 'Health', 'Lifestyle'],
     },
@@ -49,7 +44,6 @@ function Blog() {
       title: 'iOS 26 Preview: A Closer Look at the New Phone and Messages Apps',
       excerpt: "Exploring the new features and improvements in iOS 26's Phone and Messages applications.",
       date: '2025',
-      readTime: '? min read',
       url: 'https://kalharatennakoon.medium.com/ios-26-preview-a-closer-look-at-the-new-phone-and-messages-apps-e72c20ca4c84',
       tags: ['iOS', 'Apple', 'Mobile'],
     },
@@ -102,15 +96,9 @@ function Blog() {
 
               {/* Header strip */}
               <div className="px-5 pt-4 pb-3 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.05)] to-transparent">
-                <div className="flex items-center gap-3 text-xs text-[var(--text-secondary)]">
-                  <span className="flex items-center gap-1">
-                    <FaCalendarAlt className="text-[var(--color-primary)]" /> {post.date}
-                  </span>
-                  <span>·</span>
-                  <span className="flex items-center gap-1">
-                    <FaClock className="text-[var(--color-primary)]" /> {post.readTime}
-                  </span>
-                </div>
+                <span className="flex items-center gap-1 text-xs text-[var(--text-secondary)]">
+                  <FaCalendarAlt className="text-[var(--color-primary)]" /> {post.date}
+                </span>
               </div>
 
               {/* Body */}
