@@ -70,12 +70,12 @@ function Blog() {
   return (
     <section id="blog" className="py-20 bg-[var(--bg-primary)] dark:bg-[var(--bg-secondary)]">
       <div className="max-w-6xl mx-auto px-8">
-        <h2 className="text-5xl mb-4 text-center text-[var(--text-primary)] font-bold bg-gradient-to-r from-[#172554] to-[#172554] bg-clip-text text-transparent">
+        <h2 className="text-5xl mb-4 text-center text-[var(--text-primary)] font-bold bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary)] bg-clip-text text-transparent">
           Blog Posts / Writing
         </h2>
 
         <div className="flex items-center justify-center gap-4 max-w-3xl mx-auto mb-12 px-8 py-4 bg-gradient-to-br from-[rgba(30,58,138,0.08)] to-[rgba(23,37,84,0.08)] rounded-full border-2 border-[rgba(30,58,138,0.2)] dark:from-[rgba(30,58,138,0.12)] dark:to-[rgba(23,37,84,0.12)] dark:border-[rgba(30,58,138,0.3)]">
-          <FaPen className="text-xl flex-shrink-0 text-[#172554]" />
+          <FaPen className="text-xl flex-shrink-0 text-[var(--color-primary)]" />
           <p className="m-0 text-base text-[var(--text-secondary)] font-medium text-center">
             DevOps • Cloud-Native • Engineering Insights
           </p>
@@ -114,7 +114,7 @@ function Blog() {
                     href={post.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-[#172554] transition-colors"
+                    className="hover:text-[var(--color-primary)] transition-colors"
                   >
                     {post.title}
                   </a>
@@ -126,7 +126,7 @@ function Blog() {
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 bg-[rgba(30,58,138,0.08)] rounded-full text-xs text-[#172554] font-medium border border-[rgba(30,58,138,0.15)]"
+                      className="px-3 py-1 bg-[rgba(30,58,138,0.08)] rounded-full text-xs text-[var(--color-primary)] font-medium border border-[rgba(30,58,138,0.15)]"
                     >
                       {tag}
                     </span>
@@ -136,7 +136,7 @@ function Blog() {
                   href={post.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-[#172554] hover:gap-3 transition-all"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-primary)] hover:gap-3 transition-all"
                 >
                   <FaMedium /> Read on Medium
                 </a>
@@ -150,7 +150,7 @@ function Blog() {
             href="https://kalharatennakoon.medium.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#172554] to-[#172554] text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-[0_8px_25px_rgba(30,58,138,0.4)] hover:-translate-y-1 hover:scale-105"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary)] text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-[0_8px_25px_rgba(30,58,138,0.4)] hover:-translate-y-1 hover:scale-105"
           >
             <FaMedium /> View All Posts on Medium
           </a>

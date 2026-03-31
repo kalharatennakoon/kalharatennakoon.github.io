@@ -41,9 +41,10 @@ function Navbar() {
         <a
           href="#"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="text-lg font-bold tracking-tight transition-colors bg-gradient-to-r from-[#172554] to-[#172554] bg-clip-text text-transparent"
+          className="transition-colors text-[var(--color-primary)]"
+          style={{ fontFamily: '"Rouge Script", cursive', fontSize: '1.75rem', fontWeight: 400 }}
         >
-          KT
+          Kalhara
         </a>
 
         {/* Desktop nav links */}
@@ -52,7 +53,7 @@ function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="px-3 py-2 rounded-lg text-sm font-medium transition-all text-[var(--text-secondary)] hover:bg-[rgba(30,58,138,0.1)] hover:text-[#172554]"
+                className="px-3 py-2 rounded-lg text-sm font-medium transition-all text-[var(--text-secondary)] hover:bg-[rgba(30,58,138,0.1)] hover:text-[var(--color-primary)]"
               >
                 {link.label}
               </a>
@@ -66,7 +67,7 @@ function Navbar() {
             onClick={toggleTheme}
             aria-label="Toggle theme"
             title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-            className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 bg-[rgba(30,58,138,0.1)] text-[#172554] hover:bg-[rgba(30,58,138,0.2)]"
+            className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 bg-[rgba(30,58,138,0.1)] text-[var(--color-primary)] hover:bg-[rgba(30,58,138,0.2)]"
           >
             {theme === 'light' ? <FaMoon /> : <FaSun />}
           </button>
@@ -90,7 +91,7 @@ function Navbar() {
               key={link.href}
               href={link.href}
               onClick={handleNavClick}
-              className="px-4 py-3 rounded-lg text-sm font-medium text-[var(--text-secondary)] hover:text-[#172554] hover:bg-[rgba(30,58,138,0.08)] transition-all"
+              className="px-4 py-3 rounded-lg text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--color-primary)] hover:bg-[rgba(30,58,138,0.08)] transition-all"
             >
               {link.label}
             </a>

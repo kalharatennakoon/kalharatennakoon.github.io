@@ -1,4 +1,4 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import {
   FaEnvelope, FaGithub, FaLinkedin, FaMedium,
   FaStackOverflow, FaGoogle, FaAward, FaHeart, FaCoffee
@@ -20,52 +20,50 @@ const contactLinks = [
   { href: 'https://www.credly.com/users/kalharatennakoon', icon: <FaAward />, label: 'Credly', external: true },
 ]
 
-type FormState = { name: string; email: string; message: string }
-type Status = 'idle' | 'sending' | 'success' | 'error'
+// type FormState = { name: string; email: string; message: string }
+// type Status = 'idle' | 'sending' | 'success' | 'error'
 
 function Contact() {
   const currentYear = new Date().getFullYear()
-  const [form, setForm] = useState<FormState>({ name: '', email: '', message: '' })
-  const [status, setStatus] = useState<Status>('idle')
+  // const [form, setForm] = useState<FormState>({ name: '', email: '', message: '' })
+  // const [status, setStatus] = useState<Status>('idle')
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
-  }
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  //   setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  // }
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault()
-    setStatus('sending')
+  // const handleSubmit = async (e: { preventDefault: () => void }) => {
+  //   e.preventDefault()
+  //   setStatus('sending')
+  //   try {
+  //     const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({
+  //         service_id: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+  //         template_id: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+  //         user_id: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+  //         template_params: {
+  //           from_name: form.name,
+  //           from_email: form.email,
+  //           message: form.message,
+  //           to_email: 'kalharatennakoonmck@gmail.com',
+  //         },
+  //       }),
+  //     })
+  //     if (res.ok) {
+  //       setStatus('success')
+  //       setForm({ name: '', email: '', message: '' })
+  //     } else {
+  //       setStatus('error')
+  //     }
+  //   } catch {
+  //     setStatus('error')
+  //   }
+  // }
 
-    try {
-      const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          service_id: import.meta.env.VITE_EMAILJS_SERVICE_ID,
-          template_id: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-          user_id: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-          template_params: {
-            from_name: form.name,
-            from_email: form.email,
-            message: form.message,
-            to_email: 'kalharatennakoonmck@gmail.com',
-          },
-        }),
-      })
-
-      if (res.ok) {
-        setStatus('success')
-        setForm({ name: '', email: '', message: '' })
-      } else {
-        setStatus('error')
-      }
-    } catch {
-      setStatus('error')
-    }
-  }
-
-  const inputClass =
-    'w-full px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] text-sm outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[rgba(30,58,138,0.15)] transition-all placeholder:text-[var(--text-secondary)]'
+  // const inputClass =
+  //   'w-full px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] text-sm outline-none focus:border-[var(--color-primary-2)] focus:ring-2 focus:ring-[rgba(30,58,138,0.15)] transition-all placeholder:text-[var(--text-secondary)]'
 
   return (
     <>
@@ -74,7 +72,7 @@ function Contact() {
 
           {/* Header */}
           <div className="text-center mb-14">
-            <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-[#172554] to-[#1e3a8a] bg-clip-text text-transparent">
+            <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent">
               Get In Touch
             </h2>
             <p className="text-lg text-[var(--text-secondary)] max-w-xl mx-auto leading-relaxed">
@@ -82,29 +80,26 @@ function Contact() {
             </p>
           </div>
 
-          {/* Two-column layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-
-            {/* Left: info + social icons */}
-            <div className="flex flex-col gap-8">
+          {/* Full-width: info + social icons */}
+          <div className="flex flex-col items-center gap-8 text-center">
               <div>
                 <h3 className="text-xl font-semibold text-[var(--text-primary)] mb-2">Let's connect</h3>
-                <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
-                  Whether you have a project in mind, want to collaborate, or just want to say hi —
-                  feel free to reach out through any of the platforms below or send a message directly.
+                <p className="text-[var(--text-secondary)] text-sm leading-relaxed max-w-xl mx-auto">
+                  Whether you have a project in mind, want to collaborate, or just want to say hi, <br/>
+                  feel free to reach out through any of the platforms below.
                 </p>
               </div>
 
               {/* Social icons — single row with tooltips */}
               <div>
                 <p className="text-xs font-semibold uppercase tracking-widest text-[var(--text-secondary)] mb-4">Find me on</p>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap justify-center gap-3">
                   {contactLinks.map((link) => (
                     <div key={link.label} className="relative group">
                       <a
                         href={link.href}
                         {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                        className="w-11 h-11 rounded-xl flex items-center justify-center text-lg text-[#1e3a8a] bg-white border border-[var(--border-color)] shadow-sm hover:bg-[#1e3a8a] hover:text-white hover:border-[#1e3a8a] hover:shadow-md transition-all duration-200"
+                        className="w-11 h-11 rounded-xl flex items-center justify-center text-lg text-[var(--color-primary-2)] bg-white border border-[var(--border-color)] shadow-sm hover:bg-[#1e3a8a] hover:text-white hover:border-[var(--color-primary-2)] hover:shadow-md transition-all duration-200"
                       >
                         {link.icon}
                       </a>
@@ -119,7 +114,7 @@ function Contact() {
               </div>
             </div>
 
-            {/* Right: contact form */}
+            {/* Right: contact form
             <div className="bg-[var(--card-bg)] rounded-2xl p-8 shadow-[0_4px_30px_var(--shadow)] border border-[var(--border-color)]">
               <h3 className="text-xl font-semibold text-[var(--text-primary)] mb-6">Send a message</h3>
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -180,17 +175,17 @@ function Contact() {
                 )}
               </form>
             </div>
-          </div>
+            */}
         </div>
       </section>
 
-      <footer className="bg-[var(--card-bg)] border-t border-[var(--border-color)] py-5">
+      <footer className="bg-[var(--card-bg)] border-t border-[var(--border-color)] py-2">
         <div className="max-w-6xl mx-auto px-8 text-center">
-          <p className="text-[var(--text-primary)] text-sm font-semibold mb-1">
+          <p className="text-[var(--text-primary)] text-xs font-semibold m-0 mb-1">
             © {currentYear} Kalhara Tennakoon. All Rights Reserved.
           </p>
-          <p className="text-[var(--text-secondary)] text-xs flex items-center justify-center gap-1 opacity-70">
-            Crafted with <FaHeart className="text-[#172554]" /> and <FaCoffee className="text-[#172554]" />
+          <p className="text-[var(--text-secondary)] text-xs flex items-center justify-center gap-1 opacity-70 m-0">
+            Crafted with <FaHeart className="text-[var(--color-primary)]" /> and <FaCoffee className="text-[var(--color-primary)]" />
           </p>
         </div>
       </footer>

@@ -40,18 +40,18 @@ function Hero() {
   }, [text, isDeleting, loopNum, typingSpeed])
 
   return (
-    <section className="min-h-screen flex items-center bg-white relative overflow-hidden">
+    <section className="min-h-screen flex items-center bg-[var(--bg-primary)] relative overflow-hidden">
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between gap-12 py-32">
         {/* Left: text */}
         <div className="flex-1 animate-fade-in-up text-left">
           <div className="text-lg font-light mb-2 text-[var(--text-secondary)] tracking-[2px] uppercase">Hello, I'm</div>
-          <h1 className="text-5xl md:text-6xl mb-4 font-extrabold bg-gradient-to-r from-[#172554] to-[#1e3a8a] bg-clip-text text-transparent leading-tight">
+          <h1 className="text-5xl md:text-6xl mb-4 font-extrabold bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent leading-tight">
             Kalhara Tennakoon
           </h1>
           <h2 className="text-3xl font-normal mb-6 min-h-[3rem] flex items-center gap-1">
-            <span className="text-[#172554] font-medium">{text}</span>
-            <span className="text-[#172554] font-light animate-blink">|</span>
+            <span className="text-[var(--color-primary)] font-medium">{text}</span>
+            <span className="text-[var(--color-primary)] font-light animate-blink">|</span>
           </h2>
           <p className="text-lg text-[var(--text-secondary)] max-w-xl leading-relaxed">
             Automating delivery pipelines and building reliable systems with cloud-native technologies
@@ -71,7 +71,7 @@ function Hero() {
       </div>
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-slow opacity-70 cursor-pointer">
-        <a href="#about" className="text-[#172554] flex items-center justify-center">
+        <a href="#about" className="text-[var(--color-primary)] flex items-center justify-center">
           <FaArrowDown className="text-3xl" />
         </a>
       </div>

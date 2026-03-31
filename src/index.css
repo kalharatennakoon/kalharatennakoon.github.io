@@ -12,6 +12,8 @@
     --border-color: #e2e8f0;
     --shadow: rgba(0, 0, 0, 0.08);
     --card-bg: #ffffff;
+    --color-primary: #172554;
+    --color-primary-2: #1e3a8a;
   }
 
   :root[data-theme="dark"] {
@@ -23,6 +25,8 @@
     --border-color: #334155;
     --shadow: rgba(0, 0, 0, 0.4);
     --card-bg: #1e293b;
+    --color-primary: #93c5fd;
+    --color-primary-2: #60a5fa;
   }
 
   body {
@@ -37,6 +41,10 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
+  }
+
+  footer p {
+    margin: 0;
   }
 
   h1, h2, h3, h4, h5, h6 {

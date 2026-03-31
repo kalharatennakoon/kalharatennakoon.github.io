@@ -32,7 +32,7 @@ function ScrollToTop() {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-24 right-8 z-[1000] bg-gradient-to-br from-[#172554] to-[#172554] text-white w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition-all hover:scale-110 hover:shadow-[0_8px_25px_rgba(30,58,138,0.4)] shadow-[0_4px_15px_rgba(30,58,138,0.3)]"
+          className="fixed bottom-24 right-8 z-[1000] bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary)] text-white w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition-all hover:scale-110 hover:shadow-[0_8px_25px_rgba(30,58,138,0.4)] shadow-[0_4px_15px_rgba(30,58,138,0.3)]"
           aria-label="Scroll to top"
           title="Back to top"
         >
