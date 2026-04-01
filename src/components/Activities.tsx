@@ -65,7 +65,7 @@ function Activities() {
                       {activity.icon}
                     </div>
                     <div className="min-w-0">
-                      <h3 className="text-base font-bold text-[var(--text-primary)] leading-snug truncate">{activity.title}</h3>
+                      <h3 className="text-base font-bold text-[var(--text-primary)] leading-snug break-words">{activity.title}</h3>
                       <p className="text-sm font-medium text-[var(--color-primary)] m-0">{activity.role}</p>
                     </div>
                   </div>
