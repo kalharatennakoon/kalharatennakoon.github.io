@@ -1,7 +1,37 @@
-import { FaCode, FaGithub } from 'react-icons/fa'
+import { FaCode, FaGithub, FaBuilding, FaCalendarCheck } from 'react-icons/fa'
+
+interface Project {
+  title: string
+  description: string
+  technologies: string[]
+  github?: string
+  date?: string
+  subtitle?: string
+}
 
 function Projects() {
-  const projects = [
+  const projects: Project[] = [
+    {
+      title: 'Kubernetes Cluster and Container Image Security Scanner',
+      description: 'Containerized security scanning tool deployed on Kubernetes to detect vulnerabilities in container images and cluster configurations for secure DevOps pipelines.',
+      technologies: ['Docker', 'Kubernetes', 'Golang', 'ArgoCD', 'Rancher', 'AKS', 'GKE', 'Azure DevOps', 'Shell Scripting', 'CI/CD'],
+      date: 'Jul 2020 – Dec 2020',
+      subtitle: 'Internship · IFS',
+    },
+    {
+      title: 'Predicting Course Difficulty from Student Evaluation Responses',
+      description: 'Supervised ML models to predict perceived course difficulty from student evaluation data, identifying instructor attributes as key predictors using statistical validation and classification algorithms.',
+      technologies: ['Python', 'Scikit-learn', 'Pandas', 'Matplotlib', 'Seaborn', 'SPSS', 'Machine Learning', 'Statistics'],
+      github: 'https://github.com/kalharatennakoon/course-difficulty-analysis',
+      date: 'Feb 2025 – Jul 2025',
+    },
+    {
+      title: 'VetCare Pro: Smart Web-Based Veterinary Clinic Management System',
+      description: 'Full-stack veterinary clinic management system with appointment scheduling, electronic medical records, billing, inventory management, and an ML service for disease prediction and demand forecasting.',
+      technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Python', 'Flask', 'Scikit-learn', 'JWT'],
+      github: 'https://github.com/kalharatennakoon/vetcarepro',
+      date: 'Oct 2025 – Mar 2026',
+    },
     {
       title: 'EcoRide Car Rental System',
       description: 'A Java-based car rental management system with vehicle management, booking system, payment processing, and automated invoice generation.',
@@ -13,12 +43,6 @@ function Projects() {
       description: 'Complete hospital appointment system with queue-based rescheduling (FIFO), stack-based cancellation history (LIFO), and CSV data persistence.',
       technologies: ['Java', 'Data Structures', 'Queue', 'Stack', 'CSV'],
       github: 'https://github.com/kalharatennakoon/doctor_channeling_system',
-    },
-    {
-      title: 'Course Difficulty Analysis',
-      description: 'Statistical analysis of course difficulty prediction using validity, reliability, and normality testing with machine learning models.',
-      technologies: ['Python', 'Jupyter', 'Machine Learning', 'Statistics', 'Data Science'],
-      github: 'https://github.com/kalharatennakoon/course-difficulty-analysis',
     },
   ]
 
@@ -40,20 +64,31 @@ function Projects() {
             >
               {/* Header */}
               <div className="px-6 pt-5 pb-4 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.05)] to-transparent">
-                <div className="flex items-start justify-between gap-2 mb-2">
+                <div className="flex items-start justify-between gap-2 mb-3">
                   <h3 className="text-base font-bold text-[var(--text-primary)] leading-snug">{project.title}</h3>
-                  <span className="text-xs font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[rgba(30,58,138,0.1)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)] flex-shrink-0">
-                    Project
-                  </span>
                 </div>
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs text-[var(--text-secondary)] hover:text-[var(--color-primary)] transition-colors"
-                >
-                  <FaGithub /> View on GitHub
-                </a>
+                <div className="flex flex-col gap-1.5">
+                  {project.date && (
+                    <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
+                      <FaCalendarCheck className="text-[var(--color-primary)] flex-shrink-0" /> {project.date}
+                    </span>
+                  )}
+                  {project.subtitle && (
+                    <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
+                      <FaBuilding className="flex-shrink-0" /> {project.subtitle}
+                    </span>
+                  )}
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs text-[var(--text-secondary)] hover:text-[var(--color-primary)] transition-colors w-fit"
+                    >
+                      <FaGithub /> View on GitHub
+                    </a>
+                  )}
+                </div>
               </div>
 
               {/* Body */}

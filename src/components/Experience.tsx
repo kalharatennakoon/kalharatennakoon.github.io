@@ -9,10 +9,9 @@ function Experience() {
       period: 'Jul 2024 – Oct 2024',
       type: 'Internship',
       achievements: [
-        'Automated artifact packaging and task execution in CI/CD pipelines using Tekton, streamlining the deployment process for critical services',
-        'Integrated Behave automated tests directly into Tekton pipelines, enhancing reliability and reducing manual debugging effort by approximately 30%',
-        'Optimized pipeline configurations and resolved persistent build issues, leading to smoother and faster deployment cycles',
-        'Conducted a knowledge-sharing session on testing best practices, improving team collaboration and code quality standards'
+        'Automated CI/CD pipelines using Tekton, streamlining artifact packaging and deployment for critical services',
+        'Integrated Behave automated tests into Tekton pipelines, reducing manual debugging effort by ~30%',
+        'Optimized pipeline configurations, resolving persistent build issues for faster deployment cycles',
       ]
     },
     {
@@ -22,10 +21,9 @@ function Experience() {
       period: 'Jul 2020 – Dec 2020',
       type: 'Internship',
       achievements: [
-        'Developed a cloud security scanning application utilizing Docker and Kubernetes, significantly improving container platform security posture',
-        'Integrated multiple scanning tools into CI/CD pipelines, enhancing vulnerability detection coverage across various deployment stages',
-        'Diagnosed and resolved deployment and runtime issues to maintain consistent system performance and achieve 99.9% system uptime',
-        'Authored comprehensive technical documentation to support onboarding for new team members and future development initiatives'
+        'Built a cloud security scanning app using Docker and Kubernetes, improving container platform security posture',
+        'Integrated scanning tools into CI/CD pipelines, enhancing vulnerability detection across deployment stages',
+        'Diagnosed and resolved runtime issues, maintaining 99.9% system uptime',
       ]
     }
   ]
@@ -65,9 +63,6 @@ function Experience() {
                           {exp.company}
                         </p>
                       </div>
-                      <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-[rgba(30,58,138,0.1)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)] flex-shrink-0">
-                        {exp.type}
-                      </span>
                     </div>
 
                     <div className="flex flex-wrap gap-4 mt-3">

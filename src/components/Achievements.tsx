@@ -67,11 +67,6 @@ function Achievements() {
                         {item.title}
                       </h3>
                       <div className="flex items-center gap-2 flex-shrink-0">
-                        {item.highlight && (
-                          <span className="text-xs font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[rgba(30,58,138,0.1)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)]">
-                            Featured
-                          </span>
-                        )}
                         <span className="text-xs font-medium text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] px-2.5 py-1 rounded-full whitespace-nowrap border border-[rgba(30,58,138,0.15)]">
                           {item.date}
                         </span>

@@ -1,4 +1,4 @@
-import { FaPen, FaHandsHelping, FaFlask, FaTableTennis, FaCalendarAlt } from 'react-icons/fa'
+import { FaPen, FaHandsHelping, FaCalendarAlt, FaStackOverflow } from 'react-icons/fa'
 
 interface Activity {
   title: string
@@ -8,6 +8,7 @@ interface Activity {
   icon: React.ReactNode
   badge: string
   stats?: string[]
+  link?: string
 }
 
 const activities: Activity[] = [
@@ -29,20 +30,13 @@ const activities: Activity[] = [
     icon: <FaHandsHelping />,
   },
   {
-    title: 'Senior Science Society - Maliyadeva College',
-    role: 'Member',
-    period: 'School Years',
-    badge: 'Club',
-    description: 'Member of the Senior Science Society during school years, involved in science fairs, experiments, and inter-school competitions.',
-    icon: <FaFlask />,
-  },
-  {
-    title: 'Badminton - School Team',
-    role: 'Under-17 Player',
-    period: 'School Years',
-    badge: 'Sports',
-    description: 'Represented the school in the Under-17 badminton team, competing in inter-school tournaments.',
-    icon: <FaTableTennis />,
+    title: 'Stack Overflow',
+    role: 'Contributor',
+    period: 'Apr 2020 – Present',
+    badge: 'Community',
+    description: 'Active member of the Stack Overflow developer community, contributing answers and engaging with questions across DevOps, cloud, and software engineering topics.',
+    icon: <FaStackOverflow />,
+    link: 'https://stackoverflow.com/users/13018789/kalhara-tennakoon',
   },
 ]
 
@@ -99,6 +93,16 @@ function Activities() {
                       </span>
                     ))}
                   </div>
+                )}
+                {activity.link && (
+                  <a
+                    href={activity.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-lg text-xs font-semibold bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-2)] hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(30,58,138,0.35)] transition-all duration-200 self-start"
+                  >
+                    <FaStackOverflow className="text-sm" /> View Profile
+                  </a>
                 )}
               </div>
             </div>

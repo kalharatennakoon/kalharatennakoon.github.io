@@ -5,6 +5,7 @@ interface Cert {
   issuer: string
   date: string
   credentialUrl: string
+  badgeImage?: string
 }
 
 const certGroups: { group: string; items: Cert[] }[] = [
@@ -12,10 +13,38 @@ const certGroups: { group: string; items: Cert[] }[] = [
     group: 'Cloud & DevOps',
     items: [
       {
+        title: 'Containers & Kubernetes Essentials',
+        issuer: 'IBM',
+        date: 'Feb 2025',
+        credentialUrl: 'https://www.credly.com/earner/earned/badge/cd6d6b21-8e27-4980-b51d-d97f011ed11d',
+        badgeImage: 'https://images.credly.com/size/340x340/images/82966826-6630-4768-80d4-6028b3fab414/image.png',
+      },
+      {
+        title: 'GitHub Foundations',
+        issuer: 'GitHub',
+        date: 'Jan 2025',
+        credentialUrl: 'https://www.credly.com/badges/91239f31-74c8-4175-93a0-0855efb3c46e/public_url',
+        badgeImage: 'https://images.credly.com/size/340x340/images/024d0122-724d-4c5a-bd83-cfe3c4b7a073/image.png',
+      },
+      {
+        title: 'Cloud DevOps',
+        issuer: 'Intel',
+        date: 'Jan 2025',
+        credentialUrl: 'https://www.credly.com/earner/earned/badge/41940219-ee87-4c5d-9fce-f6f8d55370ac',
+        badgeImage: 'https://images.credly.com/size/340x340/images/f953f0f3-d130-4d6d-8d5d-62d8b24eee9b/image.png',
+      },
+      {
+        title: 'Introduction to Kubernetes',
+        issuer: 'The Linux Foundation',
+        date: 'Dec 2024',
+        credentialUrl: 'https://ti-user-certificates.s3.amazonaws.com/e0df7fbf-a057-42af-8a1f-590912be5460/ff96589e-6699-4b22-847c-d9ec38812b30-t-m-kalhara-tennakoon-5b479bc0-2836-48c1-8abc-35ad7de91aa7-certificate.pdf',
+      },
+      {
         title: 'Microsoft Certified: Azure Fundamentals (AZ-900)',
         issuer: 'Microsoft',
         date: 'Jan 2023',
         credentialUrl: 'https://www.credly.com/badges/1cd00bda-ffc7-467f-83a9-c8f7c9702be7/public_url',
+        badgeImage: 'https://images.credly.com/size/340x340/images/be8fcaeb-c769-4858-b567-ffaaa73ce8cf/image.png',
       },
       {
         title: 'Getting Started with Google Kubernetes Engine',
@@ -23,40 +52,30 @@ const certGroups: { group: string; items: Cert[] }[] = [
         date: 'Jul 2020',
         credentialUrl: 'https://www.coursera.org/account/accomplishments/records/KHP2Z9NZ9FY7',
       },
-      {
-        title: 'Introduction to Kubernetes',
-        issuer: 'The Linux Foundation',
-        date: 'May 2022',
-        credentialUrl: 'https://ti-user-certificates.s3.amazonaws.com/e0df7fbf-a057-42af-8a1f-590912be5460/ff96589e-6699-4b22-847c-d9ec38812b30-t-m-kalhara-tennakoon-5b479bc0-2836-48c1-8abc-35ad7de91aa7-certificate.pdf',
-      },
-      {
-        title: 'Introduction to GitOps',
-        issuer: 'The Linux Foundation',
-        date: 'May 2022',
-        credentialUrl: 'https://ti-user-certificates.s3.amazonaws.com/e0df7fbf-a057-42af-8a1f-590912be5460/26a061f2-539e-41a7-9e6a-8ee41a2d21ca-t-m-kalhara-randil-bandara-tennakoon-d03dccea-4781-4578-9d2c-de8fa9c0f7db-certificate.pdf',
-      },
-      {
-        title: 'GitHub Foundations',
-        issuer: 'GitHub',
-        date: 'Jan 2025',
-        credentialUrl: 'https://www.credly.com/badges/91239f31-74c8-4175-93a0-0855efb3c46e/public_url',
-      },
     ],
   },
   {
     group: 'AI & Data',
     items: [
       {
+        title: 'Cisco AI Technical Practitioner',
+        issuer: 'Cisco',
+        date: 'Mar 2026',
+        credentialUrl: 'https://www.credly.com/earner/earned/badge/9b00b8b8-743c-4a8e-b835-1fe68df201c4',
+        badgeImage: 'https://images.credly.com/size/340x340/images/cd953e3c-7106-4547-ac48-2af013959760/blob',
+      },
+      {
         title: 'Google AI Professional Certificate',
         issuer: 'Google (Coursera)',
-        date: '2026',
+        date: 'Feb 2026',
         credentialUrl: 'https://www.coursera.org/account/accomplishments/specialization/X5H7V3FBA2ZC',
       },
       {
-        title: 'Microsoft Certified: Azure AI Fundamentals (AI-900)',
-        issuer: 'Microsoft',
-        date: 'Apr 2024',
-        credentialUrl: 'https://learn.microsoft.com/api/credentials/share/en-gb/TMKRBTennakoon/1C53DDEE0DB410A4?sharingId=87BD701455AA18AA',
+        title: 'Artificial Intelligence Fundamentals',
+        issuer: 'IBM SkillsBuild',
+        date: 'Jun 2025',
+        credentialUrl: 'https://www.credly.com/earner/earned/badge/a5b815dd-e21b-4841-86a6-d3948a44dfe9',
+        badgeImage: 'https://images.credly.com/size/340x340/images/82b908e1-fdcd-4785-9d32-97f11ccbcf08/image.png',
       },
       {
         title: 'Microsoft Certified: Azure Data Fundamentals (DP-900)',
@@ -65,51 +84,29 @@ const certGroups: { group: string; items: Cert[] }[] = [
         credentialUrl: 'https://learn.microsoft.com/api/credentials/share/en-gb/TMKRBTennakoon/38133387373C82E1?sharingId=87BD701455AA18AA',
       },
       {
-        title: 'Career Essentials in Generative AI',
-        issuer: 'Microsoft & LinkedIn',
-        date: 'Jul 2023',
-        credentialUrl: 'https://www.linkedin.com/learning/certificates/3df7542a5c778a0e3e180571caf85ba59fb4a1afddbf58ea438e2e1badf72d80',
-      },
-      {
-        title: 'Gemini Certified Educator',
-        issuer: 'Google for Education',
-        date: '2024',
-        credentialUrl: 'https://edu.google.accredible.com/ae8c5710-9e25-4048-82d5-8e2f15288978',
-      },
-      {
-        title: 'Gemini Certified University Student',
-        issuer: 'Google for Education',
-        date: '2024',
-        credentialUrl: 'https://edu.google.accredible.com/fd37035c-4b98-4d55-a083-80fbb8a7ad57',
+        title: 'Microsoft Certified: Azure AI Fundamentals (AI-900)',
+        issuer: 'Microsoft',
+        date: 'Apr 2024',
+        credentialUrl: 'https://learn.microsoft.com/api/credentials/share/en-gb/TMKRBTennakoon/1C53DDEE0DB410A4?sharingId=87BD701455AA18AA',
       },
     ],
   },
   {
-    group: 'Cybersecurity & Software Dev',
+    group: 'Cybersecurity',
     items: [
+      {
+        title: 'Cybersecurity Fundamentals',
+        issuer: 'IBM',
+        date: 'Jun 2025',
+        credentialUrl: 'https://www.credly.com/earner/earned/badge/e25e75f5-2d41-416c-b383-86f5fec810b9',
+        badgeImage: 'https://images.credly.com/size/340x340/images/50b96632-6cbb-40b7-ac0e-b83f49ff7f94/image.png',
+      },
       {
         title: 'Introduction to Cybersecurity',
         issuer: 'Cisco',
-        date: '2023',
+        date: 'Apr 2020',
         credentialUrl: 'https://www.credly.com/badges/9061852c-fdf7-4219-926b-523d30a31111',
-      },
-      {
-        title: 'Career Essentials in Cybersecurity',
-        issuer: 'Microsoft & LinkedIn',
-        date: 'Feb 2024',
-        credentialUrl: 'https://www.linkedin.com/learning/certificates/',
-      },
-      {
-        title: 'Career Essentials in Software Development',
-        issuer: 'Microsoft & LinkedIn',
-        date: 'Aug 2023',
-        credentialUrl: 'https://www.linkedin.com/learning/certificates/',
-      },
-      {
-        title: 'AWS Fundamentals: Going Cloud-Native',
-        issuer: 'AWS (Coursera)',
-        date: '2022',
-        credentialUrl: 'https://coursera.org/share/a527b8fa5b14962328c02a3c3e8b54f9',
+        badgeImage: 'https://images.credly.com/size/340x340/images/af8c6b4e-fc31-47c4-8dcb-eb7a2065dc5b/I2CS__1_.png',
       },
     ],
   },
@@ -144,9 +141,13 @@ function Certifications() {
                     key={cert.title}
                     className="bg-[var(--card-bg)] rounded-xl border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.35)] px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(30,58,138,0.1)] overflow-hidden"
                   >
-                    {/* Icon */}
-                    <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[rgba(30,58,138,0.1)] to-[rgba(23,37,84,0.08)] flex items-center justify-center flex-shrink-0">
-                      <FaAward className="text-base text-[var(--color-primary)]" />
+                    {/* Icon / Badge */}
+                    <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[rgba(30,58,138,0.1)] to-[rgba(23,37,84,0.08)] flex items-center justify-center flex-shrink-0 overflow-hidden">
+                      {cert.badgeImage ? (
+                        <img src={cert.badgeImage} alt={cert.title} className="w-full h-full object-contain p-0.5" />
+                      ) : (
+                        <FaAward className="text-base text-[var(--color-primary)]" />
+                      )}
                     </div>
 
                     {/* Title + issuer */}

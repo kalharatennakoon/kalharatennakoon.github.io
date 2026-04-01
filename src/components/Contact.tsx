@@ -1,8 +1,9 @@
 // import { useState } from 'react'
 import {
   FaEnvelope, FaGithub, FaLinkedin, FaMedium,
-  FaStackOverflow, FaHeart, FaCoffee
+  FaStackOverflow, FaHeart
 } from 'react-icons/fa'
+import { FaMugHot } from 'react-icons/fa6'
 import { FaXTwitter } from 'react-icons/fa6'
 import { SiBluesky } from 'react-icons/si'
 
@@ -77,10 +78,10 @@ function Contact() {
       <footer className="bg-[var(--card-bg)] border-t border-[var(--border-color)] py-2">
         <div className="max-w-6xl mx-auto px-8 text-center">
           <p className="text-[var(--text-primary)] text-xs font-semibold m-0 mb-1">
-            © {currentYear} Kalhara Tennakoon. All Rights Reserved.
+            © {currentYear} Kalhara Tennakoon.
           </p>
           <p className="text-[var(--text-secondary)] text-xs flex items-center justify-center gap-1 opacity-70 m-0">
-            Crafted with <FaHeart className="text-[var(--color-primary)]" /> and <FaCoffee className="text-[var(--color-primary)]" />
+            Crafted with <FaHeart className="text-red-700" /> and <FaMugHot className="text-amber-900" />
           </p>
         </div>
       </footer>
