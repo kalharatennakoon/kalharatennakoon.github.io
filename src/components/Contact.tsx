@@ -78,7 +78,7 @@ function Contact() {
       <footer className="bg-[var(--card-bg)] border-t border-[var(--border-color)] py-2">
         <div className="max-w-6xl mx-auto px-8 text-center">
           <p className="text-[var(--text-primary)] text-xs font-semibold m-0 mb-1">
-            © {currentYear} Kalhara Tennakoon.
+            © {currentYear} Kalhara Tennakoon. All Rights Reserved.
           </p>
           <p className="text-[var(--text-secondary)] text-xs flex items-center justify-center gap-1 opacity-70 m-0">
             Crafted with <FaHeart className="text-red-700" /> and <FaMugHot className="text-amber-900" />
