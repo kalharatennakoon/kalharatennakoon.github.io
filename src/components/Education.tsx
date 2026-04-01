@@ -71,7 +71,9 @@ function Education() {
                         'Data Structures & Algorithms',
                         'Network Security',
                         'Database Design',
-                        'UX/UI Design',
+                        'UI/UX Design',
+                        'Discrete Mathematics',
+                        'Digital Entrepreneurship',
                       ].map((item) => (
                         <li key={item} className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
                           <FaChevronRight className="text-[var(--color-primary)] text-xs flex-shrink-0" />

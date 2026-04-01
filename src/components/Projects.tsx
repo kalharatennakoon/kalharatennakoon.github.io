@@ -1,9 +1,11 @@
-import { FaCode, FaGithub, FaBuilding, FaCalendarCheck } from 'react-icons/fa'
+import { FaCode, FaGithub, FaBuilding, FaCalendarCheck, FaShieldAlt, FaBrain, FaPaw, FaCar, FaHospital } from 'react-icons/fa'
+import type { IconType } from 'react-icons'
 
 interface Project {
   title: string
   description: string
   technologies: string[]
+  icon: IconType
   github?: string
   date?: string
   subtitle?: string
@@ -15,6 +17,7 @@ function Projects() {
       title: 'Kubernetes Cluster and Container Image Security Scanner',
       description: 'Containerized security scanning tool deployed on Kubernetes to detect vulnerabilities in container images and cluster configurations for secure DevOps pipelines.',
       technologies: ['Docker', 'Kubernetes', 'Golang', 'ArgoCD', 'Rancher', 'AKS', 'GKE', 'Azure DevOps', 'Shell Scripting', 'CI/CD'],
+      icon: FaShieldAlt,
       date: 'Jul 2020 – Dec 2020',
       subtitle: 'Internship · IFS',
     },
@@ -22,6 +25,7 @@ function Projects() {
       title: 'Predicting Course Difficulty from Student Evaluation Responses',
       description: 'Supervised ML models to predict perceived course difficulty from student evaluation data, identifying instructor attributes as key predictors using statistical validation and classification algorithms.',
       technologies: ['Python', 'Scikit-learn', 'Pandas', 'Matplotlib', 'Seaborn', 'SPSS', 'Machine Learning', 'Statistics'],
+      icon: FaBrain,
       github: 'https://github.com/kalharatennakoon/course-difficulty-analysis',
       date: 'Feb 2025 – Jul 2025',
     },
@@ -29,6 +33,7 @@ function Projects() {
       title: 'VetCare Pro: Smart Web-Based Veterinary Clinic Management System',
       description: 'Full-stack veterinary clinic management system with appointment scheduling, electronic medical records, billing, inventory management, and an ML service for disease prediction and demand forecasting.',
       technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Python', 'Flask', 'Scikit-learn', 'JWT'],
+      icon: FaPaw,
       github: 'https://github.com/kalharatennakoon/vetcarepro',
       date: 'Oct 2025 – Mar 2026',
     },
@@ -36,12 +41,14 @@ function Projects() {
       title: 'EcoRide Car Rental System',
       description: 'A Java-based car rental management system with vehicle management, booking system, payment processing, and automated invoice generation.',
       technologies: ['Java', 'OOP', 'File I/O', 'Data Persistence'],
+      icon: FaCar,
       github: 'https://github.com/kalharatennakoon/EcoRideCarRentalSystem',
     },
     {
       title: 'Hospital Appointment Management System',
       description: 'Complete hospital appointment system with queue-based rescheduling (FIFO), stack-based cancellation history (LIFO), and CSV data persistence.',
       technologies: ['Java', 'Data Structures', 'Queue', 'Stack', 'CSV'],
+      icon: FaHospital,
       github: 'https://github.com/kalharatennakoon/doctor_channeling_system',
     },
   ]
@@ -57,14 +64,19 @@ function Projects() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project) => (
+          {projects.map((project) => {
+            const Icon = project.icon
+            return (
             <div
               key={project.title}
               className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.35)] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(30,58,138,0.12)] transition-all duration-300 overflow-hidden flex flex-col"
             >
               {/* Header */}
               <div className="px-6 pt-5 pb-4 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.05)] to-transparent">
-                <div className="flex items-start justify-between gap-2 mb-3">
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-2)] flex items-center justify-center text-white text-sm flex-shrink-0 mt-0.5">
+                    <Icon />
+                  </div>
                   <h3 className="text-base font-bold text-[var(--text-primary)] leading-snug">{project.title}</h3>
                 </div>
                 <div className="flex flex-col gap-1.5">
@@ -83,9 +95,9 @@ function Projects() {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs text-[var(--text-secondary)] hover:text-[var(--color-primary)] transition-colors w-fit"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--color-primary)] hover:text-[var(--color-primary-2)] hover:underline transition-colors w-fit"
                     >
-                      <FaGithub /> View on GitHub
+                      <FaGithub className="text-sm" /> View on GitHub
                     </a>
                   )}
                 </div>
@@ -108,7 +120,8 @@ function Projects() {
                 </div>
               </div>
             </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>
