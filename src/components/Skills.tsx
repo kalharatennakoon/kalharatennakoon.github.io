@@ -9,6 +9,7 @@ import {
   SiJupyter,
 } from 'react-icons/si'
 import type { IconType } from 'react-icons'
+import useScrollReveal from '../hooks/useScrollReveal'
 
 interface Skill {
   name: string
@@ -114,50 +115,102 @@ const skillCategories: Category[] = [
 ]
 
 function Skills() {
-  return (
-    <section id="skills" className="py-20 bg-[var(--bg-secondary)] dark:bg-[var(--bg-primary)]">
-      <div className="max-w-6xl mx-auto px-8">
-        <h2 className="text-5xl mb-10 text-center font-bold flex items-center justify-center gap-3">
-          <FaWrench className="text-4xl text-[var(--color-primary)] flex-shrink-0" />
-          <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent pb-1">
-            Technical Expertise
-          </span>
-        </h2>
+  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
+  const [gridRef, gridVisible] = useScrollReveal<HTMLDivElement>(0.05)
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {skillCategories.map((category) => {
+  return (
+    <section id="skills" className="py-20 bg-[var(--bg-secondary)] relative overflow-hidden dark:bg-[var(--bg-primary)]">
+
+      {/* Background blobs */}
+      <div
+        className="blob-shape w-[500px] h-[500px]"
+        style={{
+          background: 'radial-gradient(circle, rgba(30,58,138,0.12), transparent)',
+          top: '-150px',
+          left: '-150px',
+          animationDuration: '20s',
+        }}
+      />
+      <div
+        className="blob-shape w-[350px] h-[350px]"
+        style={{
+          background: 'radial-gradient(circle, rgba(6,182,212,0.1), transparent)',
+          bottom: '-100px',
+          right: '-80px',
+          animationDelay: '-8s',
+          animationDuration: '15s',
+        }}
+      />
+
+      <div className="max-w-6xl mx-auto px-8 relative z-10">
+
+        {/* Section header */}
+        <div
+          ref={headerRef}
+          className={`text-center mb-12 reveal ${headerVisible ? 'is-visible' : ''}`}
+        >
+          <div className="inline-flex items-center gap-3 mb-3">
+            <div className="relative">
+              <div className="absolute inset-0 blur-xl bg-[var(--color-primary)] opacity-30 rounded-full" />
+              <FaWrench className="relative text-3xl text-[var(--color-primary)]" />
+            </div>
+            <h2
+              className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text"
+              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
+            >
+              Technical Expertise
+            </h2>
+          </div>
+          <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
+        </div>
+
+        {/* Cards grid */}
+        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {skillCategories.map((category, index) => {
             const CatIcon = category.icon
             return (
               <div
                 key={category.title}
-                className="bg-[var(--card-bg)] rounded-xl shadow-[0_2px_12px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.35)] hover:-translate-y-0.5 hover:shadow-[0_6px_24px_rgba(30,58,138,0.1)] transition-all duration-300"
+                className={`reveal-scale shimmer-hover ${gridVisible ? 'is-visible' : ''}`}
+                style={{ transitionDelay: gridVisible ? `${index * 0.08}s` : '0s' }}
               >
-                {/* Card header */}
-                <div className="px-4 pt-4 pb-3 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.05)] to-transparent">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-md bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-2)] flex items-center justify-center flex-shrink-0">
-                      <CatIcon className="text-white text-xs" />
-                    </div>
-                    <h3 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider leading-tight">
-                      {category.title}
-                    </h3>
-                  </div>
-                </div>
-
-                {/* Skill pills */}
-                <div className="px-4 py-3 flex flex-wrap gap-1.5">
-                  {category.skills.map((skill) => {
-                    const Icon = skill.icon
-                    return (
-                      <span
-                        key={skill.name}
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[var(--bg-secondary)] dark:bg-[rgba(255,255,255,0.04)] border border-[var(--border-color)] text-xs font-medium text-[var(--text-secondary)] hover:border-[rgba(30,58,138,0.3)] hover:text-[var(--text-primary)] transition-colors duration-150"
+                <div className="bg-[var(--card-bg)] rounded-xl shadow-[0_2px_12px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(30,58,138,0.14)] transition-all duration-300 overflow-hidden h-full">
+                  {/* Card header */}
+                  <div className="px-4 pt-4 pb-3 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.06)] to-transparent">
+                    <div className="flex items-center gap-2.5">
+                      <div
+                        className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0"
+                        style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
                       >
-                        <Icon style={{ color: skill.color }} className="text-sm flex-shrink-0" />
-                        {skill.name}
-                      </span>
-                    )
-                  })}
+                        <CatIcon className="text-white text-xs" />
+                      </div>
+                      <h3 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider leading-tight">
+                        {category.title}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Skill pills */}
+                  <div className="px-4 py-3 flex flex-wrap gap-1.5">
+                    {category.skills.map((skill, skillIdx) => {
+                      const Icon = skill.icon
+                      return (
+                        <span
+                          key={skill.name}
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[var(--bg-secondary)] dark:bg-[rgba(255,255,255,0.04)] border border-[var(--border-color)] text-xs font-medium text-[var(--text-secondary)] hover:border-[rgba(30,58,138,0.35)] hover:text-[var(--text-primary)] hover:shadow-[0_2px_8px_rgba(30,58,138,0.1)] transition-all duration-200 cursor-default"
+                          style={{
+                            opacity: gridVisible ? 1 : 0,
+                            transform: gridVisible ? 'translateY(0)' : 'translateY(8px)',
+                            transition: `opacity 0.4s ease, transform 0.4s ease`,
+                            transitionDelay: gridVisible ? `${index * 0.08 + skillIdx * 0.04}s` : '0s',
+                          }}
+                        >
+                          <Icon style={{ color: skill.color }} className="text-sm flex-shrink-0" />
+                          {skill.name}
+                        </span>
+                      )
+                    })}
+                  </div>
                 </div>
               </div>
             )

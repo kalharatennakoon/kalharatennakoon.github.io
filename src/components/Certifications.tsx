@@ -1,4 +1,5 @@
 import { FaAward, FaExternalLinkAlt } from 'react-icons/fa'
+import useScrollReveal from '../hooks/useScrollReveal'
 
 interface Cert {
   title: string
@@ -113,62 +114,100 @@ const certGroups: { group: string; items: Cert[] }[] = [
 ]
 
 function Certifications() {
-  return (
-    <section id="certifications" className="py-20 bg-[var(--bg-secondary)] dark:bg-[var(--bg-primary)]">
-      <div className="max-w-5xl mx-auto px-8">
-        <h2 className="text-5xl mb-10 text-center font-bold flex items-center justify-center gap-3">
-          <FaAward className="text-4xl text-[var(--color-primary)] flex-shrink-0" />
-          <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent pb-1">
-            Certifications
-          </span>
-        </h2>
+  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
+  const [bodyRef, bodyVisible] = useScrollReveal<HTMLDivElement>(0.05)
 
-        <div className="space-y-10">
-          {certGroups.map(({ group, items }) => (
-            <div key={group}>
+  return (
+    <section id="certifications" className="py-20 bg-[var(--bg-secondary)] relative overflow-hidden dark:bg-[var(--bg-primary)]">
+
+      {/* Background blob */}
+      <div
+        className="blob-shape w-[450px] h-[450px]"
+        style={{
+          background: 'radial-gradient(circle, rgba(30,58,138,0.1), transparent)',
+          top: '-130px',
+          left: '-100px',
+          animationDuration: '18s',
+          animationDelay: '-4s',
+        }}
+      />
+
+      <div className="max-w-5xl mx-auto px-8 relative z-10">
+
+        {/* Section header */}
+        <div
+          ref={headerRef}
+          className={`text-center mb-12 reveal ${headerVisible ? 'is-visible' : ''}`}
+        >
+          <div className="inline-flex items-center gap-3 mb-3">
+            <div className="relative">
+              <div className="absolute inset-0 blur-xl bg-[var(--color-primary)] opacity-30 rounded-full" />
+              <FaAward className="relative text-3xl text-[var(--color-primary)]" />
+            </div>
+            <h2
+              className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text"
+              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
+            >
+              Certifications
+            </h2>
+          </div>
+          <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
+        </div>
+
+        <div ref={bodyRef} className="space-y-10">
+          {certGroups.map(({ group, items }, groupIdx) => (
+            <div
+              key={group}
+              className={`reveal ${bodyVisible ? 'is-visible' : ''}`}
+              style={{ transitionDelay: bodyVisible ? `${groupIdx * 0.15}s` : '0s' }}
+            >
               {/* Group header */}
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] px-3 py-1 rounded-full border border-[rgba(30,58,138,0.2)]">
                   {group}
                 </span>
-                <div className="flex-1 h-px bg-[var(--border-color)]" />
+                <div className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, rgba(30,58,138,0.3), transparent)' }} />
               </div>
 
               {/* Cert rows */}
               <div className="space-y-3">
-                {items.map((cert) => (
+                {items.map((cert, certIdx) => (
                   <div
                     key={cert.title}
-                    className="bg-[var(--card-bg)] rounded-xl border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.35)] px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(30,58,138,0.1)] overflow-hidden"
+                    className={`reveal-scale shimmer-hover ${bodyVisible ? 'is-visible' : ''}`}
+                    style={{ transitionDelay: bodyVisible ? `${groupIdx * 0.15 + certIdx * 0.07}s` : '0s' }}
                   >
-                    {/* Icon / Badge */}
-                    <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[rgba(30,58,138,0.1)] to-[rgba(23,37,84,0.08)] flex items-center justify-center flex-shrink-0 overflow-hidden">
-                      {cert.badgeImage ? (
-                        <img src={cert.badgeImage} alt={cert.title} className="w-full h-full object-contain p-0.5" />
-                      ) : (
-                        <FaAward className="text-base text-[var(--color-primary)]" />
-                      )}
-                    </div>
+                    <div className="bg-[var(--card-bg)] rounded-xl border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(30,58,138,0.12)] overflow-hidden">
+                      {/* Badge */}
+                      <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[rgba(30,58,138,0.1)] to-[rgba(6,182,212,0.08)] flex items-center justify-center flex-shrink-0 overflow-hidden border border-[rgba(30,58,138,0.1)]">
+                        {cert.badgeImage ? (
+                          <img src={cert.badgeImage} alt={cert.title} className="w-full h-full object-contain p-0.5" />
+                        ) : (
+                          <FaAward className="text-base text-[var(--color-primary)]" />
+                        )}
+                      </div>
 
-                    {/* Title + issuer */}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-[var(--text-primary)] leading-snug m-0">{cert.title}</p>
-                      <p className="text-xs text-[var(--text-secondary)] m-0 mt-0.5">{cert.issuer}</p>
-                    </div>
+                      {/* Title + issuer */}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-[var(--text-primary)] leading-snug m-0">{cert.title}</p>
+                        <p className="text-xs text-[var(--text-secondary)] m-0 mt-0.5">{cert.issuer}</p>
+                      </div>
 
-                    {/* Date + button */}
-                    <div className="flex items-center gap-3 flex-shrink-0">
-                      <span className="text-xs font-medium text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] px-2.5 py-1 rounded-full whitespace-nowrap border border-[rgba(30,58,138,0.15)]">
-                        {cert.date}
-                      </span>
-                      <a
-                        href={cert.credentialUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-2)] hover:shadow-[0_4px_12px_rgba(30,58,138,0.3)] hover:-translate-y-0.5 transition-all duration-200 whitespace-nowrap"
-                      >
-                        <FaExternalLinkAlt className="text-[10px]" /> View
-                      </a>
+                      {/* Date + button */}
+                      <div className="flex items-center gap-3 flex-shrink-0">
+                        <span className="text-xs font-medium text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] px-2.5 py-1 rounded-full whitespace-nowrap border border-[rgba(30,58,138,0.15)]">
+                          {cert.date}
+                        </span>
+                        <a
+                          href={cert.credentialUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg text-white hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(30,58,138,0.35)] transition-all duration-200 whitespace-nowrap"
+                          style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
+                        >
+                          <FaExternalLinkAlt className="text-[10px]" /> View
+                        </a>
+                      </div>
                     </div>
                   </div>
                 ))}
