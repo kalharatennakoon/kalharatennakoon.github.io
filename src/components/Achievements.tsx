@@ -68,7 +68,7 @@ function Achievements() {
               <FaTrophy className="relative text-3xl text-[var(--color-primary)]" />
             </div>
             <h2
-              className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text"
+              className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
               style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
             >
               Achievements
@@ -130,9 +130,9 @@ function Achievements() {
                       <h3 className="text-base font-bold text-[var(--text-primary)] leading-snug flex-1">
                         {item.title}
                       </h3>
-                      <span className={`text-xs font-medium px-2.5 py-1 rounded-full whitespace-nowrap border flex-shrink-0 ${
+                      <span className={`text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap border flex-shrink-0 ${
                         item.highlight
-                          ? 'text-amber-600 bg-amber-50 border-amber-200 dark:text-amber-400 dark:bg-amber-900/20 dark:border-amber-800/30'
+                          ? 'text-white bg-amber-500 border-amber-600 shadow-[0_2px_8px_rgba(245,158,11,0.4)]'
                           : 'text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] border-[rgba(30,58,138,0.15)]'
                       }`}>
                         {item.date}

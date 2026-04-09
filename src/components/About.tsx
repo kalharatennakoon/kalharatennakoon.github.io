@@ -24,7 +24,7 @@ function About() {
           ref={ref}
           className={`text-center mb-10 reveal ${isVisible ? 'is-visible' : ''}`}
         >
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-3 inline-block bg-clip-text text-transparent animate-gradient-text"
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-3 inline-block bg-clip-text text-transparent animate-gradient-text pb-1"
             style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
           >
             About Me

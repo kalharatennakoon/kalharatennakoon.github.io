@@ -155,7 +155,7 @@ function Skills() {
               <FaWrench className="relative text-3xl text-[var(--color-primary)]" />
             </div>
             <h2
-              className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text"
+              className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
               style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
             >
               Technical Expertise
