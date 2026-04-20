@@ -12,27 +12,35 @@ function ScrollToTop() {
     return () => window.removeEventListener('scroll', toggleVisibility)
   }, [])
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
   return (
     <button
-      onClick={scrollToTop}
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label="Scroll to top"
       title="Back to top"
-      className="glass-btn-primary fixed bottom-8 right-8 z-[1000] w-12 h-12 cursor-pointer transition-all duration-300 text-white"
       style={{
         position: 'fixed',
-        background: 'linear-gradient(135deg, var(--color-primary), #3b82f6, #06b6d4)',
+        bottom: '2rem',
+        right: '2rem',
+        zIndex: 1000,
+        width: '2.25rem',
+        height: '2.25rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#000000',
+        border: 'none',
+        borderRadius: '50%',
+        cursor: 'pointer',
+        color: '#ffffff',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.8)',
         pointerEvents: isVisible ? 'auto' : 'none',
+        transition: 'opacity 0.2s, color 0.15s, border-color 0.15s',
       }}
-      onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px) scale(1.12)' }}
-      onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0) scale(1)' }}
+      onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.75' }}
+      onMouseLeave={(e) => { e.currentTarget.style.opacity = '1' }}
     >
-      <FaArrowUp className="text-base relative z-10" />
+      <FaArrowUp size={11} />
     </button>
   )
 }

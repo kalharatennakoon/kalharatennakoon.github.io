@@ -1,7 +1,5 @@
 import Navbar from './components/Navbar'
-import CursorBubbles from './components/CursorBubbles'
 import Hero from './components/Hero'
-import About from './components/About'
 import Education from './components/Education'
 import Experience from './components/Experience'
 import Skills from './components/Skills'
@@ -19,7 +17,6 @@ function App() {
       <Navbar />
       <main className="flex-grow">
         <Hero />
-        <About />
         <Education />
         <Experience />
         <Skills />
@@ -31,7 +28,6 @@ function App() {
         <Contact />
       </main>
       <ScrollToTop />
-      <CursorBubbles />
     </div>
   )
 }

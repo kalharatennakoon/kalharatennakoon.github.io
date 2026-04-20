@@ -1,193 +1,46 @@
-import { FaGraduationCap, FaMapMarkerAlt, FaCalendarAlt, FaChevronRight } from 'react-icons/fa'
-import useScrollReveal from '../hooks/useScrollReveal'
-
 function Education() {
-  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
-  const [timelineRef, timelineVisible] = useScrollReveal<HTMLDivElement>(0.05)
-
   return (
-    <section id="education" className="py-20 bg-[var(--bg-secondary)] relative overflow-hidden dark:bg-[var(--bg-primary)]">
-
-      {/* Background blob */}
-      <div
-        className="blob-shape w-[400px] h-[400px]"
-        style={{
-          background: 'radial-gradient(circle, rgba(6,182,212,0.08), transparent)',
-          bottom: '-120px',
-          left: '-80px',
-          animationDuration: '19s',
-          animationDelay: '-6s',
-        }}
-      />
-
-      <div className="max-w-6xl mx-auto px-8 relative z-10">
-
-        {/* Section header */}
-        <div
-          ref={headerRef}
-          className={`text-center mb-12 reveal ${headerVisible ? 'is-visible' : ''}`}
-        >
-          <div className="inline-flex items-center gap-3 mb-3">
-            <div className="relative">
-              <div className="absolute inset-0 blur-xl bg-[var(--color-primary)] opacity-30 rounded-full" />
-              <FaGraduationCap className="relative text-3xl text-[var(--color-primary)]" />
-            </div>
-            <h2
-              className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
-              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
-            >
-              Education
-            </h2>
-          </div>
-          <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
+    <section id="education" style={{ background: 'var(--bg-primary)' }}>
+      <div style={{ maxWidth: '64rem', margin: '0 auto', padding: '2rem 1.5rem' }}>
+        <div style={{ marginBottom: '1.25rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--border-color)' }}>
+          <h2 style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-primary)', margin: 0 }}>Education</h2>
         </div>
 
-        {/* Timeline */}
-        <div ref={timelineRef} className="relative max-w-4xl mx-auto">
-          {/* Animated vertical line */}
-          <div
-            className="absolute left-6 top-0 bottom-0 w-px hidden sm:block"
-            style={{
-              background: 'linear-gradient(to bottom, var(--color-primary), rgba(30,58,138,0.25), transparent)',
-              transformOrigin: 'top',
-              transform: timelineVisible ? 'scaleY(1)' : 'scaleY(0)',
-              transition: 'transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)',
-            }}
-          />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
 
-          <div className="space-y-10">
-            {/* Kingston University */}
-            <div
-              className={`relative sm:pl-20 reveal-left ${timelineVisible ? 'is-visible' : ''}`}
-              style={{ transitionDelay: timelineVisible ? '0.2s' : '0s' }}
-            >
-              <div
-                className="absolute left-0 top-6 hidden sm:flex items-center justify-center w-12 h-12 rounded-full shadow-[0_0_0_4px_var(--bg-secondary),0_0_0_5px_rgba(30,58,138,0.25)] dark:shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)] pulse-dot"
-                style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
-              >
-                <FaGraduationCap className="text-white text-base" />
-              </div>
-
-              <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(30,58,138,0.14)] transition-all duration-300 overflow-hidden shimmer-hover">
-                <div className="px-7 pt-6 pb-5 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.06)] to-transparent">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div>
-                      <h3 className="text-xl font-bold text-[var(--text-primary)] mb-1 leading-tight">
-                        BSc(Hons) Computer Science (Software Engineering)
-                      </h3>
-                      <p className="text-base font-semibold text-[var(--color-primary)] m-0">
-                        Kingston University, London, United Kingdom
-                      </p>
-                    </div>
-                    <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)] flex-shrink-0">
-                      Undergraduate
-                    </span>
-                  </div>
-
-                  <div className="flex flex-wrap gap-4 mt-3">
-                    <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
-                      <FaCalendarAlt className="text-[var(--color-primary)] text-xs" />
-                      Expected September 2026
-                    </span>
-                    <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
-                      <FaMapMarkerAlt className="text-[var(--color-primary)] text-xs" />
-                      Delivered via ESU, Sri Lanka
-                    </span>
-                  </div>
-                </div>
-
-                <div className="px-7 py-5 space-y-5">
-                  <div>
-                    <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Concentrations</p>
-                    <div className="flex flex-wrap gap-2">
-                      {['Software Engineering', 'Web Application Development', 'Research & Data Analysis'].map((c) => (
-                        <span key={c} className="px-3 py-1 bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] rounded-full text-xs font-medium border border-[rgba(30,58,138,0.2)] hover:bg-[rgba(30,58,138,0.14)] transition-colors">{c}</span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Key Coursework</p>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5 list-none">
-                      {[
-                        'Object-Oriented Programming',
-                        'Data Structures & Algorithms',
-                        'Network Security',
-                        'Database Design',
-                        'UI/UX Design',
-                        'Web Application Development',
-                        'Research & Data Analysis',
-                      ].map((item) => (
-                        <li key={item} className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
-                          <FaChevronRight className="text-[var(--color-primary)] text-xs flex-shrink-0" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
+          {/* Kingston University */}
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.2rem' }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-primary)' }}>BSc (Hons) Computer Science (Software Engineering)</span>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>Expected Sep 2026</span>
             </div>
-
-            {/* Maliyadeva College */}
-            <div
-              className={`relative sm:pl-20 reveal-left ${timelineVisible ? 'is-visible' : ''}`}
-              style={{ transitionDelay: timelineVisible ? '0.4s' : '0s' }}
-            >
-              <div
-                className="absolute left-0 top-6 hidden sm:flex items-center justify-center w-12 h-12 rounded-full shadow-[0_0_0_4px_var(--bg-secondary),0_0_0_5px_rgba(30,58,138,0.25)] dark:shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)] pulse-dot"
-                style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)', animationDelay: '0.8s' }}
-              >
-                <FaGraduationCap className="text-white text-base" />
-              </div>
-
-              <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(30,58,138,0.14)] transition-all duration-300 overflow-hidden shimmer-hover">
-                <div className="px-7 pt-6 pb-5 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.06)] to-transparent">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div>
-                      <h3 className="text-xl font-bold text-[var(--text-primary)] mb-1 leading-tight">
-                        High School
-                      </h3>
-                      <p className="text-base font-semibold text-[var(--color-primary)] m-0">
-                        Maliyadeva College
-                      </p>
-                    </div>
-                    <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)] flex-shrink-0">
-                      Secondary
-                    </span>
-                  </div>
-
-                  <div className="flex flex-wrap gap-4 mt-3">
-                    <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
-                      <FaMapMarkerAlt className="text-[var(--color-primary)] text-xs" />
-                      Kurunegala, Sri Lanka
-                    </span>
-                  </div>
-                </div>
-
-                <div className="px-7 py-5">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="rounded-xl px-4 py-4 border border-[var(--border-color)]">
-                      <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-3">GCE Advanced Level</p>
-                      <div className="flex items-center gap-2 flex-wrap">
-                        {['A', 'B', 'C'].map((grade) => (
-                          <span key={grade} className="text-xs font-bold px-2 py-0.5 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)]">{grade}</span>
-                        ))}
-                        <span className="text-xs text-[var(--text-secondary)] w-full mt-1">General English: <span className="font-bold text-[var(--color-primary)]">A</span></span>
-                      </div>
-                    </div>
-
-                    <div className="rounded-xl px-4 py-4 border border-[var(--border-color)]">
-                      <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-3">GCE Ordinary Level</p>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)]">9As</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0 0 0.625rem' }}>Kingston University, London · Delivered via ESU, Sri Lanka</p>
+            <div style={{ marginBottom: '0.375rem' }}>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Concentrations: </span>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Software Engineering · Web Application Development · Research & Data Analysis</span>
+            </div>
+            <div>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Key Coursework: </span>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+                Object-Oriented Programming · Data Structures & Algorithms · Network Security · Database Design · UI/UX Design · Web Application Development · Research & Data Analysis
+              </span>
             </div>
           </div>
+
+          {/* Maliyadeva College */}
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.2rem' }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-primary)' }}>High School</span>
+            </div>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0 0 0.375rem' }}>Maliyadeva College · Kurunegala, Sri Lanka</p>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: '0 0 0.2rem' }}>
+              <span style={{ fontWeight: 600 }}>GCE Advanced Level:</span> A, B, C · General English: A
+            </p>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: 0 }}>
+              <span style={{ fontWeight: 600 }}>GCE Ordinary Level:</span> 9As
+            </p>
+          </div>
+
         </div>
       </div>
     </section>

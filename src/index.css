@@ -4,59 +4,41 @@
   :root {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, Helvetica, Arial, sans-serif;
 
-    /* Light mode colors */
     --bg-primary: #ffffff;
-    --bg-secondary: #f8fafc;
-    --text-primary: #1e293b;
-    --text-secondary: #475569;
-    --border-color: #e2e8f0;
-    --shadow: rgba(0, 0, 0, 0.08);
+    --bg-secondary: #f5f5f5;
+    --text-primary: #0a0a0a;
+    --text-secondary: #6b6b6b;
+    --border-color: #e0e0e0;
+    --shadow: rgba(0, 0, 0, 0.06);
     --card-bg: #ffffff;
-    --color-primary: #172554;
-    --color-primary-2: #1e3a8a;
+    --color-primary: #0a0a0a;
+    --color-primary-2: #333333;
 
-    /* Glass / Glow */
-    --glass-bg: rgba(255, 255, 255, 0.72);
-    --glass-border: rgba(255, 255, 255, 0.9);
-    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-    --glow-primary: rgba(30, 58, 138, 0.35);
-    --glow-cyan: rgba(6, 182, 212, 0.25);
-    --blob-opacity: 0.13;
-
-    /* macOS 26 Liquid Glass nav */
-    --nav-glass-bg: rgba(255, 255, 255, 0.55);
-    --nav-glass-border: rgba(255, 255, 255, 0.65);
-    --nav-glass-inset: rgba(255, 255, 255, 0.75);
-    --nav-glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 2px 20px rgba(0, 0, 0, 0.04);
-    --nav-glass-shadow-scrolled: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 4px 28px rgba(0, 0, 0, 0.09);
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: #e0e0e0;
+    --glass-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --blob-opacity: 0;
   }
 
   :root[data-theme="dark"] {
-    /* Dark mode colors */
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --text-primary: rgba(255, 255, 255, 0.9);
-    --text-secondary: rgba(255, 255, 255, 0.65);
-    --border-color: #334155;
+    --bg-primary: #111111;
+    --bg-secondary: #1a1a1a;
+    --text-primary: #f0f0f0;
+    --text-secondary: #999999;
+    --border-color: #2a2a2a;
     --shadow: rgba(0, 0, 0, 0.4);
-    --card-bg: #1e293b;
-    --color-primary: #93c5fd;
-    --color-primary-2: #60a5fa;
+    --card-bg: #1a1a1a;
+    --color-primary: #f0f0f0;
+    --color-primary-2: #cccccc;
 
-    /* Glass / Glow */
-    --glass-bg: rgba(15, 23, 42, 0.55);
-    --glass-border: rgba(148, 163, 184, 0.12);
-    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-    --glow-primary: rgba(96, 165, 250, 0.4);
-    --glow-cyan: rgba(34, 211, 238, 0.25);
+    --glass-bg: rgba(26, 26, 26, 0.9);
+    --glass-border: #2a2a2a;
+    --glass-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     --blob-opacity: 0;
+  }
 
-    /* macOS 26 Liquid Glass nav - dark */
-    --nav-glass-bg: rgba(10, 18, 38, 0.52);
-    --nav-glass-border: rgba(255, 255, 255, 0.09);
-    --nav-glass-inset: rgba(255, 255, 255, 0.07);
-    --nav-glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 2px 20px rgba(0, 0, 0, 0.3);
-    --nav-glass-shadow-scrolled: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 4px 32px rgba(0, 0, 0, 0.45);
+  html {
+    scroll-padding-top: 52px;
   }
 
   body {
@@ -86,7 +68,7 @@
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: #172554 var(--bg-secondary);
+    scrollbar-color: var(--text-secondary) var(--bg-secondary);
   }
 
   *::-webkit-scrollbar {
@@ -404,6 +386,10 @@
 .section-underline.is-visible {
   width: 96px;
 }
+
+/* Nav link hover */
+.nav-link { color: var(--text-secondary); transition: color 0.15s; }
+.nav-link:hover { color: var(--text-primary); }
 
 /* ==========================================
    Scroll Reveal System
