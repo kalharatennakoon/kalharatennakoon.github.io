@@ -76,7 +76,7 @@ function Education() {
                         BSc(Hons) Computer Science (Software Engineering)
                       </h3>
                       <p className="text-base font-semibold text-[var(--color-primary)] m-0">
-                        Kingston University, London, UK
+                        Kingston University, London, United Kingdom
                       </p>
                     </div>
                     <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)] flex-shrink-0">
@@ -115,8 +115,8 @@ function Education() {
                         'Network Security',
                         'Database Design',
                         'UI/UX Design',
-                        'Discrete Mathematics',
-                        'Digital Entrepreneurship',
+                        'Web Application Development',
+                        'Research & Data Analysis',
                       ].map((item) => (
                         <li key={item} className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
                           <FaChevronRight className="text-[var(--color-primary)] text-xs flex-shrink-0" />
@@ -165,31 +165,23 @@ function Education() {
                   </div>
                 </div>
 
-                <div className="px-7 py-5 space-y-5">
-                  <div>
-                    <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">GCE Advanced Level</p>
-                    <ul className="space-y-1.5 list-none">
-                      {[
-                        { subject: 'Political Science', grade: 'A' },
-                        { subject: 'Information & Communication Technology', grade: 'B' },
-                        { subject: 'Logic & Scientific Method', grade: 'C' },
-                        { subject: 'General English', grade: 'A' },
-                      ].map(({ subject, grade }) => (
-                        <li key={subject} className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
-                          <FaChevronRight className="text-[var(--color-primary)] text-xs flex-shrink-0" />
-                          <span>{subject}</span>
-                          <span className="ml-auto text-xs font-bold px-2 py-0.5 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)]">{grade}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <div className="px-7 py-5">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="rounded-xl px-4 py-4 border border-[var(--border-color)]">
+                      <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-3">GCE Advanced Level</p>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {['A', 'B', 'C'].map((grade) => (
+                          <span key={grade} className="text-xs font-bold px-2 py-0.5 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)]">{grade}</span>
+                        ))}
+                        <span className="text-xs text-[var(--text-secondary)] w-full mt-1">General English: <span className="font-bold text-[var(--color-primary)]">A</span></span>
+                      </div>
+                    </div>
 
-                  <div>
-                    <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">GCE Ordinary Level</p>
-                    <div className="flex items-center gap-2">
-                      <FaChevronRight className="text-[var(--color-primary)] text-xs flex-shrink-0" />
-                      <span className="text-sm text-[var(--text-secondary)]">9 subjects passed with</span>
-                      <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)]">9 A's</span>
+                    <div className="rounded-xl px-4 py-4 border border-[var(--border-color)]">
+                      <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-3">GCE Ordinary Level</p>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)]">9As</span>
+                      </div>
                     </div>
                   </div>
                 </div>
