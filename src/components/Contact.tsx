@@ -95,25 +95,24 @@ function Contact() {
                       <a
                         href={link.href}
                         {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                        className="w-12 h-12 rounded-xl flex items-center justify-center text-lg text-[var(--color-primary)] border border-[rgba(30,58,138,0.15)] transition-all duration-300 hover:text-white hover:scale-110 hover:shadow-[0_6px_20px_rgba(30,58,138,0.35)] hover:-translate-y-1"
-                        style={{
-                          background: 'rgba(30,58,138,0.06)',
-                          transitionDelay: cardVisible ? `${i * 0.05}s` : '0s',
-                        }}
+                        className="glass-btn w-12 h-12 text-lg text-[var(--color-primary)] transition-all duration-300"
+                        style={{ transitionDelay: cardVisible ? `${i * 0.05}s` : '0s' }}
                         onMouseEnter={(e) => {
                           const el = e.currentTarget
                           el.style.background = 'linear-gradient(135deg, var(--color-primary), #06b6d4)'
+                          el.style.color = '#fff'
                           el.style.borderColor = 'transparent'
                         }}
                         onMouseLeave={(e) => {
                           const el = e.currentTarget
-                          el.style.background = 'rgba(30,58,138,0.06)'
-                          el.style.borderColor = 'rgba(30,58,138,0.15)'
+                          el.style.background = ''
+                          el.style.color = ''
+                          el.style.borderColor = ''
                         }}
                       >
                         {link.icon}
                       </a>
-                      <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs font-medium text-white rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg"
+                      <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs font-medium text-white rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg"
                         style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
                       >
                         {link.label}

@@ -4,14 +4,14 @@ function About() {
   const [ref, isVisible] = useScrollReveal<HTMLDivElement>(0.2)
 
   return (
-    <section id="about" className="py-16 md:py-20 bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]">
+    <section id="about" className="py-16 md:py-20 bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]" style={{ contain: 'paint' }}>
 
-      {/* Subtle background blob */}
+      {/* Subtle background blob — kept inside section bounds */}
       <div
         className="blob-shape w-[400px] h-[400px] pointer-events-none"
         style={{
           background: 'radial-gradient(circle, rgba(30,58,138,0.18), transparent)',
-          top: '-100px',
+          top: '0px',
           right: '-80px',
           animationDuration: '18s',
         }}
@@ -49,13 +49,6 @@ function About() {
               style={{ background: 'rgba(30,58,138,0.08)' }}
             />
 
-            <span
-              className="text-6xl md:text-7xl text-[var(--color-primary)] opacity-20 leading-none select-none absolute -top-3 left-4 md:left-8"
-              style={{ fontFamily: '"Handlee", cursive' }}
-            >
-              "
-            </span>
-
             <p
               className="text-lg md:text-xl leading-relaxed text-[var(--text-primary)] m-0 px-4 relative z-10"
               style={{ fontFamily: '"Handlee", cursive', fontWeight: 400 }}
@@ -64,13 +57,6 @@ function About() {
               Microsoft Azure certified with hands-on experience in Kubernetes, Docker, Tekton, and ArgoCD.
               Deeply interested in the convergence of DevOps and AI, with a growing focus on MLOps and building scalable, intelligent systems.
             </p>
-
-            <span
-              className="text-6xl md:text-7xl text-[var(--color-primary)] opacity-20 leading-none select-none absolute -bottom-3 right-4 md:right-8 rotate-180 inline-block"
-              style={{ fontFamily: '"Handlee", cursive' }}
-            >
-              "
-            </span>
           </div>
         </div>
       </div>

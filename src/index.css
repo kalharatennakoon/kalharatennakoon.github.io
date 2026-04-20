@@ -49,7 +49,7 @@
     --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
     --glow-primary: rgba(96, 165, 250, 0.4);
     --glow-cyan: rgba(34, 211, 238, 0.25);
-    --blob-opacity: 0.07;
+    --blob-opacity: 0;
 
     /* macOS 26 Liquid Glass nav - dark */
     --nav-glass-bg: rgba(10, 18, 38, 0.52);
@@ -229,6 +229,116 @@
   background-image: radial-gradient(circle, rgba(30, 58, 138, 0.10) 1px, transparent 1px);
   background-size: 28px 28px;
   pointer-events: none;
+}
+
+/* ── Liquid Glass Buttons ───────────────────────────────────────────────
+ *  .glass-btn        — ghost/outline pill (clear frosted glass)
+ *  .glass-btn-primary — solid gradient pill with glass specular on top
+ * ─────────────────────────────────────────────────────────────────────── */
+.glass-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  overflow: hidden;
+  clip-path: inset(0 round 9999px);
+  backdrop-filter: blur(12px) saturate(1.6);
+  -webkit-backdrop-filter: blur(12px) saturate(1.6);
+  background: rgba(195, 215, 255, 0.52);
+  border: 2px solid rgba(120, 160, 255, 0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.92),
+    inset 0 -1px 0 rgba(80,110,220,0.18),
+    0 4px 18px rgba(80,110,220,0.20);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-btn::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 52%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.72) 0%, transparent 100%);
+  border-radius: 9999px 9999px 0 0;
+  pointer-events: none;
+}
+
+.glass-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.95),
+    inset 0 -1px 0 rgba(80,110,220,0.22),
+    0 8px 28px rgba(80,110,220,0.32);
+}
+
+.glass-btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.70);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.68),
+    inset 0 -1px 0 rgba(0,0,0,0.12),
+    0 4px 20px rgba(30,58,138,0.42);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-btn-primary::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 52%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, transparent 100%);
+  border-radius: 9999px 9999px 0 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glass-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.75),
+    inset 0 -1px 0 rgba(0,0,0,0.14),
+    0 8px 32px rgba(30,58,138,0.58);
+}
+
+/* Dark mode overrides */
+
+/* Completely remove blob elements in dark mode — opacity:0 alone still creates a GPU
+   compositing layer due to filter:blur(), which can bleed visible artifacts into
+   adjacent sections. display:none removes the layer entirely. */
+:root[data-theme="dark"] .blob-shape {
+  display: none;
+}
+
+:root[data-theme="dark"] .glass-btn {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(160,190,255,0.38);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    inset 0 -1px 0 rgba(0,0,0,0.30),
+    0 4px 18px rgba(0,0,0,0.40);
+}
+
+:root[data-theme="dark"] .glass-btn::before {
+  background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%);
+}
+
+:root[data-theme="dark"] .glass-btn:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    inset 0 -1px 0 rgba(0,0,0,0.35),
+    0 8px 28px rgba(0,0,0,0.55);
+}
+
+:root[data-theme="dark"] .glass-btn-primary {
+  border-color: rgba(255,255,255,0.45);
 }
 
 /* Glassmorphism */
