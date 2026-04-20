@@ -1,31 +1,75 @@
 import { FaGraduationCap, FaMapMarkerAlt, FaCalendarAlt, FaChevronRight } from 'react-icons/fa'
+import useScrollReveal from '../hooks/useScrollReveal'
 
 function Education() {
+  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
+  const [timelineRef, timelineVisible] = useScrollReveal<HTMLDivElement>(0.05)
+
   return (
-    <section id="education" className="py-20 bg-[var(--bg-secondary)] dark:bg-[var(--bg-primary)]">
-      <div className="max-w-6xl mx-auto px-8">
-        <h2 className="text-5xl mb-10 text-center font-bold flex items-center justify-center gap-3">
-          <FaGraduationCap className="text-4xl text-[var(--color-primary)] flex-shrink-0" />
-          <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent pb-1">
-            Education
-          </span>
-        </h2>
+    <section id="education" className="py-20 bg-[var(--bg-secondary)] relative overflow-hidden dark:bg-[var(--bg-primary)]">
+
+      {/* Background blob */}
+      <div
+        className="blob-shape w-[400px] h-[400px]"
+        style={{
+          background: 'radial-gradient(circle, rgba(6,182,212,0.08), transparent)',
+          bottom: '-120px',
+          left: '-80px',
+          animationDuration: '19s',
+          animationDelay: '-6s',
+        }}
+      />
+
+      <div className="max-w-6xl mx-auto px-8 relative z-10">
+
+        {/* Section header */}
+        <div
+          ref={headerRef}
+          className={`text-center mb-12 reveal ${headerVisible ? 'is-visible' : ''}`}
+        >
+          <div className="inline-flex items-center gap-3 mb-3">
+            <div className="relative">
+              <div className="absolute inset-0 blur-xl bg-[var(--color-primary)] opacity-30 rounded-full" />
+              <FaGraduationCap className="relative text-3xl text-[var(--color-primary)]" />
+            </div>
+            <h2
+              className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
+              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
+            >
+              Education
+            </h2>
+          </div>
+          <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
+        </div>
 
         {/* Timeline */}
-        <div className="relative max-w-4xl mx-auto">
-          {/* Vertical line */}
-          <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-[var(--color-primary)] via-[rgba(30,58,138,0.3)] to-transparent hidden sm:block" />
+        <div ref={timelineRef} className="relative max-w-4xl mx-auto">
+          {/* Animated vertical line */}
+          <div
+            className="absolute left-6 top-0 bottom-0 w-px hidden sm:block"
+            style={{
+              background: 'linear-gradient(to bottom, var(--color-primary), rgba(30,58,138,0.25), transparent)',
+              transformOrigin: 'top',
+              transform: timelineVisible ? 'scaleY(1)' : 'scaleY(0)',
+              transition: 'transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
+          />
 
           <div className="space-y-10">
             {/* Kingston University */}
-            <div className="relative sm:pl-20">
-              <div className="absolute left-0 top-6 hidden sm:flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-2)] shadow-[0_0_0_4px_var(--bg-secondary),0_0_0_5px_rgba(30,58,138,0.25)] dark:shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)]">
+            <div
+              className={`relative sm:pl-20 reveal-left ${timelineVisible ? 'is-visible' : ''}`}
+              style={{ transitionDelay: timelineVisible ? '0.2s' : '0s' }}
+            >
+              <div
+                className="absolute left-0 top-6 hidden sm:flex items-center justify-center w-12 h-12 rounded-full shadow-[0_0_0_4px_var(--bg-secondary),0_0_0_5px_rgba(30,58,138,0.25)] dark:shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)] pulse-dot"
+                style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
+              >
                 <FaGraduationCap className="text-white text-base" />
               </div>
 
-              <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.35)] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(30,58,138,0.12)] transition-all duration-300 overflow-hidden">
-                {/* Header */}
-                <div className="px-7 pt-6 pb-5 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.05)] to-transparent">
+              <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(30,58,138,0.14)] transition-all duration-300 overflow-hidden shimmer-hover">
+                <div className="px-7 pt-6 pb-5 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.06)] to-transparent">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <h3 className="text-xl font-bold text-[var(--text-primary)] mb-1 leading-tight">
@@ -35,7 +79,7 @@ function Education() {
                         Kingston University, London, UK
                       </p>
                     </div>
-                    <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-[rgba(30,58,138,0.1)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)] flex-shrink-0">
+                    <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)] flex-shrink-0">
                       Undergraduate
                     </span>
                   </div>
@@ -52,13 +96,12 @@ function Education() {
                   </div>
                 </div>
 
-                {/* Body */}
                 <div className="px-7 py-5 space-y-5">
                   <div>
                     <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Concentrations</p>
                     <div className="flex flex-wrap gap-2">
                       {['Software Engineering', 'Web Application Development', 'Research & Data Analysis'].map((c) => (
-                        <span key={c} className="px-3 py-1 bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] rounded-full text-xs font-medium border border-[rgba(30,58,138,0.2)]">{c}</span>
+                        <span key={c} className="px-3 py-1 bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] rounded-full text-xs font-medium border border-[rgba(30,58,138,0.2)] hover:bg-[rgba(30,58,138,0.14)] transition-colors">{c}</span>
                       ))}
                     </div>
                   </div>
@@ -87,14 +130,19 @@ function Education() {
             </div>
 
             {/* Maliyadeva College */}
-            <div className="relative sm:pl-20">
-              <div className="absolute left-0 top-6 hidden sm:flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-2)] shadow-[0_0_0_4px_var(--bg-secondary),0_0_0_5px_rgba(30,58,138,0.25)] dark:shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)]">
+            <div
+              className={`relative sm:pl-20 reveal-left ${timelineVisible ? 'is-visible' : ''}`}
+              style={{ transitionDelay: timelineVisible ? '0.4s' : '0s' }}
+            >
+              <div
+                className="absolute left-0 top-6 hidden sm:flex items-center justify-center w-12 h-12 rounded-full shadow-[0_0_0_4px_var(--bg-secondary),0_0_0_5px_rgba(30,58,138,0.25)] dark:shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)] pulse-dot"
+                style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)', animationDelay: '0.8s' }}
+              >
                 <FaGraduationCap className="text-white text-base" />
               </div>
 
-              <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.35)] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(30,58,138,0.12)] transition-all duration-300 overflow-hidden">
-                {/* Header */}
-                <div className="px-7 pt-6 pb-5 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.05)] to-transparent">
+              <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(30,58,138,0.14)] transition-all duration-300 overflow-hidden shimmer-hover">
+                <div className="px-7 pt-6 pb-5 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.06)] to-transparent">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <h3 className="text-xl font-bold text-[var(--text-primary)] mb-1 leading-tight">
@@ -104,7 +152,7 @@ function Education() {
                         Maliyadeva College
                       </p>
                     </div>
-                    <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-[rgba(30,58,138,0.1)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)] flex-shrink-0">
+                    <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)] flex-shrink-0">
                       Secondary
                     </span>
                   </div>
@@ -117,7 +165,6 @@ function Education() {
                   </div>
                 </div>
 
-                {/* Body */}
                 <div className="px-7 py-5 space-y-5">
                   <div>
                     <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">GCE Advanced Level</p>

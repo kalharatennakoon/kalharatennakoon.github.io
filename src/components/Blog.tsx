@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { FaPen, FaMedium, FaCalendarAlt, FaFire, FaClock } from 'react-icons/fa'
+import useScrollReveal from '../hooks/useScrollReveal'
 
 interface BlogPost {
   title: string
@@ -37,87 +38,99 @@ const MOST_VIEWED: BlogPost[] = [
   },
 ]
 
-function PostCard({ post }: { post: BlogPost }) {
+function PostCard({ post, delay = 0, visible = true }: { post: BlogPost; delay?: number; visible?: boolean }) {
   return (
-    <article className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.35)] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(30,58,138,0.12)] transition-all duration-300 overflow-hidden flex flex-col group">
-      {/* Thumbnail */}
-      <a
-        href={post.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block h-44 overflow-hidden flex-shrink-0 bg-gradient-to-br from-[rgba(30,58,138,0.08)] to-[rgba(23,37,84,0.12)]"
-      >
-        {post.image ? (
-          <img
-            src={post.image.startsWith('//') ? `https:${post.image}` : post.image}
-            alt={post.title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <FaMedium className="text-5xl text-[rgba(30,58,138,0.25)]" />
-          </div>
-        )}
-      </a>
-
-      {/* Header strip */}
-      <div className="px-5 pt-4 pb-3 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.05)] to-transparent">
-        <span className="flex items-center gap-1 text-xs text-[var(--text-secondary)]">
-          <FaCalendarAlt className="text-[var(--color-primary)]" /> {post.date}
-        </span>
-      </div>
-
-      {/* Body */}
-      <div className="px-5 py-4 flex flex-col flex-grow gap-3">
-        <h3 className="text-sm font-bold leading-snug text-[var(--text-primary)]">
-          <a
-            href={post.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-[var(--color-primary)] transition-colors"
-          >
-            {post.title}
-          </a>
-        </h3>
-        <p className="text-xs leading-relaxed text-[var(--text-secondary)] flex-grow m-0">
-          {post.excerpt}
-        </p>
-        <div className="flex flex-wrap gap-1.5">
-          {post.tags.map((tag) => (
-            <span
-              key={tag}
-              className="px-2.5 py-0.5 bg-[rgba(30,58,138,0.08)] rounded-full text-xs text-[var(--color-primary)] font-medium border border-[rgba(30,58,138,0.15)]"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+    <article
+      className={`reveal-scale ${visible ? 'is-visible' : ''}`}
+      style={{ transitionDelay: visible ? `${delay}s` : '0s' }}
+    >
+      <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:-translate-y-2 hover:shadow-[0_16px_40px_rgba(30,58,138,0.16)] transition-all duration-400 overflow-hidden flex flex-col group h-full shimmer-hover">
+        {/* Thumbnail */}
         <a
           href={post.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-2)] hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(30,58,138,0.35)] transition-all duration-200 self-start"
+          className="block h-44 overflow-hidden flex-shrink-0 bg-gradient-to-br from-[rgba(30,58,138,0.08)] to-[rgba(6,182,212,0.1)]"
         >
-          <FaMedium className="text-sm" /> Read on Medium
+          {post.image ? (
+            <img
+              src={post.image.startsWith('//') ? `https:${post.image}` : post.image}
+              alt={post.title}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108"
+              style={{ '--tw-scale-x': '1.08', '--tw-scale-y': '1.08' } as React.CSSProperties}
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <FaMedium className="text-5xl text-[rgba(30,58,138,0.2)]" />
+            </div>
+          )}
         </a>
+
+        {/* Header strip */}
+        <div className="px-5 pt-4 pb-3 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.04)] to-transparent">
+          <span className="flex items-center gap-1 text-xs text-[var(--text-secondary)]">
+            <FaCalendarAlt className="text-[var(--color-primary)]" /> {post.date}
+          </span>
+        </div>
+
+        {/* Body */}
+        <div className="px-5 py-4 flex flex-col flex-grow gap-3">
+          <h3 className="text-sm font-bold leading-snug text-[var(--text-primary)]">
+            <a
+              href={post.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[var(--color-primary)] transition-colors"
+            >
+              {post.title}
+            </a>
+          </h3>
+          <p className="text-xs leading-relaxed text-[var(--text-secondary)] flex-grow m-0">
+            {post.excerpt}
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {post.tags.map((tag) => (
+              <span
+                key={tag}
+                className="px-2.5 py-0.5 rounded-full text-xs text-[var(--color-primary)] font-medium border border-[rgba(30,58,138,0.15)] hover:bg-[rgba(30,58,138,0.1)] transition-colors"
+                style={{ background: 'rgba(30,58,138,0.07)' }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          <a
+            href={post.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold text-white hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(30,58,138,0.35)] transition-all duration-200 self-start"
+            style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
+          >
+            <FaMedium className="text-sm" /> Read on Medium
+          </a>
+        </div>
       </div>
     </article>
   )
 }
 
-function SubsectionLabel({ icon, label }: { icon: React.ReactNode; label: string }) {
+function SubsectionLabel({ icon, label, isVisible }: { icon: React.ReactNode; label: string; isVisible: boolean }) {
   return (
-    <div className="flex items-center gap-2 mb-6">
-      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-[rgba(30,58,138,0.1)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)]">
+    <div className={`flex items-center gap-2 mb-6 reveal ${isVisible ? 'is-visible' : ''}`}>
+      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)]"
+        style={{ background: 'rgba(30,58,138,0.08)' }}>
         {icon} {label}
       </span>
-      <div className="flex-1 h-px bg-[var(--border-color)]" />
+      <div className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, rgba(30,58,138,0.25), transparent)' }} />
     </div>
   )
 }
 
 function Blog() {
   const [latestPosts, setLatestPosts] = useState<BlogPost[]>([])
+  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
+  const [mostViewedRef, mostViewedVisible] = useScrollReveal<HTMLDivElement>(0.05)
+  const [latestRef, latestVisible] = useScrollReveal<HTMLDivElement>(0.05)
 
   useEffect(() => {
     fetch('/blog-posts.json')
@@ -139,42 +152,76 @@ function Blog() {
   }, [])
 
   return (
-    <section id="blog" className="py-20 bg-[var(--bg-primary)] dark:bg-[var(--bg-secondary)]">
-      <div className="max-w-6xl mx-auto px-8">
-        <h2 className="text-5xl mb-12 text-center font-bold flex items-center justify-center gap-3">
-          <FaPen className="text-4xl text-[var(--color-primary)] flex-shrink-0" />
-          <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent pb-1">
-            Writing
-          </span>
-        </h2>
+    <section id="blog" className="py-20 bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]">
+
+      {/* Background blobs */}
+      <div
+        className="blob-shape w-[400px] h-[400px]"
+        style={{
+          background: 'radial-gradient(circle, rgba(30,58,138,0.08), transparent)',
+          top: '-100px',
+          left: '-80px',
+          animationDuration: '22s',
+          animationDelay: '-5s',
+        }}
+      />
+
+      <div className="max-w-6xl mx-auto px-8 relative z-10">
+
+        {/* Section header */}
+        <div
+          ref={headerRef}
+          className={`text-center mb-12 reveal ${headerVisible ? 'is-visible' : ''}`}
+        >
+          <div className="inline-flex items-center gap-3 mb-3">
+            <div className="relative">
+              <div className="absolute inset-0 blur-xl bg-[var(--color-primary)] opacity-30 rounded-full" />
+              <FaPen className="relative text-3xl text-[var(--color-primary)]" />
+            </div>
+            <h2
+              className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
+              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
+            >
+              Writing
+            </h2>
+          </div>
+          <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
+        </div>
 
         {/* Most Viewed */}
-        <SubsectionLabel icon={<FaFire />} label="Most Viewed" />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {MOST_VIEWED.map((post) => (
-            <PostCard key={post.url} post={post} />
-          ))}
+        <div ref={mostViewedRef}>
+          <SubsectionLabel icon={<FaFire />} label="Most Viewed" isVisible={mostViewedVisible} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {MOST_VIEWED.map((post, i) => (
+              <PostCard key={post.url} post={post} delay={i * 0.1} visible={mostViewedVisible} />
+            ))}
+          </div>
         </div>
 
         {/* Latest */}
-        <SubsectionLabel icon={<FaClock />} label="Latest" />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {latestPosts.length > 0
-            ? latestPosts.map((post) => <PostCard key={post.url} post={post} />)
-            : Array.from({ length: 3 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="h-72 rounded-2xl border border-[var(--border-color)] bg-[var(--card-bg)] animate-pulse"
-                />
-              ))}
+        <div ref={latestRef}>
+          <SubsectionLabel icon={<FaClock />} label="Latest" isVisible={latestVisible} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {latestPosts.length > 0
+              ? latestPosts.map((post, i) => (
+                  <PostCard key={post.url} post={post} delay={i * 0.1} visible={latestVisible} />
+                ))
+              : Array.from({ length: 3 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-72 rounded-2xl border border-[var(--border-color)] bg-[var(--card-bg)] animate-pulse"
+                  />
+                ))}
+          </div>
         </div>
 
-        <div className="text-center">
+        <div className={`text-center reveal ${latestVisible ? 'is-visible' : ''}`} style={{ transitionDelay: latestVisible ? '0.4s' : '0s' }}>
           <a
             href="https://kalharatennakoon.medium.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] text-white rounded-xl font-semibold text-sm transition-all duration-300 hover:shadow-[0_8px_25px_rgba(30,58,138,0.35)] hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 px-8 py-3.5 text-white rounded-xl font-semibold text-sm transition-all duration-300 hover:shadow-[0_10px_30px_rgba(30,58,138,0.4)] hover:-translate-y-0.5"
+            style={{ background: 'linear-gradient(135deg, var(--color-primary), #3b82f6, #06b6d4)', backgroundSize: '200% 200%' }}
           >
             <FaMedium /> View All Posts on Medium
           </a>

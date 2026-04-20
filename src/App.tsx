@@ -1,4 +1,5 @@
 import Navbar from './components/Navbar'
+import CursorBubbles from './components/CursorBubbles'
 import Hero from './components/Hero'
 import About from './components/About'
 import Education from './components/Education'
@@ -30,6 +31,7 @@ function App() {
         <Contact />
       </main>
       <ScrollToTop />
+      <CursorBubbles />
     </div>
   )
 }

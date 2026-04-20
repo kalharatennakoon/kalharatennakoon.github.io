@@ -1,4 +1,5 @@
 import { FaTrophy } from 'react-icons/fa'
+import useScrollReveal from '../hooks/useScrollReveal'
 
 interface Achievement {
   title: string
@@ -37,40 +38,105 @@ const achievements: Achievement[] = [
 ]
 
 function Achievements() {
+  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
+  const [timelineRef, timelineVisible] = useScrollReveal<HTMLDivElement>(0.05)
+
   return (
-    <section id="achievements" className="py-20 bg-[var(--bg-primary)] dark:bg-[var(--bg-secondary)]">
-      <div className="max-w-6xl mx-auto px-8">
-        <h2 className="text-5xl mb-10 text-center font-bold flex items-center justify-center gap-3">
-          <FaTrophy className="text-4xl text-[var(--color-primary)] flex-shrink-0" />
-          <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-2)] bg-clip-text text-transparent pb-1">
-            Achievements
-          </span>
-        </h2>
+    <section id="achievements" className="py-20 bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]">
+
+      {/* Background blobs */}
+      <div
+        className="blob-shape w-[400px] h-[400px]"
+        style={{
+          background: 'radial-gradient(circle, rgba(255,215,0,0.07), rgba(30,58,138,0.08), transparent)',
+          top: '-100px',
+          right: '-80px',
+          animationDuration: '20s',
+        }}
+      />
+
+      <div className="max-w-6xl mx-auto px-8 relative z-10">
+
+        {/* Section header */}
+        <div
+          ref={headerRef}
+          className={`text-center mb-12 reveal ${headerVisible ? 'is-visible' : ''}`}
+        >
+          <div className="inline-flex items-center gap-3 mb-3">
+            <div className="relative">
+              <div className="absolute inset-0 blur-xl bg-amber-400 opacity-30 rounded-full" />
+              <FaTrophy className="relative text-3xl text-[var(--color-primary)]" />
+            </div>
+            <h2
+              className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
+              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
+            >
+              Achievements
+            </h2>
+          </div>
+          <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
+        </div>
 
         {/* Timeline */}
-        <div className="relative max-w-4xl mx-auto">
-          <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-[var(--color-primary)] via-[rgba(30,58,138,0.3)] to-transparent hidden sm:block" />
+        <div ref={timelineRef} className="relative max-w-4xl mx-auto">
+          {/* Animated vertical line */}
+          <div
+            className="absolute left-6 top-0 bottom-0 w-px hidden sm:block"
+            style={{
+              background: 'linear-gradient(to bottom, var(--color-primary), rgba(30,58,138,0.25), transparent)',
+              transformOrigin: 'top',
+              transform: timelineVisible ? 'scaleY(1)' : 'scaleY(0)',
+              transition: 'transform 1.4s cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
+          />
 
           <div className="space-y-8">
-            {achievements.map((item) => (
-              <div key={item.title} className="relative sm:pl-20">
-                {/* Dot */}
-                <div className="absolute left-0 top-5 hidden sm:flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-2)] shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)]">
+            {achievements.map((item, index) => (
+              <div
+                key={item.title}
+                className={`relative sm:pl-20 reveal-left ${timelineVisible ? 'is-visible' : ''}`}
+                style={{ transitionDelay: timelineVisible ? `${0.15 + index * 0.15}s` : '0s' }}
+              >
+                {/* Timeline dot */}
+                <div
+                  className="absolute left-0 top-5 hidden sm:flex items-center justify-center w-12 h-12 rounded-full shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)] pulse-dot"
+                  style={{
+                    background: item.highlight
+                      ? 'linear-gradient(135deg, #f59e0b, #d97706)'
+                      : 'linear-gradient(135deg, var(--color-primary), #06b6d4)',
+                    animationDelay: `${index * 0.5}s`,
+                  }}
+                >
                   <FaTrophy className="text-white text-base" />
                 </div>
 
-                <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.35)] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(30,58,138,0.12)] transition-all duration-300 overflow-hidden">
+                <div className={`bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border transition-all duration-300 hover:-translate-y-1 overflow-hidden shimmer-hover ${
+                  item.highlight
+                    ? 'border-amber-400/30 hover:border-amber-400/50 hover:shadow-[0_12px_36px_rgba(245,158,11,0.14)]'
+                    : 'border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:shadow-[0_12px_36px_rgba(30,58,138,0.14)]'
+                }`}>
+                  {/* Highlight accent */}
+                  {item.highlight && (
+                    <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #f59e0b, #d97706)' }} />
+                  )}
+
                   {/* Header */}
-                  <div className="px-7 pt-5 pb-4 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.05)] to-transparent">
+                  <div className={`px-7 pt-5 pb-4 border-b border-[var(--border-color)] ${
+                    item.highlight
+                      ? 'bg-gradient-to-r from-[rgba(245,158,11,0.06)] to-transparent'
+                      : 'bg-gradient-to-r from-[rgba(30,58,138,0.05)] to-transparent'
+                  }`}>
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <h3 className="text-base font-bold text-[var(--text-primary)] leading-snug flex-1">
                         {item.title}
                       </h3>
-                      <div className="flex items-center gap-2 flex-shrink-0">
-                        <span className="text-xs font-medium text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] px-2.5 py-1 rounded-full whitespace-nowrap border border-[rgba(30,58,138,0.15)]">
-                          {item.date}
-                        </span>
-                      </div>
+                      <span className={`text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap border flex-shrink-0 ${
+                        item.highlight
+                          ? 'text-white bg-amber-500 border-amber-600 shadow-[0_2px_8px_rgba(245,158,11,0.4)]'
+                          : 'text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] border-[rgba(30,58,138,0.15)]'
+                      }`}>
+                        {item.date}
+                      </span>
                     </div>
                   </div>
 
