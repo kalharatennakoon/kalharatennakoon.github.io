@@ -40,7 +40,7 @@ function Contact() {
         </div>
       </section>
 
-      <footer style={{ borderTop: '2px solid var(--text-primary)', padding: '1rem 1.5rem', background: 'var(--bg-primary)' }}>
+      <footer style={{ borderTop: '1px solid var(--border-color)', padding: '1rem 1.5rem', background: 'var(--bg-primary)' }}>
         <div style={{ maxWidth: '64rem', margin: '0 auto', textAlign: 'center' }}>
           <p style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', margin: 0, letterSpacing: '0.04em' }}>
             © {currentYear} Kalhara Tennakoon. All Rights Reserved.

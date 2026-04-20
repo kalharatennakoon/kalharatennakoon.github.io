@@ -2,8 +2,8 @@ import { FaStackOverflow } from 'react-icons/fa'
 
 const activities = [
   {
-    title: 'Medium – Technical Writer',
-    role: 'Technical Author',
+    title: 'Medium',
+    role: 'Technical Writer',
     period: 'Dec 2021 – Present',
     description: 'Write in-depth technical articles on DevOps, cloud-native technologies, Kubernetes, CI/CD, and software engineering. Content reaches a global audience of developers and engineers.',
     stats: '50+ Articles · 150,000+ Total Views',
