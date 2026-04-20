@@ -38,7 +38,7 @@ function Hero() {
   return (
     <section
       id="hero"
-      style={{ background: 'var(--bg-primary)', minHeight: '100vh', display: 'flex', alignItems: 'center' }}
+      style={{ background: 'var(--bg-primary)', minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative' }}
     >
       <div style={{ maxWidth: '72rem', margin: '0 auto', padding: '8rem 1.5rem', width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: '3rem', flexWrap: 'wrap' }}>
 
@@ -95,7 +95,7 @@ function Hero() {
         </div>
 
         {/* Right: profile photo */}
-        <div style={{ flexShrink: 0 }}>
+        <div className="flex justify-center md:block" style={{ flexShrink: 0, width: '100%', maxWidth: '300px', margin: '0 auto' }}>
           <div style={{ width: '300px', height: '300px', borderRadius: '50%', overflow: 'hidden', border: '3px solid rgba(59,130,246,0.4)' }}>
             <img src="/profile.png" alt="Kalhara Tennakoon" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
           </div>
@@ -103,8 +103,8 @@ function Hero() {
 
       </div>
 
-      {/* Scroll indicator */}
-      <div style={{ position: 'absolute', bottom: '32px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', opacity: 0.6 }}>
+      {/* Scroll indicator — hidden on mobile to avoid overlap with stacked content */}
+      <div className="hidden md:flex" style={{ position: 'absolute', bottom: '32px', left: '50%', transform: 'translateX(-50%)', flexDirection: 'column', alignItems: 'center', gap: '8px', opacity: 0.6 }}>
         <span style={{ fontSize: '10px', color: 'var(--text-secondary)', letterSpacing: '3px', textTransform: 'uppercase', fontWeight: 500 }}>Scroll</span>
         <FaArrowDown style={{ color: 'var(--color-primary)', fontSize: '14px' }} />
       </div>
