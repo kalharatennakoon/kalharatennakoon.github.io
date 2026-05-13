@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { FaArrowDown } from 'react-icons/fa'
+import { FaArrowDown, FaDownload } from 'react-icons/fa'
 
 const roles = [
   'DevOps Engineer',
@@ -78,6 +78,15 @@ function Hero() {
             </a>
             <a href="#contact" className="glass-btn px-7 py-3 font-semibold text-sm" style={{ color: 'var(--color-primary)' }}>
               Get In Touch
+            </a>
+            <a
+              href="/Kalhara_Tennakoon_Resume.pdf"
+              download
+              className="glass-btn px-7 py-3 font-semibold text-sm inline-flex items-center gap-2"
+              style={{ color: 'var(--color-primary)' }}
+            >
+              <FaDownload className="text-xs" />
+              Resume
             </a>
           </div>
 

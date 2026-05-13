@@ -1,4 +1,4 @@
-import { FaCode, FaGithub, FaBuilding, FaCalendarCheck, FaShieldAlt, FaBrain, FaPaw, FaCar, FaHospital } from 'react-icons/fa'
+import { FaCode, FaGithub, FaBuilding, FaCalendarCheck, FaShieldAlt, FaBrain, FaPaw, FaCar, FaHospital, FaSun } from 'react-icons/fa'
 import type { IconType } from 'react-icons'
 import useScrollReveal from '../hooks/useScrollReveal'
 
@@ -18,20 +18,11 @@ function Projects() {
 
   const projects: Project[] = [
     {
-      title: 'Kubernetes Cluster and Container Image Security Scanner',
-      description: 'Containerized security scanning tool deployed on Kubernetes to detect vulnerabilities in container images and cluster configurations for secure DevOps pipelines.',
-      technologies: ['Docker', 'Kubernetes', 'Golang', 'ArgoCD', 'Rancher', 'AKS', 'GKE', 'Azure DevOps', 'Shell Scripting', 'CI/CD'],
-      icon: FaShieldAlt,
-      date: 'Jul 2020 – Dec 2020',
-      subtitle: 'Internship · IFS',
-    },
-    {
-      title: 'Predicting Course Difficulty from Student Evaluation Responses',
-      description: 'Supervised ML models to predict perceived course difficulty from student evaluation data, identifying instructor attributes as key predictors using statistical validation and classification algorithms.',
-      technologies: ['Python', 'Scikit-learn', 'Pandas', 'Matplotlib', 'Seaborn', 'SPSS', 'Machine Learning', 'Statistics'],
-      icon: FaBrain,
-      github: 'https://github.com/kalharatennakoon/course-difficulty-analysis',
-      date: 'Feb 2025 – Jul 2025',
+      title: 'SolarCast – Personal Solar Energy Forecasting App',
+      description: 'Full-stack ML app predicting monthly solar energy generation, grid export, and cash payouts from residential inverter data using Meta\'s Prophet with 90% confidence intervals. Features an interactive React dashboard with CSV upload support.',
+      technologies: ['Python', 'FastAPI', 'React', 'Prophet', 'Machine Learning', 'Time-Series Forecasting', 'Pandas', 'Data Visualization', 'REST APIs'],
+      icon: FaSun,
+      date: 'Apr 2026 – Present',
     },
     {
       title: 'VetCare Pro: Smart Web-Based Veterinary Clinic Management System',
@@ -42,11 +33,20 @@ function Projects() {
       date: 'Oct 2025 – Mar 2026',
     },
     {
-      title: 'EcoRide Car Rental System',
-      description: 'A Java-based car rental management system with vehicle management, booking system, payment processing, and automated invoice generation.',
-      technologies: ['Java', 'OOP', 'File I/O', 'Data Persistence'],
-      icon: FaCar,
-      github: 'https://github.com/kalharatennakoon/EcoRideCarRentalSystem',
+      title: 'Predicting Course Difficulty from Student Evaluation Responses',
+      description: 'Supervised ML models to predict perceived course difficulty from student evaluation data, identifying instructor attributes as key predictors using statistical validation and classification algorithms.',
+      technologies: ['Python', 'Scikit-learn', 'Pandas', 'Matplotlib', 'Seaborn', 'SPSS', 'Machine Learning', 'Statistics'],
+      icon: FaBrain,
+      github: 'https://github.com/kalharatennakoon/course-difficulty-analysis',
+      date: 'Feb 2025 – Jul 2025',
+    },
+    {
+      title: 'Kubernetes Cluster and Container Image Security Scanner',
+      description: 'Containerized security scanning tool deployed on Kubernetes to detect vulnerabilities in container images and cluster configurations for secure DevOps pipelines.',
+      technologies: ['Docker', 'Kubernetes', 'Golang', 'ArgoCD', 'Rancher', 'AKS', 'GKE', 'Azure DevOps', 'Shell Scripting', 'CI/CD'],
+      icon: FaShieldAlt,
+      date: 'Jul 2020 – Dec 2020',
+      subtitle: 'Internship · IFS',
     },
     {
       title: 'Hospital Appointment Management System',
@@ -54,6 +54,13 @@ function Projects() {
       technologies: ['Java', 'Data Structures', 'Queue', 'Stack', 'CSV'],
       icon: FaHospital,
       github: 'https://github.com/kalharatennakoon/doctor_channeling_system',
+    },
+    {
+      title: 'EcoRide Car Rental System',
+      description: 'A Java-based car rental management system with vehicle management, booking system, payment processing, and automated invoice generation.',
+      technologies: ['Java', 'OOP', 'File I/O', 'Data Persistence'],
+      icon: FaCar,
+      github: 'https://github.com/kalharatennakoon/EcoRideCarRentalSystem',
     },
   ]
 
