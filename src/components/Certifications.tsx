@@ -179,7 +179,7 @@ function Certifications() {
                   >
                     <div className="bg-[var(--card-bg)] rounded-xl border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(30,58,138,0.12)] overflow-hidden">
                       {/* Badge */}
-                      <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[rgba(30,58,138,0.1)] to-[rgba(6,182,212,0.08)] flex items-center justify-center flex-shrink-0 overflow-hidden border border-[rgba(30,58,138,0.1)]">
+                      <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[rgba(30,58,138,0.1)] to-[rgba(6,182,212,0.08)] flex items-center justify-center flex-shrink-0 overflow-hidden border border-[rgba(30,58,138,0.1)]">
                         {cert.badgeImage ? (
                           <img src={cert.badgeImage} alt={cert.title} className="w-full h-full object-contain p-0.5" />
                         ) : (
