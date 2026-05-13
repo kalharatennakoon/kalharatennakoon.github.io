@@ -102,7 +102,7 @@ function Projects() {
               <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.65, margin: '0 0 0.75rem' }}>{proj.summary}</p>
 
               {/* Highlights */}
-              <ul style={{ margin: '0 0 0.875rem', padding: '0 0 0 1rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+              <ul style={{ margin: '0 0 0.875rem', padding: '0 0 0 1rem', display: 'flex', flexDirection: 'column', gap: '0.3rem', listStyleType: 'disc' }}>
                 {proj.highlights.map((h) => (
                   <li key={h} style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{h}</li>
                 ))}

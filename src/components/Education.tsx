@@ -12,19 +12,20 @@ function Education() {
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.2rem' }}>
               <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-primary)' }}>BSc (Hons) Computer Science (Software Engineering)</span>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>Expected Sep 2026</span>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>Graduation: Sep 2026</span>
             </div>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0 0 0.625rem' }}>Kingston University, London · Delivered via ESU, Sri Lanka</p>
-            <div style={{ marginBottom: '0.375rem' }}>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Concentrations: </span>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Software Engineering · Web Application Development · Research & Data Analysis</span>
-            </div>
-            <div>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Key Coursework: </span>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                Object-Oriented Programming · Data Structures & Algorithms · Network Security · Database Design · UI/UX Design · Web Application Development · Research & Data Analysis
-              </span>
-            </div>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0 0 0.625rem' }}>Kingston University, London, UK · Delivered via ESU, Sri Lanka</p>
+            <ul style={{ margin: 0, padding: '0 0 0 1rem', display: 'flex', flexDirection: 'column', gap: '0.35rem', listStyleType: 'disc' }}>
+              <li style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
+                <span style={{ fontWeight: 600 }}>Concentrations:</span> Software Engineering · Web Application Development · Research & Data Analysis
+              </li>
+              <li style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
+                <span style={{ fontWeight: 600 }}>Key Coursework:</span> Object-Oriented Programming · Data Structures & Algorithms · Network Security · Database Design · UI/UX Design · Web Application Development · Research & Data Analysis
+              </li>
+              <li style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
+                <span style={{ fontWeight: 600 }}>Final Year Project:</span> VetCare Pro — Full-stack veterinary healthcare management platform with RESTful architecture, database management, and machine learning workflows
+              </li>
+            </ul>
           </div>
 
           {/* Maliyadeva College */}
@@ -32,13 +33,15 @@ function Education() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.2rem' }}>
               <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-primary)' }}>High School</span>
             </div>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0 0 0.375rem' }}>Maliyadeva College · Kurunegala, Sri Lanka</p>
-            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: '0 0 0.2rem' }}>
-              <span style={{ fontWeight: 600 }}>GCE Advanced Level:</span> A, B, C · General English: A
-            </p>
-            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: 0 }}>
-              <span style={{ fontWeight: 600 }}>GCE Ordinary Level:</span> 9As
-            </p>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0 0 0.5rem' }}>Maliyadeva College · Kurunegala, Sri Lanka</p>
+            <ul style={{ margin: 0, padding: '0 0 0 1rem', display: 'flex', flexDirection: 'column', gap: '0.35rem', listStyleType: 'disc' }}>
+              <li style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
+                <span style={{ fontWeight: 600 }}>GCE Advanced Level:</span> A, B, C · General English: A
+              </li>
+              <li style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
+                <span style={{ fontWeight: 600 }}>GCE Ordinary Level:</span> 9As
+              </li>
+            </ul>
           </div>
 
         </div>

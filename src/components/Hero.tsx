@@ -1,6 +1,6 @@
 import { FaGithub, FaLinkedin, FaDownload } from 'react-icons/fa'
 
-const techStack = ['Kubernetes', 'Docker', 'Tekton', 'ArgoCD', 'Python', 'CI/CD', 'Azure', 'AWS', 'Machine Learning']
+const techStack = ['Docker', 'Kubernetes', 'Tekton', 'ArgoCD', 'Python', 'CI/CD', 'Azure', 'AWS', 'Machine Learning']
 
 const socialProof = [
   '3× Microsoft Azure Certified',
@@ -75,14 +75,6 @@ function Hero() {
               >
                 <FaLinkedin size={12} /> LinkedIn
               </a>
-              <a
-                href="#projects"
-                style={{ display: 'inline-flex', alignItems: 'center', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary)', textDecoration: 'none', letterSpacing: '0.04em' }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)' }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)' }}
-              >
-                Projects →
-              </a>
             </div>
 
             {/* Social proof */}
@@ -95,7 +87,7 @@ function Hero() {
               <p style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-primary)', margin: '0 0 0.4rem' }}>
                 Currently Building
               </p>
-              <ul style={{ margin: 0, padding: '0 0 0 1rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+              <ul style={{ margin: 0, padding: '0 0 0 1rem', display: 'flex', flexDirection: 'column', gap: '0.25rem', listStyleType: 'disc' }}>
                 {currentlyBuilding.map((item) => (
                   <li key={item} style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>{item}</li>
                 ))}
