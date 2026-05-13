@@ -19,7 +19,7 @@ function Hero() {
     <section id="hero" style={{ background: 'var(--bg-primary)', paddingTop: '52px' }}>
       <div style={{ maxWidth: '64rem', margin: '0 auto', padding: '2.5rem 1.5rem 2rem', borderBottom: '2px solid var(--text-primary)' }}>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '2rem' }}>
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start" style={{ gap: '2rem' }}>
 
           {/* Left column */}
           <div style={{ flex: 1 }}>
@@ -96,11 +96,12 @@ function Hero() {
 
           </div>
 
-          {/* Right column: photo */}
+          {/* Photo */}
           <img
             src="/profile.png"
             alt="Kalhara Tennakoon"
-            style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', objectPosition: 'top', flexShrink: 0, border: '1px solid var(--border-color)' }}
+            className="self-start"
+            style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', objectPosition: 'top', flexShrink: 0, border: '1px solid var(--border-color)' }}
           />
 
         </div>

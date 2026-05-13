@@ -41,7 +41,7 @@ function Experience() {
             <div key={exp.title}>
 
               {/* Title + period */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.15rem' }}>
+              <div className="exp-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.15rem' }}>
                 <div>
                   <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-primary)' }}>{exp.title}</span>
                   <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginLeft: '0.4rem' }}>· {exp.company}</span>

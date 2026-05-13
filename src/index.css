@@ -392,6 +392,43 @@
 .nav-link:hover { color: var(--text-primary); }
 
 /* ==========================================
+   Mobile Responsiveness
+   ========================================== */
+
+@media (max-width: 640px) {
+  /* Tighter section padding on mobile */
+  section > div {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Hero: reduce top gap */
+  #hero > div {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.25rem !important;
+  }
+
+  /* Navbar: reduce gap between links */
+  nav ul {
+    gap: 1rem !important;
+  }
+
+  /* Experience: stack title and date on mobile */
+  .exp-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.1rem !important;
+  }
+
+  /* Projects: stack title and date on mobile */
+  .proj-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.1rem !important;
+  }
+}
+
+/* ==========================================
    Scroll Reveal System
    ========================================== */
 

@@ -85,7 +85,7 @@ function Projects() {
               style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '1.25rem' }}
             >
               {/* Title row */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.2rem' }}>
+              <div className="proj-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.2rem' }}>
                 <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-primary)' }}>{proj.title}</span>
                 <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>{proj.date}</span>
               </div>

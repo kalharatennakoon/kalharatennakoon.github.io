@@ -40,7 +40,7 @@ function Skills() {
         {/* Skill groups */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
           {skillGroups.map((group) => (
-            <div key={group.title} style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+            <div key={group.title} className="flex flex-col sm:flex-row" style={{ gap: '0.5rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
               <span style={{
                 fontSize: '0.68rem', fontWeight: 700, color: 'var(--text-secondary)',
                 textTransform: 'uppercase', letterSpacing: '0.08em',
@@ -68,7 +68,7 @@ function Skills() {
 
         {/* Currently Exploring */}
         <div style={{ paddingTop: '1rem', borderTop: '1px solid var(--border-color)' }}>
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <div className="flex flex-col sm:flex-row" style={{ gap: '0.5rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
             <span style={{
               fontSize: '0.68rem', fontWeight: 700, color: 'var(--text-secondary)',
               textTransform: 'uppercase', letterSpacing: '0.08em',
