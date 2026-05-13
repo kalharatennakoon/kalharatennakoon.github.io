@@ -9,6 +9,7 @@ const socialProof = [
 ]
 
 const currentlyBuilding = [
+  'SolarCast — ML-powered solar energy forecasting platform (FastAPI + React + Prophet)',
   'Exploring MLOps & AI infrastructure pipelines',
   'Writing about Kubernetes & cloud-native engineering on Medium',
 ]

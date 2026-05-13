@@ -17,13 +17,13 @@ function App() {
       <Navbar />
       <main className="flex-grow">
         <Hero />
-        <Education />
-        <Experience />
-        <Skills />
         <Projects />
+        <Skills />
+        <Experience />
         <Certifications />
         <Achievements />
         <Activities />
+        <Education />
         <Blog />
         <Contact />
       </main>
