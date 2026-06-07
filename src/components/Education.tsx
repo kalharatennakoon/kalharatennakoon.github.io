@@ -180,7 +180,7 @@ function Education() {
                     <div className="rounded-xl px-4 py-4 border border-[var(--border-color)]">
                       <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-3">GCE Ordinary Level</p>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)]">9As</span>
+                        <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)]">9 As</span>
                       </div>
                     </div>
                   </div>
