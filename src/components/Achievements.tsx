@@ -10,10 +10,15 @@ interface Achievement {
 
 const achievements: Achievement[] = [
   {
+    title: 'First Class Honours - BSc(Hons) Computer Science',
+    description: 'Graduated from Kingston University with First Class Honours in Computer Science, specialising in Software Engineering.',
+    date: '2026',
+    highlight: true,
+  },
+  {
     title: 'Dan Kohn Scholarship - KubeCon + CloudNativeCon',
     description: 'Awarded the CNCF Dan Kohn Scholarship to attend KubeCon + CloudNativeCon. Recognised for contributions and potential in the cloud-native ecosystem.',
     date: '2025 & 2022',
-    highlight: true,
   },
   {
     title: 'First Runner-Up - Hack:Bit Hackathon',

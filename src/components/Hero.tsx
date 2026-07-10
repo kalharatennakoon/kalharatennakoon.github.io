@@ -9,6 +9,7 @@ const roles = [
 ]
 
 const stats = [
+  { value: 'First Class', label: 'Honours Graduate' },
   { value: '50+',   label: 'Articles Published' },
   { value: '150K+', label: 'Total Views' },
   { value: '13+',   label: 'Certifications' },
@@ -67,7 +68,7 @@ function Hero() {
           </h2>
 
           <p style={{ fontSize: '18px', color: 'var(--text-secondary)', maxWidth: '36rem', lineHeight: 1.75, marginBottom: '32px' }}>
-            Automating delivery pipelines and building reliable systems with cloud-native technologies
+            First Class Honours Computer Science graduate automating delivery pipelines and building reliable cloud-native systems
           </p>
 
           {/* CTA Buttons */}

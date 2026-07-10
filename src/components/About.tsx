@@ -53,7 +53,7 @@ function About() {
               className="text-lg md:text-xl leading-relaxed text-[var(--text-primary)] m-0 px-4 relative z-10"
               style={{ fontFamily: '"Handlee", cursive', fontWeight: 400 }}
             >
-              DevOps Engineer driven by a strong passion for CI/CD automation, container orchestration, and cloud-native systems.
+              First Class Honours Computer Science graduate and DevOps Engineer driven by a strong passion for CI/CD automation, container orchestration, and cloud-native systems.
               Microsoft Azure certified with hands-on experience in Kubernetes, Docker, Tekton, and ArgoCD.
               Deeply interested in the convergence of DevOps and AI, with a growing focus on MLOps and building scalable, intelligent systems.
             </p>

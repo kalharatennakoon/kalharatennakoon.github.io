@@ -79,15 +79,15 @@ function Education() {
                         Kingston University, London, United Kingdom
                       </p>
                     </div>
-                    <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)] flex-shrink-0">
-                      Undergraduate
+                    <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full text-white border border-teal-400/70 bg-gradient-to-r from-teal-500 to-cyan-500 shadow-[0_3px_12px_rgba(20,184,166,0.32)] flex-shrink-0">
+                      First Class Honours
                     </span>
                   </div>
 
                   <div className="flex flex-wrap gap-4 mt-3">
                     <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
                       <FaCalendarAlt className="text-[var(--color-primary)] text-xs" />
-                      Expected September 2026
+                      Graduated 2026
                     </span>
                     <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
                       <FaMapMarkerAlt className="text-[var(--color-primary)] text-xs" />
