@@ -33,30 +33,29 @@ function Navbar() {
   }, [])
 
   /* ── Liquid Glass colours ─────────────────────────────────────────────
-   *  The pill needs to look like glass you can actually SEE.
-   *  Light: a distinct sky-blue frosted pill
-   *  Dark : a deep navy pill
+   *  Light mode keeps a visible frosted pill with liquid-glass edges.
+   *  Dark mode keeps the deeper navy glass for contrast.
    * ──────────────────────────────────────────────────────────────────── */
   const pillBg = isDark
     ? 'rgba(12, 22, 50, 0.72)'         // dark navy glass
-    : 'rgba(200, 220, 255, 0.62)'      // sky-blue frosted glass
+    : 'linear-gradient(135deg, rgba(235,244,255,0.68), rgba(200,220,255,0.52))'
 
   const pillBorder = isDark
     ? '1.5px solid rgba(140, 170, 255, 0.25)'
-    : '1.5px solid rgba(255, 255, 255, 0.90)'
+    : '1.5px solid rgba(255, 255, 255, 0.86)'
 
   const pillShadow = scrolled
     ? isDark
       ? '0 8px 40px rgba(0,0,0,0.60), 0 2px 8px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.12)'
-      : '0 8px 40px rgba(80,110,220,0.22), 0 2px 8px rgba(80,110,220,0.12), inset 0 1px 0 rgba(255,255,255,0.95)'
+      : '0 8px 40px rgba(80,110,220,0.20), 0 2px 8px rgba(80,110,220,0.11), inset 0 1px 0 rgba(255,255,255,0.92)'
     : isDark
       ? '0 4px 24px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.10)'
-      : '0 4px 24px rgba(80,110,220,0.16), inset 0 1px 0 rgba(255,255,255,0.92)'
+      : '0 4px 24px rgba(80,110,220,0.15), inset 0 1px 0 rgba(255,255,255,0.88)'
 
   /* ── mobile dropdown glass ────────────────────────────────────────── */
   const dropBg = isDark
     ? 'rgba(12, 22, 50, 0.82)'
-    : 'rgba(210, 228, 255, 0.88)'
+    : 'linear-gradient(135deg, rgba(235,244,255,0.76), rgba(210,228,255,0.64))'
 
   return (
     <div className="fixed top-0 left-0 right-0 z-[999] flex flex-col items-center pointer-events-none">
@@ -68,8 +67,8 @@ function Navbar() {
           border:               pillBorder,
           borderRadius:         '9999px',
           boxShadow:            pillShadow,
-          backdropFilter:       isDark ? 'none' : 'blur(40px) saturate(2.0) brightness(1.08)',
-          WebkitBackdropFilter: isDark ? 'none' : 'blur(40px) saturate(2.0) brightness(1.08)',
+          backdropFilter:       isDark ? 'none' : 'blur(38px) saturate(1.9) brightness(1.06)',
+          WebkitBackdropFilter: isDark ? 'none' : 'blur(38px) saturate(1.9) brightness(1.06)',
         }}
       >
         {/* ① Specular highlight — top half of pill */}
@@ -81,7 +80,7 @@ function Navbar() {
             borderRadius: '9999px 9999px 0 0',
             background: isDark
               ? 'linear-gradient(180deg, rgba(255,255,255,0.09) 0%, transparent 100%)'
-              : 'linear-gradient(180deg, rgba(255,255,255,0.75) 0%, transparent 100%)',
+              : 'linear-gradient(180deg, rgba(255,255,255,0.72) 0%, transparent 100%)',
           }}
         />
 
@@ -93,7 +92,7 @@ function Navbar() {
             height: '1.5px',
             background: isDark
               ? 'linear-gradient(90deg, transparent, rgba(180,210,255,0.50) 30%, rgba(220,235,255,0.65) 50%, rgba(180,210,255,0.50) 70%, transparent)'
-              : 'linear-gradient(90deg, transparent, rgba(255,255,255,0.90) 20%, rgba(255,255,255,1.00) 50%, rgba(255,255,255,0.90) 80%, transparent)',
+              : 'linear-gradient(90deg, transparent, rgba(255,255,255,0.86) 20%, rgba(255,255,255,1.00) 50%, rgba(255,255,255,0.86) 80%, transparent)',
           }}
         />
 

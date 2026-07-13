@@ -2,14 +2,13 @@ import { useEffect, useState } from 'react'
 import { FaArrowDown, FaDownload } from 'react-icons/fa'
 
 const roles = [
-  'DevOps Engineer',
-  'MLOps Engineer',
-  'Cloud-Native Developer',
-  'CI/CD Automation Engineer',
+  'DevSecOps & Cloud-Native',
+  '2x KubeCon Scholar',
+  'First Class CS Graduate',
+  'Technical Writer',
 ]
 
 const stats = [
-  { value: 'First Class', label: 'Honours Graduate' },
   { value: '50+',   label: 'Articles Published' },
   { value: '150K+', label: 'Total Views' },
   { value: '13+',   label: 'Certifications' },
@@ -68,7 +67,7 @@ function Hero() {
           </h2>
 
           <p style={{ fontSize: '18px', color: 'var(--text-secondary)', maxWidth: '36rem', lineHeight: 1.75, marginBottom: '32px' }}>
-            First Class Honours Computer Science graduate automating delivery pipelines and building reliable cloud-native systems
+            Automating delivery pipelines and building reliable systems with cloud-native technologies
           </p>
 
           {/* CTA Buttons */}

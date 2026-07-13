@@ -79,7 +79,7 @@ function Education() {
                         Kingston University, London, United Kingdom
                       </p>
                     </div>
-                    <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full text-white border border-teal-400/70 bg-gradient-to-r from-teal-500 to-cyan-500 shadow-[0_3px_12px_rgba(20,184,166,0.32)] flex-shrink-0">
+                    <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full text-white border border-blue-400/70 bg-gradient-to-r from-blue-700 to-blue-500 shadow-[0_3px_12px_rgba(30,58,138,0.32)] flex-shrink-0">
                       First Class Honours
                     </span>
                   </div>
