@@ -1,7 +1,10 @@
+import { FaTerminal } from 'react-icons/fa'
 import useScrollReveal from '../hooks/useScrollReveal'
+import Terminal from './Terminal'
 
 function About() {
   const [ref, isVisible] = useScrollReveal<HTMLDivElement>(0.2)
+  const [termRef, termVisible] = useScrollReveal<HTMLDivElement>(0.05)
 
   return (
     <section id="about" className="py-16 md:py-20 bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]" style={{ contain: 'paint' }}>
@@ -17,7 +20,7 @@ function About() {
         }}
       />
 
-      <div className="max-w-4xl mx-auto px-6 md:px-8 relative z-10">
+      <div className="max-w-5xl mx-auto px-6 md:px-8 relative z-10">
 
         {/* Section header */}
         <div
@@ -58,6 +61,37 @@ function About() {
               Deeply interested in the convergence of DevOps and AI, with a growing focus on MLOps and building scalable, intelligent systems.
             </p>
           </div>
+        </div>
+
+        {/* Interactive shell */}
+        <div
+          ref={termRef}
+          className={`mt-14 reveal ${termVisible ? 'is-visible' : ''}`}
+          style={{ transitionDelay: '0.1s' }}
+        >
+          <div className="text-center mb-5">
+            <div
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-3"
+              style={{
+                background: 'rgba(30,58,138,0.1)',
+                border: '1px solid rgba(30,58,138,0.2)',
+                fontSize: '12px',
+                fontWeight: 600,
+                letterSpacing: '1.5px',
+                textTransform: 'uppercase',
+                color: 'var(--color-primary)',
+              }}
+            >
+              <FaTerminal />
+              Interactive shell
+            </div>
+            <p className="text-sm md:text-base text-[var(--text-secondary)] max-w-xl mx-auto m-0 leading-relaxed">
+              I automate infrastructure for a living, so this portfolio ships with a working shell.
+              Explore it like you would a cluster — type a command, or click one below.
+            </p>
+          </div>
+
+          <Terminal />
         </div>
       </div>
     </section>
