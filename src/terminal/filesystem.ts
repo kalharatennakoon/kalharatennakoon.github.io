@@ -40,8 +40,6 @@ export interface FsDir {
   name: string
   meta: string
   children: Record<string, FsNode>
-  /** Page section this directory mirrors — `cd` scrolls there too. */
-  sectionId?: string
 }
 
 export type FsNode = FsFile | FsDir
@@ -54,12 +52,12 @@ const file = (name: string, meta: string, render: () => Segment[][], open?: stri
   open,
 })
 
-const dir = (
-  name: string,
-  meta: string,
-  children: Record<string, FsNode>,
-  sectionId?: string,
-): FsDir => ({ type: 'dir', name, meta, children, sectionId })
+const dir = (name: string, meta: string, children: Record<string, FsNode>): FsDir => ({
+  type: 'dir',
+  name,
+  meta,
+  children,
+})
 
 /** Turn a list of nodes into the keyed record a directory needs. */
 const index = (nodes: FsNode[]): Record<string, FsNode> =>
@@ -195,9 +193,9 @@ export const root: FsDir = dir('~', 'home', index([
     line('resume.pdf: binary file — opening in a new tab…', 'dim'),
   ], resumePath),
 
-  dir('projects', `${projects.length} projects`, projectDirs, 'projects'),
-  dir('experience', `${experience.length} roles`, experienceDirs, 'experience'),
-  dir('certifications', `${certifications.length} certifications`, certGroups, 'certifications'),
+  dir('projects', `${projects.length} projects`, projectDirs),
+  dir('experience', `${experience.length} roles`, experienceDirs),
+  dir('certifications', `${certifications.length} certifications`, certGroups),
 
   dir('education', 'degree & coursework', index([
     file('README.md', 'degree detail', () => [
@@ -214,7 +212,7 @@ export const root: FsDir = dir('~', 'home', index([
     file('coursework.txt', `${education.coursework.length} modules`, () =>
       education.coursework.map((c) => [s('  • ', 'cyan'), s(c)]),
     ),
-  ]), 'education'),
+  ])),
 
   dir('achievements', `${achievements.length} awards`, index([
     file('README.md', 'award list', () =>
@@ -224,7 +222,7 @@ export const root: FsDir = dir('~', 'home', index([
         blank,
       ]),
     ),
-  ]), 'achievements'),
+  ])),
 
   dir('community', 'writing & volunteering', index([
     file('README.md', 'community roles', () =>
@@ -244,7 +242,7 @@ export const root: FsDir = dir('~', 'home', index([
       blank,
       [s('  medium  ', 'dim'), link('kalharatennakoon.medium.com', 'https://kalharatennakoon.medium.com')],
     ]),
-  ]), 'activities'),
+  ])),
 ]))
 
 /* ────────────────────────────────────────────────────────────────────────────

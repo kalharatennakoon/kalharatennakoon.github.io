@@ -116,11 +116,6 @@ function Terminal() {
     [],
   )
 
-  const navigate = useCallback((sectionId: string) => {
-    const el = document.getElementById(sectionId)
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }, [])
-
   const runCommand = useCallback(
     async (rawInput: string) => {
       const trimmed = rawInput.trim()
@@ -161,7 +156,6 @@ function Terminal() {
           raw: trimmed,
           print: (rows) => append('output', rows),
           clear: () => setLines([]),
-          navigate,
           cwd,
           setCwd,
           toggleTheme,
@@ -178,7 +172,7 @@ function Terminal() {
         setBusy(false)
       }
     },
-    [append, cwd, navigate, sleep, theme, toggleTheme],
+    [append, cwd, sleep, theme, toggleTheme],
   )
 
   const submit = useCallback(async () => {
@@ -274,7 +268,9 @@ function Terminal() {
   const focusInput = () => {
     /* Don't steal focus mid-selection — the user may be copying output. */
     if (window.getSelection()?.toString()) return
-    inputRef.current?.focus()
+    /* preventScroll: focusing an off-screen input would otherwise make the
+       browser scroll the page to it. The shell never moves the page. */
+    inputRef.current?.focus({ preventScroll: true })
   }
 
   return (
@@ -373,7 +369,7 @@ function Terminal() {
               setInput('')
               setHistoryIndex(null)
               void runCommand(cmd)
-              inputRef.current?.focus()
+              inputRef.current?.focus({ preventScroll: true })
             }}
           >
             {cmd}

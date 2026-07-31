@@ -35,8 +35,6 @@ export interface CommandContext {
   print: (rows: Segment[][]) => void
   /** Wipe the scrollback. */
   clear: () => void
-  /** Smooth-scroll the page to a section id. */
-  navigate: (sectionId: string) => void
   /** Current working directory, as path segments below the home directory. */
   cwd: string[]
   /** Change the working directory. */

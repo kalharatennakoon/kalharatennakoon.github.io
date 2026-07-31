@@ -905,7 +905,7 @@ export const commands: Command[] = [
     description: 'Change the working directory',
     category: 'navigation',
     completions: (cwd) => completionsFor(cwd, false),
-    run({ args, print, cwd, setCwd, navigate }) {
+    run({ args, print, cwd, setCwd }) {
       const target = args[0] ?? '~'
 
       const resolved = resolvePath(cwd, target)
@@ -916,12 +916,9 @@ export const commands: Command[] = [
         return print([error(`cd: ${target}: Not a directory`)])
       }
 
+      /* Deliberately does not scroll the page: changing directory should
+         leave the reader where they are, with the cursor in the shell. */
       setCwd(resolved.segments)
-
-      /* Directories that mirror a page section bring the page along with you. */
-      const sectionId = resolved.node.sectionId
-      if (sectionId) navigate(sectionId)
-      else if (resolved.segments.length === 0) navigate('hero')
 
       print([hint(`Now in ${displayPath(resolved.segments)} — run \`ls\` to see what's here.`)])
     },
