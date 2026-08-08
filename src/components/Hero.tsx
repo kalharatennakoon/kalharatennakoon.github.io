@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { FaArrowDown, FaDownload } from 'react-icons/fa'
+import useCountUp from '../hooks/useCountUp'
 
 const roles = [
   'DevSecOps & Cloud-Native',
@@ -9,10 +10,26 @@ const roles = [
 ]
 
 const stats = [
-  { value: '50+',   label: 'Articles Published' },
-  { value: '150K+', label: 'Total Views' },
-  { value: '13+',   label: 'Certifications' },
+  { value: 50,  suffix: '+',  label: 'Articles Published' },
+  { value: 150, suffix: 'K+', label: 'Total Views' },
+  { value: 13,  suffix: '+',  label: 'Certifications' },
 ]
+
+/** Shorthand for the stagger delay the .enter animation reads. */
+const delay = (seconds: number) => ({ '--enter-delay': `${seconds}s` } as CSSProperties)
+
+function Stat({ value, suffix, label, startDelay }: { value: number; suffix: string; label: string; startDelay: number }) {
+  const count = useCountUp(value, { delay: startDelay })
+
+  return (
+    <div>
+      <div style={{ fontSize: '1.5rem', fontWeight: 800, background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', fontVariantNumeric: 'tabular-nums' }}>
+        {count}{suffix}
+      </div>
+      <div style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 500, marginTop: '2px' }}>{label}</div>
+    </div>
+  )
+}
 
 function Hero() {
   const [text, setText]           = useState('')
@@ -46,32 +63,35 @@ function Hero() {
         <div style={{ flex: 1, minWidth: '280px' }}>
 
           {/* Status badge */}
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 16px', borderRadius: '9999px', background: 'rgba(30,58,138,0.1)', border: '1px solid rgba(30,58,138,0.2)', fontSize: '14px', fontWeight: 500, color: 'var(--color-primary)', marginBottom: '24px' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', display: 'inline-block' }} />
+          <div className="enter" style={{ ...delay(0.05), display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 16px', borderRadius: '9999px', background: 'rgba(30,58,138,0.1)', border: '1px solid rgba(30,58,138,0.2)', fontSize: '14px', fontWeight: 500, color: 'var(--color-primary)', marginBottom: '24px' }}>
+            <span className="animate-pulse-slow" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', display: 'inline-block', boxShadow: '0 0 8px rgba(16,185,129,0.9)' }} />
             Available for opportunities
           </div>
 
-          <div style={{ fontSize: '16px', fontWeight: 300, color: 'var(--text-secondary)', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '4px' }}>
+          <div className="enter" style={{ ...delay(0.12), fontSize: '16px', fontWeight: 300, color: 'var(--text-secondary)', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '4px' }}>
             Hello, I'm
           </div>
 
-          <h1 style={{ fontSize: 'clamp(2.5rem, 6vw, 3.75rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '16px' }}>
-            <span style={{ background: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 45%, #06b6d4 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+          <h1 className="enter" style={{ ...delay(0.19), fontSize: 'clamp(2.5rem, 6vw, 3.75rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '16px' }}>
+            <span
+              className="animate-gradient-text"
+              style={{ background: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 45%, #06b6d4 100%)', backgroundSize: '200% 200%', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
+            >
               Kalhara Tennakoon
             </span>
           </h1>
 
-          <h2 style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', fontWeight: 400, marginBottom: '24px', minHeight: '3rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <h2 className="enter" style={{ ...delay(0.26), fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', fontWeight: 400, marginBottom: '24px', minHeight: '3rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
             <span style={{ color: 'var(--color-primary)', fontWeight: 500 }}>{text}</span>
-            <span style={{ color: 'var(--color-primary)', fontWeight: 300, animation: 'blink 0.7s infinite' }}>|</span>
+            <span className="type-caret" style={{ color: 'var(--color-primary)', fontWeight: 300, animation: 'blink 0.7s infinite' }}>|</span>
           </h2>
 
-          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', maxWidth: '36rem', lineHeight: 1.75, marginBottom: '32px' }}>
+          <p className="enter" style={{ ...delay(0.33), fontSize: '18px', color: 'var(--text-secondary)', maxWidth: '36rem', lineHeight: 1.75, marginBottom: '32px' }}>
             Automating delivery pipelines and building reliable systems with cloud-native technologies
           </p>
 
           {/* CTA Buttons */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '40px' }}>
+          <div className="enter" style={{ ...delay(0.4), display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '40px' }}>
             <a href="#projects" className="glass-btn-primary px-7 py-3 font-semibold text-sm text-white"
               style={{ background: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 100%)' }}>
               View Projects
@@ -91,31 +111,37 @@ function Hero() {
           </div>
 
           {/* Stats */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '32px' }}>
-            {stats.map((s) => (
-              <div key={s.label}>
-                <div style={{ fontSize: '1.5rem', fontWeight: 800, background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                  {s.value}
-                </div>
-                <div style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 500, marginTop: '2px' }}>{s.label}</div>
-              </div>
+          <div className="enter" style={{ ...delay(0.47), display: 'flex', flexWrap: 'wrap', gap: '32px' }}>
+            {stats.map((s, i) => (
+              <Stat key={s.label} value={s.value} suffix={s.suffix} label={s.label} startDelay={700 + i * 120} />
             ))}
           </div>
         </div>
 
         {/* Right: profile photo */}
-        <div className="flex justify-center md:block" style={{ flexShrink: 0, width: '100%', maxWidth: '300px', margin: '0 auto' }}>
-          <div style={{ width: '300px', height: '300px', borderRadius: '50%', overflow: 'hidden', border: '3px solid rgba(59,130,246,0.4)' }}>
-            <img src="/profile.png" alt="Kalhara Tennakoon" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+        <div className="flex justify-center md:block enter" style={{ ...delay(0.25), flexShrink: 0, width: '100%', maxWidth: '300px', margin: '0 auto' }}>
+          <div className="animate-float" style={{ position: 'relative', width: '300px', height: '300px' }}>
+            <div className="avatar-halo" />
+            <div className="avatar-ring" style={{ width: '100%', height: '100%' }}>
+              <div className="avatar-frame">
+                <img src="/profile.png" alt="Kalhara Tennakoon" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+              </div>
+            </div>
           </div>
         </div>
 
       </div>
 
       {/* Scroll indicator — hidden on mobile to avoid overlap with stacked content */}
-      <div className="hidden md:flex" style={{ position: 'absolute', bottom: '32px', left: '50%', transform: 'translateX(-50%)', flexDirection: 'column', alignItems: 'center', gap: '8px', opacity: 0.6 }}>
-        <span style={{ fontSize: '10px', color: 'var(--text-secondary)', letterSpacing: '3px', textTransform: 'uppercase', fontWeight: 500 }}>Scroll</span>
-        <FaArrowDown style={{ color: 'var(--color-primary)', fontSize: '14px' }} />
+      {/* Three layers because each owns a different transform: the outer one
+          centres, .enter slides it in, .animate-bounce-slow loops. */}
+      <div className="hidden md:block" style={{ position: 'absolute', bottom: '32px', left: '50%', transform: 'translateX(-50%)' }}>
+        <div className="enter" style={delay(0.9)}>
+          <div className="animate-bounce-slow" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', opacity: 0.6 }}>
+            <span style={{ fontSize: '10px', color: 'var(--text-secondary)', letterSpacing: '3px', textTransform: 'uppercase', fontWeight: 500 }}>Scroll</span>
+            <FaArrowDown style={{ color: 'var(--color-primary)', fontSize: '14px' }} />
+          </div>
+        </div>
       </div>
     </section>
   )

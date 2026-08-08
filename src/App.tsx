@@ -12,8 +12,12 @@ import Activities from './components/Activities'
 import Blog from './components/Blog'
 import Contact from './components/Contact'
 import ScrollToTop from './components/ScrollToTop'
+import useSpotlight from './hooks/useSpotlight'
 
 function App() {
+  // Drives the cursor-following spotlight on every card root, site-wide.
+  useSpotlight()
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />

@@ -699,3 +699,187 @@
   opacity: 1;
   transform: scale(1) translateY(0);
 }
+
+/* ==========================================
+   Entrance Choreography
+   ==========================================
+   Above-the-fold content can't use the IntersectionObserver reveal system —
+   it is already in view when the page loads, so it would reveal all at once.
+   These run on mount instead, staggered via --enter-delay so the hero
+   assembles itself piece by piece.
+   ========================================== */
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ring-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes halo-breathe {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%      { opacity: 0.8;  transform: scale(1.07); }
+}
+
+.enter {
+  /* `both` holds the from-state through the delay. Without it a staggered
+     item sits at full opacity until its turn, then flashes. */
+  animation: rise-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--enter-delay, 0s);
+}
+
+/* ── Hero avatar: spinning conic ring + breathing halo ─────────────────── */
+
+.avatar-ring {
+  position: relative;
+  border-radius: 50%;
+  padding: 4px;
+}
+
+.avatar-ring::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    var(--color-primary),
+    #3b82f6,
+    #06b6d4,
+    #22d3ee,
+    #3b82f6,
+    var(--color-primary)
+  );
+  animation: ring-spin 9s linear infinite;
+}
+
+/* position:relative lifts the photo above the spinning ring, leaving only
+   the 4px of padding showing as the ring itself. */
+.avatar-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar-halo {
+  position: absolute;
+  inset: -14%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow-primary), transparent 68%);
+  filter: blur(26px);
+  pointer-events: none;
+  animation: halo-breathe 6s ease-in-out infinite;
+}
+
+/* ── Cursor spotlight ───────────────────────────────────────────────────
+ *  Rides on .shimmer-hover, which already marks every card root and brings
+ *  the position:relative + overflow:hidden this needs. Shimmer owns ::after,
+ *  so the spotlight takes ::before. Coordinates come from useSpotlight.
+ * ─────────────────────────────────────────────────────────────────────── */
+
+.shimmer-hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    240px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(59, 130, 246, 0.14),
+    transparent 72%
+  );
+}
+
+.shimmer-hover:hover::before {
+  opacity: 1;
+}
+
+:root[data-theme="dark"] .shimmer-hover::before {
+  background: radial-gradient(
+    240px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(96, 165, 250, 0.17),
+    transparent 72%
+  );
+}
+
+/* ==========================================
+   Fly-In Assembly  (Contact section)
+   ==========================================
+   Pieces sweep in from off-screen, rotating, overshoot slightly past their
+   resting place, then settle — the entrance used on amantha.lk.
+
+   One keyframe set drives every direction: each element supplies its own
+   start offset, rotation and overshoot through custom properties, so this is
+   a single animation with per-element vectors rather than a keyframe per
+   corner.
+
+   The easing is what sells it. cubic-bezier(0.16, 1, 0.3, 1) covers most of
+   the distance in the first fraction of the run, so a start point a full
+   viewport away arrives almost immediately and the eye only ever tracks the
+   rotation unwinding and the settle.
+   ========================================== */
+
+@keyframes fly-in {
+  0% {
+    opacity: 0;
+    transform: translate(var(--fly-x, 0), var(--fly-y, 0)) rotate(var(--fly-rot, 0deg));
+  }
+  60% {
+    opacity: 1;
+    transform: translate(var(--fly-ox, 0), var(--fly-oy, 0)) rotate(var(--fly-orot, 0deg));
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+/* Held invisible until the stage is armed, so nothing flashes before its run. */
+.fly-stage .fly-in {
+  opacity: 0;
+}
+
+.fly-stage.is-flying .fly-in {
+  animation-name: fly-in;
+  animation-duration: 0.8s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: both;
+  animation-delay: var(--fly-delay, 0s);
+}
+
+/* ==========================================
+   Reduced Motion
+   ==========================================
+   One global stop for the whole motion layer. Durations collapse to ~0ms
+   rather than 0 so transitionend/animationend still fire for anything that
+   listens, and reveal/enter rules land on their end state instead of being
+   stranded at opacity 0.
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html,
+  body {
+    scroll-behavior: auto !important;
+  }
+
+  /* blink ends on opacity:0, so a collapsed run would erase the typing caret
+     outright. Hold it visible instead. */
+  .type-caret {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
