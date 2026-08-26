@@ -32,7 +32,7 @@ const mascotMessages: Message[] = [
   },
   {
     badge: '💻 Terminal CLI',
-    text: 'Pro Tip: You can type `help`, `skills`, or `projects` in the terminal below!',
+    text: 'Pro Tip: You can type `help`, `projects`, or `resume` in the terminal below!',
     mode: 'general',
   },
   {
