@@ -88,6 +88,18 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'vetcare-pro',
+    name: 'vetcare-pro',
+    tagline: 'Smart veterinary clinic management system',
+    description:
+      'Full-stack veterinary platform supporting appointment, medical record, and inventory workflows, role-based access, and a SwiftUI app. ' +
+      'Features a local RAG assistant (Ollama & pgvector) with intelligent SQL query routing and ML services for disease & demand forecasting.',
+    stack: ['React', 'Node.js', 'PostgreSQL', 'pgvector', 'Python', 'Flask', 'Scikit-learn', 'Ollama', 'SwiftUI'],
+    status: 'Completed',
+    period: 'Oct 2025 – Aug 2026',
+    github: 'https://github.com/kalharatennakoon/vetcarepro',
+  },
+  {
     id: 'solarcast',
     name: 'solarcast',
     tagline: 'Personal solar energy forecasting app',
@@ -98,19 +110,6 @@ export const projects: Project[] = [
     stack: ['Python', 'FastAPI', 'React', 'Prophet', 'Pandas', 'REST APIs'],
     status: 'Running',
     period: 'Apr 2026 – Present',
-  },
-  {
-    id: 'vetcare-pro',
-    name: 'vetcare-pro',
-    tagline: 'Smart veterinary clinic management system',
-    description:
-      'Full-stack veterinary clinic platform with appointment scheduling, electronic medical records, ' +
-      'billing, and inventory workflows. RESTful APIs with secure JWT auth, plus ML services for disease ' +
-      'prediction and demand forecasting. Final year project — Grade A (76%).',
-    stack: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Python', 'Flask', 'Scikit-learn', 'JWT'],
-    status: 'Completed',
-    period: 'Oct 2025 – Mar 2026',
-    github: 'https://github.com/kalharatennakoon/vetcarepro',
   },
   {
     id: 'course-difficulty',

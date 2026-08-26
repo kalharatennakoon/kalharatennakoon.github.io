@@ -37,7 +37,7 @@ function Navbar() {
    *  Dark mode keeps the deeper navy glass for contrast.
    * ──────────────────────────────────────────────────────────────────── */
   const pillBg = isDark
-    ? 'rgba(12, 22, 50, 0.72)'         // dark navy glass
+    ? 'rgba(12, 22, 50, 0.65)'         // dark navy translucent glass
     : 'linear-gradient(135deg, rgba(235,244,255,0.68), rgba(200,220,255,0.52))'
 
   const pillBorder = isDark
@@ -54,7 +54,7 @@ function Navbar() {
 
   /* ── mobile dropdown glass ────────────────────────────────────────── */
   const dropBg = isDark
-    ? 'rgba(12, 22, 50, 0.82)'
+    ? 'rgba(12, 22, 50, 0.75)'
     : 'linear-gradient(135deg, rgba(235,244,255,0.76), rgba(210,228,255,0.64))'
 
   return (
@@ -67,8 +67,8 @@ function Navbar() {
           border:               pillBorder,
           borderRadius:         '9999px',
           boxShadow:            pillShadow,
-          backdropFilter:       isDark ? 'none' : 'blur(38px) saturate(1.9) brightness(1.06)',
-          WebkitBackdropFilter: isDark ? 'none' : 'blur(38px) saturate(1.9) brightness(1.06)',
+          backdropFilter:       isDark ? 'blur(24px) saturate(1.8) brightness(1.05)' : 'blur(38px) saturate(1.9) brightness(1.06)',
+          WebkitBackdropFilter: isDark ? 'blur(24px) saturate(1.8) brightness(1.05)' : 'blur(38px) saturate(1.9) brightness(1.06)',
         }}
       >
         {/* ① Specular highlight — top half of pill */}

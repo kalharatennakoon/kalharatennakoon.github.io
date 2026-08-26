@@ -12,6 +12,7 @@ import Activities from './components/Activities'
 import Blog from './components/Blog'
 import Contact from './components/Contact'
 import ScrollToTop from './components/ScrollToTop'
+import Mascot from './components/Mascot'
 import useSpotlight from './hooks/useSpotlight'
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Contact />
       </main>
       <ScrollToTop />
+      <Mascot />
       <CursorBubbles />
     </div>
   )

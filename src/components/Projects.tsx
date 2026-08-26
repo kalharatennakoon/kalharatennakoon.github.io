@@ -18,19 +18,21 @@ function Projects() {
 
   const projects: Project[] = [
     {
+      title: 'VetCare Pro – Smart Veterinary Clinic Management System',
+      description:
+        'Full-stack veterinary platform supporting appointment, medical record, and inventory workflows, role-based access, and a SwiftUI app. ' +
+        'Features a local RAG assistant (Ollama & pgvector) with intelligent SQL query routing and ML services for disease & demand forecasting.',
+      technologies: ['React', 'Node.js', 'PostgreSQL', 'pgvector', 'Python', 'Flask', 'Scikit-learn', 'Ollama', 'SwiftUI'],
+      icon: FaPaw,
+      github: 'https://github.com/kalharatennakoon/vetcarepro',
+      date: 'Oct 2025 – Aug 2026',
+    },
+    {
       title: 'SolarCast – Personal Solar Energy Forecasting App',
       description: 'Full-stack ML app predicting monthly solar energy generation, grid export, and cash payouts from residential inverter data using Meta\'s Prophet with 90% confidence intervals. Features an interactive React dashboard with CSV upload support.',
       technologies: ['Python', 'FastAPI', 'React', 'Prophet', 'Machine Learning', 'Time-Series Forecasting', 'Pandas', 'Data Visualization', 'REST APIs'],
       icon: FaSun,
       date: 'Apr 2026 – Present',
-    },
-    {
-      title: 'VetCare Pro: Smart Web-Based Veterinary Clinic Management System',
-      description: 'Full-stack veterinary clinic management system with appointment scheduling, electronic medical records, billing, inventory management, and an ML service for disease prediction and demand forecasting.',
-      technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Python', 'Flask', 'Scikit-learn', 'JWT'],
-      icon: FaPaw,
-      github: 'https://github.com/kalharatennakoon/vetcarepro',
-      date: 'Oct 2025 – Mar 2026',
     },
     {
       title: 'Predicting Course Difficulty from Student Evaluation Responses',

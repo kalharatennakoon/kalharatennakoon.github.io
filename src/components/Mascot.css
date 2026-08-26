@@ -1,0 +1,154 @@
+/* Mascot styles & animations */
+
+.mascot-wrapper {
+  position: fixed;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  left: max(24px, env(safe-area-inset-left));
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  pointer-events: none;
+  font-family: inherit;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+@media (max-width: 640px) {
+  .mascot-wrapper {
+    bottom: max(16px, env(safe-area-inset-bottom));
+    left: max(12px, env(safe-area-inset-left));
+  }
+}
+
+.mascot-interactive {
+  pointer-events: auto;
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mascot-float-anim {
+  animation: mascot-float 3.5s ease-in-out infinite;
+}
+
+.mascot-spin-anim {
+  animation: mascot-spin 0.6s ease-in-out;
+}
+
+.mascot-bounce-anim {
+  animation: mascot-bounce 0.5s ease-in-out;
+}
+
+@keyframes mascot-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1.5deg);
+  }
+}
+
+@keyframes mascot-spin {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.18); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes mascot-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  40% { transform: translateY(-18px) scale(1.1); }
+  60% { transform: translateY(-6px) scale(0.95); }
+}
+
+/* Antenna & Eye Glow */
+.mascot-glow-pulse {
+  animation: mascot-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes mascot-glow {
+  0% {
+    filter: drop-shadow(0 0 2px rgba(6, 182, 212, 0.6)) drop-shadow(0 0 6px rgba(59, 130, 246, 0.4));
+  }
+  100% {
+    filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.9)) drop-shadow(0 0 14px rgba(99, 102, 241, 0.7));
+  }
+}
+
+/* Floating Particles */
+.mascot-particle {
+  position: absolute;
+  pointer-events: none;
+  font-size: 14px;
+  font-weight: 700;
+  animation: mascot-particle-anim 1s ease-out forwards;
+}
+
+@keyframes mascot-particle-anim {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--p-x, 0px), var(--p-y, -40px)) scale(1.3);
+  }
+}
+
+/* Speech Bubble */
+.mascot-speech-bubble {
+  position: relative;
+  margin-bottom: 8px;
+  max-width: min(240px, calc(100vw - 32px));
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 500;
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  animation: mascot-bubble-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mascot-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 24px;
+  width: 12px;
+  height: 12px;
+  transform: rotate(45deg);
+  background: inherit;
+  border-right: inherit;
+  border-bottom: inherit;
+}
+
+@keyframes mascot-bubble-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Dark mode speech bubble */
+.mascot-bubble-dark {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #f1f5f9;
+}
+
+/* Light mode speech bubble */
+.mascot-bubble-light {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #0f172a;
+}

@@ -1,8 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 
-function useScrollReveal<T extends HTMLElement = HTMLDivElement>(threshold = 0.12) {
+interface ScrollRevealOptions {
+  threshold?: number
+  rootMargin?: string
+}
+
+function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
+  optionsParam: number | ScrollRevealOptions = 0.12
+) {
   const ref = useRef<T>(null)
   const [isVisible, setIsVisible] = useState(false)
+
+  const threshold = typeof optionsParam === 'number' ? optionsParam : (optionsParam.threshold ?? 0.12)
+  const rootMargin = typeof optionsParam === 'object' && optionsParam.rootMargin ? optionsParam.rootMargin : '0px 0px -50px 0px'
 
   useEffect(() => {
     const el = ref.current
@@ -14,11 +24,11 @@ function useScrollReveal<T extends HTMLElement = HTMLDivElement>(threshold = 0.1
           obs.unobserve(el)
         }
       },
-      { threshold, rootMargin: '0px 0px -60px 0px' }
+      { threshold, rootMargin }
     )
     obs.observe(el)
     return () => obs.disconnect()
-  }, [threshold])
+  }, [threshold, rootMargin])
 
   return [ref, isVisible] as const
 }
