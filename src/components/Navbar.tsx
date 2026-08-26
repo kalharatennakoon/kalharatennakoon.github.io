@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { FaSun, FaMoon, FaBars, FaTimes } from 'react-icons/fa'
-import { useTheme } from '../context/ThemeContext'
+import { useTheme } from '../hooks/useTheme'
 
 const navLinks = [
   { label: 'About',          href: '#about' },

@@ -1,5 +1,17 @@
 [
   {
+    "title": "I Built a Free Expense Tracker Using Apple Shortcuts",
+    "excerpt": "A step-by-step guide to building a free iPhone expense tracker using Apple Shortcuts, Numbers, and Apple Intelligence &#x2014; without any&#x2026;",
+    "date": "May 22, 2026",
+    "url": "https://medium.com/macoclock/i-built-a-free-expense-tracker-using-apple-shortcuts-aff8178775f6?source=rss-71d60f60a8aa------2",
+    "tags": [
+      "shortcuts",
+      "apple",
+      "free"
+    ],
+    "image": "https://cdn-images-1.medium.com/max/2186/1*W65_RN112Ky4gOrMiZRWBg.jpeg"
+  },
+  {
     "title": "Software Testing Processes for Beginners",
     "excerpt": "Different software testing types can be used to improve the quality of an application.",
     "date": "November 26, 2025",
@@ -58,17 +70,5 @@
       "containerization"
     ],
     "image": "https://cdn-images-1.medium.com/max/2600/1*BD4MIh6X3pcdtek0v16YPA.jpeg"
-  },
-  {
-    "title": "The Importance of Writing Clean Code.",
-    "excerpt": "How Clean Code Improves Project Efficiency",
-    "date": "April 7, 2025",
-    "url": "https://levelup.gitconnected.com/the-importance-of-writing-clean-code-a4d453814373?source=rss-71d60f60a8aa------2",
-    "tags": [
-      "best-practices",
-      "software-engineering",
-      "gui̇de"
-    ],
-    "image": "https://cdn-images-1.medium.com/max/2600/1*PSG01XT8CtYseRF1DjnzCQ.jpeg"
   }
 ]

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useTheme } from '../context/ThemeContext'
+import { useTheme } from '../hooks/useTheme'
 import useScrollReveal from '../hooks/useScrollReveal'
 import { completableNames, parse, resolve } from '../terminal/commands'
 import { displayPath } from '../terminal/filesystem'
