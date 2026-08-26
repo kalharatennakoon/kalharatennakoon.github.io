@@ -462,16 +462,11 @@ export const commands: Command[] = [
   {
     name: 'resume',
     usage: 'resume',
-    description: 'Download the full CV as a PDF',
+    description: 'Open the full CV as a PDF in a new tab',
     category: 'system',
     run({ print }) {
-      const a = document.createElement('a')
-      a.href = resumePath
-      a.download = 'Kalhara_Tennakoon_Resume.pdf'
-      document.body.appendChild(a)
-      a.click()
-      a.remove()
-      print([ok('Downloading Kalhara_Tennakoon_Resume.pdf…')])
+      window.open(resumePath, '_blank', 'noopener,noreferrer')
+      print([ok('Opening Kalhara_Tennakoon_Resume.pdf in a new tab…')])
     },
   },
 

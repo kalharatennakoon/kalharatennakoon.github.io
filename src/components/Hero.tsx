@@ -1,5 +1,5 @@
 import { useEffect, useState, type CSSProperties } from 'react'
-import { FaArrowDown, FaDownload } from 'react-icons/fa'
+import { FaArrowDown, FaExternalLinkAlt } from 'react-icons/fa'
 import useCountUp from '../hooks/useCountUp'
 
 const roles = [
@@ -101,11 +101,12 @@ function Hero() {
             </a>
             <a
               href="/Kalhara_Tennakoon_Resume.pdf"
-              download
+              target="_blank"
+              rel="noopener noreferrer"
               className="glass-btn px-7 py-3 font-semibold text-sm inline-flex items-center gap-2"
               style={{ color: 'var(--color-primary)' }}
             >
-              <FaDownload className="text-xs" />
+              <FaExternalLinkAlt className="text-xs" />
               Resume
             </a>
           </div>
