@@ -213,8 +213,50 @@ export const commands: Command[] = [
         blank,
         ...stats.map((st) => [s('  ' + st.value.padEnd(8), 'yellow', true), s(st.label, 'dim')]),
         blank,
-        hint('Next: `ls` to browse, or `kubectl get projects` to see the work.'),
+        hint('Next: `skills`, `projects`, or `kubectl get projects` to explore.'),
       ])
+    },
+  },
+
+  {
+    name: 'skills',
+    usage: 'skills',
+    description: 'Display tech stack, cloud tools & programming languages',
+    category: 'system',
+    run({ print }) {
+      const rows: Segment[][] = [
+        [s('TECHNICAL SKILLS & COMPETENCIES', 'cyan', true)],
+        blank,
+      ]
+      for (const group of skills) {
+        rows.push([s(`  ${group.label.padEnd(20)}`, 'yellow', true), s(group.items.join(' · '), 'dim')])
+      }
+      rows.push(blank, hint('Try `kubectl get skills` or `cat skills.txt` for deeper details.'))
+      print(rows)
+    },
+  },
+
+  {
+    name: 'projects',
+    usage: 'projects',
+    description: 'List featured projects and repositories',
+    category: 'system',
+    run({ print }) {
+      const rows: Segment[][] = [
+        [s('FEATURED PROJECTS', 'cyan', true)],
+        blank,
+      ]
+      for (const p of projects) {
+        rows.push([
+          s(`  ${p.name.padEnd(24)}`, 'green', true),
+          s(`[${p.status}]`, p.status === 'Running' ? 'yellow' : 'dim'),
+          s(`  ${p.tagline}`, 'dim'),
+        ])
+        rows.push([s(`    Stack: `, 'cyan'), s(p.stack.join(', '), 'dim')])
+        rows.push(blank)
+      }
+      rows.push(hint('Type `cat projects/vetcare-pro` or `kubectl describe project vetcare-pro` for details.'))
+      print(rows)
     },
   },
 
