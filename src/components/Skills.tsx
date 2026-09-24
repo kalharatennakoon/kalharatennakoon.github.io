@@ -1,31 +1,29 @@
 const skillGroups = [
   {
-    title: 'Programming & Backend',
-    skills: ['Python', 'Golang', 'Java', 'JavaScript', 'Node.js', 'FastAPI', 'Flask', 'REST APIs', 'Bash / Shell'],
+    title: 'Programming',
+    skills: ['Python', 'Java', 'Golang', 'JavaScript', 'C', 'Bash / Shell'],
+  },
+  {
+    title: 'Data & AI',
+    skills: ['Scikit-learn', 'Pandas', 'Prophet', 'pgvector', 'Ollama', 'SPSS', 'Jupyter Notebook', 'Power BI', 'EDA'],
   },
   {
     title: 'Cloud & DevOps',
-    skills: ['Docker', 'Kubernetes', 'GitHub Actions', 'Tekton', 'ArgoCD', 'Azure DevOps', 'CI/CD', 'Infrastructure as Code (IaC)'],
+    skills: ['Docker', 'Kubernetes', 'Tekton', 'ArgoCD', 'GitHub Actions', 'Azure DevOps', 'CI/CD', 'Infrastructure as Code (IaC)'],
   },
   {
     title: 'Cloud Platforms',
     skills: ['Microsoft Azure', 'AWS', 'Google Cloud Platform', 'AKS', 'GKE', 'Rancher'],
   },
   {
-    title: 'AI/ML & Data',
-    skills: ['Scikit-learn', 'pgvector', 'Ollama', 'Pandas', 'Prophet', 'Machine Learning', 'Data Analysis', 'Jupyter Notebook', 'Power BI'],
+    title: 'Web & Databases',
+    skills: ['React', 'Node.js', 'Flask', 'FastAPI', 'REST APIs', 'PostgreSQL', 'MySQL', 'MongoDB'],
   },
   {
-    title: 'Frontend & Databases',
-    skills: ['React', 'PostgreSQL', 'MongoDB', 'MySQL', 'HTML / CSS'],
-  },
-  {
-    title: 'Tools & Collaboration',
-    skills: ['Git', 'GitHub', 'Jira', 'Agile / Scrum', 'Technical Writing', 'Figma'],
+    title: 'Tools & Practices',
+    skills: ['Git', 'GitHub', 'Agile', 'Scrum', 'Jira', 'Technical Documentation'],
   },
 ]
-
-const currentlyExploring = ['MLOps', 'LLM Applications', 'AI Infrastructure', 'Agentic AI Systems', 'Cloud Security']
 
 function Skills() {
   return (
@@ -34,11 +32,11 @@ function Skills() {
 
         {/* Section header */}
         <div style={{ marginBottom: '1.25rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--border-color)' }}>
-          <h2 style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-primary)', margin: 0 }}>Technical Expertise</h2>
+          <h2 style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-primary)', margin: 0 }}>Technical Skills</h2>
         </div>
 
         {/* Skill groups */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {skillGroups.map((group) => (
             <div key={group.title} className="flex flex-col sm:flex-row" style={{ gap: '0.5rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
               <span style={{
@@ -64,33 +62,6 @@ function Skills() {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Currently Exploring */}
-        <div style={{ paddingTop: '1rem', borderTop: '1px solid var(--border-color)' }}>
-          <div className="flex flex-col sm:flex-row" style={{ gap: '0.5rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-            <span style={{
-              fontSize: '0.68rem', fontWeight: 700, color: 'var(--text-secondary)',
-              textTransform: 'uppercase', letterSpacing: '0.08em',
-              whiteSpace: 'nowrap', minWidth: '9.5rem', paddingTop: '0.15rem',
-            }}>
-              Currently Exploring
-            </span>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem', flex: 1 }}>
-              {currentlyExploring.map((item) => (
-                <span key={item} style={{
-                  fontSize: '0.72rem', fontWeight: 500,
-                  color: 'var(--text-secondary)',
-                  background: 'transparent',
-                  border: '1px dashed var(--border-color)',
-                  borderRadius: '9999px',
-                  padding: '0.15rem 0.6rem',
-                }}>
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
 
       </div>

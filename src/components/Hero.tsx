@@ -1,18 +1,14 @@
-import { FaGithub, FaLinkedin, FaDownload } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaDownload, FaEnvelope } from 'react-icons/fa'
 
-const techStack = ['Docker', 'Kubernetes', 'Tekton', 'ArgoCD', 'Python', 'CI/CD', 'Azure', 'AWS', 'Machine Learning']
-
-const socialProof = [
-  '3× Microsoft Azure Certified',
-  'Two-Time Dan Kohn Scholar',
-  '150K+ Medium Views',
+const researchInterests = [
+  'MLOps & Machine Learning Systems',
+  'LLM Applications & Retrieval-Augmented Generation',
+  'AI Infrastructure',
+  'Agentic AI Systems',
+  'Cloud Security & DevSecOps',
 ]
 
-const currentlyBuilding = [
-  'SolarCast — ML-powered solar energy forecasting platform (FastAPI + React + Prophet)',
-  'Exploring MLOps & AI infrastructure pipelines',
-  'Writing about Kubernetes & cloud-native engineering on Medium',
-]
+const buttonStyle = { display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-primary)', background: 'transparent', border: '1px solid var(--border-color)', borderRadius: '9999px', padding: '0.4rem 1.1rem', textDecoration: 'none', letterSpacing: '0.04em' }
 
 function Hero() {
   return (
@@ -29,69 +25,56 @@ function Hero() {
               Kalhara Tennakoon
             </h1>
 
-            {/* Role identity */}
-            <p style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', fontWeight: 500, color: 'var(--text-secondary)', letterSpacing: '-0.01em', lineHeight: 1.4, margin: '0 0 1rem' }}>
-              Software Engineer focused on Cloud-Native Systems, DevSecOps & AI Infrastructure
+            {/* Degree identity */}
+            <p style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', fontWeight: 500, color: 'var(--text-secondary)', letterSpacing: '-0.01em', lineHeight: 1.4, margin: '0 0 0.35rem' }}>
+              BSc (Hons) Computer Science (Software Engineering) · First Class Honours
+            </p>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0 0 1rem' }}>
+              Kingston University, London · Kurunegala, Sri Lanka
             </p>
 
-            {/* Short description */}
+            {/* Academic profile */}
             <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.75, margin: '0 0 1rem' }}>
-              Early-career engineer with hands-on industry experience in software development, cloud-native systems, and automation. Skilled in Kubernetes, Docker, CI/CD automation, and cloud platforms including Azure and AWS. Passionate about DevSecOps, MLOps, AI infrastructure, and technical knowledge sharing.
+              Computer Science graduate with First Class Honours, ranked top of the Software Engineering batch at ESU Kandy, with industry experience in cloud-native systems and DevOps automation at IFS R&D International. My undergraduate work applies machine learning to real problems: a final-year clinic management system with a local RAG assistant and forecasting models (Grade A, Ascentic AI Launch Pad Top 10), and a statistical study predicting perceived course difficulty from student evaluations. I am seeking graduate study at the intersection of machine learning and reliable, secure systems infrastructure.
             </p>
 
-            {/* Tech stack */}
-            <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', margin: '0 0 1.25rem', letterSpacing: '0.01em' }}>
-              {techStack.join(' · ')}
-            </p>
+            {/* Research interests */}
+            <div style={{ marginBottom: '1.25rem' }}>
+              <p style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-primary)', margin: '0 0 0.4rem' }}>
+                Research Interests
+              </p>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+                {researchInterests.join(' · ')}
+              </p>
+            </div>
 
             {/* CTA buttons */}
-            <div style={{ display: 'flex', gap: '0.625rem', flexWrap: 'wrap', marginBottom: '1.25rem', alignItems: 'center' }}>
+            <div className="no-print" style={{ display: 'flex', gap: '0.625rem', flexWrap: 'wrap', alignItems: 'center' }}>
               <a
                 href="/Kalhara_Tennakoon_Resume.pdf"
-                download="Kalhara_Tennakoon_Resume.pdf"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.75rem', fontWeight: 600, color: 'var(--bg-primary)', background: 'var(--text-primary)', border: '1px solid var(--text-primary)', borderRadius: '9999px', padding: '0.4rem 1.1rem', textDecoration: 'none', letterSpacing: '0.04em' }}
+                download="Kalhara_Tennakoon_CV.pdf"
+                style={{ ...buttonStyle, color: 'var(--bg-primary)', background: 'var(--text-primary)', border: '1px solid var(--text-primary)' }}
                 onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.8' }}
                 onMouseLeave={(e) => { e.currentTarget.style.opacity = '1' }}
               >
-                <FaDownload size={10} /> Resume
+                <FaDownload size={10} /> CV (PDF)
               </a>
-              <a
-                href="https://github.com/kalharatennakoon"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-primary)', background: 'transparent', border: '1px solid var(--border-color)', borderRadius: '9999px', padding: '0.4rem 1.1rem', textDecoration: 'none', letterSpacing: '0.04em' }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--text-primary)' }}
-                onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-color)' }}
-              >
-                <FaGithub size={12} /> GitHub
-              </a>
-              <a
-                href="https://www.linkedin.com/in/kalharatennakoon"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-primary)', background: 'transparent', border: '1px solid var(--border-color)', borderRadius: '9999px', padding: '0.4rem 1.1rem', textDecoration: 'none', letterSpacing: '0.04em' }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--text-primary)' }}
-                onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-color)' }}
-              >
-                <FaLinkedin size={12} /> LinkedIn
-              </a>
-            </div>
-
-            {/* Social proof */}
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', margin: '0 0 1.5rem', letterSpacing: '0.02em' }}>
-              {socialProof.join(' · ')}
-            </p>
-
-            {/* Currently building */}
-            <div>
-              <p style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-primary)', margin: '0 0 0.4rem' }}>
-                Currently Building
-              </p>
-              <ul style={{ margin: 0, padding: '0 0 0 1rem', display: 'flex', flexDirection: 'column', gap: '0.25rem', listStyleType: 'disc' }}>
-                {currentlyBuilding.map((item) => (
-                  <li key={item} style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>{item}</li>
-                ))}
-              </ul>
+              {[
+                { href: 'mailto:kalharatennakoonmck@gmail.com', icon: <FaEnvelope size={12} />, label: 'Email', external: false },
+                { href: 'https://github.com/kalharatennakoon', icon: <FaGithub size={12} />, label: 'GitHub', external: true },
+                { href: 'https://www.linkedin.com/in/kalharatennakoon', icon: <FaLinkedin size={12} />, label: 'LinkedIn', external: true },
+              ].map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  style={buttonStyle}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--text-primary)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-color)' }}
+                >
+                  {link.icon} {link.label}
+                </a>
+              ))}
             </div>
 
           </div>

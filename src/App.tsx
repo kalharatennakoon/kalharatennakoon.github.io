@@ -4,6 +4,7 @@ import Education from './components/Education'
 import Experience from './components/Experience'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
+import Awards from './components/Awards'
 import Certifications from './components/Certifications'
 import Activities from './components/Activities'
 import Contact from './components/Contact'
@@ -15,10 +16,11 @@ function App() {
       <Navbar />
       <main className="flex-grow">
         <Hero />
-        <Projects />
-        <Skills />
-        <Experience />
         <Education />
+        <Projects />
+        <Awards />
+        <Experience />
+        <Skills />
         <Certifications />
         <Activities />
         <Contact />

@@ -429,6 +429,25 @@
 }
 
 /* ==========================================
+   Print (CV hard copy)
+   ========================================== */
+
+@media print {
+  .no-print { display: none !important; }
+
+  #hero { padding-top: 0 !important; }
+
+  section { background: #ffffff !important; }
+
+  /* Keep entries whole across page breaks */
+  section h2,
+  section li,
+  #projects [style*="border-radius: 8px"] {
+    break-inside: avoid;
+  }
+}
+
+/* ==========================================
    Scroll Reveal System
    ========================================== */
 

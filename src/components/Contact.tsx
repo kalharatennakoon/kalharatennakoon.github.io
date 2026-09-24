@@ -1,15 +1,10 @@
-import { FaEnvelope, FaGithub, FaLinkedin, FaMedium, FaStackOverflow } from 'react-icons/fa'
-import { FaXTwitter } from 'react-icons/fa6'
-import { SiBluesky } from 'react-icons/si'
+import { FaEnvelope, FaGithub, FaLinkedin, FaMedium } from 'react-icons/fa'
 
 const contactLinks = [
-  { href: 'mailto:kalharatennakoonmck@gmail.com', icon: <FaEnvelope size={16} />, label: 'Email', value: 'kalharatennakoonmck@gmail.com', external: false },
-  { href: 'https://www.linkedin.com/in/kalharatennakoon', icon: <FaLinkedin size={16} />, label: 'LinkedIn', value: 'linkedin.com/in/kalharatennakoon', external: true },
-  { href: 'https://github.com/kalharatennakoon', icon: <FaGithub size={16} />, label: 'GitHub', value: 'github.com/kalharatennakoon', external: true },
-  { href: 'https://kalharatennakoon.medium.com', icon: <FaMedium size={16} />, label: 'Medium', value: 'kalharatennakoon.medium.com', external: true },
-  { href: 'https://x.com/_KalharaT', icon: <FaXTwitter size={16} />, label: 'X', value: 'x.com/_KalharaT', external: true },
-  { href: 'https://bsky.app/profile/kalharatennakoon.bsky.social', icon: <SiBluesky size={16} />, label: 'Bluesky', value: 'kalharatennakoon.bsky.social', external: true },
-  { href: 'https://stackoverflow.com/users/13018789/kalhara-tennakoon', icon: <FaStackOverflow size={16} />, label: 'Stack Overflow', value: 'stackoverflow.com/users/13018789', external: true },
+  { href: 'mailto:kalharatennakoonmck@gmail.com', icon: <FaEnvelope size={13} />, label: 'Email', value: 'kalharatennakoonmck@gmail.com', external: false },
+  { href: 'https://www.linkedin.com/in/kalharatennakoon', icon: <FaLinkedin size={13} />, label: 'LinkedIn', value: 'linkedin.com/in/kalharatennakoon', external: true },
+  { href: 'https://github.com/kalharatennakoon', icon: <FaGithub size={13} />, label: 'GitHub', value: 'github.com/kalharatennakoon', external: true },
+  { href: 'https://kalharatennakoon.medium.com', icon: <FaMedium size={13} />, label: 'Medium', value: 'kalharatennakoon.medium.com', external: true },
 ]
 
 function Contact() {
@@ -22,21 +17,23 @@ function Contact() {
           <div style={{ marginBottom: '1.25rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--border-color)' }}>
             <h2 style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-primary)', margin: 0 }}>Contact</h2>
           </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem', marginBottom: '1rem' }}>
             {contactLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                title={link.label}
                 {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                style={{ display: 'inline-flex', alignItems: 'center', color: 'var(--text-secondary)', textDecoration: 'none' }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', color: 'var(--text-secondary)', textDecoration: 'none', width: 'fit-content' }}
                 onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)' }}
                 onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)' }}
               >
-                {link.icon}
+                {link.icon} {link.value}
               </a>
             ))}
           </div>
+          <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', fontStyle: 'italic', margin: 0 }}>
+            Academic and professional references available upon request.
+          </p>
         </div>
       </section>
 

@@ -1,3 +1,15 @@
+const coursework = [
+  'Object-Oriented Programming',
+  'Data Structures & Algorithms',
+  'Network Security',
+  'Database Design',
+  'UI/UX Design',
+  'Web Application Development',
+  'Research & Data Analysis',
+]
+
+const liStyle = { fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.65 }
+
 function Education() {
   return (
     <section id="education" style={{ background: 'var(--bg-primary)' }}>
@@ -12,15 +24,18 @@ function Education() {
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.2rem' }}>
               <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-primary)' }}>BSc (Hons) Computer Science (Software Engineering) - First Class Honours</span>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>Graduation: September 2026</span>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>2026</span>
             </div>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0 0 0.625rem' }}>Kingston University, London, United Kingdom</p>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0 0 0.625rem' }}>Kingston University, London, United Kingdom · Delivered via ESU Kandy, Sri Lanka</p>
             <ul style={{ margin: 0, padding: '0 0 0 1rem', display: 'flex', flexDirection: 'column', gap: '0.35rem', listStyleType: 'disc' }}>
-              <li style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
+              <li style={liStyle}>
+                <span style={{ fontWeight: 600 }}>Class Rank:</span> Batch Top – Software Engineering, ESU Kandy
+              </li>
+              <li style={liStyle}>
                 <span style={{ fontWeight: 600 }}>Final Year Project:</span> VetCare Pro - Smart Veterinary Clinic Management System | Grade: A (76%)
               </li>
-              <li style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
-                Batch Top – Software Engineering, ESU Kandy
+              <li style={liStyle}>
+                <span style={{ fontWeight: 600 }}>Relevant Coursework:</span> {coursework.join(', ')}
               </li>
             </ul>
           </div>
@@ -28,14 +43,14 @@ function Education() {
           {/* Maliyadeva College */}
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.2rem' }}>
-              <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-primary)' }}>High School</span>
+              <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-primary)' }}>Secondary Education</span>
             </div>
             <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0 0 0.5rem' }}>Maliyadeva College · Kurunegala, Sri Lanka</p>
             <ul style={{ margin: 0, padding: '0 0 0 1rem', display: 'flex', flexDirection: 'column', gap: '0.35rem', listStyleType: 'disc' }}>
-              <li style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
+              <li style={liStyle}>
                 <span style={{ fontWeight: 600 }}>GCE Advanced Level:</span> A, B, C · General English: A
               </li>
-              <li style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
+              <li style={liStyle}>
                 <span style={{ fontWeight: 600 }}>GCE Ordinary Level:</span> 9As
               </li>
             </ul>

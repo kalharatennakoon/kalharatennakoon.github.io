@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 
 const navLinks = [
-  { label: 'Projects',       href: '#projects' },
-  { label: 'Skills',         href: '#skills' },
-  { label: 'Experience',     href: '#experience' },
-  { label: 'Education',      href: '#education' },
-  { label: 'Certifications', href: '#certifications' },
-  { label: 'Writing',        href: '#activities' },
-  { label: 'Contact',        href: '#contact' },
+  { label: 'Education',  href: '#education' },
+  { label: 'Research',   href: '#projects' },
+  { label: 'Awards',     href: '#awards' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Skills',     href: '#skills' },
+  { label: 'Writing',    href: '#activities' },
+  { label: 'Contact',    href: '#contact' },
 ]
 
 function Navbar() {
@@ -24,7 +24,7 @@ function Navbar() {
   }, [scrollProgress])
 
   return (
-    <nav style={{
+    <nav className="no-print" style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 999,
       background: 'var(--bg-primary)',
       borderBottom: '1px solid var(--border-color)',

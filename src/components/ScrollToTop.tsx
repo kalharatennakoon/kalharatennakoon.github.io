@@ -15,6 +15,7 @@ function ScrollToTop() {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      className="no-print"
       aria-label="Scroll to top"
       title="Back to top"
       style={{
