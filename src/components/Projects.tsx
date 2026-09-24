@@ -17,15 +17,15 @@ const featuredProjects = [
   {
     title: 'VetCare Pro',
     subtitle: 'Smart Veterinary Clinic Management System',
-    summary: 'Full-stack veterinary management platform integrating RESTful services, ML pipelines, and secure authentication for real-world clinical workflows.',
+    summary: 'Full-stack veterinary clinic platform covering appointments, medical records, billing, and inventory, with role-based access, a pet owner portal, and a SwiftUI companion app.',
     highlights: [
-      'ML services for disease prediction, sales forecasting, and inventory demand forecasting (Python + Scikit-learn)',
-      'RESTful API design with modular Node.js/Express backend and JWT-based authentication',
-      'Appointment scheduling, electronic medical records, billing, and inventory management workflows',
+      'Local RAG assistant using locally hosted LLMs and pgvector, with intelligent routing between semantic retrieval and exact SQL queries',
+      'Human-in-the-loop database controls requiring confirmation for write actions',
+      'ML models for disease prediction, sales forecasting, and inventory demand forecasting',
     ],
-    technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Python', 'Flask', 'Scikit-learn', 'JWT'],
+    technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'pgvector', 'Python', 'Flask', 'Scikit-learn', 'Ollama', 'SwiftUI', 'JWT'],
     github: 'https://github.com/kalharatennakoon/vetcarepro',
-    date: 'Oct 2025 – Mar 2026',
+    date: 'Oct 2025 – Aug 2026',
     tag: 'Final Year Project',
   },
   {

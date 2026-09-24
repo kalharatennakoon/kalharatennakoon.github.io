@@ -19,6 +19,9 @@ function Education() {
               <li style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
                 <span style={{ fontWeight: 600 }}>Final Year Project:</span> VetCare Pro - Smart Veterinary Clinic Management System | Grade: A (76%)
               </li>
+              <li style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
+                Batch Top – Software Engineering, ESU Kandy
+              </li>
             </ul>
           </div>
 

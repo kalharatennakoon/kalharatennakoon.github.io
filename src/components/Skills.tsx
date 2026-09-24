@@ -13,7 +13,7 @@ const skillGroups = [
   },
   {
     title: 'AI/ML & Data',
-    skills: ['Scikit-learn', 'Pandas', 'Prophet', 'Machine Learning', 'Data Analysis', 'Jupyter Notebook', 'Power BI'],
+    skills: ['Scikit-learn', 'pgvector', 'Ollama', 'Pandas', 'Prophet', 'Machine Learning', 'Data Analysis', 'Jupyter Notebook', 'Power BI'],
   },
   {
     title: 'Frontend & Databases',
