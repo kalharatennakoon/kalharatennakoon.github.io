@@ -1,148 +1,94 @@
-import { useEffect, useState, type CSSProperties } from 'react'
-import { FaArrowDown, FaExternalLinkAlt } from 'react-icons/fa'
-import useCountUp from '../hooks/useCountUp'
+import { FaGithub, FaLinkedin, FaDownload, FaEnvelope } from 'react-icons/fa'
 
-const roles = [
-  'DevSecOps & Cloud-Native',
-  '2x KubeCon Scholar',
-  'First Class CS Graduate',
-  'Technical Writer',
+const researchInterests = [
+  'MLOps & Machine Learning Systems',
+  'LLM Applications & Retrieval-Augmented Generation',
+  'AI Infrastructure',
+  'Agentic AI Systems',
+  'Cloud Security & DevSecOps',
 ]
 
-const stats = [
-  { value: 50,  suffix: '+',  label: 'Articles Published' },
-  { value: 150, suffix: 'K+', label: 'Total Views' },
-  { value: 13,  suffix: '+',  label: 'Certifications' },
-]
-
-/** Shorthand for the stagger delay the .enter animation reads. */
-const delay = (seconds: number) => ({ '--enter-delay': `${seconds}s` } as CSSProperties)
-
-function Stat({ value, suffix, label, startDelay }: { value: number; suffix: string; label: string; startDelay: number }) {
-  const count = useCountUp(value, { delay: startDelay })
-
-  return (
-    <div>
-      <div style={{ fontSize: '1.5rem', fontWeight: 800, background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', fontVariantNumeric: 'tabular-nums' }}>
-        {count}{suffix}
-      </div>
-      <div style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 500, marginTop: '2px' }}>{label}</div>
-    </div>
-  )
-}
+const buttonStyle = { display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-primary)', background: 'transparent', border: '1px solid var(--border-color)', borderRadius: '9999px', padding: '0.4rem 1.1rem', textDecoration: 'none', letterSpacing: '0.04em' }
 
 function Hero() {
-  const [text, setText]           = useState('')
-  const [isDeleting, setIsDeleting] = useState(false)
-  const [loopNum, setLoopNum]     = useState(0)
-  const [typingSpeed, setTypingSpeed] = useState(150)
-
-  useEffect(() => {
-    const handle = () => {
-      const i        = loopNum % roles.length
-      const fullText = roles[i]
-      setText(isDeleting
-        ? fullText.substring(0, text.length - 1)
-        : fullText.substring(0, text.length + 1))
-      setTypingSpeed(isDeleting ? 50 : 150)
-      if (!isDeleting && text === fullText) setTimeout(() => setIsDeleting(true), 2000)
-      else if (isDeleting && text === '') { setIsDeleting(false); setLoopNum(loopNum + 1) }
-    }
-    const t = setTimeout(handle, typingSpeed)
-    return () => clearTimeout(t)
-  }, [text, isDeleting, loopNum, typingSpeed])
-
   return (
-    <section
-      id="hero"
-      style={{ background: 'var(--bg-primary)', minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative' }}
-    >
-      <div style={{ maxWidth: '72rem', margin: '0 auto', padding: '8rem 1.5rem', width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: '3rem', flexWrap: 'wrap' }}>
+    <section id="hero" style={{ background: 'var(--bg-primary)', paddingTop: '52px' }}>
+      <div style={{ maxWidth: '64rem', margin: '0 auto', padding: '2.5rem 1.5rem 2rem', borderBottom: '2px solid var(--text-primary)' }}>
 
-        {/* Left: text */}
-        <div style={{ flex: 1, minWidth: '280px' }}>
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start" style={{ gap: '2rem' }}>
 
-          {/* Status badge */}
-          <div className="enter" style={{ ...delay(0.05), display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 16px', borderRadius: '9999px', background: 'rgba(30,58,138,0.1)', border: '1px solid rgba(30,58,138,0.2)', fontSize: '14px', fontWeight: 500, color: 'var(--color-primary)', marginBottom: '24px' }}>
-            <span className="animate-pulse-slow" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', display: 'inline-block', boxShadow: '0 0 8px rgba(16,185,129,0.9)' }} />
-            Available for opportunities
-          </div>
+          {/* Left column */}
+          <div style={{ flex: 1 }}>
 
-          <div className="enter" style={{ ...delay(0.12), fontSize: '16px', fontWeight: 300, color: 'var(--text-secondary)', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '4px' }}>
-            Hello, I'm
-          </div>
-
-          <h1 className="enter" style={{ ...delay(0.19), fontSize: 'clamp(2.5rem, 6vw, 3.75rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '16px' }}>
-            <span
-              className="animate-gradient-text"
-              style={{ background: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 45%, #06b6d4 100%)', backgroundSize: '200% 200%', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
-            >
+            {/* Name */}
+            <h1 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 0.5rem' }}>
               Kalhara Tennakoon
-            </span>
-          </h1>
+            </h1>
 
-          <h2 className="enter" style={{ ...delay(0.26), fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', fontWeight: 400, marginBottom: '24px', minHeight: '3rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <span style={{ color: 'var(--color-primary)', fontWeight: 500 }}>{text}</span>
-            <span className="type-caret" style={{ color: 'var(--color-primary)', fontWeight: 300, animation: 'blink 0.7s infinite' }}>|</span>
-          </h2>
+            {/* Degree identity */}
+            <p style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', fontWeight: 500, color: 'var(--text-secondary)', letterSpacing: '-0.01em', lineHeight: 1.4, margin: '0 0 0.35rem' }}>
+              BSc (Hons) Computer Science (Software Engineering) · First Class Honours
+            </p>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0 0 1rem' }}>
+              Kingston University, London · Kurunegala, Sri Lanka
+            </p>
 
-          <p className="enter" style={{ ...delay(0.33), fontSize: '18px', color: 'var(--text-secondary)', maxWidth: '36rem', lineHeight: 1.75, marginBottom: '32px' }}>
-            Automating delivery pipelines and building reliable systems with cloud-native technologies
-          </p>
+            {/* Academic profile */}
+            <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.75, margin: '0 0 1rem' }}>
+              Computer Science graduate with First Class Honours, ranked top of the Software Engineering batch at ESU Kandy, with industry experience in cloud-native systems and DevOps automation at IFS R&D International. My undergraduate work applies machine learning to real problems: a final-year veterinary clinic management system with ML forecasting models (Grade A), later extended with a local RAG assistant that reached the Top 10 of the Ascentic AI Launch Pad, and a statistical study predicting perceived course difficulty from student evaluations. I am seeking graduate study at the intersection of machine learning and reliable, secure systems infrastructure.
+            </p>
 
-          {/* CTA Buttons */}
-          <div className="enter" style={{ ...delay(0.4), display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '40px' }}>
-            <a href="#projects" className="glass-btn-primary px-7 py-3 font-semibold text-sm text-white"
-              style={{ background: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 100%)' }}>
-              View Projects
-            </a>
-            <a href="#contact" className="glass-btn px-7 py-3 font-semibold text-sm" style={{ color: 'var(--color-primary)' }}>
-              Get In Touch
-            </a>
-            <a
-              href="/Kalhara_Tennakoon_Resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glass-btn px-7 py-3 font-semibold text-sm inline-flex items-center gap-2"
-              style={{ color: 'var(--color-primary)' }}
-            >
-              <FaExternalLinkAlt className="text-xs" />
-              Resume
-            </a>
-          </div>
-
-          {/* Stats */}
-          <div className="enter" style={{ ...delay(0.47), display: 'flex', flexWrap: 'wrap', gap: '32px' }}>
-            {stats.map((s, i) => (
-              <Stat key={s.label} value={s.value} suffix={s.suffix} label={s.label} startDelay={700 + i * 120} />
-            ))}
-          </div>
-        </div>
-
-        {/* Right: profile photo */}
-        <div className="flex justify-center md:block enter" style={{ ...delay(0.25), flexShrink: 0, width: '100%', maxWidth: '300px', margin: '0 auto' }}>
-          <div className="animate-float" style={{ position: 'relative', width: '300px', height: '300px' }}>
-            <div className="avatar-halo" />
-            <div className="avatar-ring" style={{ width: '100%', height: '100%' }}>
-              <div className="avatar-frame">
-                <img src="/profile.png" alt="Kalhara Tennakoon" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
-              </div>
+            {/* Research interests */}
+            <div style={{ marginBottom: '1.25rem' }}>
+              <p style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-primary)', margin: '0 0 0.4rem' }}>
+                Research Interests
+              </p>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+                {researchInterests.join(' · ')}
+              </p>
             </div>
+
+            {/* CTA buttons */}
+            <div className="no-print" style={{ display: 'flex', gap: '0.625rem', flexWrap: 'wrap', alignItems: 'center' }}>
+              <a
+                href="/Kalhara_Tennakoon_CV.pdf"
+                download="Kalhara_Tennakoon_CV.pdf"
+                style={{ ...buttonStyle, color: 'var(--bg-primary)', background: 'var(--text-primary)', border: '1px solid var(--text-primary)' }}
+                onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.8' }}
+                onMouseLeave={(e) => { e.currentTarget.style.opacity = '1' }}
+              >
+                <FaDownload size={10} /> CV (PDF)
+              </a>
+              {[
+                { href: 'mailto:kalharatennakoonmck@gmail.com', icon: <FaEnvelope size={12} />, label: 'Email', external: false },
+                { href: 'https://github.com/kalharatennakoon', icon: <FaGithub size={12} />, label: 'GitHub', external: true },
+                { href: 'https://www.linkedin.com/in/kalharatennakoon', icon: <FaLinkedin size={12} />, label: 'LinkedIn', external: true },
+              ].map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  style={buttonStyle}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--text-primary)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-color)' }}
+                >
+                  {link.icon} {link.label}
+                </a>
+              ))}
+            </div>
+
           </div>
+
+          {/* Photo */}
+          <img
+            src="/profile.png"
+            alt="Kalhara Tennakoon"
+            className="self-start order-first sm:order-last w-28 h-28 sm:w-[150px] sm:h-[150px]"
+            style={{ borderRadius: '50%', objectFit: 'cover', objectPosition: 'top', flexShrink: 0, border: '1px solid var(--border-color)' }}
+          />
+
         </div>
 
-      </div>
-
-      {/* Scroll indicator — hidden on mobile to avoid overlap with stacked content */}
-      {/* Three layers because each owns a different transform: the outer one
-          centres, .enter slides it in, .animate-bounce-slow loops. */}
-      <div className="hidden md:block" style={{ position: 'absolute', bottom: '32px', left: '50%', transform: 'translateX(-50%)' }}>
-        <div className="enter" style={delay(0.9)}>
-          <div className="animate-bounce-slow" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', opacity: 0.6 }}>
-            <span style={{ fontSize: '10px', color: 'var(--text-secondary)', letterSpacing: '3px', textTransform: 'uppercase', fontWeight: 500 }}>Scroll</span>
-            <FaArrowDown style={{ color: 'var(--color-primary)', fontSize: '14px' }} />
-          </div>
-        </div>
       </div>
     </section>
   )
