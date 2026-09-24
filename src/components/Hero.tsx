@@ -35,7 +35,7 @@ function Hero() {
 
             {/* Academic profile */}
             <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.75, margin: '0 0 1rem' }}>
-              Computer Science graduate with First Class Honours, ranked top of the Software Engineering batch at ESU Kandy, with industry experience in cloud-native systems and DevOps automation at IFS R&D International. My undergraduate work applies machine learning to real problems: a final-year clinic management system with a local RAG assistant and forecasting models (Grade A, Ascentic AI Launch Pad Top 10), and a statistical study predicting perceived course difficulty from student evaluations. I am seeking graduate study at the intersection of machine learning and reliable, secure systems infrastructure.
+              Computer Science graduate with First Class Honours, ranked top of the Software Engineering batch at ESU Kandy, with industry experience in cloud-native systems and DevOps automation at IFS R&D International. My undergraduate work applies machine learning to real problems: a final-year veterinary clinic management system with ML forecasting models (Grade A), later extended with a local RAG assistant that reached the Top 10 of the Ascentic AI Launch Pad, and a statistical study predicting perceived course difficulty from student evaluations. I am seeking graduate study at the intersection of machine learning and reliable, secure systems infrastructure.
             </p>
 
             {/* Research interests */}

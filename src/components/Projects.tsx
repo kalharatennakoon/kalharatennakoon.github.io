@@ -15,17 +15,17 @@ const projects: Project[] = [
   {
     title: 'VetCare Pro',
     subtitle: 'Smart Veterinary Clinic Management System',
-    summary: 'Full-stack veterinary clinic platform covering appointments, medical records, billing, and inventory, with role-based access, a pet owner portal, and a SwiftUI companion app.',
+    summary: 'Full-stack veterinary clinic management platform, developed as my final year project (Oct 2025 – Mar 2026, Grade A) and then extended with AI features for the Ascentic AI Launch Pad through Aug 2026.',
     highlights: [
-      'Local RAG assistant using locally hosted LLMs and pgvector, with intelligent routing between semantic retrieval and exact SQL queries',
-      'Human-in-the-loop database controls requiring confirmation for write actions',
-      'ML models for disease prediction, sales forecasting, and inventory demand forecasting',
-      'Awarded Grade A (76%); selected for the Top 10 of the Ascentic AI Launch Pad',
+      'Final year project: appointments, medical records, billing, and inventory management with role-based access, a RESTful Node.js/Express API, and JWT authentication',
+      'Final year project: ML models for disease prediction, sales forecasting, and inventory demand forecasting; awarded Grade A (76%)',
+      'AI Launch Pad extension: local RAG assistant using locally hosted LLMs and pgvector, routing between semantic retrieval and exact SQL queries, with human-in-the-loop confirmation for database writes',
+      'AI Launch Pad extension: pet owner portal and SwiftUI companion iOS app; selected for the Top 10',
     ],
     technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'pgvector', 'Python', 'Flask', 'Scikit-learn', 'Ollama', 'SwiftUI', 'JWT'],
     github: 'https://github.com/kalharatennakoon/vetcarepro',
     date: 'Oct 2025 – Aug 2026',
-    tag: 'Final Year Project',
+    tag: 'Final Year Project · AI Launch Pad',
   },
   {
     title: 'Predicting Course Difficulty from Student Evaluation Responses',
