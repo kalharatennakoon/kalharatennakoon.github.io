@@ -238,6 +238,11 @@ export interface Achievement {
 
 export const achievements: Achievement[] = [
   {
+    title: 'Top 10 Finalist — Ascentic AI Launch Pad',
+    detail: 'Invited to present VetCare Pro, an on-premise AI veterinary clinic system, at Final Demo Day',
+    date: '2026',
+  },
+  {
     title: 'Dan Kohn Scholarship — KubeCon + CloudNativeCon Europe',
     detail: 'Two-time recipient of the competitive scholarship recognizing cloud-native contributions',
     date: '2025 & 2022',
