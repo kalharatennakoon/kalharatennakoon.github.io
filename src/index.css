@@ -391,6 +391,30 @@
 .nav-link { color: var(--text-secondary); transition: color 0.15s; }
 .nav-link:hover { color: var(--text-primary); }
 
+/* Mobile menu toggle (hidden on desktop) */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0.4rem;
+  margin-right: -0.4rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  line-height: 0;
+}
+.nav-mobile-menu { display: none; }
+
+@media (max-width: 768px) {
+  .nav-desktop { display: none !important; }
+  .nav-toggle { display: inline-flex; }
+  .nav-bar { justify-content: flex-end !important; }
+  .nav-mobile-menu {
+    display: block;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-primary);
+  }
+}
+
 /* ==========================================
    Mobile Responsiveness
    ========================================== */
@@ -406,11 +430,6 @@
   #hero > div {
     padding-top: 1.5rem !important;
     padding-bottom: 1.25rem !important;
-  }
-
-  /* Navbar: reduce gap between links */
-  nav ul {
-    gap: 1rem !important;
   }
 
   /* Experience: stack title and date on mobile */
