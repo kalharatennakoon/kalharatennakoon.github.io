@@ -83,8 +83,8 @@ function Hero() {
           <img
             src="/profile.png"
             alt="Kalhara Tennakoon"
-            className="self-start"
-            style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', objectPosition: 'top', flexShrink: 0, border: '1px solid var(--border-color)' }}
+            className="self-start order-first sm:order-last w-28 h-28 sm:w-[150px] sm:h-[150px]"
+            style={{ borderRadius: '50%', objectFit: 'cover', objectPosition: 'top', flexShrink: 0, border: '1px solid var(--border-color)' }}
           />
 
         </div>
