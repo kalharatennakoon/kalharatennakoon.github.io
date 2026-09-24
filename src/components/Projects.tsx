@@ -70,8 +70,9 @@ const projects: Project[] = [
 
 function Projects() {
   return (
-    <section id="projects" style={{ background: 'var(--bg-primary)' }}>
-      <div style={{ maxWidth: '64rem', margin: '0 auto', padding: '2rem 1.5rem' }}>
+    <section id="projects" style={{ background: 'var(--bg-primary)', scrollMarginTop: '1.5rem' }}>
+      {/* Reduced top padding: follows Education on the same background */}
+      <div style={{ maxWidth: '64rem', margin: '0 auto', padding: '0.5rem 1.5rem 2rem' }}>
 
         {/* Section header */}
         <div style={{ marginBottom: '1.25rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--border-color)' }}>
