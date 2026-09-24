@@ -51,7 +51,7 @@ function Hero() {
             {/* CTA buttons */}
             <div className="no-print" style={{ display: 'flex', gap: '0.625rem', flexWrap: 'wrap', alignItems: 'center' }}>
               <a
-                href="/Kalhara_Tennakoon_Resume.pdf"
+                href="/Kalhara_Tennakoon_CV.pdf"
                 download="Kalhara_Tennakoon_CV.pdf"
                 style={{ ...buttonStyle, color: 'var(--bg-primary)', background: 'var(--text-primary)', border: '1px solid var(--text-primary)' }}
                 onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.8' }}
