@@ -10,11 +10,25 @@ const __dirname = path.dirname(__filename);
 const MEDIUM_RSS_URL = 'https://medium.com/feed/@kalharatennakoon';
 const OUTPUT_FILE = path.join(__dirname, '../public/blog-posts.json');
 
-function fetchRSS(url) {
+function fetchRSS(url, maxRedirects = 5) {
   return new Promise((resolve, reject) => {
-    https.get(url, (res) => {
+    if (maxRedirects <= 0) {
+      return reject(new Error('Too many redirects'));
+    }
+    const options = {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      },
+    };
+    https.get(url, options, (res) => {
+      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+        return resolve(fetchRSS(res.headers.location, maxRedirects - 1));
+      }
+      if (res.statusCode !== 200) {
+        return reject(new Error(`Request failed with status code ${res.statusCode}`));
+      }
       let data = '';
-      res.on('data', (chunk) => data += chunk);
+      res.on('data', (chunk) => { data += chunk; });
       res.on('end', () => resolve(data));
     }).on('error', reject);
   });
