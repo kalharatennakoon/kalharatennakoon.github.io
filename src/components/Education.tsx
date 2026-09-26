@@ -97,18 +97,6 @@ function Education() {
                 </div>
 
                 <div className="px-7 py-5 space-y-5">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="rounded-xl px-4 py-4 border border-[var(--border-color)]">
-                      <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Class Rank</p>
-                      <p className="text-sm font-semibold text-[var(--text-primary)] m-0">Batch Top – Software Engineering, ESU Kandy</p>
-                    </div>
-                    <div className="rounded-xl px-4 py-4 border border-[var(--border-color)]">
-                      <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Final Year Project</p>
-                      <p className="text-sm font-semibold text-[var(--text-primary)] m-0 mb-2">VetCare Pro – Smart Veterinary Clinic Management System</p>
-                      <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)]">Grade A (76%)</span>
-                    </div>
-                  </div>
-
                   <div>
                     <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Concentrations</p>
                     <div className="flex flex-wrap gap-2">

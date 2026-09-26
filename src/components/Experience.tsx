@@ -31,7 +31,7 @@ function Experience() {
       achievements: [
         'Built a cloud security scanning app using Docker and Kubernetes, improving container platform security posture',
         'Integrated scanning tools into CI/CD pipelines, enhancing vulnerability detection across deployment stages',
-        'Diagnosed and resolved runtime issues, maintaining 99.9% system uptime',
+        'Diagnosed deployment and runtime issues while authoring technical documentation to support system reliability and onboarding',
       ],
       stack: ['Kubernetes', 'Docker', 'Golang', 'AKS', 'GKE', 'ArgoCD', 'CI/CD'],
     },

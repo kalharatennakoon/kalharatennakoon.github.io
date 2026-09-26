@@ -2,14 +2,6 @@ import { FaTerminal } from 'react-icons/fa'
 import useScrollReveal from '../hooks/useScrollReveal'
 import Terminal from './Terminal'
 
-const researchInterests = [
-  'MLOps & Machine Learning Systems',
-  'LLM Applications & Retrieval-Augmented Generation',
-  'AI Infrastructure',
-  'Agentic AI Systems',
-  'Cloud Security & DevSecOps',
-]
-
 function About() {
   const [ref, isVisible] = useScrollReveal<HTMLDivElement>(0.2)
   const [termRef, termVisible] = useScrollReveal<HTMLDivElement>(0.05)
@@ -64,40 +56,10 @@ function About() {
               className="text-lg md:text-xl leading-relaxed text-[var(--text-primary)] m-0 px-4 relative z-10"
               style={{ fontFamily: '"Handlee", cursive', fontWeight: 400 }}
             >
-              DevOps Engineer driven by a strong passion for CI/CD automation, container orchestration, and cloud-native systems.
-              Microsoft Azure certified with hands-on experience in Kubernetes, Docker, Tekton, and ArgoCD.
-              Deeply interested in the convergence of DevOps and AI, with a growing focus on MLOps and building scalable, intelligent systems.
+              Software engineer and First Class Computer Science graduate with industry experience in DevOps and cloud-native systems at IFS.
+              I build full-stack applications, automate CI/CD with Kubernetes, Docker, Tekton, and ArgoCD, and ship machine learning features,
+              from forecasting models to a local RAG assistant. Focused on MLOps and bringing AI systems reliably into production.
             </p>
-          </div>
-        </div>
-
-        {/* Academic profile */}
-        <div
-          className={`mt-8 grid grid-cols-1 md:grid-cols-5 gap-6 reveal ${isVisible ? 'is-visible' : ''}`}
-          style={{ transitionDelay: '0.3s' }}
-        >
-          <div className="md:col-span-3 bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] transition-all duration-300 overflow-hidden shimmer-hover">
-            <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, var(--color-primary), #06b6d4)' }} />
-            <div className="px-7 py-6">
-              <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-3">Academic Profile</p>
-              <p className="text-sm text-[var(--text-secondary)] leading-relaxed m-0">
-                Computer Science graduate with First Class Honours, ranked top of the Software Engineering batch at ESU Kandy, with industry experience in cloud-native systems and DevOps automation at IFS R&amp;D International. My undergraduate work applies machine learning to real problems: a final-year veterinary clinic management system with ML forecasting models (Grade A), later extended with a local RAG assistant that reached the Top 10 of the Ascentic AI Launch Pad, and a statistical study predicting perceived course difficulty from student evaluations. I am seeking graduate study at the intersection of machine learning and reliable, secure systems infrastructure.
-              </p>
-            </div>
-          </div>
-
-          <div className="md:col-span-2 bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] transition-all duration-300 overflow-hidden shimmer-hover">
-            <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, var(--color-primary), #06b6d4)' }} />
-            <div className="px-7 py-6">
-              <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-3">Research Interests</p>
-              <div className="flex flex-wrap gap-2">
-                {researchInterests.map((interest) => (
-                  <span key={interest} className="px-3 py-1 bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] rounded-full text-xs font-medium border border-[rgba(30,58,138,0.2)] hover:bg-[rgba(30,58,138,0.14)] transition-colors">
-                    {interest}
-                  </span>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
 

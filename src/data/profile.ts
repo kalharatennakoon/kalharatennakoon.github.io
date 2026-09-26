@@ -8,15 +8,15 @@
 export const identity = {
   name: 'Kalhara Tennakoon',
   handle: 'kalharatennakoon',
-  role: 'DevOps Engineer',
+  role: 'Software, DevOps & AI/ML Engineer',
   location: 'Kurunegala, Sri Lanka',
   email: 'kalharatennakoonmck@gmail.com',
   site: 'kalharatennakoon.github.io',
   summary:
     'Computer Science graduate with hands-on industry experience in software development, ' +
-    'cloud-native systems, and automation. Focused on DevSecOps, MLOps, AI infrastructure, ' +
-    'and building reliable deployment workflows with Kubernetes, Docker, and CI/CD.',
-  focus: ['DevSecOps', 'MLOps', 'AI Infrastructure', 'Cloud-Native Platforms'],
+    'cloud-native systems, and automation. Builds full-stack applications, reliable deployment ' +
+    'workflows with Kubernetes, Docker, and CI/CD, and machine learning systems from model to production.',
+  focus: ['Software Engineering', 'DevOps & Cloud-Native', 'Machine Learning & MLOps', 'DevSecOps'],
 }
 
 export const links = [
@@ -237,6 +237,16 @@ export interface Achievement {
 }
 
 export const achievements: Achievement[] = [
+  {
+    title: 'Top 10 Finalist — Ascentic AI Launch Pad',
+    detail: 'Presented VetCare Pro, with its local RAG assistant and ML forecasting models, at Demo Day',
+    date: '2026',
+  },
+  {
+    title: 'Batch Top — Software Engineering, ESU Kandy',
+    detail: 'Ranked first in the Software Engineering cohort',
+    date: '2026',
+  },
   {
     title: 'Dan Kohn Scholarship — KubeCon + CloudNativeCon Europe',
     detail: 'Two-time recipient of the competitive scholarship recognizing cloud-native contributions',
