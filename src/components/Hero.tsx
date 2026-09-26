@@ -1,4 +1,4 @@
-import { FaGithub, FaLinkedin, FaDownload, FaEnvelope } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaExternalLinkAlt, FaEnvelope } from 'react-icons/fa'
 
 const researchInterests = [
   'MLOps & Machine Learning Systems',
@@ -52,12 +52,13 @@ function Hero() {
             <div className="no-print" style={{ display: 'flex', gap: '0.625rem', flexWrap: 'wrap', alignItems: 'center' }}>
               <a
                 href="/Kalhara_Tennakoon_CV.pdf"
-                download="Kalhara_Tennakoon_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{ ...buttonStyle, color: 'var(--bg-primary)', background: 'var(--text-primary)', border: '1px solid var(--text-primary)' }}
                 onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.8' }}
                 onMouseLeave={(e) => { e.currentTarget.style.opacity = '1' }}
               >
-                <FaDownload size={10} /> CV (PDF)
+                <FaExternalLinkAlt size={10} /> CV (PDF)
               </a>
               {[
                 { href: 'mailto:kalharatennakoonmck@gmail.com', icon: <FaEnvelope size={12} />, label: 'Email', external: false },
