@@ -4,59 +4,41 @@
   :root {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, Helvetica, Arial, sans-serif;
 
-    /* Light mode colors */
     --bg-primary: #ffffff;
-    --bg-secondary: #f8fafc;
-    --text-primary: #1e293b;
-    --text-secondary: #475569;
-    --border-color: #e2e8f0;
-    --shadow: rgba(0, 0, 0, 0.08);
+    --bg-secondary: #f5f5f5;
+    --text-primary: #0a0a0a;
+    --text-secondary: #6b6b6b;
+    --border-color: #e0e0e0;
+    --shadow: rgba(0, 0, 0, 0.06);
     --card-bg: #ffffff;
-    --color-primary: #172554;
-    --color-primary-2: #1e3a8a;
+    --color-primary: #0a0a0a;
+    --color-primary-2: #333333;
 
-    /* Glass / Glow */
-    --glass-bg: rgba(255, 255, 255, 0.72);
-    --glass-border: rgba(255, 255, 255, 0.9);
-    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-    --glow-primary: rgba(30, 58, 138, 0.35);
-    --glow-cyan: rgba(6, 182, 212, 0.25);
-    --blob-opacity: 0.13;
-
-    /* macOS 26 Liquid Glass nav */
-    --nav-glass-bg: rgba(255, 255, 255, 0.55);
-    --nav-glass-border: rgba(255, 255, 255, 0.65);
-    --nav-glass-inset: rgba(255, 255, 255, 0.75);
-    --nav-glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 2px 20px rgba(0, 0, 0, 0.04);
-    --nav-glass-shadow-scrolled: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 4px 28px rgba(0, 0, 0, 0.09);
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: #e0e0e0;
+    --glass-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --blob-opacity: 0;
   }
 
   :root[data-theme="dark"] {
-    /* Dark mode colors */
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --text-primary: rgba(255, 255, 255, 0.9);
-    --text-secondary: rgba(255, 255, 255, 0.65);
-    --border-color: #334155;
+    --bg-primary: #111111;
+    --bg-secondary: #1a1a1a;
+    --text-primary: #f0f0f0;
+    --text-secondary: #999999;
+    --border-color: #2a2a2a;
     --shadow: rgba(0, 0, 0, 0.4);
-    --card-bg: #1e293b;
-    --color-primary: #93c5fd;
-    --color-primary-2: #60a5fa;
+    --card-bg: #1a1a1a;
+    --color-primary: #f0f0f0;
+    --color-primary-2: #cccccc;
 
-    /* Glass / Glow */
-    --glass-bg: rgba(15, 23, 42, 0.55);
-    --glass-border: rgba(148, 163, 184, 0.12);
-    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-    --glow-primary: rgba(96, 165, 250, 0.4);
-    --glow-cyan: rgba(34, 211, 238, 0.25);
+    --glass-bg: rgba(26, 26, 26, 0.9);
+    --glass-border: #2a2a2a;
+    --glass-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     --blob-opacity: 0;
+  }
 
-    /* macOS 26 Liquid Glass nav - dark */
-    --nav-glass-bg: rgba(10, 18, 38, 0.52);
-    --nav-glass-border: rgba(255, 255, 255, 0.09);
-    --nav-glass-inset: rgba(255, 255, 255, 0.07);
-    --nav-glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 2px 20px rgba(0, 0, 0, 0.3);
-    --nav-glass-shadow-scrolled: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 4px 32px rgba(0, 0, 0, 0.45);
+  html {
+    scroll-padding-top: 52px;
   }
 
   body {
@@ -86,7 +68,7 @@
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: #172554 var(--bg-secondary);
+    scrollbar-color: var(--text-secondary) var(--bg-secondary);
   }
 
   *::-webkit-scrollbar {
@@ -251,8 +233,7 @@
     inset 0 1px 0 rgba(255,255,255,0.92),
     inset 0 -1px 0 rgba(80,110,220,0.18),
     0 4px 18px rgba(80,110,220,0.20);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
-  will-change: transform;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .glass-btn::before {
@@ -266,15 +247,11 @@
 }
 
 .glass-btn:hover {
-  transform: translateY(-3px) scale(1.03);
+  transform: translateY(-2px);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.95),
     inset 0 -1px 0 rgba(80,110,220,0.22),
     0 8px 28px rgba(80,110,220,0.32);
-}
-
-.glass-btn:active {
-  transform: translateY(0) scale(0.97);
 }
 
 .glass-btn-primary {
@@ -289,8 +266,7 @@
     inset 0 1px 0 rgba(255,255,255,0.68),
     inset 0 -1px 0 rgba(0,0,0,0.12),
     0 4px 20px rgba(30,58,138,0.42);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
-  will-change: transform;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .glass-btn-primary::before {
@@ -305,15 +281,11 @@
 }
 
 .glass-btn-primary:hover {
-  transform: translateY(-3px) scale(1.03);
+  transform: translateY(-2px);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.75),
     inset 0 -1px 0 rgba(0,0,0,0.14),
-    0 10px 36px rgba(30,58,138,0.58);
-}
-
-.glass-btn-primary:active {
-  transform: translateY(0) scale(0.97);
+    0 8px 32px rgba(30,58,138,0.58);
 }
 
 /* Dark mode overrides */
@@ -351,26 +323,13 @@
   border-color: rgba(255,255,255,0.45);
 }
 
-/* Glassmorphism Cards */
+/* Glassmorphism */
 .glass-card {
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
-  will-change: transform;
-}
-
-.glass-card:hover {
-  transform: translateY(-6px) scale(1.012);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12), 0 0 20px var(--glow-primary);
-  border-color: rgba(96, 165, 250, 0.45);
-}
-
-:root[data-theme="dark"] .glass-card:hover {
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55), 0 0 24px rgba(56, 189, 248, 0.25);
-  border-color: rgba(56, 189, 248, 0.45);
 }
 
 /* Animated gradient text */
@@ -428,250 +387,82 @@
   width: 96px;
 }
 
+/* Nav link hover */
+.nav-link { color: var(--text-secondary); transition: color 0.15s; }
+.nav-link:hover { color: var(--text-primary); }
+
+/* Mobile menu toggle (hidden on desktop) */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0.4rem;
+  margin-right: -0.4rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  line-height: 0;
+}
+.nav-mobile-menu { display: none; }
+
+@media (max-width: 768px) {
+  .nav-desktop { display: none !important; }
+  .nav-toggle { display: inline-flex; }
+  .nav-bar { justify-content: flex-end !important; }
+  .nav-mobile-menu {
+    display: block;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-primary);
+  }
+}
+
 /* ==========================================
-   Interactive Terminal
-   ==========================================
-   The body stays dark in both themes: a terminal reads as a real tool that
-   way, and the ANSI-style palette needs a dark ground to stay legible. The
-   chrome around it follows the site's liquid-glass language.
+   Mobile Responsiveness
    ========================================== */
 
-.terminal-shell {
-  --term-bg: rgba(9, 15, 32, 0.94);
-  --term-border: rgba(120, 160, 255, 0.28);
-  --term-font: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
-
-  width: 100%;
-  border-radius: 14px;
-  overflow: hidden;
-  border: 1px solid var(--term-border);
-  background: var(--term-bg);
-  /* No backdrop-filter: the body is ~94% opaque, so it would buy nothing
-     visually while forcing an extra compositing layer. */
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.10),
-    0 18px 50px rgba(10, 25, 70, 0.35);
-  display: flex;
-  flex-direction: column;
-}
-
-:root[data-theme="dark"] .terminal-shell {
-  --term-bg: rgba(2, 8, 23, 0.88);
-  --term-border: rgba(148, 163, 184, 0.18);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 18px 50px rgba(0, 0, 0, 0.55);
-}
-
-/* ── Title bar ─────────────────────────────────────────────────────────── */
-.terminal-titlebar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  flex-shrink: 0;
-}
-
-.terminal-title {
-  flex: 1;
-  font-family: var(--term-font);
-  font-size: 11px;
-  color: rgba(226, 232, 240, 0.55);
-  letter-spacing: 0.3px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.terminal-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--term-font);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: rgba(226, 232, 240, 0.5);
-  flex-shrink: 0;
-}
-
-.terminal-status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #4ade80;
-  box-shadow: 0 0 8px rgba(74, 222, 128, 0.8);
-}
-
-.terminal-status-dot.is-busy {
-  background: #fbbf24;
-  box-shadow: 0 0 8px rgba(251, 191, 36, 0.8);
-  animation: pulse-slow 1.1s ease-in-out infinite;
-}
-
-/* ── Scrollback ────────────────────────────────────────────────────────── */
-.terminal-body {
-  height: clamp(360px, 46vh, 440px);
-  overflow-y: auto;
-  overflow-x: auto;
-  padding: 16px 18px 20px;
-  font-family: var(--term-font);
-  font-size: 12.5px;
-  line-height: 1.65;
-  cursor: text;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
-}
-
-.terminal-body::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.terminal-body::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.35);
-  border-radius: 3px;
-}
-
-.terminal-line {
-  white-space: pre;
-  min-height: 1.65em;
-}
-
-.terminal-link {
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  transition: opacity 0.15s ease;
-}
-
-.terminal-link:hover {
-  opacity: 0.75;
-}
-
-/* ── Prompt ────────────────────────────────────────────────────────────── */
-.terminal-prompt-row {
-  display: flex;
-  align-items: center;
-  white-space: pre;
-  margin-top: 2px;
-}
-
-.terminal-input {
-  flex: 1;
-  min-width: 0;
-  background: transparent;
-  border: none;
-  outline: none;
-  padding: 0;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  color: #e2e8f0;
-  caret-color: #4ade80;
-}
-
-.terminal-input::placeholder {
-  color: rgba(148, 163, 184, 0.45);
-}
-
-.terminal-input:disabled {
-  cursor: default;
-}
-
-/* ── Quick-command chips ───────────────────────────────────────────────── */
-.terminal-chips {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 7px;
-  padding: 11px 14px;
-  background: rgba(255, 255, 255, 0.04);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  flex-shrink: 0;
-}
-
-.terminal-chips-label {
-  font-family: var(--term-font);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: rgba(226, 232, 240, 0.4);
-  margin-right: 2px;
-}
-
-.terminal-chip {
-  font-family: var(--term-font);
-  font-size: 11px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  color: #a5c9ff;
-  background: rgba(96, 165, 250, 0.12);
-  border: 1px solid rgba(96, 165, 250, 0.28);
-  cursor: pointer;
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
-}
-
-.terminal-chip:hover:not(:disabled) {
-  background: rgba(96, 165, 250, 0.22);
-  border-color: rgba(96, 165, 250, 0.5);
-  transform: translateY(-1px);
-}
-
-.terminal-chip:disabled {
-  opacity: 0.45;
-  cursor: default;
-}
-
 @media (max-width: 640px) {
-  .terminal-body {
-    font-size: 11.5px;
-    /* dvh keeps the panel usable when the on-screen keyboard opens. */
-    height: clamp(300px, 52dvh, 380px);
-    padding: 13px 14px 16px;
-    /* Momentum scrolling for the wide output tables. */
-    -webkit-overflow-scrolling: touch;
+  /* Tighter section padding on mobile */
+  section > div {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
 
-  /* 16px is the threshold below which iOS Safari zooms the page on focus.
-     Applied to the input alone so the prompt itself stays in proportion
-     with the scrollback above it. */
-  .terminal-input {
-    font-size: 16px;
+  /* Hero: reduce top gap */
+  #hero > div {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.25rem !important;
   }
 
-  .terminal-titlebar {
-    padding: 9px 12px;
+  /* Experience: stack title and date on mobile */
+  .exp-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.1rem !important;
   }
 
-  .terminal-title {
-    font-size: 10px;
-  }
-
-  .terminal-badge {
-    font-size: 9px;
-  }
-
-  /* One horizontally scrollable strip beats five wrapped rows of chips. */
-  .terminal-chips {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .terminal-chips::-webkit-scrollbar {
-    display: none;
-  }
-
-  .terminal-chips-label,
-  .terminal-chip {
-    flex: 0 0 auto;
+  /* Projects: stack title and date on mobile */
+  .proj-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.1rem !important;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .terminal-status-dot.is-busy {
-    animation: none;
+/* ==========================================
+   Print (CV hard copy)
+   ========================================== */
+
+@media print {
+  .no-print { display: none !important; }
+
+  #hero { padding-top: 0 !important; }
+
+  section { background: #ffffff !important; }
+
+  /* Keep entries whole across page breaks */
+  section h2,
+  section li,
+  #projects [style*="border-radius: 8px"] {
+    break-inside: avoid;
   }
 }
 
@@ -721,188 +512,4 @@
 .reveal-scale.is-visible {
   opacity: 1;
   transform: scale(1) translateY(0);
-}
-
-/* ==========================================
-   Entrance Choreography
-   ==========================================
-   Above-the-fold content can't use the IntersectionObserver reveal system —
-   it is already in view when the page loads, so it would reveal all at once.
-   These run on mount instead, staggered via --enter-delay so the hero
-   assembles itself piece by piece.
-   ========================================== */
-
-@keyframes rise-in {
-  from { opacity: 0; transform: translateY(26px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes ring-spin {
-  to { transform: rotate(360deg); }
-}
-
-@keyframes halo-breathe {
-  0%, 100% { opacity: 0.45; transform: scale(1); }
-  50%      { opacity: 0.8;  transform: scale(1.07); }
-}
-
-.enter {
-  /* `both` holds the from-state through the delay. Without it a staggered
-     item sits at full opacity until its turn, then flashes. */
-  animation: rise-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: var(--enter-delay, 0s);
-}
-
-/* ── Hero avatar: spinning conic ring + breathing halo ─────────────────── */
-
-.avatar-ring {
-  position: relative;
-  border-radius: 50%;
-  padding: 4px;
-}
-
-.avatar-ring::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: conic-gradient(
-    from 0deg,
-    var(--color-primary),
-    #3b82f6,
-    #06b6d4,
-    #22d3ee,
-    #3b82f6,
-    var(--color-primary)
-  );
-  animation: ring-spin 9s linear infinite;
-}
-
-/* position:relative lifts the photo above the spinning ring, leaving only
-   the 4px of padding showing as the ring itself. */
-.avatar-frame {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.avatar-halo {
-  position: absolute;
-  inset: -14%;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--glow-primary), transparent 68%);
-  filter: blur(26px);
-  pointer-events: none;
-  animation: halo-breathe 6s ease-in-out infinite;
-}
-
-/* ── Cursor spotlight ───────────────────────────────────────────────────
- *  Rides on .shimmer-hover, which already marks every card root and brings
- *  the position:relative + overflow:hidden this needs. Shimmer owns ::after,
- *  so the spotlight takes ::before. Coordinates come from useSpotlight.
- * ─────────────────────────────────────────────────────────────────────── */
-
-.shimmer-hover::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  background: radial-gradient(
-    240px circle at var(--spot-x, 50%) var(--spot-y, 50%),
-    rgba(59, 130, 246, 0.14),
-    transparent 72%
-  );
-}
-
-.shimmer-hover:hover::before {
-  opacity: 1;
-}
-
-:root[data-theme="dark"] .shimmer-hover::before {
-  background: radial-gradient(
-    240px circle at var(--spot-x, 50%) var(--spot-y, 50%),
-    rgba(96, 165, 250, 0.17),
-    transparent 72%
-  );
-}
-
-/* ==========================================
-   Fly-In Assembly  (Contact section)
-   ==========================================
-   Pieces sweep in from off-screen, rotating, overshoot slightly past their
-   resting place, then settle — the entrance used on amantha.lk.
-
-   One keyframe set drives every direction: each element supplies its own
-   start offset, rotation and overshoot through custom properties, so this is
-   a single animation with per-element vectors rather than a keyframe per
-   corner.
-
-   The easing is what sells it. cubic-bezier(0.16, 1, 0.3, 1) covers most of
-   the distance in the first fraction of the run, so a start point a full
-   viewport away arrives almost immediately and the eye only ever tracks the
-   rotation unwinding and the settle.
-   ========================================== */
-
-@keyframes fly-in {
-  0% {
-    opacity: 0;
-    transform: translate(var(--fly-x, 0), var(--fly-y, 0)) rotate(var(--fly-rot, 0deg));
-  }
-  60% {
-    opacity: 1;
-    transform: translate(var(--fly-ox, 0), var(--fly-oy, 0)) rotate(var(--fly-orot, 0deg));
-  }
-  100% {
-    opacity: 1;
-    transform: translate(0, 0) rotate(0deg);
-  }
-}
-
-/* Held invisible until the stage is armed, so nothing flashes before its run. */
-.fly-stage .fly-in {
-  opacity: 0;
-}
-
-.fly-stage.is-flying .fly-in {
-  animation-name: fly-in;
-  animation-duration: 0.8s;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-  animation-fill-mode: both;
-  animation-delay: var(--fly-delay, 0s);
-}
-
-/* ==========================================
-   Reduced Motion
-   ==========================================
-   One global stop for the whole motion layer. Durations collapse to ~0ms
-   rather than 0 so transitionend/animationend still fire for anything that
-   listens, and reveal/enter rules land on their end state instead of being
-   stranded at opacity 0.
-   ========================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-
-  html,
-  body {
-    scroll-behavior: auto !important;
-  }
-
-  /* blink ends on opacity:0, so a collapsed run would erase the typing caret
-     outright. Hold it visible instead. */
-  .type-caret {
-    animation: none !important;
-    opacity: 1 !important;
-  }
 }
