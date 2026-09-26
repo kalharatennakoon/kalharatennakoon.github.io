@@ -2,18 +2,18 @@ const certGroups = [
   {
     category: 'Cloud, DevOps & Platform Engineering',
     certs: [
-      { title: 'Microsoft Certified: Azure Fundamentals (AZ-900)', issuer: 'Microsoft', date: 'Jan 2023' },
-      { title: 'Introduction to Kubernetes', issuer: 'The Linux Foundation', date: 'Dec 2024' },
-      { title: 'GitHub Foundations', issuer: 'GitHub', date: 'Jan 2025' },
       { title: 'Containers & Kubernetes Essentials', issuer: 'IBM', date: 'Feb 2025' },
+      { title: 'GitHub Foundations', issuer: 'GitHub', date: 'Jan 2025' },
+      { title: 'Introduction to Kubernetes', issuer: 'The Linux Foundation', date: 'Dec 2024' },
+      { title: 'Microsoft Certified: Azure Fundamentals (AZ-900)', issuer: 'Microsoft', date: 'Jan 2023' },
     ],
   },
   {
     category: 'Artificial Intelligence & Data',
     certs: [
-      { title: 'Microsoft Certified: Azure AI Fundamentals (AI-900)', issuer: 'Microsoft', date: 'Apr 2024' },
-      { title: 'Microsoft Certified: Azure Data Fundamentals (DP-900)', issuer: 'Microsoft', date: 'Nov 2024' },
       { title: 'Google AI Professional Certificate', issuer: 'Google (Coursera)', date: 'Feb 2026' },
+      { title: 'Microsoft Certified: Azure Data Fundamentals (DP-900)', issuer: 'Microsoft', date: 'Nov 2024' },
+      { title: 'Microsoft Certified: Azure AI Fundamentals (AI-900)', issuer: 'Microsoft', date: 'Apr 2024' },
     ],
   },
 ]

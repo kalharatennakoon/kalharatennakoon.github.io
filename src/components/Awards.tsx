@@ -27,7 +27,7 @@ const awards = [
   {
     title: 'Finalist – Cisco Packet Riders',
     date: '2018',
-    description: '',
+    description: 'Reached the national final of a networking and troubleshooting competition open to students across Sri Lanka.',
   },
   {
     title: 'Cisco NetRiders',

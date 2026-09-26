@@ -5,7 +5,7 @@ const skillGroups = [
   },
   {
     title: 'Data & AI',
-    skills: ['Scikit-learn', 'Pandas', 'Prophet', 'pgvector', 'Ollama', 'SPSS', 'Jupyter Notebook', 'Power BI', 'EDA'],
+    skills: ['Scikit-learn', 'Pandas', 'Prophet', 'pgvector', 'Ollama', 'SPSS', 'Matplotlib', 'Seaborn', 'Jupyter Notebook', 'Google Colab', 'Power BI', 'Data Cleaning', 'EDA'],
   },
   {
     title: 'Cloud & DevOps',
@@ -18,6 +18,10 @@ const skillGroups = [
   {
     title: 'Web & Databases',
     skills: ['React', 'Node.js', 'Flask', 'FastAPI', 'REST APIs', 'PostgreSQL', 'MySQL', 'MongoDB'],
+  },
+  {
+    title: 'Networking',
+    skills: ['TCP/IP', 'DNS', 'Load Balancing', 'Firewalls', 'VPN', 'OSI Model'],
   },
   {
     title: 'Tools & Practices',
