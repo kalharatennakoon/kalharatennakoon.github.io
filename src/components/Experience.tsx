@@ -12,11 +12,14 @@ function Experience() {
       location: 'Colombo, Sri Lanka',
       period: 'Jul 2024 – Oct 2024',
       type: 'Internship',
+      summary: 'Worked on Kubernetes-native CI/CD workflows and deployment automation for cloud-native services.',
       achievements: [
         'Automated CI/CD pipelines using Tekton, streamlining artifact packaging and deployment for critical services',
         'Integrated Behave automated tests into Tekton pipelines, reducing manual debugging effort by ~30%',
         'Optimized pipeline configurations, resolving persistent build issues for faster deployment cycles',
+        'Conducted a knowledge-sharing session on testing best practices to support team collaboration and code quality improvements',
       ],
+      stack: ['Kubernetes', 'Tekton', 'Docker', 'Azure DevOps', 'CI/CD', 'Python'],
     },
     {
       title: 'Software Engineering Intern',
@@ -24,11 +27,13 @@ function Experience() {
       location: 'Colombo, Sri Lanka',
       period: 'Jul 2020 – Dec 2020',
       type: 'Internship',
+      summary: 'Contributed to cloud-native security tooling and container platform reliability improvements.',
       achievements: [
         'Built a cloud security scanning app using Docker and Kubernetes, improving container platform security posture',
         'Integrated scanning tools into CI/CD pipelines, enhancing vulnerability detection across deployment stages',
         'Diagnosed and resolved runtime issues, maintaining 99.9% system uptime',
       ],
+      stack: ['Kubernetes', 'Docker', 'Golang', 'AKS', 'GKE', 'ArgoCD', 'CI/CD'],
     },
   ]
 
@@ -124,15 +129,31 @@ function Experience() {
                     </div>
                   </div>
 
-                  {/* Achievements */}
-                  <ul className="px-7 py-5 space-y-3 list-none">
-                    {exp.achievements.map((achievement, idx) => (
-                      <li key={idx} className="flex gap-3 text-sm text-[var(--text-secondary)] leading-relaxed">
-                        <FaChevronRight className="text-[var(--color-primary)] text-xs mt-1 flex-shrink-0" />
-                        <span>{achievement}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="px-7 py-5 space-y-4">
+                    <p className="text-sm italic text-[var(--text-secondary)] leading-relaxed m-0">{exp.summary}</p>
+
+                    {/* Achievements */}
+                    <ul className="space-y-3 list-none">
+                      {exp.achievements.map((achievement, idx) => (
+                        <li key={idx} className="flex gap-3 text-sm text-[var(--text-secondary)] leading-relaxed">
+                          <FaChevronRight className="text-[var(--color-primary)] text-xs mt-1 flex-shrink-0" />
+                          <span>{achievement}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Tech stack */}
+                    <div className="flex flex-wrap gap-1.5">
+                      {exp.stack.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2.5 py-0.5 bg-[rgba(30,58,138,0.07)] text-[var(--color-primary)] rounded-full text-xs font-medium border border-[rgba(30,58,138,0.15)] hover:bg-[rgba(30,58,138,0.14)] hover:border-[rgba(30,58,138,0.3)] transition-colors"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}

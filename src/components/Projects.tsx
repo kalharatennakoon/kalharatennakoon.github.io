@@ -20,12 +20,13 @@ function Projects() {
     {
       title: 'VetCare Pro – Smart Veterinary Clinic Management System',
       description:
-        'Full-stack veterinary platform supporting appointment, medical record, and inventory workflows, role-based access, and a SwiftUI app. ' +
-        'Features a local RAG assistant (Ollama & pgvector) with intelligent SQL query routing and ML services for disease & demand forecasting.',
-      technologies: ['React', 'Node.js', 'PostgreSQL', 'pgvector', 'Python', 'Flask', 'Scikit-learn', 'Ollama', 'SwiftUI'],
+        'Final year project (Grade A, 76%) covering appointments, medical records, billing and inventory, with role-based access, a RESTful Express API, JWT auth, and ML models for disease prediction and sales & demand forecasting. ' +
+        'Extended for the Ascentic AI Launch Pad (Top 10) with a local RAG assistant (Ollama & pgvector) that routes between semantic retrieval and exact SQL queries, with human-in-the-loop confirmation for database writes, plus a pet owner portal and SwiftUI iOS app.',
+      technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'pgvector', 'Python', 'Flask', 'Scikit-learn', 'Ollama', 'SwiftUI', 'JWT'],
       icon: FaPaw,
       github: 'https://github.com/kalharatennakoon/vetcarepro',
       date: 'Oct 2025 – Aug 2026',
+      subtitle: 'Final Year Project · AI Launch Pad',
     },
     {
       title: 'SolarCast – Personal Solar Energy Forecasting App',

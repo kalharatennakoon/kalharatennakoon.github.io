@@ -180,6 +180,12 @@ function Contact() {
                   ))}
                 </div>
               </div>
+
+              <div className="px-8 py-4 border-t border-[var(--border-color)] text-center">
+                <p className="text-sm italic text-[var(--text-secondary)] m-0">
+                  Academic and professional references available upon request.
+                </p>
+              </div>
             </div>
           </div>
         </div>

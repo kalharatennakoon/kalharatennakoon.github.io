@@ -16,18 +16,23 @@ const achievements: Achievement[] = [
     highlight: true,
   },
   {
-    title: 'Dan Kohn Scholarship - KubeCon + CloudNativeCon',
+    title: 'Batch Top - Software Engineering, ESU Kandy',
+    description: 'Ranked first in the Software Engineering cohort of the BSc (Hons) Computer Science programme.',
+    date: '2026',
+  },
+  {
+    title: 'Two-Time Dan Kohn Scholarship Recipient - KubeCon + CloudNativeCon',
     description: 'Awarded the CNCF Dan Kohn Scholarship to attend KubeCon + CloudNativeCon. Recognised for contributions and potential in the cloud-native ecosystem.',
     date: '2025 & 2022',
   },
   {
     title: 'First Runner-Up - Hack:Bit Hackathon',
-    description: 'Secured First Runner-Up at the Hack:Bit national-level hackathon, competing against university and school teams across Sri Lanka.',
+    description: 'Secured First Runner-Up at the Hack:Bit national-level hackathon, organised in collaboration with Microsoft and Sarvodaya Fusion, competing against university and school teams across Sri Lanka.',
     date: 'Jul 2019',
   },
   {
     title: 'Top 15 Finalist - HaXmas Hackathon',
-    description: 'Selected as one of the Top 15 finalists at the HaXmas Hackathon, a competitive coding and innovation challenge.',
+    description: 'Selected as one of the Top 15 finalists from 75+ competing teams at the HaXmas Hackathon, a national-level coding and innovation challenge.',
     date: 'Jan 2018',
   },
   {

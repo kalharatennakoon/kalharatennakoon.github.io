@@ -1,4 +1,4 @@
-import { FaCode, FaCog, FaWrench, FaNetworkWired, FaCloud, FaAws, FaChartBar } from 'react-icons/fa'
+import { FaCode, FaCog, FaWrench, FaNetworkWired, FaCloud, FaAws, FaChartBar, FaBrain } from 'react-icons/fa'
 import {
   SiDocker, SiKubernetes, SiJenkins, SiGithubactions, SiArgo,
   SiGooglecloud,
@@ -7,6 +7,7 @@ import {
   SiMysql, SiPostgresql, SiMongodb,
   SiGit, SiGithub, SiBitbucket, SiJira, SiConfluence,
   SiJupyter,
+  SiScikitlearn, SiPandas, SiOllama, SiFastapi, SiTerraform,
 } from 'react-icons/si'
 import type { IconType } from 'react-icons'
 import useScrollReveal from '../hooks/useScrollReveal'
@@ -35,6 +36,7 @@ const skillCategories: Category[] = [
       { name: 'Jenkins',        icon: SiJenkins,       color: '#D24939' },
       { name: 'Azure DevOps',   icon: FaCloud,         color: '#0078D7' },
       { name: 'Tekton',         icon: FaCog,           color: '#FD495C' },
+      { name: 'Infrastructure as Code', icon: SiTerraform, color: '#7B42BC' },
     ],
   },
   {
@@ -70,6 +72,7 @@ const skillCategories: Category[] = [
       { name: 'Node.js',    icon: SiNodedotjs,  color: '#339933' },
       { name: 'Angular',    icon: SiAngular,    color: '#DD0031' },
       { name: 'Flask',      icon: SiFlask,      color: '#6B7280' },
+      { name: 'FastAPI',    icon: SiFastapi,    color: '#009688' },
       { name: 'HTML / CSS', icon: SiHtml5,      color: '#E34F26' },
       { name: 'PostgreSQL', icon: SiPostgresql, color: '#336791' },
       { name: 'MySQL',      icon: SiMysql,      color: '#4479A1' },
@@ -99,6 +102,18 @@ const skillCategories: Category[] = [
       { name: 'Firewall',       icon: FaNetworkWired, color: '#EF4444' },
       { name: 'VPN',            icon: FaNetworkWired, color: '#6B7280' },
       { name: 'OSI Model',      icon: FaNetworkWired, color: '#6B7280' },
+    ],
+  },
+  {
+    title: 'Data & AI',
+    icon: FaBrain,
+    skills: [
+      { name: 'Scikit-learn', icon: SiScikitlearn, color: '#F7931E' },
+      { name: 'Pandas',       icon: SiPandas,      color: '#150458' },
+      { name: 'Prophet',      icon: FaChartBar,    color: '#0668E1' },
+      { name: 'pgvector',     icon: SiPostgresql,  color: '#336791' },
+      { name: 'Ollama',       icon: SiOllama,      color: '#6B7280' },
+      { name: 'SPSS',         icon: FaChartBar,    color: '#052FAD' },
     ],
   },
   {
