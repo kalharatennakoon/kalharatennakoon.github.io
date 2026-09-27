@@ -30,7 +30,7 @@ function Hero() {
               BSc (Hons) Computer Science (Software Engineering) · First Class Honours
             </p>
             <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0 0 1rem' }}>
-              Kingston University, London · Kurunegala, Sri Lanka
+              Kingston University, London
             </p>
 
             {/* Academic profile */}
