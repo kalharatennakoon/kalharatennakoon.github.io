@@ -51,8 +51,8 @@ const projects: Project[] = [
       'Interactive React dashboard with CSV upload support and energy analytics visualisations',
     ],
     technologies: ['Python', 'FastAPI', 'React', 'Prophet', 'Machine Learning', 'Pandas', 'REST APIs'],
-    date: 'Apr 2026 – Present',
-    tag: 'Ongoing',
+    date: 'Apr 2026 – Jul 2026',
+    tag: 'Personal Project',
   },
   {
     title: 'Kubernetes Cluster & Container Image Security Scanner',

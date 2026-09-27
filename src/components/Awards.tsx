@@ -5,11 +5,6 @@ const awards = [
     description: 'Selected for the Top 10 of the Ascentic AI Launch Pad programme and invited to present VetCare Pro at Demo Day. VetCare Pro is an on-premise, AI-powered veterinary clinic management system. It was recognised for its local RAG assistant, ML forecasting models and companion iOS app, all built for a real working clinic.',
   },
   {
-    title: 'Batch Top – Software Engineering, ESU Kandy',
-    date: '2026',
-    description: 'Ranked first in the Software Engineering cohort of the BSc (Hons) Computer Science programme.',
-  },
-  {
     title: 'Two-Time Dan Kohn Scholarship Recipient – KubeCon + CloudNativeCon Europe',
     date: '2022 & 2025',
     description: 'Awarded the highly competitive scholarship recognising contributions to the cloud-native ecosystem.',
