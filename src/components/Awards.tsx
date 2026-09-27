@@ -2,7 +2,7 @@ const awards = [
   {
     title: 'Top 10 Finalist – Ascentic AI Launch Pad',
     date: '2026',
-    description: 'Selected for the Top 10 of the Ascentic AI Launch Pad programme and invited to present VetCare Pro at Demo Day. VetCare Pro is an on-premise, AI-powered veterinary clinic management system. It was recognised for its local RAG assistant, ML forecasting models and companion iOS app, all built for a real working clinic.',
+    description: 'Presented VetCare Pro at Demo Day, recognised for its local RAG assistant, ML forecasting models and companion iOS app.',
   },
   {
     title: 'Two-Time Dan Kohn Scholarship Recipient – KubeCon + CloudNativeCon Europe',

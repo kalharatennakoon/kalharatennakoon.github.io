@@ -35,7 +35,7 @@ function Hero() {
 
             {/* Academic profile */}
             <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.75, margin: '0 0 1rem' }}>
-              Computer Science graduate working where machine learning meets systems infrastructure. Across two internships at IFS R&amp;D International, I automated Kubernetes-native CI/CD pipelines with Tekton and built a container security scanner for Kubernetes clusters. My final-year project, VetCare Pro (Grade A), pairs ML forecasting models with a local RAG assistant that combines semantic retrieval with exact SQL queries, and was selected for the Top 10 of the Ascentic AI Launch Pad. I have also applied supervised learning and statistical testing to predict perceived course difficulty from student evaluations. I am seeking graduate study in machine learning systems, focused on making AI reliable and secure in production.
+              Computer Science graduate working where machine learning meets systems infrastructure. At IFS R&amp;D International, I automated Kubernetes-native CI/CD pipelines with Tekton and built a container security scanner. My final-year project, VetCare Pro (Grade A), used ML forecasting models; I later extended it with a local RAG assistant that reached the Top 10 of the Ascentic AI Launch Pad. I am seeking graduate study in machine learning systems, focused on making AI reliable and secure in production.
             </p>
 
             {/* Research interests */}
