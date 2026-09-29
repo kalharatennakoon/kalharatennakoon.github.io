@@ -24,7 +24,7 @@ const projects: Project[] = [
       'AI Launch Pad extension: pet owner portal and SwiftUI companion iOS app; selected for the Top 10',
     ],
     technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'pgvector', 'Python', 'Flask', 'Scikit-learn', 'Ollama', 'SwiftUI', 'JWT'],
-    website: 'https://kalharatennakoon.github.io/vetcarepro',
+    website: 'https://kalharatennakoon.github.io/vetcareone/',
     date: 'Oct 2025 – Aug 2026',
     tag: 'Final Year Project · AI Launch Pad',
   },
