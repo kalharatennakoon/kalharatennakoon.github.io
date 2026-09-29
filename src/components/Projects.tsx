@@ -1,4 +1,4 @@
-import { FaGithub } from 'react-icons/fa'
+import { FaGithub, FaGlobe } from 'react-icons/fa'
 
 interface Project {
   title: string
@@ -7,6 +7,7 @@ interface Project {
   highlights: string[]
   technologies: string[]
   github?: string
+  website?: string
   date: string
   tag: string
 }
@@ -23,7 +24,7 @@ const projects: Project[] = [
       'AI Launch Pad extension: pet owner portal and SwiftUI companion iOS app; selected for the Top 10',
     ],
     technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'pgvector', 'Python', 'Flask', 'Scikit-learn', 'Ollama', 'SwiftUI', 'JWT'],
-    github: 'https://github.com/kalharatennakoon/vetcarepro',
+    website: 'https://kalharatennakoon.github.io/vetcarepro',
     date: 'Oct 2025 – Aug 2026',
     tag: 'Final Year Project · AI Launch Pad',
   },
@@ -110,7 +111,7 @@ function Projects() {
               </ul>
 
               {/* Tech badges */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem', alignItems: 'center', marginBottom: proj.github ? '0.75rem' : 0 }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem', alignItems: 'center', marginBottom: proj.github || proj.website ? '0.75rem' : 0 }}>
                 {proj.technologies.map((t) => (
                   <span key={t} style={{ fontSize: '0.68rem', fontWeight: 500, color: 'var(--text-primary)', background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: '9999px', padding: '0.1rem 0.5rem' }}>
                     {t}
@@ -118,18 +119,26 @@ function Projects() {
                 ))}
               </div>
 
-              {/* GitHub button */}
-              {proj.github && (
-                <a
-                  href={proj.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.72rem', fontWeight: 600, color: 'var(--bg-primary)', background: 'var(--text-primary)', borderRadius: '9999px', padding: '0.3rem 0.8rem', textDecoration: 'none', letterSpacing: '0.03em' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.8' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.opacity = '1' }}
-                >
-                  <FaGithub size={11} /> View on GitHub
-                </a>
+              {/* Link buttons */}
+              {(proj.github || proj.website) && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                  {[
+                    proj.website && { href: proj.website, icon: <FaGlobe size={11} />, label: 'Visit Site' },
+                    proj.github && { href: proj.github, icon: <FaGithub size={11} />, label: 'View on GitHub' },
+                  ].flatMap((l) => (l ? [l] : [])).map((l) => (
+                    <a
+                      key={l.href}
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.72rem', fontWeight: 600, color: 'var(--bg-primary)', background: 'var(--text-primary)', borderRadius: '9999px', padding: '0.3rem 0.8rem', textDecoration: 'none', letterSpacing: '0.03em' }}
+                      onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.8' }}
+                      onMouseLeave={(e) => { e.currentTarget.style.opacity = '1' }}
+                    >
+                      {l.icon} {l.label}
+                    </a>
+                  ))}
+                </div>
               )}
             </div>
           ))}
