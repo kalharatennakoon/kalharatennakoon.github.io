@@ -58,7 +58,7 @@ const projects: Project[] = [
     tag: 'Personal Project',
   },
   {
-    title: 'Job Tracker',
+    title: 'Shortlistd',
     subtitle: 'Job Application Tracking Board',
     summary: 'Web app for tracking job applications on a status board with per-user accounts, scheduled next steps, follow-up emails, statistics, and a document library.',
     highlights: [
@@ -68,7 +68,7 @@ const projects: Project[] = [
       'Opt-in daily email reminders sent by a scheduled Supabase Edge Function; deployed to GitHub Pages via GitHub Actions',
     ],
     technologies: ['React', 'TypeScript', 'Vite', 'Supabase', 'PostgreSQL', 'GitHub Actions'],
-    website: 'https://kalharatennakoon.github.io/job-tracker/',
+    website: 'https://kalharatennakoon.github.io/shortlistd/',
     date: 'Sep 2026',
     tag: 'Personal Project',
   },
