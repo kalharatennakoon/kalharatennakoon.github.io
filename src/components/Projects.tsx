@@ -14,8 +14,8 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: 'VetCare Pro',
-    subtitle: 'Smart Veterinary Clinic Management System',
+    title: 'VetCare One',
+    subtitle: 'Smart Veterinary Clinic Management System (formerly VetCare Pro)',
     summary: 'Full-stack veterinary clinic management platform, developed as my final year project (Oct 2025 – Mar 2026, Grade A) and then extended with AI features for the Ascentic AI Launch Pad through Aug 2026.',
     highlights: [
       'Final year project: appointments, medical records, billing, and inventory management with role-based access, a RESTful Node.js/Express API, and JWT authentication',
