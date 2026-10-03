@@ -45,10 +45,11 @@ const projects: Project[] = [
   {
     title: 'CV Analyzer LK',
     subtitle: 'AI-Powered CV Review & Rewriting Tool',
-    summary: 'Web app that analyses a CV against a target role and job description, highlights strengths, gaps, and missing keywords, then rewrites the CV with the fixes applied for download as Word or PDF.',
+    summary: 'Web app that analyses a CV against a target role and job description, scores it overall and section by section, highlights strengths, gaps, and missing keywords, then rewrites the CV with the fixes applied for download as Word or PDF.',
     highlights: [
       'Two-model LLM pipeline on Ollama Cloud (analysis and rewriting) with JSON-schema structured outputs validated by Zod; rewrites use only facts from the original CV',
-      'Rule-based and AI-assisted ATS checks, before/after match scoring, tailored cover letters, and interview preparation with STAR-style answer outlines',
+      'Section-by-section scoring (summary, experience, projects, skills, education, formatting & ATS) from the same analysis call; the rewrite prioritises weak sections and the re-score shows per-section before/after deltas',
+      'Rule-based and AI-assisted ATS checks, tailored cover letters, and interview preparation with STAR-style answer outlines',
       'Feedback explained in Sinhala or Tamil, job posting URL extraction with an SSRF guard, and per-visitor rate limiting with Upstash Redis',
     ],
     technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Ollama', 'LLMs', 'Zod', 'Upstash Redis', 'Vercel'],
@@ -59,10 +60,11 @@ const projects: Project[] = [
   {
     title: 'Job Tracker',
     subtitle: 'Job Application Tracking Board',
-    summary: 'Web app for tracking job applications on a status board with per-user accounts, a calendar view, statistics, and a document library.',
+    summary: 'Web app for tracking job applications on a status board with per-user accounts, scheduled next steps, follow-up emails, statistics, and a document library.',
     highlights: [
       'Supabase authentication and Postgres with Row Level Security so each user can only access their own applications and documents',
-      'Board, calendar, and statistics views, CSV import/export, and a document library linking CVs and cover letters to applications',
+      'Board, table, calendar, and statistics views, an "Up Next" panel for upcoming steps, CSV import/export, and a document library linking CVs and cover letters to applications',
+      'Next steps can be added to Google Calendar or exported as .ics files; built-in email templates draft follow-ups, thank-you notes, and check-ins; posting checks record when a job ad was last verified and whether it has closed',
       'Opt-in daily email reminders sent by a scheduled Supabase Edge Function; deployed to GitHub Pages via GitHub Actions',
     ],
     technologies: ['React', 'TypeScript', 'Vite', 'Supabase', 'PostgreSQL', 'GitHub Actions'],
