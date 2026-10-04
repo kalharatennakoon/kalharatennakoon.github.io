@@ -75,17 +75,18 @@ const projects: Project[] = [
   {
     title: 'SolarCast',
     subtitle: 'Solar Energy Forecasting App',
-    summary: 'Full-stack ML app that forecasts monthly solar generation, grid export and cash payouts from residential inverter data, containerised and shipped through an automated CI/CD pipeline.',
+    summary: 'Full-stack ML app that forecasts monthly solar generation, grid export and cash payouts from residential inverter data, containerised and deployed to Kubernetes through an automated GitOps pipeline.',
     highlights: [
-      'Time-series forecasting with Meta\'s Prophet, producing 90% confidence interval predictions, with a chronological train/test split to prevent data leakage',
+      'Time-series forecasting with Meta\'s Prophet, producing 90% confidence interval predictions, with a chronological train/test split to prevent data leakage (about 8% error on unseen months)',
       'FastAPI backend with health checks and Prometheus metrics, serving an interactive React dashboard with energy analytics visualisations',
       'Containerised with Docker (multi-stage, non-root images), nginx and Docker Compose',
       'CI/CD with GitHub Actions: linting, 39 automated tests, Trivy vulnerability scanning, container smoke tests, and multi-architecture images published to Docker Hub',
+      'Deployed to Kubernetes with separate dev and prod environments using Kustomize, managed by Argo CD: merges roll out to dev automatically, prod is promoted by pull request, and rollbacks are Git reverts',
       'Live demo on GitHub Pages, built from synthetic data and redeployed automatically every month',
     ],
-    technologies: ['Python', 'FastAPI', 'React', 'Prophet', 'Machine Learning', 'Pandas', 'Docker', 'nginx', 'GitHub Actions', 'Prometheus', 'Trivy'],
+    technologies: ['Python', 'FastAPI', 'React', 'Prophet', 'Machine Learning', 'Pandas', 'Docker', 'Kubernetes', 'Kustomize', 'Argo CD', 'GitOps', 'GitHub Actions', 'nginx', 'Prometheus', 'Trivy'],
     website: 'https://kalharatennakoon.github.io/solarcast/',
-    date: 'Apr 2026 – Present',
+    date: 'Apr 2026 – Oct 2026',
     tag: 'Personal Project',
   },
   {
