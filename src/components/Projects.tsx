@@ -43,7 +43,7 @@ const projects: Project[] = [
     tag: 'Research',
   },
   {
-    title: 'CV Analyzer LK',
+    title: 'StrongCV',
     subtitle: 'AI-Powered CV Review & Rewriting Tool',
     summary: 'Web app that analyses a CV against a target role and job description, scores it overall and section by section, highlights strengths, gaps, and missing keywords, then rewrites the CV with the fixes applied for download as Word or PDF.',
     highlights: [
@@ -53,7 +53,7 @@ const projects: Project[] = [
       'Feedback explained in Sinhala or Tamil, job posting URL extraction with an SSRF guard, and per-visitor rate limiting with Upstash Redis',
     ],
     technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Ollama', 'LLMs', 'Zod', 'Upstash Redis', 'Vercel'],
-    website: 'https://cv-analyzer-lk.vercel.app/',
+    website: 'https://strongcv.vercel.app/',
     date: 'Sep 2026',
     tag: 'Personal Project',
   },
