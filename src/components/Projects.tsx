@@ -101,6 +101,20 @@ const projects: Project[] = [
     date: 'Jul 2020 – Dec 2020',
     tag: 'Industry · IFS',
   },
+  {
+    title: 'Know Your Letter',
+    subtitle: 'Plain-Language Explainer for Official Letters',
+    summary: 'Free web app that explains official letters to Sri Lankans in plain Sinhala, Tamil or English from a photo or PDF: what the letter says, what to do, and the date to act by. It also flags signs of a scam and handles letters written in other languages for Sri Lankans living abroad.',
+    highlights: [
+      'Vision model (Gemma) on Ollama Cloud fills a fixed JSON schema, and the server cleans every field before display, so every letter is shown as the same set of cards',
+      'Switching language translates the text without re-reading the photo; the translation is rejected if any number differs from the original, and the photo is re-read instead',
+      'Privacy by design: no letter content is stored or logged, PDFs and their passwords never leave the device, and NIC, card and IBAN numbers are masked server-side, with IBANs confirmed by checksum',
+    ],
+    technologies: ['Next.js', 'React', 'Vision LLM', 'Ollama', 'Prompt Engineering', 'Upstash Redis', 'pdf.js', 'Vercel', 'i18n', 'Accessibility'],
+    website: 'https://know-your-letter.vercel.app',
+    date: 'Oct 2026',
+    tag: 'Personal Project',
+  },
 ]
 
 function Projects() {
