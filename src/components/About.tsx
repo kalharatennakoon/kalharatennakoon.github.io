@@ -56,9 +56,11 @@ function About() {
               className="text-lg md:text-xl leading-relaxed text-[var(--text-primary)] m-0 px-4 relative z-10"
               style={{ fontFamily: '"Handlee", cursive', fontWeight: 400 }}
             >
-              Software engineer and First Class Computer Science graduate with industry experience in DevOps and cloud-native systems at IFS.
-              I build full-stack applications, automate CI/CD with Kubernetes, Docker, Tekton, and ArgoCD, and ship machine learning features,
-              from forecasting models to a local RAG assistant. Focused on MLOps and bringing AI systems reliably into production.
+              Software engineer working across DevOps, cloud-native platforms, and applied machine learning.
+              At IFS I automated Kubernetes-native CI/CD with Tekton, added automated testing that cut manual debugging by about 30%,
+              and integrated security scanning into delivery pipelines. I also build and ship full-stack products end to end,
+              from React and FastAPI apps deployed to Kubernetes with GitHub Actions and ArgoCD to ML forecasting and LLM features.
+              Open to software, DevOps, MLOps, and AI/ML engineering roles.
             </p>
           </div>
         </div>
@@ -87,7 +89,9 @@ function About() {
             </div>
             <p className="text-sm md:text-base text-[var(--text-secondary)] max-w-xl mx-auto m-0 leading-relaxed">
               I automate infrastructure for a living, so this portfolio ships with a working shell.
-              Explore it like you would a cluster — type a command, or click one below.
+              Explore it like you would a cluster —{' '}
+              <span className="pointer-coarse:hidden">type a command, or click one below.</span>
+              <span className="hidden pointer-coarse:inline">tap a command below, or type your own.</span>
             </p>
           </div>
 

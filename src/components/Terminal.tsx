@@ -3,7 +3,7 @@ import { useTheme } from '../hooks/useTheme'
 import useScrollReveal from '../hooks/useScrollReveal'
 import { completableNames, parse, resolve } from '../terminal/commands'
 import { displayPath } from '../terminal/filesystem'
-import { hint, line, s } from '../terminal/format'
+import { flow, hint, line, s, setColumns } from '../terminal/format'
 import type { Line, Segment, TermColor } from '../terminal/types'
 
 /** ANSI-ish palette tuned for the dark navy terminal body. */
@@ -24,7 +24,7 @@ const PROMPT_USER = 'kalhara@portfolio'
 const quickCommands = [
   'whoami',
   'ls',
-  'cd projects',
+  'cd ~/projects',
   'pipeline run',
   'pipeline run --inject-exploit',
   'kubectl get projects',
@@ -39,8 +39,12 @@ const bootSequence: { text: string; color?: TermColor; delay: number }[] = [
   { text: '✓ All systems healthy', color: 'green', delay: 200 },
 ]
 
+/** Phones and tablets: tapping a chip is the main way in, typing the fallback. */
+const isTouchDevice = () => window.matchMedia('(pointer: coarse)').matches
+
 function Terminal() {
   const { theme, toggleTheme } = useTheme()
+  const [touch] = useState(isTouchDevice)
 
   const [lines, setLines] = useState<Line[]>([])
   const [input, setInput] = useState('')
@@ -81,7 +85,7 @@ function Terminal() {
       timers.push(
         window.setTimeout(() => {
           if (cancelled) return
-          append('output', [line(step.text, step.color)])
+          append('output', [flow(line(step.text, step.color))])
         }, elapsed),
       )
     })
@@ -91,8 +95,15 @@ function Terminal() {
         if (cancelled) return
         append('output', [
           [],
-          [s('Welcome. ', 'white', true), s("This portfolio runs a real shell — type a command to explore.", 'dim')],
-          hint("Try `help` for everything, or `whoami` to start. Tab completes, ↑ recalls."),
+          flow([
+            s('Welcome. ', 'white', true),
+            s(`This portfolio runs a real shell — ${touch ? 'tap a command below' : 'type a command'} to explore.`, 'dim'),
+          ]),
+          hint(
+            touch
+              ? 'Or type your own: `help` lists everything.'
+              : 'Try `help` for everything, or `whoami` to start. Tab completes, ↑ recalls.',
+          ),
           [],
         ])
         setBooted(true)
@@ -103,7 +114,33 @@ function Terminal() {
       cancelled = true
       timers.forEach(clearTimeout)
     }
-  }, [append, inView])
+  }, [append, inView, touch])
+
+  /* Tell the formatter how many columns fit, so prose wraps to the screen. */
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+
+    const measure = () => {
+      const probe = document.createElement('span')
+      probe.textContent = '0'.repeat(50)
+      probe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre'
+      el.appendChild(probe)
+      const charWidth = probe.getBoundingClientRect().width / 50
+      probe.remove()
+
+      const style = getComputedStyle(el)
+      const inner = el.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)
+      if (charWidth > 0) setColumns(Math.floor(inner / charWidth))
+    }
+
+    measure()
+    /* The monospace web font changes the character width once it loads. */
+    void document.fonts.ready.then(measure)
+    const observer = new ResizeObserver(measure)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   /* Keep the newest output in view. */
   useEffect(() => {
@@ -235,7 +272,7 @@ function Terminal() {
     }
   }
 
-  /** Complete the command name, or the first argument when one is expected. */
+  /** Complete the command name, or the argument being typed. */
   const completeInput = () => {
     const parts = input.split(/\s+/)
     const isFirstWord = parts.length <= 1
@@ -252,13 +289,14 @@ function Terminal() {
     }
 
     const command = resolve(parts[0])
-    const options = command?.completions?.(cwd) ?? []
+    const prefix = parts[parts.length - 1]
+    const options = command?.completions?.(cwd, parts.slice(1, -1), prefix) ?? []
     if (!options.length) return
 
-    const prefix = parts[parts.length - 1]
     const matches = options.filter((o) => o.startsWith(prefix))
     if (matches.length === 1) {
-      setInput([...parts.slice(0, -1), matches[0]].join(' ') + ' ')
+      /* No space after a directory, so the next Tab keeps descending into it. */
+      setInput([...parts.slice(0, -1), matches[0]].join(' ') + (matches[0].endsWith('/') ? '' : ' '))
     } else if (matches.length > 1) {
       append('output', [[s(matches.join('   '), 'dim')]])
       setInput([...parts.slice(0, -1), commonPrefix(matches)].join(' '))
@@ -296,7 +334,10 @@ function Terminal() {
         aria-label="Interactive portfolio terminal output"
       >
         {lines.map((l) => (
-          <div key={l.id} className="terminal-line">
+          <div
+            key={l.id}
+            className={`terminal-line${l.kind === 'input' || l.segments[0]?.flow ? ' is-flow' : ''}`}
+          >
             {l.segments.length === 0 ? (
               <span>&nbsp;</span>
             ) : (
@@ -350,7 +391,7 @@ function Terminal() {
               autoCapitalize="off"
               autoCorrect="off"
               aria-label="Terminal command input"
-              placeholder={busy ? '' : 'type a command…'}
+              placeholder={busy ? '' : touch ? 'or type a command…' : 'type a command…'}
             />
           </div>
         )}
@@ -358,7 +399,7 @@ function Terminal() {
 
       {/* Quick commands for visitors who would rather click than type */}
       <div className="terminal-chips">
-        <span className="terminal-chips-label">Try:</span>
+        <span className="terminal-chips-label">{touch ? 'Tap:' : 'Try:'}</span>
         {quickCommands.map((cmd) => (
           <button
             key={cmd}
@@ -369,7 +410,8 @@ function Terminal() {
               setInput('')
               setHistoryIndex(null)
               void runCommand(cmd)
-              inputRef.current?.focus({ preventScroll: true })
+              /* Focusing on touch would pop the keyboard over the output. */
+              if (!touch) inputRef.current?.focus({ preventScroll: true })
             }}
           >
             {cmd}
