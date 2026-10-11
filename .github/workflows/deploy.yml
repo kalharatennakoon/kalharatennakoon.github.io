@@ -16,27 +16,61 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+# One Pages site serves both branches: main at /, academic-cv at /academic/.
+env:
+  ACADEMIC_PATH: academic
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout industry site (main)
         uses: actions/checkout@v4
+        with:
+          ref: main
+          path: industry
+
+      - name: Checkout academic site (academic-cv)
+        uses: actions/checkout@v4
+        with:
+          ref: academic-cv
+          path: academic
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install dependencies
+      - name: Install dependencies (industry)
+        working-directory: industry
         run: npm install
 
-      - name: Fetch Medium posts
+      - name: Fetch Medium posts (industry)
+        working-directory: industry
         run: node scripts/fetch-medium-posts.js
         continue-on-error: true
 
-      - name: Build
+      - name: Build industry site
+        working-directory: industry
         run: npm run build
+
+      - name: Install dependencies (academic)
+        working-directory: academic
+        run: npm install
+
+      - name: Fetch Medium posts (academic)
+        working-directory: academic
+        run: node scripts/fetch-medium-posts.js
+        continue-on-error: true
+
+      - name: Build academic site
+        working-directory: academic
+        run: npm run build -- --base="/$ACADEMIC_PATH/"
+
+      - name: Combine sites
+        run: |
+          mkdir "industry/dist/$ACADEMIC_PATH"
+          cp -R academic/dist/. "industry/dist/$ACADEMIC_PATH/"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -44,7 +78,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: industry/dist
 
   deploy:
     environment:
