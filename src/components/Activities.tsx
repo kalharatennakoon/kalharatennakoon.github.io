@@ -44,7 +44,7 @@ function Activities() {
               Authored 50+ technical articles on DevOps, cloud-native technologies, and software engineering, reaching 150K+ views.
             </p>
             <p style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-secondary)', margin: '0 0 0.4rem' }}>
-              Selected Articles
+              Featured Articles
             </p>
             <ol style={{ margin: '0 0 0.5rem', padding: '0 0 0 1.25rem', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
               {selectedArticles.map((article) => (
