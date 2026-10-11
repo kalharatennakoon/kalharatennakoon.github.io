@@ -7,7 +7,7 @@
  * that blocks a deploy shows you understand why the gate is there.
  */
 
-import { blank, error, hint, line, s, table } from './format'
+import { blank, error, flow, hint, line, s, table } from './format'
 import type { CommandContext, Segment } from './types'
 
 export type Cluster = 'aks' | 'gke' | 'eks' | 'rancher'
@@ -177,11 +177,11 @@ const findings = [
 ]
 
 const stage = (name: string) => [s('  ┌─ ', 'dim'), s(name, 'cyan', true)]
-const step = (text: string, colour: 'green' | 'red' | 'yellow' = 'green') => [
+const step = (text: string, colour: 'green' | 'red' | 'yellow' = 'green') => flow([
   s('  │  ', 'dim'),
   s(colour === 'green' ? '✓ ' : colour === 'red' ? '✗ ' : '! ', colour),
   s(text, 'dim'),
-]
+])
 const endStage = (label: string, colour: 'green' | 'red' | 'yellow') => [
   s('  └─ ', 'dim'),
   s(label, colour),
@@ -196,16 +196,16 @@ export async function runPipeline(
   }
 
   print([
-    [
+    flow([
       s('▶ ', 'green', true),
       s('Pipeline started', 'white', true),
       s('  kalhara-release-pipeline · main', 'dim'),
-    ],
-    [
+    ]),
+    flow([
       s('  target: ', 'dim'),
       s(config.cluster.toUpperCase(), 'cyan'),
       s(`  (${clusterLabels[config.cluster]})`, 'dim'),
-    ],
+    ]),
     [s('  gate:   ', 'dim'), s(config.gate, config.gate === 'fail-on-high' ? 'yellow' : 'dim')],
     blank,
   ])
@@ -249,11 +249,11 @@ export async function runPipeline(
     ])
   } else {
     print([
-      [
+      flow([
         s('  │  ', 'dim'),
         s(blocked ? '✗ ' : '! ', blocked ? 'red' : 'yellow'),
         s('2 vulnerabilities above the severity gate', blocked ? 'red' : 'yellow'),
-      ],
+      ]),
       blank,
       ...table(
         [
@@ -280,14 +280,14 @@ export async function runPipeline(
     await sleep(300)
     if (blocked) {
       print([
-        [s('  │  ', 'dim'), s('✗ ', 'red'), s('FAIL_ON_CVE=true — severity gate HIGH,CRITICAL breached', 'red')],
-        [s('  │  ', 'dim'), s('✗ ', 'red'), s('Blocking promotion to ' + config.cluster.toUpperCase(), 'red')],
+        flow([s('  │  ', 'dim'), s('✗ ', 'red'), s('FAIL_ON_CVE=true — severity gate HIGH,CRITICAL breached', 'red')]),
+        flow([s('  │  ', 'dim'), s('✗ ', 'red'), s('Blocking promotion to ' + config.cluster.toUpperCase(), 'red')]),
         endStage('blocked', 'red'),
       ])
     } else {
       print([
-        [s('  │  ', 'dim'), s('! ', 'yellow'), s('FAIL_ON_CVE=false — findings logged, promotion allowed', 'yellow')],
-        [s('  │  ', 'dim'), s('! ', 'yellow'), s('Risk accepted and recorded against release v1.5.0', 'yellow')],
+        flow([s('  │  ', 'dim'), s('! ', 'yellow'), s('FAIL_ON_CVE=false — findings logged, promotion allowed', 'yellow')]),
+        flow([s('  │  ', 'dim'), s('! ', 'yellow'), s('Risk accepted and recorded against release v1.5.0', 'yellow')]),
         endStage('warning', 'yellow'),
       ])
     }
@@ -303,11 +303,11 @@ export async function runPipeline(
       [s('  │  ', 'dim'), s('- ', 'dim'), s('skipped — upstream task failed', 'dim')],
       endStage('skipped', 'red'),
       blank,
-      [
+      flow([
         s('✗ ', 'red', true),
         s('Pipeline failed', 'red', true),
         s('  2/5 stages passed · deploy blocked by SecOps gate', 'dim'),
-      ],
+      ]),
       [s('  exit code: ', 'dim'), s('1', 'red')],
       blank,
       hint('Re-run with `--gate=log-and-continue` to accept the risk and ship anyway.'),
@@ -327,16 +327,16 @@ export async function runPipeline(
   print([
     blank,
     config.injectExploit
-      ? [
+      ? flow([
           s('! ', 'yellow', true),
           s('Pipeline succeeded with warnings', 'yellow', true),
           s('  5/5 stages · deployed with 2 CVEs accepted', 'dim'),
-        ]
-      : [
+        ])
+      : flow([
           s('✓ ', 'green', true),
           s('Pipeline succeeded', 'green', true),
           s('  4/4 stages · commit d9f2e1a', 'dim'),
-        ],
+        ]),
     [s('  exit code: ', 'dim'), s('0', 'green')],
     blank,
     hint(

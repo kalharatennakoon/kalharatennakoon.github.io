@@ -1,5 +1,23 @@
 import type { Segment, TermColor } from './types'
 
+/** Columns the terminal can currently show; prose wraps to this on narrow screens. */
+let columns = 80
+
+/** Called by the terminal whenever its visible width changes. */
+export function setColumns(count: number): void {
+  columns = Math.max(20, count)
+}
+
+export const getColumns = (): number => columns
+
+/**
+ * Mark a row as prose: on a screen narrower than the row it wraps onto the
+ * next line, where preformatted rows (tables, ASCII art) scroll sideways.
+ */
+export function flow(row: Segment[]): Segment[] {
+  return row.length ? [{ ...row[0], flow: true }, ...row.slice(1)] : row
+}
+
 /** A styled run of text. */
 export function s(text: string, color?: TermColor, bold = false): Segment {
   return { text, color, bold }
@@ -57,18 +75,20 @@ export function table(columns: Column[], rows: string[][]): Segment[][] {
 }
 
 /**
- * Break `text` into rows no wider than `width`, prefixing every row with
- * `indent`. Long unbreakable tokens are allowed to overflow rather than split.
+ * Break `text` into rows no wider than `width` (or the terminal, when that is
+ * narrower), prefixing every row with `indent`. Long unbreakable tokens are
+ * allowed to overflow rather than split.
  */
 export function wrap(text: string, width = 76, indent = '  '): string[] {
   const words = text.split(/\s+/).filter(Boolean)
   const rows: string[] = []
+  const limit = Math.min(width, columns) - indent.length
   let current = ''
 
   for (const word of words) {
     if (!current) {
       current = word
-    } else if ((current + ' ' + word).length <= width - indent.length) {
+    } else if ((current + ' ' + word).length <= limit) {
       current += ' ' + word
     } else {
       rows.push(indent + current)
@@ -87,15 +107,15 @@ export function paragraph(text: string, color?: TermColor, width = 76, indent = 
 
 /** `[ok] message` in green. */
 export function ok(text: string): Segment[] {
-  return [s('✓ ', 'green', true), s(text)]
+  return flow([s('✓ ', 'green', true), s(text)])
 }
 
 /** `error: message` in red — the standard shape for command failures. */
 export function error(text: string): Segment[] {
-  return [s('error: ', 'red', true), s(text)]
+  return flow([s('error: ', 'red', true), s(text)])
 }
 
 /** A dim hint row, used for "try X next" nudges. */
 export function hint(text: string): Segment[] {
-  return line(text, 'dim')
+  return flow(line(text, 'dim'))
 }

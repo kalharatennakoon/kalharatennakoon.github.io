@@ -539,6 +539,12 @@
   min-height: 1.65em;
 }
 
+/* Prose rows wrap to the screen; tables and ASCII art keep scrolling sideways. */
+.terminal-line.is-flow {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 .terminal-link {
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -666,6 +672,14 @@
   .terminal-chips-label,
   .terminal-chip {
     flex: 0 0 auto;
+  }
+}
+
+/* Touch: the chips are the main way in, so give them a finger-sized target. */
+@media (pointer: coarse) {
+  .terminal-chip {
+    font-size: 12px;
+    padding: 8px 14px;
   }
 }
 

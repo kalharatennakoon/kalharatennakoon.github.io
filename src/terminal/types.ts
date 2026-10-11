@@ -17,6 +17,8 @@ export interface Segment {
   bold?: boolean
   /** Renders the segment as an anchor opening in a new tab. */
   href?: string
+  /** Set on a row's first segment: the row soft-wraps instead of scrolling sideways. */
+  flow?: boolean
 }
 
 /** A rendered terminal row: either the echoed command or command output. */
@@ -62,7 +64,10 @@ export interface Command {
   aliases?: string[]
   /** Hidden from `help` and tab completion, but still runnable. */
   hidden?: boolean
-  /** Values suggested for tab completion of the first argument. */
-  completions?: (cwd: string[]) => string[]
+  /**
+   * Values suggested for tab completion. `args` holds the words already typed
+   * after the command name; `partial` is the word being completed.
+   */
+  completions?: (cwd: string[], args: string[], partial: string) => string[]
   run: (ctx: CommandContext) => void | Promise<void>
 }

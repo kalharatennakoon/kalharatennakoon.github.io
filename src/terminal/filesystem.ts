@@ -18,7 +18,7 @@ import {
   resumePath,
   skills,
 } from '../data/profile'
-import { blank, heading, hint, line, link, paragraph, s } from './format'
+import { blank, flow, heading, hint, line, link, paragraph, s } from './format'
 import { defaultConfig, renderPipelineYaml } from './pipeline'
 import type { Segment } from './types'
 
@@ -89,7 +89,7 @@ const aboutMd = (): Segment[][] => [
   blank,
   ...paragraph(identity.summary),
   blank,
-  [s('  Focus     ', 'dim'), s(identity.focus.join(', '))],
+  flow([s('  Focus     ', 'dim'), s(identity.focus.join(', '))]),
   [s('  Location  ', 'dim'), s(identity.location)],
   [s('  Status    ', 'dim'), s('Open to opportunities', 'green')],
 ]
@@ -98,10 +98,10 @@ const contactMd = (): Segment[][] => {
   const rows: Segment[][] = [
     heading('contact'),
     blank,
-    [s('  email'.padEnd(16), 'dim'), link(identity.email, `mailto:${identity.email}`)],
+    flow([s('  email'.padEnd(16), 'dim'), link(identity.email, `mailto:${identity.email}`)]),
   ]
   for (const l of links) {
-    rows.push([s(`  ${l.label.toLowerCase()}`.padEnd(16), 'dim'), link(l.url, l.url)])
+    rows.push(flow([s(`  ${l.label.toLowerCase()}`.padEnd(16), 'dim'), link(l.url, l.url)]))
   }
   rows.push(blank, hint('Machine-readable: `curl /api/contact`'))
   return rows
@@ -132,8 +132,8 @@ const projectDirs = index(
         blank,
         [s('  Status  ', 'dim'), s(p.status, p.status === 'Running' ? 'green' : 'white')],
         [s('  Period  ', 'dim'), s(p.period)],
-        ...(p.github ? [[s('  Source  ', 'dim'), link(p.github, p.github)]] : []),
-        ...(p.site ? [[s('  Live    ', 'dim'), link(p.site, p.site)]] : []),
+        ...(p.github ? [flow([s('  Source  ', 'dim'), link(p.github, p.github)])] : []),
+        ...(p.site ? [flow([s('  Live    ', 'dim'), link(p.site, p.site)])] : []),
       ]),
       file('stack.txt', `${p.stack.length} technologies`, () =>
         p.stack.map((t) => [s('  ' + t, 'yellow')]),
@@ -151,7 +151,7 @@ const experienceDirs = index(
     dir(e.id, `${e.title} · ${e.period}`, index([
       file('README.md', 'role overview', () => [
         [s(e.title, 'cyan', true)],
-        [s(e.company, 'white'), s('  ·  ', 'dim'), s(e.location, 'dim')],
+        flow([s(e.company, 'white'), s('  ·  ', 'dim'), s(e.location, 'dim')]),
         blank,
         [s('  Period  ', 'dim'), s(e.period)],
         [s('  Type    ', 'dim'), s(e.type)],
@@ -203,7 +203,7 @@ export const root: FsDir = dir('~', 'home', index([
       [s(education.degree, 'cyan', true)],
       [s(education.honours, 'green')],
       blank,
-      [s('  University  ', 'dim'), s(education.university)],
+      flow([s('  University  ', 'dim'), s(education.university)]),
       [s('  Delivery    ', 'dim'), s(education.delivery)],
       [s('  Graduation  ', 'dim'), s(education.graduation)],
       blank,
@@ -218,7 +218,7 @@ export const root: FsDir = dir('~', 'home', index([
   dir('achievements', `${achievements.length} awards`, index([
     file('README.md', 'award list', () =>
       achievements.flatMap((a) => [
-        [s('  ' + a.title, 'cyan', true), s('  ' + a.date, 'dim')],
+        flow([s('  ' + a.title, 'cyan', true), s('  ' + a.date, 'dim')]),
         ...paragraph(a.detail, undefined, 74, '    '),
         blank,
       ]),
@@ -228,7 +228,7 @@ export const root: FsDir = dir('~', 'home', index([
   dir('community', 'writing & volunteering', index([
     file('README.md', 'community roles', () =>
       community.flatMap((c) => [
-        [s('  ' + c.role, 'cyan', true), s('  ·  ', 'dim'), s(c.org), s('  ' + c.period, 'dim')],
+        flow([s('  ' + c.role, 'cyan', true), s('  ·  ', 'dim'), s(c.org), s('  ' + c.period, 'dim')]),
         ...paragraph(c.detail, undefined, 74, '    '),
         blank,
       ]),
@@ -306,11 +306,15 @@ export function entries(node: FsDir): FsNode[] {
   })
 }
 
-/** Names under `cwd`, for tab completion. */
-export function completionsFor(cwd: string[], includeFiles = true): string[] {
-  const node = lookup(cwd)
+/**
+ * Names for tab completion. `partial` is the path typed so far, so
+ * `projects/sol` completes inside `projects/` rather than in `cwd`.
+ */
+export function completionsFor(cwd: string[], includeFiles = true, partial = ''): string[] {
+  const base = partial.slice(0, partial.lastIndexOf('/') + 1)
+  const node = base ? resolvePath(cwd, base)?.node : lookup(cwd)
   if (!node || node.type !== 'dir') return []
   return entries(node)
     .filter((n) => includeFiles || n.type === 'dir')
-    .map((n) => (n.type === 'dir' ? n.name + '/' : n.name))
+    .map((n) => base + (n.type === 'dir' ? n.name + '/' : n.name))
 }

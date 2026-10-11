@@ -15,6 +15,8 @@ import {
 import {
   blank,
   error,
+  flow,
+  getColumns,
   hint,
   line,
   link,
@@ -29,6 +31,10 @@ import { parseFlags, pipelineCompletions, renderPipelineYaml, runPipeline } from
 import type { Command, CommandContext, Segment } from './types'
 
 const projectAge = (p: (typeof projects)[number]) => p.period.split('–')[0].trim()
+
+/** Completion for commands that only take one argument: nothing once it is typed. */
+const firstArg = (options: () => string[]) => (_cwd: string[], args: string[]) =>
+  args.length ? [] : options()
 
 /* ────────────────────────────────────────────────────────────────────────────
  * kubectl
@@ -112,18 +118,18 @@ function describeProject(name: string): Segment[][] {
   }
 
   const out: Segment[][] = [
-    [s('  Name'.padEnd(18), 'dim'), s(p.name, 'cyan', true)],
-    [s('  Tagline'.padEnd(18), 'dim'), s(p.tagline)],
-    [s('  Status'.padEnd(18), 'dim'), s(p.status, p.status === 'Running' ? 'green' : 'yellow')],
-    [s('  Period'.padEnd(18), 'dim'), s(p.period)],
-    [s('  Stack'.padEnd(18), 'dim'), s(p.stack.join(', '))],
+    flow([s('  Name'.padEnd(18), 'dim'), s(p.name, 'cyan', true)]),
+    flow([s('  Tagline'.padEnd(18), 'dim'), s(p.tagline)]),
+    flow([s('  Status'.padEnd(18), 'dim'), s(p.status, p.status === 'Running' ? 'green' : 'yellow')]),
+    flow([s('  Period'.padEnd(18), 'dim'), s(p.period)]),
+    flow([s('  Stack'.padEnd(18), 'dim'), s(p.stack.join(', '))]),
   ]
 
   if (p.github) {
-    out.push([s('  Source'.padEnd(18), 'dim'), link(p.github, p.github)])
+    out.push(flow([s('  Source'.padEnd(18), 'dim'), link(p.github, p.github)]))
   }
   if (p.site) {
-    out.push([s('  Live'.padEnd(18), 'dim'), link(p.site, p.site)])
+    out.push(flow([s('  Live'.padEnd(18), 'dim'), link(p.site, p.site)]))
   }
 
   out.push(blank, [s('  Description:', 'dim')], ...paragraph(p.description, undefined, 76, '    '))
@@ -140,11 +146,11 @@ function describeExperience(name: string): Segment[][] {
   }
 
   const out: Segment[][] = [
-    [s('  Role'.padEnd(18), 'dim'), s(e.title, 'cyan', true)],
-    [s('  Company'.padEnd(18), 'dim'), s(e.company)],
-    [s('  Location'.padEnd(18), 'dim'), s(e.location)],
-    [s('  Period'.padEnd(18), 'dim'), s(e.period)],
-    [s('  Type'.padEnd(18), 'dim'), s(e.type)],
+    flow([s('  Role'.padEnd(18), 'dim'), s(e.title, 'cyan', true)]),
+    flow([s('  Company'.padEnd(18), 'dim'), s(e.company)]),
+    flow([s('  Location'.padEnd(18), 'dim'), s(e.location)]),
+    flow([s('  Period'.padEnd(18), 'dim'), s(e.period)]),
+    flow([s('  Type'.padEnd(18), 'dim'), s(e.type)]),
     blank,
     [s('  Highlights:', 'dim')],
   ]
@@ -167,7 +173,7 @@ export const commands: Command[] = [
     description: 'List available commands, or show detail for one',
     category: 'system',
     aliases: ['?'],
-    completions: () => commands.filter((c) => !c.hidden).map((c) => c.name),
+    completions: firstArg(() => commands.filter((c) => !c.hidden).map((c) => c.name)),
     run({ args, print }) {
       if (args[0]) {
         const cmd = resolve(args[0])
@@ -187,13 +193,20 @@ export const commands: Command[] = [
       ]
 
       const rows: Segment[][] = [
-        [s('Available commands', 'yellow', true), s('  (Tab completes · ↑↓ recalls history)', 'dim')],
+        flow([s('Available commands', 'yellow', true), s('  (Tab completes · ↑↓ recalls history)', 'dim')]),
       ]
+
+      /* Two columns need about 90 characters; below that, stack them. */
+      const stacked = getColumns() < 90
 
       for (const g of groups) {
         rows.push(blank, [s(g.title, 'magenta', true)])
         for (const cmd of commands.filter((c) => c.category === g.key && !c.hidden)) {
-          rows.push([s('  ' + cmd.usage.padEnd(30), 'cyan'), s(cmd.description, 'dim')])
+          if (stacked) {
+            rows.push([s('  ' + cmd.usage, 'cyan')], ...paragraph(cmd.description, 'dim', 76, '      '))
+          } else {
+            rows.push([s('  ' + cmd.usage.padEnd(30), 'cyan'), s(cmd.description, 'dim')])
+          }
         }
       }
 
@@ -210,7 +223,7 @@ export const commands: Command[] = [
     run({ print }) {
       print([
         [s(identity.name, 'cyan', true)],
-        [s(identity.role, 'green'), s('  ·  '), s(identity.location, 'dim')],
+        flow([s(identity.role, 'green'), s('  ·  '), s(identity.location, 'dim')]),
         blank,
         ...paragraph(identity.summary),
         blank,
@@ -232,9 +245,24 @@ export const commands: Command[] = [
         blank,
       ]
       for (const group of skills) {
-        rows.push([s(`  ${group.label.padEnd(20)}`, 'yellow', true), s(group.items.join(' · '), 'dim')])
+        /* Too narrow for two columns: label on its own row, items below. */
+        if (getColumns() < 80) {
+          rows.push([s(`  ${group.label}`, 'yellow', true)], ...paragraph(group.items.join(' · '), 'dim', 76, '    '))
+          continue
+        }
+
+        /* Wrap at item boundaries so the list stays inside 80 columns. */
+        const wrapped: string[] = []
+        for (const item of group.items) {
+          const last = wrapped[wrapped.length - 1]
+          if (last !== undefined && `${last} · ${item}`.length <= 56) wrapped[wrapped.length - 1] = `${last} · ${item}`
+          else wrapped.push(item)
+        }
+        wrapped.forEach((text, i) =>
+          rows.push([s(`  ${(i ? '' : group.label).padEnd(20)}`, 'yellow', true), s(text, 'dim')]),
+        )
       }
-      rows.push(blank, hint('Try `kubectl get skills` or `cat skills.txt` for deeper details.'))
+      rows.push(blank, hint('Try `kubectl get skills` or `cat ~/skills.yaml` for deeper details.'))
       print(rows)
     },
   },
@@ -249,16 +277,25 @@ export const commands: Command[] = [
         [s('FEATURED PROJECTS', 'cyan', true)],
         blank,
       ]
+      /* One row per project needs about 120 columns; below that, stack the detail. */
+      const stacked = getColumns() < 120
+
       for (const p of projects) {
-        rows.push([
-          s(`  ${p.name.padEnd(24)}`, 'green', true),
-          s(`[${p.status}]`, p.status === 'Running' ? 'yellow' : 'dim'),
-          s(`  ${p.tagline}`, 'dim'),
-        ])
+        const status = s(`[${p.status}]`, p.status === 'Running' ? 'yellow' : 'dim')
+        if (stacked) {
+          rows.push(
+            [s(`  ${p.name}  `, 'green', true), status],
+            ...paragraph(p.tagline, 'dim', 76, '    '),
+            ...paragraph(`Stack: ${p.stack.join(', ')}`, 'dim', 76, '    '),
+            blank,
+          )
+          continue
+        }
+        rows.push([s(`  ${p.name.padEnd(24)}`, 'green', true), status, s(`  ${p.tagline}`, 'dim')])
         rows.push([s(`    Stack: `, 'cyan'), s(p.stack.join(', '), 'dim')])
         rows.push(blank)
       }
-      rows.push(hint('Type `cat projects/vetcare-one` or `kubectl describe project vetcare-one` for details.'))
+      rows.push(hint('Type `cat ~/projects/vetcare-one/README.md` or `kubectl describe project vetcare-one` for details.'))
       print(rows)
     },
   },
@@ -268,7 +305,7 @@ export const commands: Command[] = [
     usage: 'ls [-l] [path]',
     description: 'List the contents of the current directory',
     category: 'system',
-    completions: (cwd) => completionsFor(cwd, false),
+    completions: (cwd, _args, partial) => completionsFor(cwd, false, partial),
     run({ args, print, cwd }) {
       const long = args.some((a) => a === '-l' || a === '-la' || a === '-al')
       const target = args.find((a) => !a.startsWith('-'))
@@ -290,7 +327,7 @@ export const commands: Command[] = [
         /* Wrap into fixed columns the way `ls` does, so wide directories
            don't force the terminal to scroll sideways. */
         const width = items.reduce((max, n) => Math.max(max, n.name.length + 1), 0) + 2
-        const columns = Math.max(1, Math.floor(80 / width))
+        const columns = Math.max(1, Math.floor(Math.min(80, getColumns()) / width))
         const rows: Segment[][] = []
 
         for (let i = 0; i < items.length; i += columns) {
@@ -328,7 +365,7 @@ export const commands: Command[] = [
     usage: 'cat <file>',
     description: 'Print the contents of a file',
     category: 'system',
-    completions: (cwd) => completionsFor(cwd),
+    completions: (cwd, _args, partial) => completionsFor(cwd, true, partial),
     run({ args, print, cwd }) {
       const target = args[0]
       if (!target) return print([error('cat: missing operand'), hint('Usage: cat <file>')])
@@ -359,7 +396,7 @@ export const commands: Command[] = [
     usage: 'tree [path]',
     description: 'Print the directory structure',
     category: 'system',
-    completions: (cwd) => completionsFor(cwd, false),
+    completions: (cwd, _args, partial) => completionsFor(cwd, false, partial),
     run({ args, print, cwd }) {
       const resolved = resolvePath(cwd, args[0] ?? '.')
       if (!resolved) return print([error(`tree: ${args[0]}: No such file or directory`)])
@@ -452,7 +489,7 @@ export const commands: Command[] = [
     usage: 'theme [dark|light]',
     description: 'Switch the site between dark and light',
     category: 'system',
-    completions: () => ['dark', 'light'],
+    completions: firstArg(() => ['dark', 'light']),
     run({ args, print, theme, toggleTheme }) {
       const want = args[0]?.toLowerCase()
       if (!want) return print([[s('Current theme: ', 'dim'), s(theme, 'cyan', true)], hint('Usage: theme dark | theme light')])
@@ -511,7 +548,7 @@ export const commands: Command[] = [
     category: 'system',
     run({ print }) {
       window.open(resumePath, '_blank', 'noopener,noreferrer')
-      print([ok('Opening Kalhara_Tennakoon_Resume.pdf in a new tab…')])
+      print([ok(`Opening ${resumePath.slice(1)} in a new tab…`)])
     },
   },
 
@@ -522,7 +559,18 @@ export const commands: Command[] = [
     description: 'Query projects, skills, nodes, certs and deployments',
     category: 'devops',
     aliases: ['k'],
-    completions: () => ['get', 'describe'],
+    completions: (_cwd, args) => {
+      const [verb, resource] = args
+      if (args.length === 0) return ['get', 'describe']
+      if (args.length === 1) {
+        return verb === 'describe' ? ['projects', 'deployments'] : Object.keys(kubectlResources).sort()
+      }
+      if (args.length === 2 && verb === 'describe') {
+        if (/^(projects?|pods)$/.test(resource)) return projects.map((p) => p.name)
+        if (/^deployments?$/.test(resource)) return experience.map((e) => e.id)
+      }
+      return []
+    },
     run({ args, print }) {
       const [verb, resource, name] = args
 
@@ -585,7 +633,7 @@ export const commands: Command[] = [
     usage: 'docker ps',
     description: 'Show what I am actively working on',
     category: 'devops',
-    completions: () => ['ps', 'images'],
+    completions: firstArg(() => ['ps', 'images']),
     run({ args, print }) {
       const sub = args[0] ?? 'ps'
 
@@ -635,7 +683,7 @@ export const commands: Command[] = [
     description: 'Render work experience as infrastructure state',
     category: 'devops',
     aliases: ['tf'],
-    completions: () => ['show', 'plan', 'state'],
+    completions: firstArg(() => ['show', 'plan', 'state']),
     run({ args, print }) {
       const sub = args[0] ?? 'show'
 
@@ -653,7 +701,7 @@ export const commands: Command[] = [
           blank,
           [s('Plan: ', 'white', true), s('1 to add, 0 to change, 0 to destroy.', 'green')],
           blank,
-          hint('Run `cat contact.md` to apply.'),
+          hint('Run `cat ~/contact.md` to apply.'),
         ])
       }
 
@@ -692,7 +740,7 @@ export const commands: Command[] = [
     usage: 'helm list',
     description: 'List certifications as installed releases',
     category: 'devops',
-    completions: () => ['list'],
+    completions: firstArg(() => ['list']),
     run({ args, print }) {
       const sub = args[0] ?? 'list'
       if (sub !== 'list' && sub !== 'ls') {
@@ -751,7 +799,7 @@ export const commands: Command[] = [
     usage: 'git log',
     description: 'Show my career timeline as a commit history',
     category: 'devops',
-    completions: () => ['log', 'status'],
+    completions: firstArg(() => ['log', 'status']),
     run({ args, print }) {
       const sub = args[0] ?? 'log'
 
@@ -766,7 +814,7 @@ export const commands: Command[] = [
           [s('Untracked files:', 'red')],
           [s('  ', 'dim'), s('opportunities/', 'red')],
           blank,
-          hint("Run `cat contact.md` to open a PR on my career."),
+          hint("Run `cat ~/contact.md` to open a PR on my career."),
         ])
       }
 
@@ -776,13 +824,13 @@ export const commands: Command[] = [
 
       const rows: Segment[][] = []
       for (const c of timeline) {
-        rows.push([
+        rows.push(flow([
           s(c.hash, 'yellow'),
           s('  '),
           s(c.date, 'dim'),
           s('  '),
           s(c.subject),
-        ])
+        ]))
       }
       print([...rows, blank, hint(`${timeline.length} commits · newest first`)])
     },
@@ -874,7 +922,7 @@ export const commands: Command[] = [
     usage: 'curl /api/<endpoint>',
     description: 'Fetch profile data as JSON',
     category: 'devops',
-    completions: () => ['/api/contact', '/api/stats', '/api/health', '/api/education'],
+    completions: firstArg(() => ['/api/contact', '/api/stats', '/api/health', '/api/education']),
     run({ args, print }) {
       const endpoint = (args[0] ?? '').replace(/^https?:\/\/[^/]+/, '')
 
@@ -944,7 +992,7 @@ export const commands: Command[] = [
     usage: 'cd <directory>',
     description: 'Change the working directory',
     category: 'navigation',
-    completions: (cwd) => completionsFor(cwd, false),
+    completions: (cwd, _args, partial) => completionsFor(cwd, false, partial),
     run({ args, print, cwd, setCwd }) {
       const target = args[0] ?? '~'
 
@@ -969,7 +1017,7 @@ export const commands: Command[] = [
     usage: 'open <link>',
     description: 'Open a profile link in a new tab',
     category: 'navigation',
-    completions: () => links.map((l) => l.label.toLowerCase().replace(/\s+/g, '')),
+    completions: firstArg(() => links.map((l) => l.label.toLowerCase().replace(/\s+/g, ''))),
     run({ args, print }) {
       const key = (args[0] ?? '').toLowerCase().replace(/\s+/g, '')
       if (!key) {
@@ -1021,7 +1069,7 @@ export const commands: Command[] = [
       print([
         line('logout'),
         blank,
-        hint('There is no escape — but there is a scroll bar. Try `cd projects`.'),
+        hint('There is no escape — but there is a scroll bar. Try `cd ~/projects`.'),
       ])
     },
   },
@@ -1054,7 +1102,7 @@ export const commands: Command[] = [
     description: 'Show the manual for a command',
     category: 'system',
     hidden: true,
-    completions: () => commands.map((c) => c.name),
+    completions: firstArg(() => commands.map((c) => c.name)),
     run({ args, print }) {
       const cmd = resolve(args[0] ?? '')
       if (!cmd) return print([error(`No manual entry for ${args[0] ?? ''}`)])
