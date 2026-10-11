@@ -13,8 +13,8 @@ export const identity = {
   email: 'kalharatennakoonmck@gmail.com',
   site: 'kalharatennakoon.github.io',
   summary:
-    'Computer Science graduate with hands-on industry experience in software development, ' +
-    'cloud-native systems, and automation. Builds full-stack applications, reliable deployment ' +
+    'Software engineer with hands-on industry experience in DevOps, cloud-native systems, ' +
+    'and automation. Builds full-stack applications, reliable deployment ' +
     'workflows with Kubernetes, Docker, and CI/CD, and machine learning systems from model to production.',
   focus: ['Software Engineering', 'DevOps & Cloud-Native', 'Machine Learning & MLOps', 'DevSecOps'],
 }
@@ -375,4 +375,4 @@ export const timeline = [
   { hash: '1e5a8f0', date: '2017-09', subject: 'award: Cisco NetRiders — 4th in Sri Lanka' },
 ]
 
-export const resumePath = '/Kalhara_Tennakoon_Resume.pdf'
+export const resumePath = '/Kalhara_Tennakoon_CV.pdf'
