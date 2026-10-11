@@ -1,5 +1,11 @@
 const selectedArticles = [
   {
+    title: 'I Built a Free Expense Tracker Using Apple Shortcuts',
+    venue: 'Mac O\'Clock',
+    date: 'May 2026',
+    url: 'https://medium.com/macoclock/i-built-a-free-expense-tracker-using-apple-shortcuts-aff8178775f6',
+  },
+  {
     title: 'Building, Dockerizing, and Deploying a CRUD API in Go on Kubernetes',
     venue: 'Level Up Coding',
     date: 'Apr 2025',
@@ -12,10 +18,22 @@ const selectedArticles = [
     url: 'https://levelup.gitconnected.com/getting-started-with-tekton-pipelines-a-beginners-guide-to-ci-cd-on-kubernetes-afd21e98b9fe',
   },
   {
+    title: 'Integrating Argo CD for Your Kubernetes Project',
+    venue: 'FAUN.dev',
+    date: 'Dec 2021',
+    url: 'https://faun.pub/integrating-argo-cd-for-your-kubernetes-project-79ef16011433',
+  },
+  {
     title: 'Getting Started with CronJobs in Kubernetes',
     venue: 'FAUN.dev',
     date: 'Dec 2021',
     url: 'https://faun.pub/getting-started-with-cronjobs-in-kubernetes-d3cfce10fd9b',
+  },
+  {
+    title: 'Understanding Jobs in Kubernetes',
+    venue: 'Level Up Coding',
+    date: 'Dec 2021',
+    url: 'https://levelup.gitconnected.com/understanding-jobs-in-kubernetes-68ac21b272d8',
   },
 ]
 
@@ -46,7 +64,7 @@ function Activities() {
             <p style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-secondary)', margin: '0 0 0.4rem' }}>
               Featured Articles
             </p>
-            <ol style={{ margin: '0 0 0.5rem', padding: '0 0 0 1.25rem', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+            <ol style={{ margin: '0 0 0.5rem', padding: '0 0 0 1.25rem', display: 'flex', flexDirection: 'column', gap: '0.35rem', listStyleType: 'decimal' }}>
               {selectedArticles.map((article) => (
                 <li key={article.url} style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
                   <a
