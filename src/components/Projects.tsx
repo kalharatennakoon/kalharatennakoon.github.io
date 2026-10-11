@@ -1,4 +1,4 @@
-import { FaCode, FaGithub, FaBuilding, FaCalendarCheck, FaShieldAlt, FaBrain, FaPaw, FaCar, FaHospital, FaSun } from 'react-icons/fa'
+import { FaCode, FaGithub, FaGlobe, FaBuilding, FaCalendarCheck, FaShieldAlt, FaBrain, FaPaw, FaCar, FaHospital, FaSun, FaFileAlt, FaClipboardList, FaEnvelopeOpenText } from 'react-icons/fa'
 import type { IconType } from 'react-icons'
 import useScrollReveal from '../hooks/useScrollReveal'
 
@@ -8,6 +8,7 @@ interface Project {
   technologies: string[]
   icon: IconType
   github?: string
+  website?: string
   date?: string
   subtitle?: string
 }
@@ -18,22 +19,55 @@ function Projects() {
 
   const projects: Project[] = [
     {
-      title: 'VetCare Pro – Smart Veterinary Clinic Management System',
+      title: 'VetCare One – Smart Veterinary Clinic Management System',
       description:
-        'Final year project (Grade A, 76%) covering appointments, medical records, billing and inventory, with role-based access, a RESTful Express API, JWT auth, and ML models for disease prediction and sales & demand forecasting. ' +
+        'Formerly VetCare Pro. Final year project (Grade A, 76%) covering appointments, medical records, billing and inventory, with role-based access, a RESTful Express API, JWT auth, and ML models for disease prediction and sales & demand forecasting. ' +
         'Extended for the Ascentic AI Launch Pad (Top 10) with a local RAG assistant (Ollama & pgvector) that routes between semantic retrieval and exact SQL queries, with human-in-the-loop confirmation for database writes, plus a pet owner portal and SwiftUI iOS app.',
       technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'pgvector', 'Python', 'Flask', 'Scikit-learn', 'Ollama', 'SwiftUI', 'JWT'],
       icon: FaPaw,
-      github: 'https://github.com/kalharatennakoon/vetcarepro',
+      website: 'https://kalharatennakoon.github.io/vetcareone/',
       date: 'Oct 2025 – Aug 2026',
       subtitle: 'Final Year Project · AI Launch Pad',
     },
     {
-      title: 'SolarCast – Personal Solar Energy Forecasting App',
-      description: 'Full-stack ML app predicting monthly solar energy generation, grid export, and cash payouts from residential inverter data using Meta\'s Prophet with 90% confidence intervals. Features an interactive React dashboard with CSV upload support.',
-      technologies: ['Python', 'FastAPI', 'React', 'Prophet', 'Machine Learning', 'Time-Series Forecasting', 'Pandas', 'Data Visualization', 'REST APIs'],
+      title: 'SolarCast – Solar Energy Forecasting App',
+      description:
+        'Full-stack ML app that forecasts monthly solar generation, grid export, and cash payouts from residential inverter data using Meta\'s Prophet with 90% confidence intervals (about 8% error on unseen months). ' +
+        'FastAPI backend with Prometheus metrics and an interactive React dashboard, packaged as multi-stage, non-root Docker images and shipped through GitHub Actions CI/CD (linting, 39 automated tests, Trivy scans) to Kubernetes dev and prod environments managed with Kustomize and ArgoCD.',
+      technologies: ['Python', 'FastAPI', 'React', 'Prophet', 'Machine Learning', 'Pandas', 'Docker', 'Kubernetes', 'Kustomize', 'ArgoCD', 'GitOps', 'GitHub Actions', 'nginx', 'Prometheus', 'Trivy'],
       icon: FaSun,
-      date: 'Apr 2026 – Present',
+      website: 'https://kalharatennakoon.github.io/solarcast/',
+      date: 'Apr 2026 – Oct 2026',
+    },
+    {
+      title: 'StrongCV – AI-Powered CV Review & Rewriting Tool',
+      description:
+        'Web app that analyses a CV against a target role and job description, scores it overall and section by section, highlights strengths, gaps, and missing keywords, then rewrites it for download as Word or PDF. ' +
+        'Runs a two-model LLM pipeline on Ollama Cloud with JSON-schema outputs validated by Zod, plus ATS checks, tailored cover letters, interview preparation, feedback in Sinhala or Tamil, and per-visitor rate limiting with Upstash Redis.',
+      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Ollama', 'LLMs', 'Zod', 'Upstash Redis', 'Vercel'],
+      icon: FaFileAlt,
+      website: 'https://strongcv.vercel.app/',
+      date: 'Sep 2026',
+    },
+    {
+      title: 'Shortlisted – Job Application Tracking Board',
+      description:
+        'Web app for tracking job applications on a status board with per-user accounts, built on Supabase authentication and Postgres with Row Level Security. ' +
+        'Offers board, table, calendar, and statistics views, CSV import/export, a document library for CVs and cover letters, Google Calendar and .ics export, follow-up email templates, and opt-in daily reminders sent by a scheduled Supabase Edge Function.',
+      technologies: ['React', 'TypeScript', 'Vite', 'Supabase', 'PostgreSQL', 'GitHub Actions'],
+      icon: FaClipboardList,
+      website: 'https://kalharatennakoon.github.io/shortlisted/',
+      date: 'Sep 2026',
+    },
+    {
+      title: 'Know Your Letter – Plain-Language Explainer for Official Letters',
+      description:
+        'Free web app that explains official letters to Sri Lankans in plain Sinhala, Tamil, or English from a photo or PDF: what the letter says, what to do, and the date to act by, with scam warnings. ' +
+        'A vision model (Gemma) on Ollama Cloud fills a fixed JSON schema, translations are rejected if any number differs from the original, and no letter content is stored or logged, with NIC, card, and IBAN numbers masked server-side.',
+      technologies: ['Next.js', 'React', 'Vision LLM', 'Ollama', 'Prompt Engineering', 'Upstash Redis', 'pdf.js', 'Vercel', 'i18n', 'Accessibility'],
+      icon: FaEnvelopeOpenText,
+      website: 'https://know-your-letter.vercel.app',
+      date: 'Oct 2026',
     },
     {
       title: 'Predicting Course Difficulty from Student Evaluation Responses',
@@ -151,6 +185,16 @@ function Projects() {
                         <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
                           <FaBuilding className="flex-shrink-0" /> {project.subtitle}
                         </span>
+                      )}
+                      {project.website && (
+                        <a
+                          href={project.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--color-primary)] hover:text-[var(--color-primary-2)] hover:underline transition-colors w-fit"
+                        >
+                          <FaGlobe className="text-sm" /> Visit Site
+                        </a>
                       )}
                       {project.github && (
                         <a

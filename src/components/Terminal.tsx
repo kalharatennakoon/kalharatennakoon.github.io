@@ -35,7 +35,7 @@ const quickCommands = [
 const bootSequence: { text: string; color?: TermColor; delay: number }[] = [
   { text: 'Booting portfolio-sh 4.0 …', color: 'dim', delay: 180 },
   { text: '✓ Connected to cluster: kalhara-portfolio (context: production)', color: 'green', delay: 260 },
-  { text: '✓ Loaded 6 projects, 11 certifications, 2 deployments', color: 'green', delay: 220 },
+  { text: '✓ Loaded 9 projects, 11 certifications, 2 deployments', color: 'green', delay: 220 },
   { text: '✓ All systems healthy', color: 'green', delay: 200 },
 ]
 

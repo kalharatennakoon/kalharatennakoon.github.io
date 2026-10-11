@@ -133,6 +133,7 @@ const projectDirs = index(
         [s('  Status  ', 'dim'), s(p.status, p.status === 'Running' ? 'green' : 'white')],
         [s('  Period  ', 'dim'), s(p.period)],
         ...(p.github ? [[s('  Source  ', 'dim'), link(p.github, p.github)]] : []),
+        ...(p.site ? [[s('  Live    ', 'dim'), link(p.site, p.site)]] : []),
       ]),
       file('stack.txt', `${p.stack.length} technologies`, () =>
         p.stack.map((t) => [s('  ' + t, 'yellow')]),

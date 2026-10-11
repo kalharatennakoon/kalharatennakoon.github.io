@@ -84,32 +84,75 @@ export interface Project {
   status: 'Running' | 'Completed' | 'Archived'
   period: string
   github?: string
+  site?: string
 }
 
 export const projects: Project[] = [
   {
-    id: 'vetcare-pro',
-    name: 'vetcare-pro',
-    tagline: 'Smart veterinary clinic management system',
+    id: 'vetcare-one',
+    name: 'vetcare-one',
+    tagline: 'Smart veterinary clinic management system (formerly VetCare Pro)',
     description:
       'Full-stack veterinary platform supporting appointment, medical record, and inventory workflows, role-based access, and a SwiftUI app. ' +
       'Features a local RAG assistant (Ollama & pgvector) with intelligent SQL query routing and ML services for disease & demand forecasting.',
     stack: ['React', 'Node.js', 'PostgreSQL', 'pgvector', 'Python', 'Flask', 'Scikit-learn', 'Ollama', 'SwiftUI'],
     status: 'Completed',
     period: 'Oct 2025 – Aug 2026',
-    github: 'https://github.com/kalharatennakoon/vetcarepro',
+    site: 'https://kalharatennakoon.github.io/vetcareone/',
   },
   {
     id: 'solarcast',
     name: 'solarcast',
-    tagline: 'Personal solar energy forecasting app',
+    tagline: 'Solar energy forecasting app',
     description:
       'Full-stack ML app predicting monthly solar generation, grid export, and cash payouts from ' +
-      "residential inverter data using Meta's Prophet with 90% confidence intervals. Interactive " +
-      'React dashboard with CSV upload support.',
-    stack: ['Python', 'FastAPI', 'React', 'Prophet', 'Pandas', 'REST APIs'],
-    status: 'Running',
-    period: 'Apr 2026 – Present',
+      "residential inverter data using Meta's Prophet with 90% confidence intervals (about 8% error " +
+      'on unseen months). FastAPI backend and React dashboard, shipped through GitHub Actions CI/CD ' +
+      '(39 automated tests, Trivy scans) to Kubernetes dev and prod environments managed with ' +
+      'Kustomize and ArgoCD.',
+    stack: ['Python', 'FastAPI', 'React', 'Prophet', 'Docker', 'Kubernetes', 'Kustomize', 'ArgoCD', 'GitHub Actions', 'Prometheus', 'Trivy'],
+    status: 'Completed',
+    period: 'Apr 2026 – Oct 2026',
+    site: 'https://kalharatennakoon.github.io/solarcast/',
+  },
+  {
+    id: 'strongcv',
+    name: 'strongcv',
+    tagline: 'AI-powered CV review & rewriting tool',
+    description:
+      'Web app that analyses a CV against a target role and job description, scores it section by ' +
+      'section, then rewrites it for download as Word or PDF. Two-model LLM pipeline on Ollama Cloud ' +
+      'with JSON-schema outputs validated by Zod, ATS checks, cover letters, and interview preparation.',
+    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Ollama', 'Zod', 'Upstash Redis', 'Vercel'],
+    status: 'Completed',
+    period: 'Sep 2026',
+    site: 'https://strongcv.vercel.app/',
+  },
+  {
+    id: 'shortlisted',
+    name: 'shortlisted',
+    tagline: 'Job application tracking board',
+    description:
+      'Web app for tracking job applications on a status board with per-user accounts, built on ' +
+      'Supabase authentication and Postgres with Row Level Security. Board, table, calendar, and ' +
+      'statistics views, a document library, and opt-in daily email reminders.',
+    stack: ['React', 'TypeScript', 'Vite', 'Supabase', 'PostgreSQL', 'GitHub Actions'],
+    status: 'Completed',
+    period: 'Sep 2026',
+    site: 'https://kalharatennakoon.github.io/shortlisted/',
+  },
+  {
+    id: 'know-your-letter',
+    name: 'know-your-letter',
+    tagline: 'Plain-language explainer for official letters',
+    description:
+      'Free web app that explains official letters to Sri Lankans in plain Sinhala, Tamil, or English ' +
+      'from a photo or PDF. A vision model (Gemma) on Ollama Cloud fills a fixed JSON schema, and no ' +
+      'letter content is stored or logged.',
+    stack: ['Next.js', 'React', 'Vision LLM', 'Ollama', 'Upstash Redis', 'pdf.js', 'Vercel'],
+    status: 'Completed',
+    period: 'Oct 2026',
+    site: 'https://know-your-letter.vercel.app',
   },
   {
     id: 'course-difficulty',
@@ -316,9 +359,13 @@ export const community: CommunityRole[] = [
 
 /** Career timeline rendered as a commit log by the `git log` command. */
 export const timeline = [
+  { hash: 'b82d4e9', date: '2026-10', subject: 'feat(know-your-letter): ship plain-language letter explainer' },
+  { hash: '5f0c7a1', date: '2026-10', subject: 'feat(solarcast): deploy to Kubernetes with Kustomize and ArgoCD' },
   { hash: 'a3f91c2', date: '2026-09', subject: 'release: BSc (Hons) Computer Science — First Class Honours' },
+  { hash: 'e61b3d8', date: '2026-09', subject: 'feat(strongcv): ship AI-powered CV review tool' },
+  { hash: '3a9e5c4', date: '2026-09', subject: 'feat(shortlisted): ship job application tracking board' },
   { hash: '7d2e084', date: '2026-04', subject: 'feat(solarcast): ship ML solar forecasting app' },
-  { hash: 'c15b6af', date: '2026-03', subject: 'feat(vetcare-pro): deliver final year project, Grade A' },
+  { hash: 'c15b6af', date: '2026-03', subject: 'feat(vetcare-one): deliver final year project, Grade A' },
   { hash: '9e40d73', date: '2025-04', subject: 'award: Dan Kohn Scholarship, KubeCon EU (2nd time)' },
   { hash: '2b8c5e1', date: '2024-10', subject: 'perf(ci): cut manual debugging ~30% with Behave in Tekton' },
   { hash: 'f6a1930', date: '2024-07', subject: 'feat(ifs): join as DevOps Engineering Intern' },

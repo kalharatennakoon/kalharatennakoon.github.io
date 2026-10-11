@@ -122,6 +122,9 @@ function describeProject(name: string): Segment[][] {
   if (p.github) {
     out.push([s('  Source'.padEnd(18), 'dim'), link(p.github, p.github)])
   }
+  if (p.site) {
+    out.push([s('  Live'.padEnd(18), 'dim'), link(p.site, p.site)])
+  }
 
   out.push(blank, [s('  Description:', 'dim')], ...paragraph(p.description, undefined, 76, '    '))
   return out
@@ -255,7 +258,7 @@ export const commands: Command[] = [
         rows.push([s(`    Stack: `, 'cyan'), s(p.stack.join(', '), 'dim')])
         rows.push(blank)
       }
-      rows.push(hint('Type `cat projects/vetcare-pro` or `kubectl describe project vetcare-pro` for details.'))
+      rows.push(hint('Type `cat projects/vetcare-one` or `kubectl describe project vetcare-one` for details.'))
       print(rows)
     },
   },
@@ -561,7 +564,7 @@ export const commands: Command[] = [
         if (!resource || !name) {
           return print([
             error('describe requires a resource type and a name'),
-            hint('Example: kubectl describe projects vetcare-pro'),
+            hint('Example: kubectl describe projects vetcare-one'),
           ])
         }
         if (resource === 'projects' || resource === 'project' || resource === 'pods') {
