@@ -51,7 +51,7 @@ function Hero() {
             {/* CTA buttons */}
             <div className="no-print" style={{ display: 'flex', gap: '0.625rem', flexWrap: 'wrap', alignItems: 'center' }}>
               <a
-                href="/Kalhara_Tennakoon_CV.pdf"
+                href={`${import.meta.env.BASE_URL}Kalhara_Tennakoon_CV.pdf`}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ ...buttonStyle, color: 'var(--bg-primary)', background: 'var(--text-primary)', border: '1px solid var(--text-primary)' }}
@@ -82,7 +82,7 @@ function Hero() {
 
           {/* Photo */}
           <img
-            src="/profile.png"
+            src={`${import.meta.env.BASE_URL}profile.png`}
             alt="Kalhara Tennakoon"
             className="self-start order-first sm:order-last w-28 h-28 sm:w-[150px] sm:h-[150px]"
             style={{ borderRadius: '50%', objectFit: 'cover', objectPosition: 'top', flexShrink: 0, border: '1px solid var(--border-color)' }}

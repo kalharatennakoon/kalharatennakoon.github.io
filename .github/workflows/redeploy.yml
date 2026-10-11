@@ -1,0 +1,19 @@
+name: Redeploy GitHub Pages
+
+# The Pages site is built and deployed by deploy.yml on main, which serves
+# this branch under /academic/. Pushing here just asks main to redeploy.
+on:
+  push:
+    branches: [academic-cv]
+
+permissions:
+  actions: write
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run the deploy workflow on main
+        run: gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main
+        env:
+          GH_TOKEN: ${{ github.token }}

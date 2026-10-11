@@ -62,7 +62,7 @@ function Blog() {
   const [latestPosts, setLatestPosts] = useState<BlogPost[]>([])
 
   useEffect(() => {
-    fetch('/blog-posts.json')
+    fetch(`${import.meta.env.BASE_URL}blog-posts.json`)
       .then(res => res.json())
       .then((data: BlogPost[]) => {
         if (data && data.length > 0) {
