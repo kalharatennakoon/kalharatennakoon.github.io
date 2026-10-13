@@ -31,9 +31,6 @@ function Contact() {
               </a>
             ))}
           </div>
-          <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', fontStyle: 'italic', margin: 0 }}>
-            Academic and professional references available upon request.
-          </p>
         </div>
       </section>
 
