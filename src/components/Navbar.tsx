@@ -1,289 +1,190 @@
-import { useState, useEffect } from 'react'
-import {
-  FaSun, FaMoon, FaBars, FaTimes, FaSearch, FaVolumeUp, FaVolumeMute
-} from 'react-icons/fa'
+import { useEffect, useState } from 'react'
+import { FaBars, FaMoon, FaSearch, FaSun, FaTimes } from 'react-icons/fa'
 import { useTheme } from '../hooks/useTheme'
-import { soundFx } from '../utils/sound'
 
 interface NavbarProps {
   onOpenCommandPalette: () => void
 }
 
 const navLinks = [
-  { label: 'About',          href: '#about' },
-  { label: 'Terminal',       href: '#terminal' },
-  { label: 'Projects',       href: '#projects' },
-  { label: 'Experience',     href: '#experience' },
-  { label: 'Skills',         href: '#skills' },
-  { label: 'Education',      href: '#education' },
-  { label: 'Achievements',   href: '#achievements' },
-  { label: 'Writing',        href: '#blog' },
-  { label: 'Contact',        href: '#contact' },
+  { label: 'About', id: 'about' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Experience', id: 'experience' },
+  { label: 'Education', id: 'education' },
+  { label: 'Writing', id: 'blog' },
+  { label: 'Contact', id: 'contact' },
+]
+
+const spySections = [
+  'hero', 'about', 'projects', 'experience', 'education', 'skills',
+  'terminal', 'certifications', 'achievements', 'blog', 'contact',
 ]
 
 export function Navbar({ onOpenCommandPalette }: NavbarProps) {
   const { theme, toggleTheme } = useTheme()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const [activeSection, setActiveSection] = useState('hero')
-  const [soundEnabled, setSoundEnabled] = useState(soundFx.isEnabled())
+  const [active, setActive] = useState('hero')
   const isDark = theme === 'dark'
+  const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform)
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 40)
-      const docH = document.documentElement.scrollHeight - window.innerHeight
-      setScrollProgress(docH > 0 ? (window.scrollY / docH) * 100 : 0)
-
-      // Scrollspy
-      const sections = ['hero', 'about', 'terminal', 'projects', 'experience', 'skills', 'education', 'certifications', 'achievements', 'activities', 'blog', 'contact']
-      const scrollPos = window.scrollY + 200
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i])
-        if (el && el.offsetTop <= scrollPos) {
-          setActiveSection(sections[i])
+      setScrolled(window.scrollY > 8)
+      const y = window.scrollY + 160
+      for (let i = spySections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(spySections[i])
+        if (el && el.offsetTop <= y) {
+          setActive(spySections[i])
           break
         }
       }
     }
-
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Listen for global shortcut Cmd+K or Ctrl+K
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault()
         onOpenCommandPalette()
       }
     }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   }, [onOpenCommandPalette])
 
-  const handleToggleSound = () => {
-    const next = soundFx.toggle()
-    setSoundEnabled(next)
-  }
-
-  const handleNavClick = (href: string) => {
-    soundFx.tab()
+  const go = (id: string) => (e: React.MouseEvent) => {
+    e.preventDefault()
     setMenuOpen(false)
-    const el = document.querySelector(href)
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' })
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    history.replaceState(null, '', id === 'hero' ? '#' : `#${id}`)
   }
 
   return (
-    <>
-      {/* ── Top Scroll Reading Progress Bar ────────────────────────────── */}
-      <div
-        className="fixed top-0 left-0 right-0 h-[2.5px] z-[10000] bg-transparent pointer-events-none"
-        aria-hidden="true"
-      >
-        <div
-          className="h-full bg-gradient-to-r from-sky-400 via-indigo-500 to-cyan-400 transition-all duration-150 ease-out"
-          style={{ width: `${scrollProgress}%` }}
-        />
-      </div>
+    <header
+      className={`fixed inset-x-0 top-0 z-[1000] transition-[background-color,border-color] duration-200 ${
+        scrolled || menuOpen
+          ? 'border-b border-rule bg-paper/90 backdrop-blur-md'
+          : 'border-b border-transparent bg-transparent'
+      }`}
+    >
+      <div className="page-wrap flex h-16 items-center justify-between gap-4">
+        <a href="#" onClick={go('hero')} className="flex items-center gap-2.5 font-semibold text-ink">
+          <span
+            aria-hidden="true"
+            className="flex h-8 w-8 items-center justify-center rounded-md bg-accent text-[0.8125rem] font-semibold text-accent-ink"
+          >
+            KT
+          </span>
+          <span className="text-[0.9688rem]">Kalhara Tennakoon</span>
+        </a>
 
-      {/* ── Floating Island Header ────────────────────────────────────────── */}
-      <header className="fixed top-0 left-0 right-0 z-[1000] flex flex-col items-center pointer-events-none px-4 pt-3 sm:pt-4">
-        <div
-          className={`pointer-events-auto w-full max-w-6xl transition-all duration-300 relative rounded-full ${
-            scrolled ? 'py-2 px-4 sm:px-6 shadow-2xl' : 'py-3 px-5 sm:px-7 shadow-lg'
-          }`}
-          style={{
-            background: isDark
-              ? 'rgba(11, 18, 36, 0.78)'
-              : 'rgba(255, 255, 255, 0.82)',
-            backdropFilter: 'blur(20px) saturate(1.8)',
-            WebkitBackdropFilter: 'blur(20px) saturate(1.8)',
-            border: isDark
-              ? '1px solid rgba(255, 255, 255, 0.12)'
-              : '1px solid rgba(226, 232, 240, 0.9)',
-            boxShadow: isDark
-              ? '0 10px 30px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-              : '0 10px 30px -10px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95)',
-          }}
-        >
-          <div className="flex items-center justify-between gap-4">
-            {/* Brand Logo & Status Beacon */}
-            <a
-              href="#hero"
-              onClick={(e) => {
-                e.preventDefault()
-                handleNavClick('#hero')
-              }}
-              className="flex items-center gap-2.5 text-base font-extrabold tracking-tight group"
-            >
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white font-mono text-xs shadow-md group-hover:scale-105 transition-transform">
-                KT
-              </div>
-              <span className="text-[var(--text-primary)] font-bold tracking-tight">
-                Kalhara
-                <span className="text-sky-500">.</span>
-              </span>
-              <div className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 ml-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Open for roles</span>
-              </div>
-            </a>
-
-            {/* Desktop Navigation Links (with Scrollspy) */}
-            <nav className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => {
-                const sectionId = link.href.replace('#', '')
-                const isActive = activeSection === sectionId
-
-                return (
+        <nav aria-label="Sections" className="hidden lg:block">
+          <ul className="flex items-center gap-1">
+            {navLinks.map((link) => {
+              const isActive = active === link.id
+              return (
+                <li key={link.id}>
                   <a
-                    key={link.label}
-                    href={link.href}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      handleNavClick(link.href)
-                    }}
-                    className={`px-3 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 relative ${
-                      isActive
-                        ? 'text-sky-400 bg-sky-500/12 shadow-sm font-bold'
-                        : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-slate-500/10'
+                    href={`#${link.id}`}
+                    onClick={go(link.id)}
+                    aria-current={isActive ? 'location' : undefined}
+                    className={`relative rounded-md px-3 py-2 text-[0.875rem] font-medium transition-colors ${
+                      isActive ? 'text-ink' : 'text-muted hover:text-ink'
                     }`}
                   >
                     {link.label}
-                    {isActive && (
-                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-0.5 bg-sky-400 rounded-full" />
-                    )}
+                    <span
+                      aria-hidden="true"
+                      className={`absolute inset-x-3 -bottom-[1px] h-[2px] rounded-full bg-accent transition-opacity ${
+                        isActive ? 'opacity-100' : 'opacity-0'
+                      }`}
+                    />
                   </a>
-                )
-              })}
-            </nav>
+                </li>
+              )
+            })}
+          </ul>
+        </nav>
 
-            {/* Action Tools Cluster: Command Palette, Sound FX, Theme Toggle, Mobile Menu */}
-            <div className="flex items-center gap-2">
-              {/* Quick Search / Command Palette Button */}
-              <button
-                onClick={() => {
-                  soundFx.click()
-                  onOpenCommandPalette()
-                }}
-                className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 text-xs font-medium rounded-full bg-[var(--bg-secondary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-sky-500/40 border border-[var(--border-color)] transition-all shadow-sm"
-                title="Open Command Palette (⌘K)"
-                aria-label="Open Command Palette"
-              >
-                <FaSearch className="text-[11px] text-sky-400" />
-                <span className="hidden md:inline text-[11px]">Search</span>
-                <kbd className="hidden sm:inline-block px-1.5 py-0.2 text-[10px] bg-slate-500/15 border border-[var(--border-color)] rounded font-mono text-[var(--text-secondary)]">
-                  ⌘K
-                </kbd>
-              </button>
-
-              {/* Sound FX Toggle */}
-              <button
-                onClick={handleToggleSound}
-                className={`p-2 rounded-full text-xs transition-all border ${
-                  soundEnabled
-                    ? 'text-sky-400 border-sky-400/30 bg-sky-500/10'
-                    : 'text-[var(--text-secondary)] border-transparent hover:bg-slate-500/10'
-                }`}
-                title={soundEnabled ? 'Mute sound effects' : 'Enable interface sound effects'}
-                aria-label="Toggle sound FX"
-              >
-                {soundEnabled ? <FaVolumeUp /> : <FaVolumeMute />}
-              </button>
-
-              {/* Theme Toggle Button */}
-              <button
-                onClick={() => {
-                  soundFx.click()
-                  toggleTheme()
-                }}
-                className="p-2 rounded-full text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-transparent hover:border-[var(--border-color)] hover:bg-slate-500/10 transition-all"
-                title={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-                aria-label="Toggle theme"
-              >
-                {isDark ? (
-                  <FaSun className="text-amber-400 hover:rotate-45 transition-transform" />
-                ) : (
-                  <FaMoon className="text-indigo-500 hover:-rotate-12 transition-transform" />
-                )}
-              </button>
-
-              {/* Mobile Drawer Trigger Button */}
-              <button
-                onClick={() => {
-                  soundFx.click()
-                  setMenuOpen(!menuOpen)
-                }}
-                className="lg:hidden p-2 text-base text-[var(--text-primary)] rounded-full hover:bg-slate-500/10 transition-colors"
-                aria-label="Toggle mobile menu"
-              >
-                {menuOpen ? <FaTimes /> : <FaBars />}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* ── Mobile Drawer Dropdown ────────────────────────────────────────── */}
-        {menuOpen && (
-          <div
-            className="pointer-events-auto lg:hidden w-full max-w-6xl mt-2 rounded-2xl p-4 shadow-2xl transition-all duration-300 animate-fadeIn border"
-            style={{
-              background: isDark ? 'rgba(11, 18, 36, 0.95)' : 'rgba(255, 255, 255, 0.95)',
-              backdropFilter: 'blur(24px)',
-              borderColor: isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(226, 232, 240, 0.95)',
-            }}
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={onOpenCommandPalette}
+            className="hidden h-9 items-center gap-2 rounded-md border border-rule-strong bg-surface pl-2.5 pr-1.5 text-[0.8125rem] text-muted transition-colors hover:border-ink hover:text-ink sm:flex"
+            aria-label="Search the site"
           >
-            <div className="grid grid-cols-2 gap-2">
-              {navLinks.map((link) => (
+            <FaSearch className="text-[0.75rem]" />
+            <span>Search</span>
+            <kbd className="rounded border border-rule bg-sunken px-1.5 font-mono text-[0.6875rem] leading-5">
+              {isMac ? '⌘K' : 'Ctrl K'}
+            </kbd>
+          </button>
+          <button
+            type="button"
+            onClick={onOpenCommandPalette}
+            className="icon-btn sm:hidden"
+            aria-label="Search the site"
+          >
+            <FaSearch className="text-sm" />
+          </button>
+
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="icon-btn"
+            aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
+            title={`Switch to ${isDark ? 'light' : 'dark'} theme`}
+          >
+            {isDark ? <FaSun className="text-sm" /> : <FaMoon className="text-sm" />}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setMenuOpen((v) => !v)}
+            className="icon-btn lg:hidden"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+          >
+            {menuOpen ? <FaTimes className="text-base" /> : <FaBars className="text-base" />}
+          </button>
+        </div>
+      </div>
+
+      {menuOpen && (
+        <nav id="mobile-menu" aria-label="Sections" className="border-t border-rule lg:hidden">
+          <ul className="page-wrap flex flex-col py-2">
+            {navLinks.map((link) => (
+              <li key={link.id}>
                 <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    handleNavClick(link.href)
-                  }}
-                  className={`px-3 py-2 text-xs font-semibold rounded-xl text-center transition-all ${
-                    activeSection === link.href.replace('#', '')
-                      ? 'bg-sky-500/15 text-sky-400 font-bold border border-sky-500/30'
-                      : 'text-[var(--text-primary)] hover:bg-slate-500/10'
+                  href={`#${link.id}`}
+                  onClick={go(link.id)}
+                  className={`block py-3 text-[1rem] font-medium ${
+                    active === link.id ? 'text-accent' : 'text-ink'
                   }`}
                 >
                   {link.label}
                 </a>
-              ))}
-            </div>
-
-            <div className="mt-4 pt-3 border-t border-[var(--border-color)] flex items-center justify-between">
-              <button
-                onClick={() => {
-                  soundFx.click()
-                  setMenuOpen(false)
-                  onOpenCommandPalette()
-                }}
-                className="flex items-center gap-2 text-xs font-semibold text-sky-400"
-              >
-                <FaSearch className="text-xs" />
-                <span>Open Command Palette</span>
-              </button>
+              </li>
+            ))}
+            <li className="border-t border-rule mt-2 pt-3 pb-2">
               <a
                 href="/Kalhara_Tennakoon_CV.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs font-bold text-sky-400 underline underline-offset-4"
+                className="text-link"
               >
-                Download CV
+                Download CV (PDF)
               </a>
-            </div>
-          </div>
-        )}
-      </header>
-    </>
+            </li>
+          </ul>
+        </nav>
+      )}
+    </header>
   )
 }
 

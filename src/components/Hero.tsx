@@ -1,277 +1,154 @@
 import { useEffect, useState, type CSSProperties } from 'react'
-import {
-  FaArrowDown, FaEnvelope, FaTerminal, FaFilePdf, FaCode
-} from 'react-icons/fa'
-import {
-  SiKubernetes, SiDocker, SiReact, SiOllama
-} from 'react-icons/si'
-import useCountUp from '../hooks/useCountUp'
-import { soundFx } from '../utils/sound'
+import { FaGithub, FaLinkedin } from 'react-icons/fa'
 
-const roles = [
-  'DevOps & Cloud-Native Engineer',
-  'AI / ML & Full-Stack Systems Builder',
-  'First Class CS Graduate • Batch Top',
-  '2× Dan Kohn Scholar (KubeCon EU)',
-  'Technical Author (150K+ Reads)',
+const credentials = [
+  { fact: 'First Class Honours', context: 'BSc Computer Science, Kingston University' },
+  { fact: 'Batch Top', context: 'Software Engineering cohort, 2026' },
+  { fact: 'Top 10 of 700+', context: 'Ascentic AI Launch Pad 2026' },
+  { fact: '2× Dan Kohn Scholar', context: 'KubeCon + CloudNativeCon Europe' },
+  { fact: '50+ articles', context: '150K+ views on Medium' },
 ]
 
-const stats = [
-  { value: 50,  suffix: '+',  label: 'Technical Articles', sub: 'DevOps & Cloud' },
-  { value: 150, suffix: 'K+', label: 'Total Article Views', sub: 'Global Audience' },
-  { value: 13,  suffix: '+',  label: 'Certifications',     sub: 'IBM, MS, GitHub' },
-  { value: 2,   suffix: '×',  label: 'KubeCon Scholarships', sub: 'Dan Kohn Memorial' },
-]
+const delay = (seconds: number) => ({ '--enter-delay': `${seconds}s` }) as CSSProperties
 
-const delay = (seconds: number) => ({ '--enter-delay': `${seconds}s` } as CSSProperties)
+function useColomboTime() {
+  const format = () =>
+    new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Colombo',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    }).format(new Date())
 
-function Stat({ value, suffix, label, sub, startDelay }: { value: number; suffix: string; label: string; sub: string; startDelay: number }) {
-  const count = useCountUp(value, { delay: startDelay })
+  const [time, setTime] = useState(format)
 
-  return (
-    <div className="flex flex-col items-start p-3 sm:p-4 rounded-2xl bg-[var(--card-bg)] border border-[var(--border-color)] backdrop-blur-md shadow-sm hover:border-sky-500/30 transition-all">
-      <div className="text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-400 bg-clip-text text-transparent font-mono">
-        {count}{suffix}
-      </div>
-      <div className="text-xs font-bold text-[var(--text-primary)] mt-1">{label}</div>
-      <div className="text-[11px] text-[var(--text-secondary)] opacity-75">{sub}</div>
-    </div>
-  )
+  useEffect(() => {
+    // Tick on the minute boundary so the clock never lags by up to a minute.
+    let interval: number | undefined
+    const timeout = window.setTimeout(() => {
+      setTime(format())
+      interval = window.setInterval(() => setTime(format()), 60_000)
+    }, 60_000 - (Date.now() % 60_000))
+    return () => {
+      window.clearTimeout(timeout)
+      window.clearInterval(interval)
+    }
+  }, [])
+
+  return time
 }
 
 export function Hero() {
-  const [text, setText] = useState('')
-  const [isDeleting, setIsDeleting] = useState(false)
-  const [loopNum, setLoopNum] = useState(0)
-  const [typingSpeed, setTypingSpeed] = useState(120)
-
-  useEffect(() => {
-    const handle = () => {
-      const i = loopNum % roles.length
-      const fullText = roles[i]
-      setText(
-        isDeleting
-          ? fullText.substring(0, text.length - 1)
-          : fullText.substring(0, text.length + 1)
-      )
-      setTypingSpeed(isDeleting ? 40 : 100)
-
-      if (!isDeleting && text === fullText) {
-        setTimeout(() => setIsDeleting(true), 2200)
-      } else if (isDeleting && text === '') {
-        setIsDeleting(false)
-        setLoopNum(loopNum + 1)
-      }
-    }
-
-    const t = setTimeout(handle, typingSpeed)
-    return () => clearTimeout(t)
-  }, [text, isDeleting, loopNum, typingSpeed])
-
-  const scrollToTerminal = (e: React.MouseEvent) => {
-    e.preventDefault()
-    soundFx.click()
-    const el = document.getElementById('terminal') || document.getElementById('about')
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
+  const time = useColomboTime()
 
   return (
-    <section
-      id="hero"
-      className="min-h-screen relative flex items-center justify-center pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden"
-    >
-      <div className="max-w-6xl mx-auto px-6 sm:px-8 w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-
-          {/* Left Column: Hero Copy & Actions (7 cols) */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left">
-
-            {/* Availability Badge */}
-            <div
-              className="enter inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs sm:text-sm font-semibold mb-6 shadow-sm"
-              style={delay(0.05)}
-            >
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+    <section id="hero" className="pt-28 pb-16 sm:pt-36 sm:pb-20">
+      <div className="page-wrap">
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
+          <div>
+            <p className="enter flex items-center gap-2 text-[0.875rem] font-medium text-muted" style={delay(0)}>
+              <span className="relative flex h-2 w-2" aria-hidden="true">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-positive opacity-40 motion-safe:animate-ping" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-positive" />
               </span>
-              <span>Available for Software, DevOps & AI Roles</span>
-            </div>
-
-            {/* Greeting Tag */}
-            <div
-              className="enter text-xs sm:text-sm font-mono uppercase tracking-widest text-sky-400 font-semibold mb-2"
-              style={delay(0.12)}
-            >
-              System.Init() • Software Engineer
-            </div>
-
-            {/* Main Name Heading with Flowing Gradient */}
-            <h1
-              className="enter text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-4 leading-[1.08]"
-              style={delay(0.18)}
-            >
-              <span className="animate-gradient-text bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-400 bg-clip-text text-transparent">
-                Kalhara Tennakoon
-              </span>
-            </h1>
-
-            {/* Dynamic Typewriter Line */}
-            <div
-              className="enter flex items-center gap-2 text-lg sm:text-2xl font-semibold text-[var(--text-primary)] min-h-[2.5rem] mb-6"
-              style={delay(0.25)}
-            >
-              <span className="text-sky-400 font-mono text-base sm:text-xl">&gt;</span>
-              <span className="text-[var(--text-primary)] font-medium">{text}</span>
-              <span className="w-2.5 h-6 bg-sky-400 animate-pulse" />
-            </div>
-
-            {/* Bio Paragraph */}
-            <p
-              className="enter text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-xl mb-8"
-              style={delay(0.32)}
-            >
-              First Class Computer Science graduate with hands-on industry experience at IFS.
-              Specialized in Kubernetes CI/CD automation with Tekton, full-stack cloud-native platforms,
-              and applied AI systems with Ollama, pgvector, and predictive ML models.
+              Open to software, DevOps, cloud and MLOps roles
             </p>
 
-            {/* Primary Action Buttons */}
-            <div
-              className="enter flex flex-wrap items-center gap-3.5 mb-10"
-              style={delay(0.4)}
+            <h1
+              className="enter mt-5 text-[2.75rem] leading-[1.02] font-semibold tracking-[-0.035em] sm:text-[4rem] lg:text-[4.5rem]"
+              style={delay(0.06)}
             >
-              <a
-                href="#projects"
-                onClick={() => soundFx.click()}
-                className="glass-btn-primary px-6 py-3 font-semibold text-sm flex items-center gap-2 group cursor-pointer"
-              >
-                <FaCode className="text-sm group-hover:rotate-12 transition-transform" />
-                <span>Explore Projects</span>
-              </a>
+              Kalhara Tennakoon
+            </h1>
 
-              <a
-                href="#terminal"
-                onClick={scrollToTerminal}
-                className="glass-btn px-6 py-3 font-semibold text-sm flex items-center gap-2 border hover:border-emerald-500/50 hover:text-emerald-400 cursor-pointer"
-              >
-                <FaTerminal className="text-emerald-400 text-xs" />
-                <span>Open Shell</span>
-              </a>
+            <p
+              className="enter mt-4 text-[1.25rem] leading-snug text-muted sm:text-[1.5rem]"
+              style={delay(0.12)}
+            >
+              Software, DevOps &amp; AI/ML engineer
+            </p>
 
+            <p
+              className="enter mt-6 max-w-[38rem] text-[1.0625rem] leading-relaxed text-ink/85"
+              style={delay(0.18)}
+            >
+              First Class Computer Science graduate and Software Engineering batch top, with
+              industry experience at IFS R&amp;D in Kubernetes-native CI/CD and container
+              security. I build full-stack applications, machine learning systems and AI tools,
+              and ship them with GitOps.
+            </p>
+
+            <div className="enter mt-8 flex flex-wrap items-center gap-3" style={delay(0.24)}>
+              <a href="#projects" className="btn btn-primary">
+                View projects
+              </a>
               <a
                 href="/Kalhara_Tennakoon_CV.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => soundFx.click()}
-                className="glass-btn px-5 py-3 font-semibold text-sm flex items-center gap-2 border hover:border-sky-500/40 cursor-pointer"
+                className="btn btn-secondary"
               >
-                <FaFilePdf className="text-red-400 text-xs" />
-                <span>CV (PDF)</span>
+                Download CV
               </a>
-
               <a
-                href="mailto:kalhara@kalharatennakoon.com"
-                onClick={() => soundFx.click()}
-                className="glass-btn px-5 py-3 font-semibold text-sm flex items-center gap-2 border hover:border-sky-500/40 cursor-pointer"
+                href="https://github.com/kalharatennakoon"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="icon-btn ml-1"
+                aria-label="GitHub"
               >
-                <FaEnvelope className="text-sky-400 text-xs" />
-                <span>Email</span>
+                <FaGithub className="text-lg" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/kalharatennakoon"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="icon-btn"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedin className="text-lg" />
               </a>
             </div>
 
-            {/* Quick Metrics Grid */}
-            <div
-              className="enter grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-2xl"
-              style={delay(0.48)}
-            >
-              {stats.map((s, i) => (
-                <Stat
-                  key={s.label}
-                  value={s.value}
-                  suffix={s.suffix}
-                  label={s.label}
-                  sub={s.sub}
-                  startDelay={500 + i * 100}
+            <p className="enter mt-6 text-[0.8125rem] text-faint" style={delay(0.3)}>
+              Kurunegala, Sri Lanka, where it's <time className="tabular-nums">{time}</time>
+            </p>
+          </div>
+
+          <div className="enter mx-auto w-full max-w-[17rem] lg:max-w-none" style={delay(0.12)}>
+            <div className="overflow-hidden rounded-xl border border-rule bg-sunken shadow-[var(--shadow-md)]">
+              <picture>
+                <source srcSet="/profile.webp" type="image/webp" />
+                <img
+                  src="/profile.png"
+                  alt="Portrait of Kalhara Tennakoon"
+                  width={1024}
+                  height={1024}
+                  className="aspect-[4/5] w-full object-cover object-top"
+                  fetchPriority="high"
                 />
-              ))}
-            </div>
-
-          </div>
-
-          {/* Right Column: Interactive Holographic Avatar & Floating Tech Orbit (5 cols) */}
-          <div className="lg:col-span-5 flex justify-center items-center relative">
-            <div
-              className="enter relative flex items-center justify-center"
-              style={delay(0.28)}
-            >
-              {/* Outer Breathing Aura Halo */}
-              <div className="avatar-halo" />
-
-              {/* Avatar Center Frame with Conic Gradient Border */}
-              <div className="relative w-64 h-64 sm:w-72 sm:h-72 rounded-full p-1 bg-gradient-to-tr from-sky-500 via-indigo-600 to-cyan-400 shadow-2xl">
-                <div className="w-full h-full rounded-full overflow-hidden bg-slate-900 border-4 border-[var(--bg-primary)]">
-                  <img
-                    src="/profile.png"
-                    alt="Kalhara Tennakoon"
-                    className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-              </div>
-
-              {/* Orbiting Tech Badge 1: Kubernetes (Top Right) */}
-              <div
-                className="absolute -top-3 -right-3 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--border-color)] shadow-xl backdrop-blur-md animate-float flex items-center gap-2"
-                style={{ animationDuration: '6s' }}
-              >
-                <SiKubernetes className="text-[#326CE5] text-xl" />
-                <span className="text-xs font-bold text-[var(--text-primary)]">Kubernetes</span>
-              </div>
-
-              {/* Orbiting Tech Badge 2: AI / Ollama (Bottom Left) */}
-              <div
-                className="absolute -bottom-4 -left-4 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--border-color)] shadow-xl backdrop-blur-md animate-float flex items-center gap-2"
-                style={{ animationDuration: '7s', animationDelay: '-2s' }}
-              >
-                <SiOllama className="text-sky-400 text-xl" />
-                <span className="text-xs font-bold text-[var(--text-primary)]">Local AI / RAG</span>
-              </div>
-
-              {/* Orbiting Tech Badge 3: Docker & CI/CD (Bottom Right) */}
-              <div
-                className="absolute bottom-6 -right-6 p-2.5 rounded-2xl bg-[var(--card-bg)] border border-[var(--border-color)] shadow-xl backdrop-blur-md animate-float flex items-center gap-2"
-                style={{ animationDuration: '8s', animationDelay: '-4s' }}
-              >
-                <SiDocker className="text-[#2496ED] text-lg" />
-                <span className="text-xs font-bold text-[var(--text-primary)]">Tekton CI/CD</span>
-              </div>
-
-              {/* Orbiting Tech Badge 4: React / Python (Top Left) */}
-              <div
-                className="absolute top-4 -left-6 p-2.5 rounded-2xl bg-[var(--card-bg)] border border-[var(--border-color)] shadow-xl backdrop-blur-md animate-float flex items-center gap-2"
-                style={{ animationDuration: '7.5s', animationDelay: '-1s' }}
-              >
-                <SiReact className="text-[#61DAFB] text-lg" />
-                <span className="text-xs font-bold text-[var(--text-primary)]">Full-Stack</span>
-              </div>
+              </picture>
             </div>
           </div>
-
         </div>
-      </div>
 
-      {/* Down Scroll Indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
-        <a
-          href="#about"
-          onClick={() => soundFx.click()}
-          className="flex flex-col items-center gap-1 text-[11px] font-mono uppercase tracking-widest text-[var(--text-secondary)]"
+        <ul
+          className="enter mt-16 grid grid-cols-1 border-t border-rule sm:grid-cols-2 lg:grid-cols-5"
+          style={delay(0.36)}
+          aria-label="Highlights"
         >
-          <span>Scroll</span>
-          <FaArrowDown className="text-sky-400 text-xs animate-bounce" />
-        </a>
+          {credentials.map((c, i) => (
+            <li
+              key={c.fact}
+              className={`border-b border-rule py-4 lg:border-b-0 lg:py-5 lg:pr-5 ${
+                i > 0 ? 'lg:border-l lg:pl-5' : ''
+              } ${i % 2 === 1 ? 'sm:border-l sm:pl-5 lg:pl-5' : ''}`}
+            >
+              <p className="font-semibold text-ink">{c.fact}</p>
+              <p className="mt-0.5 text-[0.8125rem] leading-snug text-muted">{c.context}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )

@@ -6,18 +6,17 @@ import { completableNames, parse, resolve } from '../terminal/commands'
 import { displayPath } from '../terminal/filesystem'
 import { flow, hint, line, s, setColumns } from '../terminal/format'
 import type { Line, Segment, TermColor } from '../terminal/types'
-import { soundFx } from '../utils/sound'
 
-/** ANSI-ish palette tuned for the dark navy terminal body. */
+/** Muted ANSI-style palette: readable on the dark body without shouting. */
 const palette: Record<TermColor, string> = {
-  green: '#4ade80',
-  cyan: '#22d3ee',
-  blue: '#60a5fa',
-  yellow: '#fbbf24',
-  red: '#f87171',
-  magenta: '#c084fc',
-  dim: '#7c8db5',
-  white: '#e2e8f0',
+  green: '#8fc9a3',
+  cyan: '#9db1f2',
+  blue: '#a9bce8',
+  yellow: '#d9c38c',
+  red: '#e39b9b',
+  magenta: '#c0aee3',
+  dim: '#7d8696',
+  white: '#d9dde4',
 }
 
 const PROMPT_USER = 'kalhara@portfolio'
@@ -25,11 +24,10 @@ const PROMPT_USER = 'kalhara@portfolio'
 /** Categorized chips for quick execution */
 const quickCommands = [
   { label: 'whoami', cmd: 'whoami' },
-  { label: 'pipeline run', cmd: 'pipeline run' },
   { label: 'kubectl get projects', cmd: 'kubectl get projects' },
+  { label: 'pipeline run', cmd: 'pipeline run' },
   { label: 'git log', cmd: 'git log' },
-  { label: 'ls -la', cmd: 'ls' },
-  { label: 'cat skills.txt', cmd: 'cd ~/ && cat skills.txt' },
+  { label: 'ls', cmd: 'ls' },
   { label: 'help', cmd: 'help' },
 ]
 
@@ -219,7 +217,6 @@ export function Terminal() {
   }, [runCommand])
 
   const copyScrollback = () => {
-    soundFx.success()
     const text = lines
       .map((l) => l.segments.map((s) => s.text).join(''))
       .join('\n')
@@ -229,12 +226,10 @@ export function Terminal() {
   }
 
   const clearScreen = () => {
-    soundFx.click()
     setLines([])
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    soundFx.terminalKey()
 
     if (e.key === 'c' && e.ctrlKey) {
       if (window.getSelection()?.toString()) return
@@ -326,60 +321,28 @@ export function Terminal() {
 
   return (
     <div className="terminal-shell" ref={shellRef}>
-      {/* Title bar with macOS traffic lights & action buttons */}
-      <div className="terminal-titlebar flex items-center justify-between">
-        {/* Left: Window Controls */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={clearScreen}
-            className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors shadow-sm cursor-pointer"
-            title="Clear output"
-            aria-label="Clear terminal"
-          />
-          <button
-            onClick={() => void runCommand('pipeline run')}
-            className="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-colors shadow-sm cursor-pointer"
-            title="Run pipeline"
-            aria-label="Run pipeline"
-          />
-          <button
-            onClick={() => void runCommand('help')}
-            className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-500 transition-colors shadow-sm cursor-pointer"
-            title="Show help"
-            aria-label="Show help"
-          />
-          <span className="ml-3 text-xs font-mono text-slate-400 font-semibold hidden sm:inline">
-            kalhara@cluster-prod : zsh
+      <div className="terminal-titlebar justify-between">
+        <div className="flex min-w-0 items-center gap-3">
+          <span className="flex gap-1.5" aria-hidden="true">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#3a414d]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#3a414d]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#3a414d]" />
           </span>
+          <span className="truncate text-[12px] text-[var(--term-faint)]">{PROMPT_USER}: {displayPath(cwd)}</span>
         </div>
 
-        {/* Center / Right: Status & Quick Controls */}
-        <div className="flex items-center gap-3">
-          <div className="terminal-badge hidden xs:inline-flex">
+        <div className="flex items-center gap-1">
+          <span className="terminal-badge mr-2 hidden sm:inline-flex">
             <span className={`terminal-status-dot${busy ? ' is-busy' : ''}`} />
-            <span>{busy ? 'executing…' : 'cluster ready'}</span>
-          </div>
-
-          <button
-            onClick={copyScrollback}
-            className="p-1.5 text-xs text-slate-400 hover:text-white rounded bg-slate-800/40 hover:bg-slate-700/60 border border-slate-700/50 transition-all flex items-center gap-1.5 cursor-pointer"
-            title="Copy entire terminal text"
-            aria-label="Copy terminal text"
-          >
-            {copied ? <FaCheck className="text-emerald-400" /> : <FaCopy />}
-            <span className="text-[11px] font-mono hidden sm:inline">
-              {copied ? 'Copied' : 'Copy'}
-            </span>
+            {busy ? 'running' : 'ready'}
+          </span>
+          <button type="button" onClick={copyScrollback} className="terminal-tool" aria-label="Copy terminal output">
+            {copied ? <FaCheck aria-hidden="true" /> : <FaCopy aria-hidden="true" />}
+            <span className="hidden sm:inline">{copied ? 'Copied' : 'Copy'}</span>
           </button>
-
-          <button
-            onClick={clearScreen}
-            className="p-1.5 text-xs text-slate-400 hover:text-white rounded bg-slate-800/40 hover:bg-slate-700/60 border border-slate-700/50 transition-all flex items-center gap-1.5 cursor-pointer"
-            title="Clear screen"
-            aria-label="Clear screen"
-          >
-            <FaTrash />
-            <span className="text-[11px] font-mono hidden sm:inline">Clear</span>
+          <button type="button" onClick={clearScreen} className="terminal-tool" aria-label="Clear the screen">
+            <FaTrash aria-hidden="true" />
+            <span className="hidden sm:inline">Clear</span>
           </button>
         </div>
       </div>
@@ -448,7 +411,7 @@ export function Terminal() {
               autoCapitalize="off"
               autoCorrect="off"
               aria-label="Terminal command input"
-              placeholder={busy ? '' : touch ? 'tap a command below or type…' : 'type a command (try: pipeline run)…'}
+              placeholder={busy ? '' : touch ? 'tap a command below, or type one' : 'type a command, or try: help'}
             />
           </div>
         )}
@@ -456,7 +419,7 @@ export function Terminal() {
 
       {/* Quick Command Chips */}
       <div className="terminal-chips">
-        <span className="terminal-chips-label">{touch ? 'Tap:' : 'Quick:'}</span>
+        <span className="terminal-chips-label">Try</span>
         {quickCommands.map((item) => (
           <button
             key={item.label}
@@ -464,7 +427,6 @@ export function Terminal() {
             className="terminal-chip flex items-center gap-1.5"
             disabled={busy}
             onClick={() => {
-              soundFx.click()
               setInput('')
               setHistoryIndex(null)
               void runCommand(item.cmd)

@@ -1,38 +1,27 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { FaArrowUp } from 'react-icons/fa'
 
 function ScrollToTop() {
-  const [isVisible, setIsVisible] = useState(false)
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      setIsVisible(window.pageYOffset > 300)
-    }
-    window.addEventListener('scroll', toggleVisibility)
-    return () => window.removeEventListener('scroll', toggleVisibility)
+    const onScroll = () => setVisible(window.scrollY > 900)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
 
   return (
     <button
-      onClick={scrollToTop}
-      aria-label="Scroll to top"
-      title="Back to top"
-      className="glass-btn-primary fixed bottom-8 right-8 z-[1000] w-12 h-12 cursor-pointer transition-all duration-300 text-white"
-      style={{
-        position: 'fixed',
-        background: 'linear-gradient(135deg, var(--color-primary), #3b82f6, #06b6d4)',
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.8)',
-        pointerEvents: isVisible ? 'auto' : 'none',
-      }}
-      onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px) scale(1.12)' }}
-      onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0) scale(1)' }}
+      type="button"
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      aria-label="Back to top"
+      tabIndex={visible ? 0 : -1}
+      className={`fixed bottom-6 right-6 z-[900] flex h-10 w-10 items-center justify-center rounded-full border border-rule-strong bg-surface text-muted shadow-[var(--shadow-md)] transition-[opacity,transform,color] duration-200 hover:text-ink ${
+        visible ? 'opacity-100 translate-y-0' : 'pointer-events-none translate-y-2 opacity-0'
+      }`}
     >
-      <FaArrowUp className="text-base relative z-10" />
+      <FaArrowUp className="text-[0.8125rem]" />
     </button>
   )
 }
