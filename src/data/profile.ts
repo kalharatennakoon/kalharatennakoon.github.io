@@ -11,7 +11,7 @@ export const identity = {
   role: 'Software, DevOps & AI/ML Engineer',
   location: 'Kurunegala, Sri Lanka',
   email: 'kalhara@kalharatennakoon.com',
-  site: 'kalharatennakoon.github.io',
+  site: 'kalharatennakoon.com',
   summary:
     'Software engineer with hands-on industry experience in DevOps, cloud-native systems, ' +
     'and automation. Builds full-stack applications, reliable deployment ' +
@@ -98,7 +98,7 @@ export const projects: Project[] = [
     stack: ['React', 'Node.js', 'PostgreSQL', 'pgvector', 'Python', 'Flask', 'Scikit-learn', 'Ollama', 'SwiftUI'],
     status: 'Completed',
     period: 'Oct 2025 – Aug 2026',
-    site: 'https://kalharatennakoon.github.io/vetcareone/',
+    site: 'https://kalharatennakoon.com/vetcareone/',
   },
   {
     id: 'solarcast',
@@ -113,7 +113,7 @@ export const projects: Project[] = [
     stack: ['Python', 'FastAPI', 'React', 'Prophet', 'Docker', 'Kubernetes', 'Kustomize', 'ArgoCD', 'GitHub Actions', 'Prometheus', 'Trivy'],
     status: 'Completed',
     period: 'Apr 2026 – Oct 2026',
-    site: 'https://kalharatennakoon.github.io/solarcast/',
+    site: 'https://kalharatennakoon.com/solarcast/',
   },
   {
     id: 'strongcv',
@@ -139,7 +139,7 @@ export const projects: Project[] = [
     stack: ['React', 'TypeScript', 'Vite', 'Supabase', 'PostgreSQL', 'GitHub Actions'],
     status: 'Completed',
     period: 'Sep 2026',
-    site: 'https://kalharatennakoon.github.io/shortlisted/',
+    site: 'https://kalharatennakoon.com/shortlisted/',
   },
   {
     id: 'know-your-letter',

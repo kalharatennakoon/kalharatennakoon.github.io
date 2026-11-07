@@ -25,7 +25,7 @@ function Projects() {
         'Extended for the Ascentic AI Launch Pad (Top 10) with a local RAG assistant (Ollama & pgvector) that routes between semantic retrieval and exact SQL queries, with human-in-the-loop confirmation for database writes, plus a pet owner portal and SwiftUI iOS app.',
       technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'pgvector', 'Python', 'Flask', 'Scikit-learn', 'Ollama', 'SwiftUI', 'JWT'],
       icon: FaPaw,
-      website: 'https://kalharatennakoon.github.io/vetcareone/',
+      website: 'https://kalharatennakoon.com/vetcareone/',
       date: 'Oct 2025 – Aug 2026',
       subtitle: 'Final Year Project · AI Launch Pad',
     },
@@ -36,7 +36,7 @@ function Projects() {
         'FastAPI backend with Prometheus metrics and an interactive React dashboard, packaged as multi-stage, non-root Docker images and shipped through GitHub Actions CI/CD (linting, 39 automated tests, Trivy scans) to Kubernetes dev and prod environments managed with Kustomize and ArgoCD.',
       technologies: ['Python', 'FastAPI', 'React', 'Prophet', 'Machine Learning', 'Pandas', 'Docker', 'Kubernetes', 'Kustomize', 'ArgoCD', 'GitOps', 'GitHub Actions', 'nginx', 'Prometheus', 'Trivy'],
       icon: FaSun,
-      website: 'https://kalharatennakoon.github.io/solarcast/',
+      website: 'https://kalharatennakoon.com/solarcast/',
       date: 'Apr 2026 – Oct 2026',
     },
     {
@@ -56,7 +56,7 @@ function Projects() {
         'Offers board, table, calendar, and statistics views, CSV import/export, a document library for CVs and cover letters, Google Calendar and .ics export, follow-up email templates, and opt-in daily reminders sent by a scheduled Supabase Edge Function.',
       technologies: ['React', 'TypeScript', 'Vite', 'Supabase', 'PostgreSQL', 'GitHub Actions'],
       icon: FaClipboardList,
-      website: 'https://kalharatennakoon.github.io/shortlisted/',
+      website: 'https://kalharatennakoon.com/shortlisted/',
       date: 'Sep 2026',
     },
     {
