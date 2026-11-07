@@ -1,17 +1,13 @@
+import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import CursorBubbles from './components/CursorBubbles'
-import Hero from './components/Hero'
-import About from './components/About'
-import Education from './components/Education'
-import Experience from './components/Experience'
-import Skills from './components/Skills'
-import Projects from './components/Projects'
-import Certifications from './components/Certifications'
-import Achievements from './components/Achievements'
-import Activities from './components/Activities'
-import Blog from './components/Blog'
-import Contact from './components/Contact'
 import ScrollToTop from './components/ScrollToTop'
+import ScrollManager from './components/ScrollManager'
+import HomePage from './pages/HomePage'
+import ProjectsPage from './pages/ProjectsPage'
+import AchievementsPage from './pages/AchievementsPage'
+import BlogPage from './pages/BlogPage'
+import NotFoundPage from './pages/NotFoundPage'
 import useSpotlight from './hooks/useSpotlight'
 
 function App() {
@@ -20,19 +16,16 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <ScrollManager />
       <Navbar />
       <main className="flex-grow">
-        <Hero />
-        <About />
-        <Education />
-        <Experience />
-        <Skills />
-        <Projects />
-        <Certifications />
-        <Achievements />
-        <Activities />
-        <Blog />
-        <Contact />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/achievements" element={<AchievementsPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
       </main>
       <ScrollToTop />
       <CursorBubbles />

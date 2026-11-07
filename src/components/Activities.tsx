@@ -74,7 +74,7 @@ function Activities() {
             </div>
             <h2
               className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
-              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
+              style={{ backgroundImage: 'linear-gradient(135deg, var(--text-grad-from) 0%, var(--text-grad-to) 100%)', backgroundSize: '200% 200%' }}
             >
               Activities & Volunteering
             </h2>
@@ -93,7 +93,7 @@ function Activities() {
                 {/* Accent line */}
                 <div
                   className="h-0.5 w-full"
-                  style={{ background: 'linear-gradient(90deg, var(--color-primary), #06b6d4)' }}
+                  style={{ background: 'linear-gradient(90deg, var(--accent-bar-from), var(--accent-bar-to))' }}
                 />
 
                 {/* Header */}
@@ -102,7 +102,7 @@ function Activities() {
                     <div className="flex items-center gap-3 flex-1 min-w-0">
                       <div
                         className="w-9 h-9 rounded-lg flex items-center justify-center text-white text-sm flex-shrink-0"
-                        style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
+                        style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))' }}
                       >
                         {activity.icon}
                       </div>
@@ -143,7 +143,7 @@ function Activities() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-lg text-xs font-semibold text-white hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(30,58,138,0.35)] transition-all duration-200 self-start"
-                      style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
+                      style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))' }}
                     >
                       <FaStackOverflow className="text-sm" /> View Profile
                     </a>

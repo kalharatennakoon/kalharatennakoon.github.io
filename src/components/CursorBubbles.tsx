@@ -8,24 +8,24 @@ import { useEffect, useRef } from 'react'
  *
  * Key visual properties matching the reference:
  *   • Shape  : thin rectangle (2–4 × 4–12 px), border-radius 2px, random rotation
- *   • Color  : blue-indigo palette, adapts to light/dark theme
+ *   • Color  : navy/black in light mode, white/silver in dark mode
  *   • Motion : scatter outward (all 360°), eases out quickly, no gravity
  *   • Spawn  : at cursor ± small jitter; rate scales with cursor speed
  */
 
 const PALETTE_LIGHT = [
-  '63,  81, 200',   // indigo-600
-  '67,  97, 238',   // blue-600
-  '48,  72, 211',   // indigo-700
-  '80, 110, 240',   // blue-500 tint
-  '55,  90, 220',   // mid indigo
+  '23,  37,  84',   // navy (#172554)
+  '30,  58, 138',   // lighter navy
+  '15,  23,  42',   // navy-black
+  '10,  10,  10',   // black
+  '51,  65,  85',   // slate
 ]
 const PALETTE_DARK = [
-  '112, 145, 255',  // blue-400 light
-  '130, 160, 255',  // periwinkle
-  ' 96, 130, 248',  // blue-400
-  '148, 170, 255',  // lavender
-  '106, 138, 252',  // indigo-300
+  '255, 255, 255',  // white
+  '226, 232, 240',  // silver
+  '203, 213, 225',  // light slate
+  '148, 163, 184',  // grey
+  '191, 219, 254',  // pale navy tint
 ]
 
 function CursorBubbles() {

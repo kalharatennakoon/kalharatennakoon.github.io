@@ -1,0 +1,30 @@
+// Contact form backend: receives the portfolio's form POST and emails it to
+// the site owner via Email Routing (free plan: verified destinations only).
+//
+// Secrets (set once with `npx wrangler secret put <NAME>`, never committed):
+//   CONTACT_TO        the verified destination address messages go to
+//   TURNSTILE_SECRET  secret key of the Turnstile widget (optional but recommended)
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kalharatennakoon-contact",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "observability": { "enabled": true },
+
+  // Served at https://api.kalharatennakoon.com/contact. Cloudflare creates the
+  // DNS record for this subdomain on first deploy.
+  "routes": [{ "pattern": "api.kalharatennakoon.com", "custom_domain": true }],
+
+  // Can only reach addresses verified as Email Routing destinations. The
+  // recipient comes from the CONTACT_TO secret so it never lands in the repo.
+  // FROM_ADDRESS must be on the Email Routing domain.
+  "send_email": [{ "name": "EMAIL" }],
+
+  "vars": {
+    "FROM_ADDRESS": "contact@kalharatennakoon.com",
+    "FROM_NAME": "Portfolio Contact Form",
+    // Address shown in the email's To line. Delivery goes to CONTACT_TO.
+    "DISPLAY_TO": "kalhara@kalharatennakoon.com",
+    "ALLOWED_ORIGINS": "https://kalharatennakoon.com,https://www.kalharatennakoon.com,http://localhost:5173,http://localhost:4173"
+  }
+}

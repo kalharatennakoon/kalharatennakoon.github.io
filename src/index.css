@@ -1,26 +1,43 @@
 @import "tailwindcss";
 
+/* `dark:` utilities follow the site's theme toggle (data-theme on <html>),
+   not the OS setting, so section backgrounds always match the chosen theme. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @layer base {
   :root {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, Helvetica, Arial, sans-serif;
 
-    /* Light mode colors */
+    /* Light mode: white page, black text, dark navy accents */
+    --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
     --bg-primary: #ffffff;
-    --bg-secondary: #f8fafc;
-    --text-primary: #1e293b;
-    --text-secondary: #475569;
-    --border-color: #e2e8f0;
-    --shadow: rgba(0, 0, 0, 0.08);
+    --bg-secondary: #f4f5f7;
+    --text-primary: #0a0a0a;
+    --text-secondary: #4a4f5c;
+    --border-color: #e4e6eb;
+    --shadow: rgba(10, 22, 51, 0.08);
     --card-bg: #ffffff;
     --color-primary: #172554;
-    --color-primary-2: #1e3a8a;
+    --color-primary-2: #0a0a0a;
+
+    /* Fills behind white text (buttons, icon chips, badges) */
+    --fill-from: #172554;
+    --fill-to: #05070d;
+    /* Gradient headings */
+    --text-grad-from: #172554;
+    --text-grad-to: #0a0a0a;
+    /* Thin accent bars, underlines, progress */
+    --accent-bar-from: #172554;
+    --accent-bar-to: #0a0a0a;
+    --ring-highlight: #cbd5e1;
+    --focus-ring: rgba(23, 37, 84, 0.22);
 
     /* Glass / Glow */
     --glass-bg: rgba(255, 255, 255, 0.72);
     --glass-border: rgba(255, 255, 255, 0.9);
     --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-    --glow-primary: rgba(30, 58, 138, 0.35);
-    --glow-cyan: rgba(6, 182, 212, 0.25);
+    --glow-primary: rgba(23, 37, 84, 0.30);
+    --glow-cyan: rgba(23, 37, 84, 0.18);
     --blob-opacity: 0.13;
 
     /* macOS 26 Liquid Glass nav */
@@ -32,23 +49,32 @@
   }
 
   :root[data-theme="dark"] {
-    /* Dark mode colors */
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --text-primary: rgba(255, 255, 255, 0.9);
-    --text-secondary: rgba(255, 255, 255, 0.65);
-    --border-color: #334155;
-    --shadow: rgba(0, 0, 0, 0.4);
-    --card-bg: #1e293b;
-    --color-primary: #93c5fd;
-    --color-primary-2: #60a5fa;
+    /* Dark mode: dark navy page, black cards, white text and accents */
+    --bg-primary: #0a1330;
+    --bg-secondary: #070e24;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.68);
+    --border-color: rgba(255, 255, 255, 0.10);
+    --shadow: rgba(0, 0, 0, 0.5);
+    --card-bg: #04060d;
+    --color-primary: #ffffff;
+    --color-primary-2: #cbd5e1;
+
+    --fill-from: #1e3a8a;
+    --fill-to: #172554;
+    --text-grad-from: #ffffff;
+    --text-grad-to: #a9b4cc;
+    --accent-bar-from: #ffffff;
+    --accent-bar-to: #3b4f86;
+    --ring-highlight: #ffffff;
+    --focus-ring: rgba(255, 255, 255, 0.22);
 
     /* Glass / Glow */
     --glass-bg: rgba(15, 23, 42, 0.55);
-    --glass-border: rgba(148, 163, 184, 0.12);
+    --glass-border: rgba(255, 255, 255, 0.10);
     --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-    --glow-primary: rgba(96, 165, 250, 0.4);
-    --glow-cyan: rgba(34, 211, 238, 0.25);
+    --glow-primary: rgba(255, 255, 255, 0.18);
+    --glow-cyan: rgba(255, 255, 255, 0.10);
     --blob-opacity: 0;
 
     /* macOS 26 Liquid Glass nav - dark */
@@ -78,15 +104,30 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
     font-weight: 700;
     line-height: 1.2;
     color: var(--text-primary);
     letter-spacing: -0.02em;
   }
 
+  /* Never scroll sideways: a stray wide element (or a fly-in mid-flight)
+     would otherwise leave an unfilled strip down the right edge.
+     `clip`, unlike `hidden`, doesn't create a scroll container. */
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  html {
+    background-color: var(--bg-primary);
+  }
+
+  /* Transparent track: the page background shows through, so the scrollbar
+     doesn't paint a lighter strip beside the dark sections. */
   * {
     scrollbar-width: thin;
-    scrollbar-color: #172554 var(--bg-secondary);
+    scrollbar-color: color-mix(in srgb, var(--color-primary) 55%, transparent) transparent;
   }
 
   *::-webkit-scrollbar {
@@ -95,7 +136,7 @@
   }
 
   *::-webkit-scrollbar-track {
-    background: var(--bg-secondary);
+    background: transparent;
   }
 
   *::-webkit-scrollbar-thumb {
@@ -245,12 +286,12 @@
   clip-path: inset(0 round 9999px);
   backdrop-filter: blur(12px) saturate(1.6);
   -webkit-backdrop-filter: blur(12px) saturate(1.6);
-  background: rgba(195, 215, 255, 0.52);
-  border: 2px solid rgba(120, 160, 255, 0.55);
+  background: rgba(255, 255, 255, 0.78);
+  border: 2px solid rgba(23, 37, 84, 0.28);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.92),
-    inset 0 -1px 0 rgba(80,110,220,0.18),
-    0 4px 18px rgba(80,110,220,0.20);
+    inset 0 -1px 0 rgba(10,22,51,0.18),
+    0 4px 18px rgba(10,22,51,0.20);
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
   will-change: transform;
 }
@@ -269,8 +310,8 @@
   transform: translateY(-3px) scale(1.03);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.95),
-    inset 0 -1px 0 rgba(80,110,220,0.22),
-    0 8px 28px rgba(80,110,220,0.32);
+    inset 0 -1px 0 rgba(10,22,51,0.22),
+    0 8px 28px rgba(10,22,51,0.32);
 }
 
 .glass-btn:active {
@@ -329,7 +370,7 @@
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   background: rgba(255,255,255,0.10);
-  border-color: rgba(160,190,255,0.38);
+  border-color: rgba(255,255,255,0.22);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.18),
     inset 0 -1px 0 rgba(0,0,0,0.30),
@@ -365,12 +406,12 @@
 .glass-card:hover {
   transform: translateY(-6px) scale(1.012);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12), 0 0 20px var(--glow-primary);
-  border-color: rgba(96, 165, 250, 0.45);
+  border-color: rgba(23, 37, 84, 0.35);
 }
 
 :root[data-theme="dark"] .glass-card:hover {
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55), 0 0 24px rgba(56, 189, 248, 0.25);
-  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.30);
 }
 
 /* Animated gradient text */
@@ -419,7 +460,7 @@
   width: 0;
   height: 3px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--color-primary), #06b6d4);
+  background: linear-gradient(90deg, var(--accent-bar-from), var(--accent-bar-to));
   transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
   margin: 0 auto;
 }
@@ -438,7 +479,7 @@
 
 .terminal-shell {
   --term-bg: rgba(9, 15, 32, 0.94);
-  --term-border: rgba(120, 160, 255, 0.28);
+  --term-border: rgba(255, 255, 255, 0.14);
   --term-font: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
 
   width: 100%;
@@ -612,15 +653,15 @@
   padding: 4px 10px;
   border-radius: 999px;
   color: #a5c9ff;
-  background: rgba(96, 165, 250, 0.12);
-  border: 1px solid rgba(96, 165, 250, 0.28);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   cursor: pointer;
   transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
 }
 
 .terminal-chip:hover:not(:disabled) {
-  background: rgba(96, 165, 250, 0.22);
-  border-color: rgba(96, 165, 250, 0.5);
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-1px);
 }
 
@@ -782,12 +823,12 @@
   border-radius: 50%;
   background: conic-gradient(
     from 0deg,
-    var(--color-primary),
-    #3b82f6,
-    #06b6d4,
-    #22d3ee,
-    #3b82f6,
-    var(--color-primary)
+    var(--fill-from),
+    var(--fill-to),
+    var(--ring-highlight),
+    var(--fill-from),
+    var(--fill-to),
+    var(--fill-from)
   );
   animation: ring-spin 9s linear infinite;
 }
@@ -828,7 +869,7 @@
   transition: opacity 0.4s ease;
   background: radial-gradient(
     240px circle at var(--spot-x, 50%) var(--spot-y, 50%),
-    rgba(59, 130, 246, 0.14),
+    rgba(23, 37, 84, 0.08),
     transparent 72%
   );
 }
@@ -840,7 +881,7 @@
 :root[data-theme="dark"] .shimmer-hover::before {
   background: radial-gradient(
     240px circle at var(--spot-x, 50%) var(--spot-y, 50%),
-    rgba(96, 165, 250, 0.17),
+    rgba(255, 255, 255, 0.07),
     transparent 72%
   );
 }

@@ -12,7 +12,7 @@ function Education() {
       <div
         className="blob-shape w-[400px] h-[400px]"
         style={{
-          background: 'radial-gradient(circle, rgba(6,182,212,0.08), transparent)',
+          background: 'radial-gradient(circle, rgba(23,37,84,0.08), transparent)',
           bottom: '-120px',
           left: '-80px',
           animationDuration: '19s',
@@ -34,7 +34,7 @@ function Education() {
             </div>
             <h2
               className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
-              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
+              style={{ backgroundImage: 'linear-gradient(135deg, var(--text-grad-from) 0%, var(--text-grad-to) 100%)', backgroundSize: '200% 200%' }}
             >
               Education
             </h2>
@@ -63,7 +63,7 @@ function Education() {
             >
               <div
                 className="absolute left-0 top-6 hidden sm:flex items-center justify-center w-12 h-12 rounded-full shadow-[0_0_0_4px_var(--bg-secondary),0_0_0_5px_rgba(30,58,138,0.25)] dark:shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)] pulse-dot"
-                style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
+                style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))' }}
               >
                 <FaGraduationCap className="text-white text-base" />
               </div>
@@ -79,7 +79,7 @@ function Education() {
                         Kingston University, London, United Kingdom
                       </p>
                     </div>
-                    <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full text-white border border-blue-400/70 bg-gradient-to-r from-blue-700 to-blue-500 shadow-[0_3px_12px_rgba(30,58,138,0.32)] flex-shrink-0">
+                    <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full text-white border border-white/20 bg-gradient-to-r from-[var(--fill-from)] to-[var(--fill-to)] shadow-[0_3px_12px_rgba(30,58,138,0.32)] flex-shrink-0">
                       First Class Honours
                     </span>
                   </div>
@@ -136,7 +136,7 @@ function Education() {
             >
               <div
                 className="absolute left-0 top-6 hidden sm:flex items-center justify-center w-12 h-12 rounded-full shadow-[0_0_0_4px_var(--bg-secondary),0_0_0_5px_rgba(30,58,138,0.25)] dark:shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)] pulse-dot"
-                style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)', animationDelay: '0.8s' }}
+                style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))', animationDelay: '0.8s' }}
               >
                 <FaGraduationCap className="text-white text-base" />
               </div>

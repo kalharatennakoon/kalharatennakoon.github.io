@@ -52,13 +52,13 @@ function Achievements() {
   const [timelineRef, timelineVisible] = useScrollReveal<HTMLDivElement>(0.05)
 
   return (
-    <section id="achievements" className="py-20 bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]">
+    <section id="achievements" className="py-20 bg-[var(--bg-primary)] relative overflow-hidden">
 
       {/* Background blobs */}
       <div
         className="blob-shape w-[400px] h-[400px]"
         style={{
-          background: 'radial-gradient(circle, rgba(59,130,246,0.08), rgba(30,58,138,0.08), transparent)',
+          background: 'radial-gradient(circle, rgba(23,37,84,0.08), rgba(30,58,138,0.08), transparent)',
           top: '-100px',
           right: '-80px',
           animationDuration: '20s',
@@ -74,12 +74,12 @@ function Achievements() {
         >
           <div className="inline-flex items-center gap-3 mb-3">
             <div className="relative">
-              <div className="absolute inset-0 blur-xl bg-blue-400 opacity-30 rounded-full" />
+              <div className="absolute inset-0 blur-xl bg-[var(--color-primary)] opacity-30 rounded-full" />
               <FaTrophy className="relative text-3xl text-[var(--color-primary)]" />
             </div>
             <h2
               className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
-              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
+              style={{ backgroundImage: 'linear-gradient(135deg, var(--text-grad-from) 0%, var(--text-grad-to) 100%)', backgroundSize: '200% 200%' }}
             >
               Achievements
             </h2>
@@ -112,8 +112,8 @@ function Achievements() {
                   className="absolute left-0 top-5 hidden sm:flex items-center justify-center w-12 h-12 rounded-full shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)] pulse-dot"
                   style={{
                     background: item.highlight
-                      ? 'linear-gradient(135deg, var(--color-primary), #3b82f6)'
-                      : 'linear-gradient(135deg, var(--color-primary), #06b6d4)',
+                      ? 'linear-gradient(135deg, var(--fill-from), var(--fill-to))'
+                      : 'linear-gradient(135deg, var(--fill-from), var(--fill-to))',
                     animationDelay: `${index * 0.5}s`,
                   }}
                 >
@@ -122,12 +122,12 @@ function Achievements() {
 
                 <div className={`bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border transition-all duration-300 hover:-translate-y-1 overflow-hidden shimmer-hover ${
                   item.highlight
-                    ? 'border-blue-400/30 hover:border-blue-400/50 hover:shadow-[0_12px_36px_rgba(30,58,138,0.14)]'
+                    ? 'border-[var(--color-primary)]/30 hover:border-[var(--color-primary)]/50 hover:shadow-[0_12px_36px_rgba(30,58,138,0.14)]'
                     : 'border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:shadow-[0_12px_36px_rgba(30,58,138,0.14)]'
                 }`}>
                   {/* Highlight accent */}
                   {item.highlight && (
-                    <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, var(--color-primary), #3b82f6)' }} />
+                    <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, var(--accent-bar-from), var(--accent-bar-to))' }} />
                   )}
 
                   {/* Header */}
@@ -142,7 +142,7 @@ function Achievements() {
                       </h3>
                       <span className={`text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap border flex-shrink-0 ${
                         item.highlight
-                          ? 'text-white bg-blue-600 border-blue-700 shadow-[0_2px_8px_rgba(30,58,138,0.4)]'
+                          ? 'text-white bg-[var(--fill-from)] border-[var(--fill-to)] shadow-[0_2px_8px_rgba(30,58,138,0.4)]'
                           : 'text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] border-[rgba(30,58,138,0.15)]'
                       }`}>
                         {item.date}

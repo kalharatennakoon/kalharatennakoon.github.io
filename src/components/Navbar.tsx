@@ -1,19 +1,27 @@
 import { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { FaSun, FaMoon, FaBars, FaTimes } from 'react-icons/fa'
 import { useTheme } from '../hooks/useTheme'
 
-const navLinks = [
-  { label: 'About',          href: '#about' },
-  { label: 'Education',      href: '#education' },
-  { label: 'Experience',     href: '#experience' },
-  { label: 'Skills',         href: '#skills' },
-  { label: 'Projects',       href: '#projects' },
-  { label: 'Certifications', href: '#certifications' },
-  { label: 'Achievements',   href: '#achievements' },
-  { label: 'Activities',     href: '#activities' },
-  { label: 'Blog',           href: '#blog' },
-  { label: 'Contact',        href: '#contact' },
+/* `hash` links scroll to a section on the home page; `path` links are pages. */
+type NavItem = { label: string } & ({ hash: string } | { path: string })
+
+const navLinks: NavItem[] = [
+  { label: 'About',        hash: 'about' },
+  { label: 'Education',    hash: 'education' },
+  { label: 'Experience',   hash: 'experience' },
+  { label: 'Skills',       hash: 'skills' },
+  { label: 'Projects',     path: '/projects/' },
+  { label: 'Achievements', path: '/achievements/' },
+  { label: 'Blog',         path: '/blog/' },
+  { label: 'Contact',      hash: 'contact' },
 ]
+
+const linkTarget = (link: NavItem) =>
+  'hash' in link ? { pathname: '/', hash: `#${link.hash}` } : link.path
+
+const isActive = (link: NavItem, pathname: string) =>
+  'path' in link && pathname.replace(/\/?$/, '/') === link.path
 
 function Navbar() {
   const { theme, toggleTheme } = useTheme()
@@ -21,6 +29,7 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
   const isDark = theme === 'dark'
+  const { pathname } = useLocation()
 
   useEffect(() => {
     const onScroll = () => {
@@ -33,29 +42,28 @@ function Navbar() {
   }, [])
 
   /* ── Liquid Glass colours ─────────────────────────────────────────────
-   *  Light mode keeps a visible frosted pill with liquid-glass edges.
-   *  Dark mode keeps the deeper navy glass for contrast.
+   *  Light mode: frosted white pill. Dark mode: black glass over the navy.
    * ──────────────────────────────────────────────────────────────────── */
   const pillBg = isDark
-    ? 'rgba(12, 22, 50, 0.65)'         // dark navy translucent glass
-    : 'linear-gradient(135deg, rgba(235,244,255,0.68), rgba(200,220,255,0.52))'
+    ? 'rgba(0, 0, 0, 0.62)'            // black translucent glass
+    : 'linear-gradient(135deg, rgba(255,255,255,0.80), rgba(244,245,247,0.66))'
 
   const pillBorder = isDark
-    ? '1.5px solid rgba(140, 170, 255, 0.25)'
+    ? '1.5px solid rgba(255, 255, 255, 0.14)'
     : '1.5px solid rgba(255, 255, 255, 0.86)'
 
   const pillShadow = scrolled
     ? isDark
       ? '0 8px 40px rgba(0,0,0,0.60), 0 2px 8px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.12)'
-      : '0 8px 40px rgba(80,110,220,0.20), 0 2px 8px rgba(80,110,220,0.11), inset 0 1px 0 rgba(255,255,255,0.92)'
+      : '0 8px 40px rgba(10,22,51,0.20), 0 2px 8px rgba(10,22,51,0.11), inset 0 1px 0 rgba(255,255,255,0.92)'
     : isDark
       ? '0 4px 24px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.10)'
-      : '0 4px 24px rgba(80,110,220,0.15), inset 0 1px 0 rgba(255,255,255,0.88)'
+      : '0 4px 24px rgba(10,22,51,0.15), inset 0 1px 0 rgba(255,255,255,0.88)'
 
   /* ── mobile dropdown glass ────────────────────────────────────────── */
   const dropBg = isDark
-    ? 'rgba(12, 22, 50, 0.75)'
-    : 'linear-gradient(135deg, rgba(235,244,255,0.76), rgba(210,228,255,0.64))'
+    ? 'rgba(0, 0, 0, 0.80)'
+    : 'linear-gradient(135deg, rgba(255,255,255,0.88), rgba(244,245,247,0.76))'
 
   return (
     <div className="fixed top-0 left-0 right-0 z-[999] flex flex-col items-center pointer-events-none">
@@ -91,7 +99,7 @@ function Navbar() {
           style={{
             height: '1.5px',
             background: isDark
-              ? 'linear-gradient(90deg, transparent, rgba(180,210,255,0.50) 30%, rgba(220,235,255,0.65) 50%, rgba(180,210,255,0.50) 70%, transparent)'
+              ? 'linear-gradient(90deg, transparent, rgba(255,255,255,0.22) 30%, rgba(255,255,255,0.38) 50%, rgba(255,255,255,0.22) 70%, transparent)'
               : 'linear-gradient(90deg, transparent, rgba(255,255,255,0.86) 20%, rgba(255,255,255,1.00) 50%, rgba(255,255,255,0.86) 80%, transparent)',
           }}
         />
@@ -104,7 +112,7 @@ function Navbar() {
             height: '1px',
             background: isDark
               ? 'rgba(0,0,0,0.50)'
-              : 'rgba(90,120,220,0.18)',
+              : 'rgba(10,22,51,0.14)',
           }}
         />
 
@@ -113,7 +121,7 @@ function Navbar() {
           className="absolute bottom-0 left-0 h-[2.5px] pointer-events-none transition-[width] duration-100 ease-out"
           style={{
             width: `${scrollProgress}%`,
-            background: 'linear-gradient(90deg, #6366f1, #3b82f6, #06b6d4)',
+            background: 'linear-gradient(90deg, var(--accent-bar-from), var(--accent-bar-to))',
             borderRadius: '0 0 0 9999px',
           }}
         />
@@ -122,27 +130,32 @@ function Navbar() {
         <div className="relative flex items-center justify-between px-5 py-2.5">
 
           {/* Logo */}
-          <a
-            href="#"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          <Link
+            to="/"
+            onClick={() => { setMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
             className="shrink-0 transition-opacity duration-200 text-[var(--color-primary)] hover:opacity-70"
             style={{ fontFamily: '"Rouge Script", cursive', fontSize: '1.75rem', fontWeight: 400 }}
           >
             Kalhara
-          </a>
+          </Link>
 
           {/* Desktop links */}
           <ul className="hidden md:flex items-center gap-0.5">
             {navLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="relative px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 text-[var(--text-secondary)] hover:text-[var(--color-primary)] group"
+              <li key={link.label}>
+                <Link
+                  to={linkTarget(link)}
+                  aria-current={isActive(link, pathname) ? 'page' : undefined}
+                  className={`relative px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 hover:text-[var(--color-primary)] group ${
+                    isActive(link, pathname) ? 'text-[var(--color-primary)]' : 'text-[var(--text-secondary)]'
+                  }`}
                   style={{ letterSpacing: '0.01em' }}
                 >
                   {link.label}
-                  <span className="absolute bottom-0.5 left-3 right-3 h-[2px] rounded-full bg-[var(--color-primary)] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                </a>
+                  <span className={`absolute bottom-0.5 left-3 right-3 h-[2px] rounded-full bg-[var(--color-primary)] group-hover:scale-x-100 transition-transform duration-300 origin-left ${
+                    isActive(link, pathname) ? 'scale-x-100' : 'scale-x-0'
+                  }`} />
+                </Link>
               </li>
             ))}
           </ul>
@@ -160,7 +173,7 @@ function Navbar() {
                 border: isDark ? '1px solid rgba(255,255,255,0.18)' : '1px solid rgba(255,255,255,0.95)',
                 boxShadow: isDark
                   ? 'inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 8px rgba(0,0,0,0.35)'
-                  : 'inset 0 1px 0 rgba(255,255,255,1.00), 0 2px 8px rgba(80,110,220,0.18)',
+                  : 'inset 0 1px 0 rgba(255,255,255,1.00), 0 2px 8px rgba(10,22,51,0.18)',
               }}
             >
               <span
@@ -187,7 +200,7 @@ function Navbar() {
                 border: isDark ? '1px solid rgba(255,255,255,0.18)' : '1px solid rgba(255,255,255,0.95)',
                 boxShadow: isDark
                   ? 'inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 8px rgba(0,0,0,0.35)'
-                  : 'inset 0 1px 0 rgba(255,255,255,1.00), 0 2px 8px rgba(80,110,220,0.18)',
+                  : 'inset 0 1px 0 rgba(255,255,255,1.00), 0 2px 8px rgba(10,22,51,0.18)',
               }}
             >
               <span
@@ -232,11 +245,14 @@ function Navbar() {
           />
           <div className="px-4 py-3 grid grid-cols-2 gap-1 relative">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
+              <Link
+                key={link.label}
+                to={linkTarget(link)}
+                aria-current={isActive(link, pathname) ? 'page' : undefined}
                 onClick={() => setMenuOpen(false)}
-                className="px-4 py-2.5 rounded-xl text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--color-primary)] transition-all duration-200"
+                className={`px-4 py-2.5 rounded-xl text-sm font-medium hover:text-[var(--color-primary)] transition-all duration-200 ${
+                  isActive(link, pathname) ? 'text-[var(--color-primary)]' : 'text-[var(--text-secondary)]'
+                }`}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = isDark
                     ? 'rgba(255,255,255,0.08)'
@@ -245,7 +261,7 @@ function Navbar() {
                 onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
         </div>

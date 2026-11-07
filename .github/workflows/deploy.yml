@@ -53,6 +53,10 @@ jobs:
       - name: Build industry site
         working-directory: industry
         run: npm run build
+        env:
+          # Contact form spam check (Cloudflare Turnstile site key, public).
+          # Set under Settings → Secrets and variables → Actions → Variables.
+          VITE_TURNSTILE_SITE_KEY: ${{ vars.VITE_TURNSTILE_SITE_KEY }}
 
       - name: Install dependencies (academic)
         working-directory: academic

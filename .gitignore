@@ -27,3 +27,7 @@ package-lock.json
 
 # Claude Code local settings
 .claude/
+
+# Cloudflare Worker local state and secrets
+.wrangler/
+.dev.vars
