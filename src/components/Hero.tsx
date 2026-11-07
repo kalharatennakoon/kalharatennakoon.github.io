@@ -109,7 +109,7 @@ function Hero() {
               CV (PDF)
             </a>
             <a
-              href="mailto:kalharatennakoonmck@gmail.com"
+              href="mailto:kalhara@kalharatennakoon.com"
               className="glass-btn px-7 py-3 font-semibold text-sm inline-flex items-center gap-2"
               style={{ color: 'var(--color-primary)' }}
             >

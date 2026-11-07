@@ -10,7 +10,7 @@ export const identity = {
   handle: 'kalharatennakoon',
   role: 'Software, DevOps & AI/ML Engineer',
   location: 'Kurunegala, Sri Lanka',
-  email: 'kalharatennakoonmck@gmail.com',
+  email: 'kalhara@kalharatennakoon.com',
   site: 'kalharatennakoon.github.io',
   summary:
     'Software engineer with hands-on industry experience in DevOps, cloud-native systems, ' +

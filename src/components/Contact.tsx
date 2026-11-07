@@ -56,7 +56,7 @@ const BUTTON_VECTORS: FlyVector[] = [
 ]
 
 const contactLinks = [
-  { href: 'mailto:kalharatennakoonmck@gmail.com', icon: <FaEnvelope />, label: 'Email', external: false },
+  { href: 'mailto:kalhara@kalharatennakoon.com', icon: <FaEnvelope />, label: 'Email', external: false },
   { href: 'https://www.linkedin.com/in/kalharatennakoon', icon: <FaLinkedin />, label: 'LinkedIn', external: true },
   { href: 'https://github.com/kalharatennakoon', icon: <FaGithub />, label: 'GitHub', external: true },
   { href: 'https://kalharatennakoon.medium.com', icon: <FaMedium />, label: 'Medium', external: true },
