@@ -1,235 +1,397 @@
-import { FaCode, FaGithub, FaGlobe, FaBuilding, FaCalendarCheck, FaShieldAlt, FaBrain, FaPaw, FaCar, FaHospital, FaSun, FaFileAlt, FaClipboardList, FaEnvelopeOpenText } from 'react-icons/fa'
+import { useState, useMemo } from 'react'
+import {
+  FaCode, FaGithub, FaExternalLinkAlt, FaPaw, FaSun, FaFileAlt,
+  FaClipboardList, FaEnvelopeOpenText, FaBrain, FaShieldAlt,
+  FaHospital, FaCar, FaChevronDown, FaChevronUp, FaLayerGroup
+} from 'react-icons/fa'
 import type { IconType } from 'react-icons'
 import useScrollReveal from '../hooks/useScrollReveal'
+import { soundFx } from '../utils/sound'
 
 interface Project {
+  id: string
   title: string
+  subtitle?: string
   description: string
+  architectureDetails?: string[]
   technologies: string[]
   icon: IconType
+  category: 'ai' | 'devops' | 'web'
+  featured?: boolean
+  date?: string
   github?: string
   website?: string
-  date?: string
-  subtitle?: string
 }
 
-function Projects() {
-  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
-  const [gridRef, gridVisible] = useScrollReveal<HTMLDivElement>(0.05)
+const projectsData: Project[] = [
+  {
+    id: 'vetcare-one',
+    title: 'VetCare One',
+    subtitle: 'Final Year Project (Grade A, 76%) · AI Launch Pad Top 10',
+    description:
+      'Smart veterinary clinic management system (formerly VetCare Pro). Features role-based clinical records, inventory, and appointment workflows, combined with a local RAG assistant (Ollama & pgvector) that intelligently routes between natural language semantics and exact SQL queries with human-in-the-loop write confirmation.',
+    architectureDetails: [
+      'Dual-route local RAG assistant with Ollama (Llama 3) and pgvector for semantic clinic queries',
+      'Intelligent SQL generation with safety guards and confirmation for database mutations',
+      'Machine learning microservices for clinical disease prediction and seasonal demand forecasting',
+      'Companion SwiftUI iOS mobile app for clinic staff and pet owners',
+    ],
+    technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'pgvector', 'Python', 'Flask', 'Scikit-learn', 'Ollama', 'SwiftUI', 'JWT'],
+    icon: FaPaw,
+    category: 'ai',
+    featured: true,
+    website: 'https://kalharatennakoon.com/vetcareone/',
+    date: 'Oct 2025 – Aug 2026',
+  },
+  {
+    id: 'solarcast',
+    title: 'SolarCast',
+    subtitle: 'Solar Energy Forecasting App · GitOps on Kubernetes',
+    description:
+      'Full-stack machine learning application predicting monthly solar generation, grid exports, and financial payouts from residential inverter datasets using Meta\'s Prophet with 90% confidence intervals (approx. 8% error on unseen test months).',
+    architectureDetails: [
+      'Time-series forecasting models with Meta\'s Prophet achieving ~8% error on unseen test months',
+      'FastAPI microservice instrumented with custom Prometheus telemetry metrics',
+      'Multi-stage non-root container packaging with 39 automated tests and Trivy security scanning',
+      'Continuous deployment via GitOps using Kustomize and ArgoCD to Kubernetes environments',
+    ],
+    technologies: ['Python', 'FastAPI', 'React', 'Prophet', 'Docker', 'Kubernetes', 'Kustomize', 'ArgoCD', 'GitOps', 'Prometheus', 'Trivy'],
+    icon: FaSun,
+    category: 'devops',
+    featured: true,
+    website: 'https://kalharatennakoon.com/solarcast/',
+    date: 'Apr 2026 – Oct 2026',
+  },
+  {
+    id: 'strongcv',
+    title: 'StrongCV',
+    subtitle: 'AI-Powered Resume Analysis & Targeted Rewriting',
+    description:
+      'Intelligent web application that evaluates CVs against target role specifications and job descriptions. Scores section-by-section alignment, highlights missing domain keywords, and synthesizes tailored rewrites with validated JSON schemas.',
+    architectureDetails: [
+      'Two-model LLM generation pipeline on Ollama Cloud with deterministic JSON schema validation via Zod',
+      'Automated Applicant Tracking System (ATS) compatibility analysis and tailored cover letter generation',
+      'Multilingual feedback assistance in Sinhala and Tamil',
+      'Distributed visitor rate limiting and session caching via Upstash Redis',
+    ],
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Ollama', 'LLMs', 'Zod', 'Upstash Redis', 'Vercel'],
+    icon: FaFileAlt,
+    category: 'ai',
+    featured: true,
+    website: 'https://strongcv.vercel.app/',
+    date: 'Sep 2026',
+  },
+  {
+    id: 'shortlisted',
+    title: 'Shortlisted',
+    subtitle: 'Job Application Tracking Board with Row-Level Security',
+    description:
+      'Modern web application for managing job searches with status boards, calendar schedules, and analytics. Built on Supabase Postgres with strict Row-Level Security (RLS) policies and scheduled reminders.',
+    architectureDetails: [
+      'Interactive Kanban, table, calendar, and metric analytics views with CSV import/export',
+      'Encrypted document repository for versioned CVs, transcripts, and cover letters',
+      'Daily scheduled email digest notifications dispatched via Supabase Edge Functions',
+    ],
+    technologies: ['React', 'TypeScript', 'Vite', 'Supabase', 'PostgreSQL', 'GitHub Actions'],
+    icon: FaClipboardList,
+    category: 'web',
+    website: 'https://kalharatennakoon.com/shortlisted/',
+    date: 'Sep 2026',
+  },
+  {
+    id: 'know-your-letter',
+    title: 'Know Your Letter',
+    subtitle: 'Vision LLM Official Letter Explainer',
+    description:
+      'Free civic-tech web application that breaks down official letters into plain Sinhala, Tamil, or English from photos or PDFs. Summarizes required actions, critical deadlines, and highlights scam warnings without storing user documents.',
+    architectureDetails: [
+      'Multimodal Gemma vision model on Ollama Cloud producing structured breakdown schemas',
+      'Automated numerical verification: rejects translations if any critical date or reference number diverges',
+      'Zero-storage privacy architecture with server-side masking for NIC, credit card, and IBAN data',
+    ],
+    technologies: ['Next.js', 'React', 'Vision LLM', 'Ollama', 'Upstash Redis', 'pdf.js', 'Vercel'],
+    icon: FaEnvelopeOpenText,
+    category: 'ai',
+    featured: true,
+    website: 'https://know-your-letter.vercel.app',
+    date: 'Oct 2026',
+  },
+  {
+    id: 'k8s-scanner',
+    title: 'K8s Security Scanner',
+    subtitle: 'Container & Cluster Security Tooling (IFS R&D)',
+    description:
+      'Containerized security scanning tooling deployed on Kubernetes to detect CVE vulnerabilities in container images and configuration drift in cluster workloads, wired into CI/CD delivery pipelines.',
+    architectureDetails: [
+      'Integrated static analysis and container image vulnerability scanners into pipeline stages',
+      'Automated policy validation for Kubernetes pod security standards and least-privilege configurations',
+      'Deployed on AKS and GKE clusters with GitOps workflows',
+    ],
+    technologies: ['Kubernetes', 'Docker', 'Golang', 'ArgoCD', 'Rancher', 'AKS', 'GKE', 'Azure DevOps', 'CI/CD'],
+    icon: FaShieldAlt,
+    category: 'devops',
+    date: 'Jul 2020 – Dec 2020',
+  },
+  {
+    id: 'course-difficulty',
+    title: 'Course Difficulty Prediction',
+    subtitle: 'Supervised ML from Student Evaluation Datasets',
+    description:
+      'Supervised machine learning models predicting student-perceived course difficulty levels. Statistically identified instructor-related attributes as significant predictors through regression and classification.',
+    technologies: ['Python', 'Scikit-learn', 'Pandas', 'Matplotlib', 'SPSS', 'Machine Learning'],
+    icon: FaBrain,
+    category: 'ai',
+    github: 'https://github.com/kalharatennakoon/course-difficulty-analysis',
+    date: 'Feb 2025 – Jul 2025',
+  },
+  {
+    id: 'hospital-appointments',
+    title: 'Hospital Channeling System',
+    subtitle: 'Queue-Based Clinical Appointment Engine',
+    description:
+      'Full clinical appointment scheduling system featuring FIFO queue-based rescheduling, LIFO stack-based cancellation tracking, and structured persistence.',
+    technologies: ['Java', 'Data Structures', 'Queue', 'Stack', 'CSV'],
+    icon: FaHospital,
+    category: 'web',
+    github: 'https://github.com/kalharatennakoon/doctor_channeling_system',
+    date: '2023',
+  },
+  {
+    id: 'ecoride',
+    title: 'EcoRide Car Rental',
+    subtitle: 'Fleet & Booking Management Engine',
+    description:
+      'Java-based vehicle rental and fleet management platform featuring dynamic billing, reservation tracking, and automated PDF invoice generation.',
+    technologies: ['Java', 'OOP', 'File I/O', 'Data Persistence'],
+    icon: FaCar,
+    category: 'web',
+    github: 'https://github.com/kalharatennakoon/EcoRideCarRentalSystem',
+    date: '2023',
+  },
+]
 
-  const projects: Project[] = [
-    {
-      title: 'VetCare One – Smart Veterinary Clinic Management System',
-      description:
-        'Formerly VetCare Pro. Final year project (Grade A, 76%) covering appointments, medical records, billing and inventory, with role-based access, a RESTful Express API, JWT auth, and ML models for disease prediction and sales & demand forecasting. ' +
-        'Extended for the Ascentic AI Launch Pad (Top 10) with a local RAG assistant (Ollama & pgvector) that routes between semantic retrieval and exact SQL queries, with human-in-the-loop confirmation for database writes, plus a pet owner portal and SwiftUI iOS app.',
-      technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'pgvector', 'Python', 'Flask', 'Scikit-learn', 'Ollama', 'SwiftUI', 'JWT'],
-      icon: FaPaw,
-      website: 'https://kalharatennakoon.com/vetcareone/',
-      date: 'Oct 2025 – Aug 2026',
-      subtitle: 'Final Year Project · AI Launch Pad',
-    },
-    {
-      title: 'SolarCast – Solar Energy Forecasting App',
-      description:
-        'Full-stack ML app that forecasts monthly solar generation, grid export, and cash payouts from residential inverter data using Meta\'s Prophet with 90% confidence intervals (about 8% error on unseen months). ' +
-        'FastAPI backend with Prometheus metrics and an interactive React dashboard, packaged as multi-stage, non-root Docker images and shipped through GitHub Actions CI/CD (linting, 39 automated tests, Trivy scans) to Kubernetes dev and prod environments managed with Kustomize and ArgoCD.',
-      technologies: ['Python', 'FastAPI', 'React', 'Prophet', 'Machine Learning', 'Pandas', 'Docker', 'Kubernetes', 'Kustomize', 'ArgoCD', 'GitOps', 'GitHub Actions', 'nginx', 'Prometheus', 'Trivy'],
-      icon: FaSun,
-      website: 'https://kalharatennakoon.com/solarcast/',
-      date: 'Apr 2026 – Oct 2026',
-    },
-    {
-      title: 'StrongCV – AI-Powered CV Review & Rewriting Tool',
-      description:
-        'Web app that analyses a CV against a target role and job description, scores it overall and section by section, highlights strengths, gaps, and missing keywords, then rewrites it for download as Word or PDF. ' +
-        'Runs a two-model LLM pipeline on Ollama Cloud with JSON-schema outputs validated by Zod, plus ATS checks, tailored cover letters, interview preparation, feedback in Sinhala or Tamil, and per-visitor rate limiting with Upstash Redis.',
-      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Ollama', 'LLMs', 'Zod', 'Upstash Redis', 'Vercel'],
-      icon: FaFileAlt,
-      website: 'https://strongcv.vercel.app/',
-      date: 'Sep 2026',
-    },
-    {
-      title: 'Shortlisted – Job Application Tracking Board',
-      description:
-        'Web app for tracking job applications on a status board with per-user accounts, built on Supabase authentication and Postgres with Row Level Security. ' +
-        'Offers board, table, calendar, and statistics views, CSV import/export, a document library for CVs and cover letters, Google Calendar and .ics export, follow-up email templates, and opt-in daily reminders sent by a scheduled Supabase Edge Function.',
-      technologies: ['React', 'TypeScript', 'Vite', 'Supabase', 'PostgreSQL', 'GitHub Actions'],
-      icon: FaClipboardList,
-      website: 'https://kalharatennakoon.com/shortlisted/',
-      date: 'Sep 2026',
-    },
-    {
-      title: 'Know Your Letter – Plain-Language Explainer for Official Letters',
-      description:
-        'Free web app that explains official letters to Sri Lankans in plain Sinhala, Tamil, or English from a photo or PDF: what the letter says, what to do, and the date to act by, with scam warnings. ' +
-        'A vision model (Gemma) on Ollama Cloud fills a fixed JSON schema, translations are rejected if any number differs from the original, and no letter content is stored or logged, with NIC, card, and IBAN numbers masked server-side.',
-      technologies: ['Next.js', 'React', 'Vision LLM', 'Ollama', 'Prompt Engineering', 'Upstash Redis', 'pdf.js', 'Vercel', 'i18n', 'Accessibility'],
-      icon: FaEnvelopeOpenText,
-      website: 'https://know-your-letter.vercel.app',
-      date: 'Oct 2026',
-    },
-    {
-      title: 'Predicting Course Difficulty from Student Evaluation Responses',
-      description: 'Supervised ML models to predict perceived course difficulty from student evaluation data, identifying instructor attributes as key predictors using statistical validation and classification algorithms.',
-      technologies: ['Python', 'Scikit-learn', 'Pandas', 'Matplotlib', 'Seaborn', 'SPSS', 'Machine Learning', 'Statistics'],
-      icon: FaBrain,
-      github: 'https://github.com/kalharatennakoon/course-difficulty-analysis',
-      date: 'Feb 2025 – Jul 2025',
-    },
-    {
-      title: 'Kubernetes Cluster and Container Image Security Scanner',
-      description: 'Containerized security scanning tool deployed on Kubernetes to detect vulnerabilities in container images and cluster configurations for secure DevOps pipelines.',
-      technologies: ['Docker', 'Kubernetes', 'Golang', 'ArgoCD', 'Rancher', 'AKS', 'GKE', 'Azure DevOps', 'Shell Scripting', 'CI/CD'],
-      icon: FaShieldAlt,
-      date: 'Jul 2020 – Dec 2020',
-      subtitle: 'Internship · IFS',
-    },
-    {
-      title: 'Hospital Appointment Management System',
-      description: 'Complete hospital appointment system with queue-based rescheduling (FIFO), stack-based cancellation history (LIFO), and CSV data persistence.',
-      technologies: ['Java', 'Data Structures', 'Queue', 'Stack', 'CSV'],
-      icon: FaHospital,
-      github: 'https://github.com/kalharatennakoon/doctor_channeling_system',
-    },
-    {
-      title: 'EcoRide Car Rental System',
-      description: 'A Java-based car rental management system with vehicle management, booking system, payment processing, and automated invoice generation.',
-      technologies: ['Java', 'OOP', 'File I/O', 'Data Persistence'],
-      icon: FaCar,
-      github: 'https://github.com/kalharatennakoon/EcoRideCarRentalSystem',
-    },
-  ]
+type FilterType = 'all' | 'ai' | 'devops' | 'web'
+
+export function Projects() {
+  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>(0.1)
+  const [gridRef, gridVisible] = useScrollReveal<HTMLDivElement>(0.05)
+  const [filter, setFilter] = useState<FilterType>('all')
+  const [expandedId, setExpandedId] = useState<string | null>(null)
+
+  const filteredProjects = useMemo(() => {
+    if (filter === 'all') return projectsData
+    return projectsData.filter((p) => p.category === filter)
+  }, [filter])
+
+  const handleFilterChange = (f: FilterType) => {
+    soundFx.tab()
+    setFilter(f)
+  }
+
+  const toggleExpand = (id: string) => {
+    soundFx.click()
+    setExpandedId((prev) => (prev === id ? null : id))
+  }
 
   return (
-    <section id="projects" className="py-20 bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]">
+    <section id="projects" className="py-24 relative overflow-hidden bg-[var(--bg-secondary)]">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 relative z-10">
 
-      {/* Background blobs */}
-      <div
-        className="blob-shape w-[500px] h-[500px]"
-        style={{
-          background: 'radial-gradient(circle, rgba(30,58,138,0.1), transparent)',
-          top: '-150px',
-          right: '-120px',
-          animationDuration: '16s',
-        }}
-      />
-      <div
-        className="blob-shape w-[300px] h-[300px]"
-        style={{
-          background: 'radial-gradient(circle, rgba(6,182,212,0.08), transparent)',
-          bottom: '-80px',
-          left: '-60px',
-          animationDelay: '-7s',
-          animationDuration: '13s',
-        }}
-      />
-
-      <div className="max-w-6xl mx-auto px-8 relative z-10">
-
-        {/* Section header */}
+        {/* Section Header */}
         <div
           ref={headerRef}
           className={`text-center mb-12 reveal ${headerVisible ? 'is-visible' : ''}`}
         >
-          <div className="inline-flex items-center gap-3 mb-3">
-            <div className="relative">
-              <div className="absolute inset-0 blur-xl bg-[var(--color-primary)] opacity-30 rounded-full" />
-              <FaCode className="relative text-3xl text-[var(--color-primary)]" />
-            </div>
-            <h2
-              className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
-              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
-            >
-              Projects
-            </h2>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-semibold uppercase tracking-wider mb-3">
+            <FaCode className="text-xs" />
+            <span>Portfolio Highlights</span>
           </div>
+          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--text-primary)]">
+            Featured Projects
+          </h2>
           <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
+          <p className="mt-4 text-base sm:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
+            Production-grade systems bridging Kubernetes CI/CD pipelines, local LLM architectures,
+            and scalable web platforms.
+          </p>
+
+          {/* Filter Pills */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-8">
+            <button
+              onClick={() => handleFilterChange('all')}
+              className={`px-4 py-2 text-xs font-semibold rounded-full transition-all cursor-pointer ${
+                filter === 'all'
+                  ? 'bg-sky-500 text-white shadow-md shadow-sky-500/25'
+                  : 'bg-[var(--card-bg)] text-[var(--text-secondary)] border border-[var(--border-color)] hover:border-sky-500/40 hover:text-[var(--text-primary)]'
+              }`}
+            >
+              All Projects ({projectsData.length})
+            </button>
+            <button
+              onClick={() => handleFilterChange('ai')}
+              className={`px-4 py-2 text-xs font-semibold rounded-full transition-all cursor-pointer ${
+                filter === 'ai'
+                  ? 'bg-sky-500 text-white shadow-md shadow-sky-500/25'
+                  : 'bg-[var(--card-bg)] text-[var(--text-secondary)] border border-[var(--border-color)] hover:border-sky-500/40 hover:text-[var(--text-primary)]'
+              }`}
+            >
+              AI & Machine Learning (4)
+            </button>
+            <button
+              onClick={() => handleFilterChange('devops')}
+              className={`px-4 py-2 text-xs font-semibold rounded-full transition-all cursor-pointer ${
+                filter === 'devops'
+                  ? 'bg-sky-500 text-white shadow-md shadow-sky-500/25'
+                  : 'bg-[var(--card-bg)] text-[var(--text-secondary)] border border-[var(--border-color)] hover:border-sky-500/40 hover:text-[var(--text-primary)]'
+              }`}
+            >
+              Cloud & DevOps (2)
+            </button>
+            <button
+              onClick={() => handleFilterChange('web')}
+              className={`px-4 py-2 text-xs font-semibold rounded-full transition-all cursor-pointer ${
+                filter === 'web'
+                  ? 'bg-sky-500 text-white shadow-md shadow-sky-500/25'
+                  : 'bg-[var(--card-bg)] text-[var(--text-secondary)] border border-[var(--border-color)] hover:border-sky-500/40 hover:text-[var(--text-primary)]'
+              }`}
+            >
+              Full-Stack & Systems (3)
+            </button>
+          </div>
         </div>
 
-        {/* Cards grid */}
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => {
-            const Icon = project.icon
+        {/* Projects Grid */}
+        <div
+          ref={gridRef}
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal ${
+            gridVisible ? 'is-visible' : ''
+          }`}
+        >
+          {filteredProjects.map((p) => {
+            const IconComponent = p.icon
+            const isExpanded = expandedId === p.id
+
             return (
               <div
-                key={project.title}
-                className={`reveal-scale ${gridVisible ? 'is-visible' : ''}`}
-                style={{ transitionDelay: gridVisible ? `${index * 0.1}s` : '0s' }}
+                key={p.id}
+                className={`bento-card flex flex-col justify-between shimmer-hover p-6 ${
+                  p.featured ? 'border-sky-500/30' : ''
+                }`}
               >
-                <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:-translate-y-2 hover:shadow-[0_16px_40px_rgba(30,58,138,0.16)] transition-all duration-400 overflow-hidden flex flex-col h-full shimmer-hover group">
-                  {/* Colored top accent */}
-                  <div
-                    className="h-1 w-full"
-                    style={{ background: 'linear-gradient(90deg, var(--color-primary), #06b6d4)' }}
-                  />
-
-                  {/* Header */}
-                  <div className="px-6 pt-5 pb-4 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.05)] to-transparent">
-                    <div className="flex items-start gap-3 mb-3">
-                      <div
-                        className="w-9 h-9 rounded-lg flex items-center justify-center text-white text-sm flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-300"
-                        style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
-                      >
-                        <Icon />
-                      </div>
-                      <h3 className="text-base font-bold text-[var(--text-primary)] leading-snug">{project.title}</h3>
+                <div>
+                  {/* Card Header: Icon & Badges */}
+                  <div className="flex items-start justify-between gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center text-xl shadow-sm">
+                      <IconComponent />
                     </div>
-                    <div className="flex flex-col gap-1.5">
-                      {project.date && (
-                        <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
-                          <FaCalendarCheck className="text-[var(--color-primary)] flex-shrink-0" /> {project.date}
+
+                    <div className="flex flex-col items-end gap-1">
+                      {p.featured && (
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-sky-500 to-indigo-600 text-white shadow-sm">
+                          Featured
                         </span>
                       )}
-                      {project.subtitle && (
-                        <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
-                          <FaBuilding className="flex-shrink-0" /> {project.subtitle}
+                      {p.date && (
+                        <span className="text-[11px] font-mono text-[var(--text-secondary)] opacity-80">
+                          {p.date}
                         </span>
-                      )}
-                      {project.website && (
-                        <a
-                          href={project.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--color-primary)] hover:text-[var(--color-primary-2)] hover:underline transition-colors w-fit"
-                        >
-                          <FaGlobe className="text-sm" /> Visit Site
-                        </a>
-                      )}
-                      {project.github && (
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--color-primary)] hover:text-[var(--color-primary-2)] hover:underline transition-colors w-fit"
-                        >
-                          <FaGithub className="text-sm" /> View on GitHub
-                        </a>
                       )}
                     </div>
                   </div>
 
-                  {/* Body */}
-                  <div className="px-6 py-5 flex flex-col flex-grow gap-4">
-                    <p className="text-sm text-[var(--text-secondary)] leading-relaxed flex-grow m-0">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.technologies.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2.5 py-0.5 bg-[rgba(30,58,138,0.07)] text-[var(--color-primary)] rounded-full text-xs font-medium border border-[rgba(30,58,138,0.15)] hover:bg-[rgba(30,58,138,0.14)] hover:border-[rgba(30,58,138,0.3)] transition-colors"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                  {/* Title & Subtitle */}
+                  <h3 className="text-xl font-bold text-[var(--text-primary)] mb-1 leading-snug">
+                    {p.title}
+                  </h3>
+                  {p.subtitle && (
+                    <div className="text-xs font-semibold text-sky-400 mb-3">
+                      {p.subtitle}
                     </div>
+                  )}
+
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
+                    {p.description}
+                  </p>
+
+                  {/* Expandable Architecture Details */}
+                  {p.architectureDetails && (
+                    <div className="mb-4">
+                      <button
+                        onClick={() => toggleExpand(p.id)}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-400 hover:text-sky-300 transition-colors py-1 cursor-pointer"
+                      >
+                        <FaLayerGroup className="text-xs" />
+                        <span>{isExpanded ? 'Hide Architecture' : 'Architecture & Specs'}</span>
+                        {isExpanded ? <FaChevronUp className="text-[10px]" /> : <FaChevronDown className="text-[10px]" />}
+                      </button>
+
+                      {isExpanded && (
+                        <ul className="mt-2 space-y-1.5 p-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-secondary)] animate-fadeIn">
+                          {p.architectureDetails.map((detail, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <span className="text-sky-400 font-bold">•</span>
+                              <span>{detail}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Bottom Footer: Stack pills & Links */}
+                <div>
+                  {/* Tech stack chips */}
+                  <div className="flex flex-wrap gap-1.5 mb-5 pt-3 border-t border-[var(--border-color)]">
+                    {p.technologies.slice(0, 5).map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2 py-0.5 text-[10px] font-mono font-medium rounded-md bg-[var(--bg-secondary)] text-[var(--text-primary)] border border-[var(--border-color)]"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {p.technologies.length > 5 && (
+                      <span className="px-1.5 py-0.5 text-[10px] font-mono text-[var(--text-secondary)]">
+                        +{p.technologies.length - 5}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Action Link Buttons */}
+                  <div className="flex items-center gap-2">
+                    {p.website && (
+                      <a
+                        href={p.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => soundFx.click()}
+                        className="flex-1 py-2 px-3 text-xs font-semibold rounded-xl bg-sky-500/10 hover:bg-sky-500 hover:text-white text-sky-400 border border-sky-500/30 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                      >
+                        <FaExternalLinkAlt className="text-[10px]" />
+                        <span>Live App</span>
+                      </a>
+                    )}
+                    {p.github && (
+                      <a
+                        href={p.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => soundFx.click()}
+                        className="flex-1 py-2 px-3 text-xs font-semibold rounded-xl bg-[var(--bg-secondary)] hover:border-sky-500/40 text-[var(--text-primary)] border border-[var(--border-color)] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                      >
+                        <FaGithub className="text-xs" />
+                        <span>Source</span>
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
             )
           })}
         </div>
+
       </div>
     </section>
   )

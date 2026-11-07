@@ -1,158 +1,152 @@
-import { FaPen, FaHandsHelping, FaCalendarAlt, FaStackOverflow } from 'react-icons/fa'
+import { FaPen, FaHandsHelping, FaStackOverflow, FaUsers, FaExternalLinkAlt } from 'react-icons/fa'
 import useScrollReveal from '../hooks/useScrollReveal'
+import { soundFx } from '../utils/sound'
 
 interface Activity {
   title: string
   role: string
   period: string
+  badge: string
   description: string
   icon: React.ReactNode
-  badge: string
   stats?: string[]
   link?: string
 }
 
-const activities: Activity[] = [
+const activitiesData: Activity[] = [
   {
-    title: 'Medium - Technical Writer',
-    role: 'Technical Author',
+    title: 'Medium — Technical Author',
+    role: 'Cloud-Native & DevOps Columnist',
     period: 'Dec 2021 – Present',
-    badge: 'Writing',
-    description: 'Write in-depth technical articles on DevOps, cloud-native technologies, Kubernetes, CI/CD, and software engineering. Content reaches a global audience of developers and engineers.',
+    badge: 'Technical Writing',
+    description:
+      'Authoring comprehensive, production-focused engineering articles on Kubernetes CronJobs, Tekton pipelines, container hardening, and modern software engineering. Reaching over 150,000 developers globally.',
     icon: <FaPen />,
-    stats: ['50+ Articles Published', '150,000+ Total Views'],
+    stats: ['50+ Deep-Dive Articles', '150,000+ Total Reads', 'Global Developer Reach'],
+    link: 'https://kalharatennakoon.medium.com',
   },
   {
     title: 'STEMUp Educational Foundation',
-    role: 'Volunteer',
+    role: 'Volunteer Educator',
     period: 'Aug 2018 – Dec 2020',
-    badge: 'Volunteering',
-    description: 'Contributed to STEM outreach initiatives, assisting in workshops and educational events aimed at improving access to quality science and technology education for underprivileged students in Sri Lanka.',
+    badge: 'Volunteering & Outreach',
+    description:
+      'Contributed to nationwide STEM outreach initiatives, conducting hands-on coding workshops and digital literacy sessions for students in rural and underprivileged communities across Sri Lanka.',
     icon: <FaHandsHelping />,
+    stats: ['Digital Literacy Outreach', 'Youth Coding Mentorship'],
   },
   {
-    title: 'Stack Overflow',
-    role: 'Contributor',
+    title: 'Stack Overflow Developer Community',
+    role: 'Technical Contributor',
     period: 'Apr 2020 – Present',
-    badge: 'Community',
-    description: 'Active member of the Stack Overflow developer community, contributing answers and engaging with questions across DevOps, cloud, and software engineering topics.',
+    badge: 'Community Contributor',
+    description:
+      'Active contributor addressing complex challenges across Docker, Kubernetes orchestration, CI/CD pipeline issues, and programming design patterns.',
     icon: <FaStackOverflow />,
+    stats: ['Active Community Q&A', 'DevOps & Systems Problem Solving'],
     link: 'https://stackoverflow.com/users/13018789/kalhara-tennakoon',
   },
 ]
 
-function Activities() {
-  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
+export function Activities() {
+  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>(0.1)
   const [gridRef, gridVisible] = useScrollReveal<HTMLDivElement>(0.05)
 
   return (
-    <section id="activities" className="py-20 bg-[var(--bg-secondary)] relative overflow-hidden dark:bg-[var(--bg-primary)]">
+    <section id="activities" className="py-24 relative overflow-hidden bg-[var(--bg-secondary)]">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 relative z-10">
 
-      {/* Background blob */}
-      <div
-        className="blob-shape w-[350px] h-[350px]"
-        style={{
-          background: 'radial-gradient(circle, rgba(30,58,138,0.09), transparent)',
-          bottom: '-80px',
-          right: '-60px',
-          animationDuration: '16s',
-          animationDelay: '-3s',
-        }}
-      />
-
-      <div className="max-w-6xl mx-auto px-8 relative z-10">
-
-        {/* Section header */}
+        {/* Section Header */}
         <div
           ref={headerRef}
-          className={`text-center mb-12 reveal ${headerVisible ? 'is-visible' : ''}`}
+          className={`text-center mb-16 reveal ${headerVisible ? 'is-visible' : ''}`}
         >
-          <div className="inline-flex items-center gap-3 mb-3">
-            <div className="relative">
-              <div className="absolute inset-0 blur-xl bg-[var(--color-primary)] opacity-30 rounded-full" />
-              <FaHandsHelping className="relative text-3xl text-[var(--color-primary)]" />
-            </div>
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
-              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
-            >
-              Activities & Volunteering
-            </h2>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/20 text-pink-400 text-xs font-semibold uppercase tracking-wider mb-3">
+            <FaUsers className="text-xs" />
+            <span>Community & Impact</span>
           </div>
+          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--text-primary)]">
+            Activities & Volunteering
+          </h2>
           <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
+          <p className="mt-4 text-base sm:text-lg text-[var(--text-secondary)] max-w-xl mx-auto">
+            Giving back through open knowledge sharing, technical writing, and STEM education.
+          </p>
         </div>
 
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-          {activities.map((activity, index) => (
+        {/* Activities Cards Grid */}
+        <div
+          ref={gridRef}
+          className={`grid grid-cols-1 md:grid-cols-3 gap-6 reveal ${
+            gridVisible ? 'is-visible' : ''
+          }`}
+        >
+          {activitiesData.map((act) => (
             <div
-              key={activity.title}
-              className={`reveal-scale ${gridVisible ? 'is-visible' : ''}`}
-              style={{ transitionDelay: gridVisible ? `${index * 0.12}s` : '0s' }}
+              key={act.title}
+              className="bento-card p-6 flex flex-col justify-between shimmer-hover"
             >
-              <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(30,58,138,0.14)] transition-all duration-300 overflow-hidden shimmer-hover h-full">
-                {/* Accent line */}
-                <div
-                  className="h-0.5 w-full"
-                  style={{ background: 'linear-gradient(90deg, var(--color-primary), #06b6d4)' }}
-                />
-
+              <div>
                 {/* Header */}
-                <div className="px-6 pt-5 pb-4 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.05)] to-transparent">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex items-center gap-3 flex-1 min-w-0">
-                      <div
-                        className="w-9 h-9 rounded-lg flex items-center justify-center text-white text-sm flex-shrink-0"
-                        style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
-                      >
-                        {activity.icon}
-                      </div>
-                      <div className="min-w-0">
-                        <h3 className="text-base font-bold text-[var(--text-primary)] leading-snug break-words">{activity.title}</h3>
-                        <p className="text-sm font-medium text-[var(--color-primary)] m-0">{activity.role}</p>
-                      </div>
-                    </div>
-                    <span className="text-xs font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)] flex-shrink-0 self-start">
-                      {activity.badge}
+                <div className="flex items-start justify-between gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center text-xl shadow-sm">
+                    {act.icon}
+                  </div>
+
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-[var(--bg-secondary)] text-[var(--text-secondary)] border border-[var(--border-color)]">
+                      {act.badge}
+                    </span>
+                    <span className="text-[11px] font-mono text-[var(--text-secondary)] opacity-80">
+                      {act.period}
                     </span>
                   </div>
-                  <div className="flex items-center gap-1.5 mt-2.5 ml-12">
-                    <FaCalendarAlt className="text-[var(--color-primary)] text-xs" />
-                    <span className="text-xs text-[var(--text-secondary)]">{activity.period}</span>
-                  </div>
                 </div>
 
-                {/* Body */}
-                <div className="px-6 py-5">
-                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed m-0">{activity.description}</p>
-                  {activity.stats && (
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {activity.stats.map((stat) => (
-                        <span
-                          key={stat}
-                          className="px-3 py-1 text-[var(--color-primary)] rounded-full text-xs font-semibold border border-[rgba(30,58,138,0.2)]"
-                          style={{ background: 'rgba(30,58,138,0.07)' }}
-                        >
-                          {stat}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                  {activity.link && (
-                    <a
-                      href={activity.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-lg text-xs font-semibold text-white hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(30,58,138,0.35)] transition-all duration-200 self-start"
-                      style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
-                    >
-                      <FaStackOverflow className="text-sm" /> View Profile
-                    </a>
-                  )}
+                <h3 className="text-lg font-bold text-[var(--text-primary)] mb-1 leading-snug">
+                  {act.title}
+                </h3>
+                <div className="text-xs font-semibold text-sky-400 mb-3">
+                  {act.role}
                 </div>
+
+                <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
+                  {act.description}
+                </p>
+
+                {/* Stat Badges */}
+                {act.stats && (
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {act.stats.map((s) => (
+                      <span
+                        key={s}
+                        className="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-[var(--bg-secondary)] text-sky-400 border border-[var(--border-color)]"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
+
+              {act.link && (
+                <div className="pt-3 border-t border-[var(--border-color)]">
+                  <a
+                    href={act.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => soundFx.click()}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-sky-400 hover:text-sky-300 cursor-pointer"
+                  >
+                    <span>Visit Profile / Publications</span>
+                    <FaExternalLinkAlt className="text-[10px]" />
+                  </a>
+                </div>
+              )}
             </div>
           ))}
         </div>
+
       </div>
     </section>
   )

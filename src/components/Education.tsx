@@ -1,194 +1,152 @@
-import { FaGraduationCap, FaMapMarkerAlt, FaCalendarAlt, FaChevronRight } from 'react-icons/fa'
+import { FaGraduationCap, FaMapMarkerAlt, FaCalendarAlt, FaAward, FaBookOpen } from 'react-icons/fa'
 import useScrollReveal from '../hooks/useScrollReveal'
+import FlipBook from './FlipBook'
 
-function Education() {
-  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
-  const [timelineRef, timelineVisible] = useScrollReveal<HTMLDivElement>(0.05)
+const coursework = [
+  'Object-Oriented Programming',
+  'Data Structures & Algorithms',
+  'Network Security',
+  'Database Design',
+  'UI/UX Design',
+  'Web Application Development',
+  'Research & Data Analysis',
+]
+
+export function Education() {
+  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>(0.1)
+  const [contentRef, contentVisible] = useScrollReveal<HTMLDivElement>(0.1)
+  const [bookRef, bookVisible] = useScrollReveal<HTMLDivElement>(0.1)
 
   return (
-    <section id="education" className="py-20 bg-[var(--bg-secondary)] relative overflow-hidden dark:bg-[var(--bg-primary)]">
+    <section id="education" className="py-24 relative overflow-hidden bg-[var(--bg-secondary)]">
+      <div className="max-w-5xl mx-auto px-6 sm:px-8 relative z-10">
 
-      {/* Background blob */}
-      <div
-        className="blob-shape w-[400px] h-[400px]"
-        style={{
-          background: 'radial-gradient(circle, rgba(6,182,212,0.08), transparent)',
-          bottom: '-120px',
-          left: '-80px',
-          animationDuration: '19s',
-          animationDelay: '-6s',
-        }}
-      />
-
-      <div className="max-w-6xl mx-auto px-8 relative z-10">
-
-        {/* Section header */}
+        {/* Section Header */}
         <div
           ref={headerRef}
-          className={`text-center mb-12 reveal ${headerVisible ? 'is-visible' : ''}`}
+          className={`text-center mb-16 reveal ${headerVisible ? 'is-visible' : ''}`}
         >
-          <div className="inline-flex items-center gap-3 mb-3">
-            <div className="relative">
-              <div className="absolute inset-0 blur-xl bg-[var(--color-primary)] opacity-30 rounded-full" />
-              <FaGraduationCap className="relative text-3xl text-[var(--color-primary)]" />
-            </div>
-            <h2
-              className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
-              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
-            >
-              Education
-            </h2>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-3">
+            <FaGraduationCap className="text-xs" />
+            <span>Academic Background</span>
           </div>
+          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--text-primary)]">
+            Education & Academic Logbook
+          </h2>
           <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
+          <p className="mt-4 text-base sm:text-lg text-[var(--text-secondary)] max-w-xl mx-auto">
+            Rigorous foundations in computer science, software engineering, and systems research.
+          </p>
         </div>
 
-        {/* Timeline */}
-        <div ref={timelineRef} className="relative max-w-4xl mx-auto">
-          {/* Animated vertical line */}
-          <div
-            className="absolute left-6 top-0 bottom-0 w-px hidden sm:block"
-            style={{
-              background: 'linear-gradient(to bottom, var(--color-primary), rgba(30,58,138,0.25), transparent)',
-              transformOrigin: 'top',
-              transform: timelineVisible ? 'scaleY(1)' : 'scaleY(0)',
-              transition: 'transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)',
-            }}
-          />
-
-          <div className="space-y-10">
-            {/* Kingston University */}
-            <div
-              className={`relative sm:pl-20 reveal-left ${timelineVisible ? 'is-visible' : ''}`}
-              style={{ transitionDelay: timelineVisible ? '0.2s' : '0s' }}
-            >
-              <div
-                className="absolute left-0 top-6 hidden sm:flex items-center justify-center w-12 h-12 rounded-full shadow-[0_0_0_4px_var(--bg-secondary),0_0_0_5px_rgba(30,58,138,0.25)] dark:shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)] pulse-dot"
-                style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
-              >
-                <FaGraduationCap className="text-white text-base" />
+        {/* Main Education Overview Card */}
+        <div
+          ref={contentRef}
+          className={`max-w-4xl mx-auto bento-card p-6 sm:p-10 shimmer-hover reveal-scale ${
+            contentVisible ? 'is-visible' : ''
+          }`}
+        >
+          {/* Header Row */}
+          <div className="flex flex-wrap items-start justify-between gap-4 pb-6 border-b border-[var(--border-color)]">
+            <div>
+              <div className="flex flex-wrap items-center gap-3 mb-2">
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-[var(--text-primary)] tracking-tight">
+                  BSc (Hons) Computer Science
+                </h3>
+                <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 shadow-sm">
+                  First Class Honours
+                </span>
               </div>
 
-              <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(30,58,138,0.14)] transition-all duration-300 overflow-hidden shimmer-hover">
-                <div className="px-7 pt-6 pb-5 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.06)] to-transparent">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div>
-                      <h3 className="text-xl font-bold text-[var(--text-primary)] mb-1 leading-tight">
-                        BSc(Hons) Computer Science (Software Engineering)
-                      </h3>
-                      <p className="text-base font-semibold text-[var(--color-primary)] m-0">
-                        Kingston University, London, United Kingdom
-                      </p>
-                    </div>
-                    <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full text-white border border-blue-400/70 bg-gradient-to-r from-blue-700 to-blue-500 shadow-[0_3px_12px_rgba(30,58,138,0.32)] flex-shrink-0">
-                      First Class Honours
-                    </span>
-                  </div>
+              <div className="text-base sm:text-lg font-semibold text-sky-400">
+                Kingston University, London, United Kingdom
+              </div>
+              <div className="text-xs sm:text-sm text-[var(--text-secondary)] mt-0.5">
+                Delivered via ESU, Sri Lanka • Specialization: Software Engineering
+              </div>
+            </div>
 
-                  <div className="flex flex-wrap gap-4 mt-3">
-                    <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
-                      <FaCalendarAlt className="text-[var(--color-primary)] text-xs" />
-                      Graduated 2026
-                    </span>
-                    <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
-                      <FaMapMarkerAlt className="text-[var(--color-primary)] text-xs" />
-                      Delivered via ESU, Sri Lanka
-                    </span>
-                  </div>
+            <div className="flex flex-col sm:items-end gap-1.5 font-mono text-xs text-[var(--text-secondary)]">
+              <span className="inline-flex items-center gap-1.5">
+                <FaCalendarAlt className="text-amber-400" />
+                Graduated September 2026
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <FaMapMarkerAlt className="text-amber-400" />
+                London, UK / Kandy, LK
+              </span>
+            </div>
+          </div>
+
+          {/* Highlights Row: Batch Top & Final Year Project */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+            <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg flex-shrink-0">
+                <FaAward />
+              </div>
+              <div>
+                <div className="text-sm font-bold text-[var(--text-primary)]">
+                  Batch Top Honor
                 </div>
-
-                <div className="px-7 py-5 space-y-5">
-                  <div>
-                    <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Concentrations</p>
-                    <div className="flex flex-wrap gap-2">
-                      {['Software Engineering', 'Web Application Development', 'Research & Data Analysis'].map((c) => (
-                        <span key={c} className="px-3 py-1 bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] rounded-full text-xs font-medium border border-[rgba(30,58,138,0.2)] hover:bg-[rgba(30,58,138,0.14)] transition-colors">{c}</span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Key Coursework</p>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5 list-none">
-                      {[
-                        'Object-Oriented Programming',
-                        'Data Structures & Algorithms',
-                        'Network Security',
-                        'Database Design',
-                        'UI/UX Design',
-                        'Web Application Development',
-                        'Research & Data Analysis',
-                      ].map((item) => (
-                        <li key={item} className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
-                          <FaChevronRight className="text-[var(--color-primary)] text-xs flex-shrink-0" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <div className="text-xs text-[var(--text-secondary)] mt-1 leading-relaxed">
+                  Ranked #1 in the Software Engineering cohort across the entire degree programme at ESU Kandy.
                 </div>
               </div>
             </div>
 
-            {/* Maliyadeva College */}
-            <div
-              className={`relative sm:pl-20 reveal-left ${timelineVisible ? 'is-visible' : ''}`}
-              style={{ transitionDelay: timelineVisible ? '0.4s' : '0s' }}
-            >
-              <div
-                className="absolute left-0 top-6 hidden sm:flex items-center justify-center w-12 h-12 rounded-full shadow-[0_0_0_4px_var(--bg-secondary),0_0_0_5px_rgba(30,58,138,0.25)] dark:shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)] pulse-dot"
-                style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)', animationDelay: '0.8s' }}
-              >
-                <FaGraduationCap className="text-white text-base" />
+            <div className="p-4 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center text-lg flex-shrink-0">
+                <FaBookOpen />
               </div>
-
-              <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(30,58,138,0.14)] transition-all duration-300 overflow-hidden shimmer-hover">
-                <div className="px-7 pt-6 pb-5 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.06)] to-transparent">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div>
-                      <h3 className="text-xl font-bold text-[var(--text-primary)] mb-1 leading-tight">
-                        High School
-                      </h3>
-                      <p className="text-base font-semibold text-[var(--color-primary)] m-0">
-                        Maliyadeva College
-                      </p>
-                    </div>
-                    <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)] flex-shrink-0">
-                      Secondary
-                    </span>
-                  </div>
-
-                  <div className="flex flex-wrap gap-4 mt-3">
-                    <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
-                      <FaMapMarkerAlt className="text-[var(--color-primary)] text-xs" />
-                      Kurunegala, Sri Lanka
-                    </span>
-                  </div>
+              <div>
+                <div className="text-sm font-bold text-[var(--text-primary)]">
+                  Final Year Project: Grade A (76%)
                 </div>
-
-                <div className="px-7 py-5">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="rounded-xl px-4 py-4 border border-[var(--border-color)]">
-                      <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-3">GCE Advanced Level</p>
-                      <div className="flex items-center gap-2 flex-wrap">
-                        {['A', 'B', 'C'].map((grade) => (
-                          <span key={grade} className="text-xs font-bold px-2 py-0.5 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)]">{grade}</span>
-                        ))}
-                        <span className="text-xs text-[var(--text-secondary)] w-full mt-1">General English: <span className="font-bold text-[var(--color-primary)]">A</span></span>
-                      </div>
-                    </div>
-
-                    <div className="rounded-xl px-4 py-4 border border-[var(--border-color)]">
-                      <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-3">GCE Ordinary Level</p>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-[rgba(30,58,138,0.08)] text-[var(--color-primary)] border border-[rgba(30,58,138,0.2)]">9 As</span>
-                      </div>
-                    </div>
-                  </div>
+                <div className="text-xs text-[var(--text-secondary)] mt-1 leading-relaxed">
+                  <strong>VetCare Pro</strong>: Smart Veterinary Clinic Management System with local RAG, ML forecasting models, and companion iOS app.
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Key Coursework Modules */}
+          <div className="pt-4 border-t border-[var(--border-color)]">
+            <div className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-secondary)] mb-3">
+              Key Academic Modules
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {coursework.map((course) => (
+                <span
+                  key={course}
+                  className="px-3 py-1 text-xs font-medium rounded-lg bg-[var(--bg-primary)] text-[var(--text-primary)] border border-[var(--border-color)]"
+                >
+                  {course}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
+
+        {/* 3D Interactive FlipBook / Academic Chronicles */}
+        <div
+          ref={bookRef}
+          className={`mt-14 text-center reveal ${bookVisible ? 'is-visible' : ''}`}
+        >
+          <div className="mb-4">
+            <span className="text-xs font-mono uppercase tracking-widest text-amber-400 font-semibold">
+              Interactive 3D Portfolio Reader
+            </span>
+            <h3 className="text-2xl font-bold text-[var(--text-primary)] mt-1">
+              Flip Through the Engineering Logbook
+            </h3>
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] mt-1 max-w-md mx-auto">
+              Turn pages to explore thesis architecture, research findings, and KubeCon scholarship logs.
+            </p>
+          </div>
+
+          <FlipBook />
+        </div>
+
       </div>
     </section>
   )

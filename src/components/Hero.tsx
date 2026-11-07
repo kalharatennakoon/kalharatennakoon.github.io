@@ -1,155 +1,277 @@
 import { useEffect, useState, type CSSProperties } from 'react'
-import { FaArrowDown, FaEnvelope } from 'react-icons/fa'
+import {
+  FaArrowDown, FaEnvelope, FaTerminal, FaFilePdf, FaCode
+} from 'react-icons/fa'
+import {
+  SiKubernetes, SiDocker, SiReact, SiOllama
+} from 'react-icons/si'
 import useCountUp from '../hooks/useCountUp'
+import { soundFx } from '../utils/sound'
 
 const roles = [
-  'DevSecOps & Cloud-Native',
-  '2x KubeCon Scholar',
-  'First Class CS Graduate',
-  'Technical Writer',
+  'DevOps & Cloud-Native Engineer',
+  'AI / ML & Full-Stack Systems Builder',
+  'First Class CS Graduate • Batch Top',
+  '2× Dan Kohn Scholar (KubeCon EU)',
+  'Technical Author (150K+ Reads)',
 ]
 
 const stats = [
-  { value: 50,  suffix: '+',  label: 'Articles Published' },
-  { value: 150, suffix: 'K+', label: 'Total Views' },
-  { value: 13,  suffix: '+',  label: 'Certifications' },
+  { value: 50,  suffix: '+',  label: 'Technical Articles', sub: 'DevOps & Cloud' },
+  { value: 150, suffix: 'K+', label: 'Total Article Views', sub: 'Global Audience' },
+  { value: 13,  suffix: '+',  label: 'Certifications',     sub: 'IBM, MS, GitHub' },
+  { value: 2,   suffix: '×',  label: 'KubeCon Scholarships', sub: 'Dan Kohn Memorial' },
 ]
 
-/** Shorthand for the stagger delay the .enter animation reads. */
 const delay = (seconds: number) => ({ '--enter-delay': `${seconds}s` } as CSSProperties)
 
-function Stat({ value, suffix, label, startDelay }: { value: number; suffix: string; label: string; startDelay: number }) {
+function Stat({ value, suffix, label, sub, startDelay }: { value: number; suffix: string; label: string; sub: string; startDelay: number }) {
   const count = useCountUp(value, { delay: startDelay })
 
   return (
-    <div>
-      <div style={{ fontSize: '1.5rem', fontWeight: 800, background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', fontVariantNumeric: 'tabular-nums' }}>
+    <div className="flex flex-col items-start p-3 sm:p-4 rounded-2xl bg-[var(--card-bg)] border border-[var(--border-color)] backdrop-blur-md shadow-sm hover:border-sky-500/30 transition-all">
+      <div className="text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-400 bg-clip-text text-transparent font-mono">
         {count}{suffix}
       </div>
-      <div style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 500, marginTop: '2px' }}>{label}</div>
+      <div className="text-xs font-bold text-[var(--text-primary)] mt-1">{label}</div>
+      <div className="text-[11px] text-[var(--text-secondary)] opacity-75">{sub}</div>
     </div>
   )
 }
 
-function Hero() {
-  const [text, setText]           = useState('')
+export function Hero() {
+  const [text, setText] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
-  const [loopNum, setLoopNum]     = useState(0)
-  const [typingSpeed, setTypingSpeed] = useState(150)
+  const [loopNum, setLoopNum] = useState(0)
+  const [typingSpeed, setTypingSpeed] = useState(120)
 
   useEffect(() => {
     const handle = () => {
-      const i        = loopNum % roles.length
+      const i = loopNum % roles.length
       const fullText = roles[i]
-      setText(isDeleting
-        ? fullText.substring(0, text.length - 1)
-        : fullText.substring(0, text.length + 1))
-      setTypingSpeed(isDeleting ? 50 : 150)
-      if (!isDeleting && text === fullText) setTimeout(() => setIsDeleting(true), 2000)
-      else if (isDeleting && text === '') { setIsDeleting(false); setLoopNum(loopNum + 1) }
+      setText(
+        isDeleting
+          ? fullText.substring(0, text.length - 1)
+          : fullText.substring(0, text.length + 1)
+      )
+      setTypingSpeed(isDeleting ? 40 : 100)
+
+      if (!isDeleting && text === fullText) {
+        setTimeout(() => setIsDeleting(true), 2200)
+      } else if (isDeleting && text === '') {
+        setIsDeleting(false)
+        setLoopNum(loopNum + 1)
+      }
     }
+
     const t = setTimeout(handle, typingSpeed)
     return () => clearTimeout(t)
   }, [text, isDeleting, loopNum, typingSpeed])
 
+  const scrollToTerminal = (e: React.MouseEvent) => {
+    e.preventDefault()
+    soundFx.click()
+    const el = document.getElementById('terminal') || document.getElementById('about')
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <section
       id="hero"
-      style={{ background: 'var(--bg-primary)', minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative' }}
+      className="min-h-screen relative flex items-center justify-center pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden"
     >
-      <div style={{ maxWidth: '72rem', margin: '0 auto', padding: '8rem 1.5rem', width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: '3rem', flexWrap: 'wrap' }}>
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 w-full relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
-        {/* Left: text */}
-        <div style={{ flex: 1, minWidth: '280px' }}>
+          {/* Left Column: Hero Copy & Actions (7 cols) */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left">
 
-          {/* Status badge */}
-          <div className="enter" style={{ ...delay(0.05), display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 16px', borderRadius: '9999px', background: 'rgba(30,58,138,0.1)', border: '1px solid rgba(30,58,138,0.2)', fontSize: '14px', fontWeight: 500, color: 'var(--color-primary)', marginBottom: '24px' }}>
-            <span className="animate-pulse-slow" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', display: 'inline-block', boxShadow: '0 0 8px rgba(16,185,129,0.9)' }} />
-            Available for opportunities
-          </div>
-
-          <div className="enter" style={{ ...delay(0.12), fontSize: '16px', fontWeight: 300, color: 'var(--text-secondary)', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '4px' }}>
-            Hello, I'm
-          </div>
-
-          <h1 className="enter" style={{ ...delay(0.19), fontSize: 'clamp(2.5rem, 6vw, 3.75rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '16px' }}>
-            <span
-              className="animate-gradient-text"
-              style={{ background: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 45%, #06b6d4 100%)', backgroundSize: '200% 200%', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
+            {/* Availability Badge */}
+            <div
+              className="enter inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs sm:text-sm font-semibold mb-6 shadow-sm"
+              style={delay(0.05)}
             >
-              Kalhara Tennakoon
-            </span>
-          </h1>
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+              </span>
+              <span>Available for Software, DevOps & AI Roles</span>
+            </div>
 
-          <h2 className="enter" style={{ ...delay(0.26), fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', fontWeight: 400, marginBottom: '24px', minHeight: '3rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <span style={{ color: 'var(--color-primary)', fontWeight: 500 }}>{text}</span>
-            <span className="type-caret" style={{ color: 'var(--color-primary)', fontWeight: 300, animation: 'blink 0.7s infinite' }}>|</span>
-          </h2>
-
-          <p className="enter" style={{ ...delay(0.33), fontSize: '18px', color: 'var(--text-secondary)', maxWidth: '36rem', lineHeight: 1.75, marginBottom: '32px' }}>
-            Automating delivery pipelines and building reliable systems with cloud-native technologies
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="enter" style={{ ...delay(0.4), display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '40px' }}>
-            <a href="#projects" className="glass-btn-primary px-7 py-3 font-semibold text-sm text-white"
-              style={{ background: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 100%)' }}>
-              View Projects
-            </a>
-            <a href="#contact" className="glass-btn px-7 py-3 font-semibold text-sm" style={{ color: 'var(--color-primary)' }}>
-              Get In Touch
-            </a>
-            <a
-              href="/Kalhara_Tennakoon_CV.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glass-btn px-7 py-3 font-semibold text-sm inline-flex items-center gap-2"
-              style={{ color: 'var(--color-primary)' }}
+            {/* Greeting Tag */}
+            <div
+              className="enter text-xs sm:text-sm font-mono uppercase tracking-widest text-sky-400 font-semibold mb-2"
+              style={delay(0.12)}
             >
-              CV (PDF)
-            </a>
-            <a
-              href="mailto:kalhara@kalharatennakoon.com"
-              className="glass-btn px-7 py-3 font-semibold text-sm inline-flex items-center gap-2"
-              style={{ color: 'var(--color-primary)' }}
+              System.Init() • Software Engineer
+            </div>
+
+            {/* Main Name Heading with Flowing Gradient */}
+            <h1
+              className="enter text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-4 leading-[1.08]"
+              style={delay(0.18)}
             >
-              <FaEnvelope className="text-xs" />
-              Email
-            </a>
+              <span className="animate-gradient-text bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-400 bg-clip-text text-transparent">
+                Kalhara Tennakoon
+              </span>
+            </h1>
+
+            {/* Dynamic Typewriter Line */}
+            <div
+              className="enter flex items-center gap-2 text-lg sm:text-2xl font-semibold text-[var(--text-primary)] min-h-[2.5rem] mb-6"
+              style={delay(0.25)}
+            >
+              <span className="text-sky-400 font-mono text-base sm:text-xl">&gt;</span>
+              <span className="text-[var(--text-primary)] font-medium">{text}</span>
+              <span className="w-2.5 h-6 bg-sky-400 animate-pulse" />
+            </div>
+
+            {/* Bio Paragraph */}
+            <p
+              className="enter text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-xl mb-8"
+              style={delay(0.32)}
+            >
+              First Class Computer Science graduate with hands-on industry experience at IFS.
+              Specialized in Kubernetes CI/CD automation with Tekton, full-stack cloud-native platforms,
+              and applied AI systems with Ollama, pgvector, and predictive ML models.
+            </p>
+
+            {/* Primary Action Buttons */}
+            <div
+              className="enter flex flex-wrap items-center gap-3.5 mb-10"
+              style={delay(0.4)}
+            >
+              <a
+                href="#projects"
+                onClick={() => soundFx.click()}
+                className="glass-btn-primary px-6 py-3 font-semibold text-sm flex items-center gap-2 group cursor-pointer"
+              >
+                <FaCode className="text-sm group-hover:rotate-12 transition-transform" />
+                <span>Explore Projects</span>
+              </a>
+
+              <a
+                href="#terminal"
+                onClick={scrollToTerminal}
+                className="glass-btn px-6 py-3 font-semibold text-sm flex items-center gap-2 border hover:border-emerald-500/50 hover:text-emerald-400 cursor-pointer"
+              >
+                <FaTerminal className="text-emerald-400 text-xs" />
+                <span>Open Shell</span>
+              </a>
+
+              <a
+                href="/Kalhara_Tennakoon_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => soundFx.click()}
+                className="glass-btn px-5 py-3 font-semibold text-sm flex items-center gap-2 border hover:border-sky-500/40 cursor-pointer"
+              >
+                <FaFilePdf className="text-red-400 text-xs" />
+                <span>CV (PDF)</span>
+              </a>
+
+              <a
+                href="mailto:kalhara@kalharatennakoon.com"
+                onClick={() => soundFx.click()}
+                className="glass-btn px-5 py-3 font-semibold text-sm flex items-center gap-2 border hover:border-sky-500/40 cursor-pointer"
+              >
+                <FaEnvelope className="text-sky-400 text-xs" />
+                <span>Email</span>
+              </a>
+            </div>
+
+            {/* Quick Metrics Grid */}
+            <div
+              className="enter grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-2xl"
+              style={delay(0.48)}
+            >
+              {stats.map((s, i) => (
+                <Stat
+                  key={s.label}
+                  value={s.value}
+                  suffix={s.suffix}
+                  label={s.label}
+                  sub={s.sub}
+                  startDelay={500 + i * 100}
+                />
+              ))}
+            </div>
+
           </div>
 
-          {/* Stats */}
-          <div className="enter" style={{ ...delay(0.47), display: 'flex', flexWrap: 'wrap', gap: '32px' }}>
-            {stats.map((s, i) => (
-              <Stat key={s.label} value={s.value} suffix={s.suffix} label={s.label} startDelay={700 + i * 120} />
-            ))}
-          </div>
-        </div>
+          {/* Right Column: Interactive Holographic Avatar & Floating Tech Orbit (5 cols) */}
+          <div className="lg:col-span-5 flex justify-center items-center relative">
+            <div
+              className="enter relative flex items-center justify-center"
+              style={delay(0.28)}
+            >
+              {/* Outer Breathing Aura Halo */}
+              <div className="avatar-halo" />
 
-        {/* Right: profile photo */}
-        <div className="flex justify-center md:block enter" style={{ ...delay(0.25), flexShrink: 0, width: '100%', maxWidth: '300px', margin: '0 auto' }}>
-          <div className="animate-float" style={{ position: 'relative', width: '300px', height: '300px' }}>
-            <div className="avatar-halo" />
-            <div className="avatar-ring" style={{ width: '100%', height: '100%' }}>
-              <div className="avatar-frame">
-                <img src="/profile.png" alt="Kalhara Tennakoon" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+              {/* Avatar Center Frame with Conic Gradient Border */}
+              <div className="relative w-64 h-64 sm:w-72 sm:h-72 rounded-full p-1 bg-gradient-to-tr from-sky-500 via-indigo-600 to-cyan-400 shadow-2xl">
+                <div className="w-full h-full rounded-full overflow-hidden bg-slate-900 border-4 border-[var(--bg-primary)]">
+                  <img
+                    src="/profile.png"
+                    alt="Kalhara Tennakoon"
+                    className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              </div>
+
+              {/* Orbiting Tech Badge 1: Kubernetes (Top Right) */}
+              <div
+                className="absolute -top-3 -right-3 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--border-color)] shadow-xl backdrop-blur-md animate-float flex items-center gap-2"
+                style={{ animationDuration: '6s' }}
+              >
+                <SiKubernetes className="text-[#326CE5] text-xl" />
+                <span className="text-xs font-bold text-[var(--text-primary)]">Kubernetes</span>
+              </div>
+
+              {/* Orbiting Tech Badge 2: AI / Ollama (Bottom Left) */}
+              <div
+                className="absolute -bottom-4 -left-4 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--border-color)] shadow-xl backdrop-blur-md animate-float flex items-center gap-2"
+                style={{ animationDuration: '7s', animationDelay: '-2s' }}
+              >
+                <SiOllama className="text-sky-400 text-xl" />
+                <span className="text-xs font-bold text-[var(--text-primary)]">Local AI / RAG</span>
+              </div>
+
+              {/* Orbiting Tech Badge 3: Docker & CI/CD (Bottom Right) */}
+              <div
+                className="absolute bottom-6 -right-6 p-2.5 rounded-2xl bg-[var(--card-bg)] border border-[var(--border-color)] shadow-xl backdrop-blur-md animate-float flex items-center gap-2"
+                style={{ animationDuration: '8s', animationDelay: '-4s' }}
+              >
+                <SiDocker className="text-[#2496ED] text-lg" />
+                <span className="text-xs font-bold text-[var(--text-primary)]">Tekton CI/CD</span>
+              </div>
+
+              {/* Orbiting Tech Badge 4: React / Python (Top Left) */}
+              <div
+                className="absolute top-4 -left-6 p-2.5 rounded-2xl bg-[var(--card-bg)] border border-[var(--border-color)] shadow-xl backdrop-blur-md animate-float flex items-center gap-2"
+                style={{ animationDuration: '7.5s', animationDelay: '-1s' }}
+              >
+                <SiReact className="text-[#61DAFB] text-lg" />
+                <span className="text-xs font-bold text-[var(--text-primary)]">Full-Stack</span>
               </div>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
 
-      {/* Scroll indicator — hidden on mobile to avoid overlap with stacked content */}
-      {/* Three layers because each owns a different transform: the outer one
-          centres, .enter slides it in, .animate-bounce-slow loops. */}
-      <div className="hidden md:block" style={{ position: 'absolute', bottom: '32px', left: '50%', transform: 'translateX(-50%)' }}>
-        <div className="enter" style={delay(0.9)}>
-          <div className="animate-bounce-slow" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', opacity: 0.6 }}>
-            <span style={{ fontSize: '10px', color: 'var(--text-secondary)', letterSpacing: '3px', textTransform: 'uppercase', fontWeight: 500 }}>Scroll</span>
-            <FaArrowDown style={{ color: 'var(--color-primary)', fontSize: '14px' }} />
-          </div>
-        </div>
+      {/* Down Scroll Indicator */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+        <a
+          href="#about"
+          onClick={() => soundFx.click()}
+          className="flex flex-col items-center gap-1 text-[11px] font-mono uppercase tracking-widest text-[var(--text-secondary)]"
+        >
+          <span>Scroll</span>
+          <FaArrowDown className="text-sky-400 text-xs animate-bounce" />
+        </a>
       </div>
     </section>
   )

@@ -1,9 +1,13 @@
-import { FaCode, FaCog, FaWrench, FaNetworkWired, FaCloud, FaAws, FaChartBar, FaBrain } from 'react-icons/fa'
+import { useState, useMemo } from 'react'
+import {
+  FaCode, FaCog, FaNetworkWired, FaCloud, FaAws, FaChartBar, FaBrain,
+  FaSearch, FaTimes
+} from 'react-icons/fa'
 import {
   SiDocker, SiKubernetes, SiJenkins, SiGithubactions, SiArgo,
   SiGooglecloud,
   SiPython, SiGo, SiGnubash,
-  SiJavascript, SiHtml5, SiNodedotjs, SiAngular, SiFlask, SiReact,
+  SiJavascript, SiNodedotjs, SiFlask, SiReact,
   SiMysql, SiPostgresql, SiMongodb,
   SiGit, SiGithub, SiBitbucket, SiJira, SiConfluence,
   SiJupyter,
@@ -11,6 +15,7 @@ import {
 } from 'react-icons/si'
 import type { IconType } from 'react-icons'
 import useScrollReveal from '../hooks/useScrollReveal'
+import { soundFx } from '../utils/sound'
 
 interface Skill {
   name: string
@@ -19,6 +24,7 @@ interface Skill {
 }
 
 interface Category {
+  id: string
   title: string
   icon: IconType
   skills: Skill[]
@@ -26,6 +32,7 @@ interface Category {
 
 const skillCategories: Category[] = [
   {
+    id: 'devops',
     title: 'DevOps & CI/CD',
     icon: FaCog,
     skills: [
@@ -36,10 +43,11 @@ const skillCategories: Category[] = [
       { name: 'Jenkins',        icon: SiJenkins,       color: '#D24939' },
       { name: 'Azure DevOps',   icon: FaCloud,         color: '#0078D7' },
       { name: 'Tekton',         icon: FaCog,           color: '#FD495C' },
-      { name: 'Infrastructure as Code', icon: SiTerraform, color: '#7B42BC' },
+      { name: 'IaC (Terraform)', icon: SiTerraform,    color: '#7B42BC' },
     ],
   },
   {
+    id: 'cloud',
     title: 'Cloud Platforms',
     icon: FaCloud,
     skills: [
@@ -53,7 +61,8 @@ const skillCategories: Category[] = [
     ],
   },
   {
-    title: 'Programming & Languages',
+    id: 'programming',
+    title: 'Languages & Core',
     icon: FaCode,
     skills: [
       { name: 'Python',       icon: SiPython,  color: '#3776AB' },
@@ -64,165 +73,207 @@ const skillCategories: Category[] = [
     ],
   },
   {
+    id: 'web-data',
     title: 'Web & Databases',
     icon: SiReact,
     skills: [
-      { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
       { name: 'React',      icon: SiReact,      color: '#61DAFB' },
       { name: 'Node.js',    icon: SiNodedotjs,  color: '#339933' },
-      { name: 'Angular',    icon: SiAngular,    color: '#DD0031' },
-      { name: 'Flask',      icon: SiFlask,      color: '#6B7280' },
       { name: 'FastAPI',    icon: SiFastapi,    color: '#009688' },
-      { name: 'HTML / CSS', icon: SiHtml5,      color: '#E34F26' },
+      { name: 'Flask',      icon: SiFlask,      color: '#6B7280' },
       { name: 'PostgreSQL', icon: SiPostgresql, color: '#336791' },
       { name: 'MySQL',      icon: SiMysql,      color: '#4479A1' },
       { name: 'MongoDB',    icon: SiMongodb,    color: '#47A248' },
+      { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
     ],
   },
   {
-    title: 'Version Control & Agile',
-    icon: SiGit,
-    skills: [
-      { name: 'Git',        icon: SiGit,        color: '#F05032' },
-      { name: 'GitHub',     icon: SiGithub,     color: '#181717' },
-      { name: 'Bitbucket',  icon: SiBitbucket,  color: '#0052CC' },
-      { name: 'Jira',       icon: SiJira,       color: '#0052CC' },
-      { name: 'Confluence', icon: SiConfluence, color: '#172B4D' },
-      { name: 'Scrum',      icon: FaCog,        color: '#6B7280' },
-      { name: 'Kanban',     icon: FaCog,        color: '#6B7280' },
-    ],
-  },
-  {
-    title: 'Networking',
-    icon: FaNetworkWired,
-    skills: [
-      { name: 'TCP/IP',         icon: FaNetworkWired, color: '#6B7280' },
-      { name: 'DNS',            icon: FaNetworkWired, color: '#6B7280' },
-      { name: 'Load Balancing', icon: FaNetworkWired, color: '#6B7280' },
-      { name: 'Firewall',       icon: FaNetworkWired, color: '#EF4444' },
-      { name: 'VPN',            icon: FaNetworkWired, color: '#6B7280' },
-      { name: 'OSI Model',      icon: FaNetworkWired, color: '#6B7280' },
-    ],
-  },
-  {
-    title: 'Data & AI',
+    id: 'ai-data',
+    title: 'AI & Data Science',
     icon: FaBrain,
     skills: [
       { name: 'Scikit-learn', icon: SiScikitlearn, color: '#F7931E' },
       { name: 'Pandas',       icon: SiPandas,      color: '#150458' },
+      { name: 'Ollama (RAG)', icon: SiOllama,      color: '#38bdf8' },
       { name: 'Prophet',      icon: FaChartBar,    color: '#0668E1' },
       { name: 'pgvector',     icon: SiPostgresql,  color: '#336791' },
-      { name: 'Ollama',       icon: SiOllama,      color: '#6B7280' },
-      { name: 'SPSS',         icon: FaChartBar,    color: '#052FAD' },
+      { name: 'Jupyter',       icon: SiJupyter,    color: '#F37626' },
+      { name: 'Power BI',      icon: FaChartBar,   color: '#F2C811' },
     ],
   },
   {
-    title: 'Data Analytics',
-    icon: FaChartBar,
+    id: 'practices',
+    title: 'Tools & Practices',
+    icon: SiGit,
     skills: [
-      { name: 'Power BI',      icon: FaChartBar, color: '#F2C811' },
-      { name: 'Jupyter',       icon: SiJupyter,  color: '#F37626' },
-      { name: 'Google Colab',  icon: SiJupyter,  color: '#F9AB00' },
-      { name: 'Data Cleaning', icon: FaCode,     color: '#6B7280' },
-      { name: 'EDA',           icon: FaCode,     color: '#6B7280' },
+      { name: 'Git & GitHub',   icon: SiGithub,     color: '#2088FF' },
+      { name: 'Bitbucket',      icon: SiBitbucket,  color: '#0052CC' },
+      { name: 'Jira & Agile',   icon: SiJira,       color: '#0052CC' },
+      { name: 'Confluence',     icon: SiConfluence, color: '#172B4D' },
+      { name: 'TCP/IP & DNS',   icon: FaNetworkWired, color: '#10b981' },
+      { name: 'Load Balancing', icon: FaNetworkWired, color: '#6366f1' },
     ],
   },
 ]
 
-function Skills() {
-  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
+export function Skills() {
+  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>(0.1)
   const [gridRef, gridVisible] = useScrollReveal<HTMLDivElement>(0.05)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState<string>('all')
+
+  const totalSkillsCount = useMemo(() => {
+    return skillCategories.reduce((acc, cat) => acc + cat.skills.length, 0)
+  }, [])
+
+  const filteredCategories = useMemo(() => {
+    let cats = skillCategories
+
+    if (selectedCategory !== 'all') {
+      cats = cats.filter((c) => c.id === selectedCategory)
+    }
+
+    if (!searchQuery.trim()) return cats
+
+    const q = searchQuery.toLowerCase()
+    return cats
+      .map((cat) => ({
+        ...cat,
+        skills: cat.skills.filter((s) => s.name.toLowerCase().includes(q)),
+      }))
+      .filter((cat) => cat.skills.length > 0)
+  }, [selectedCategory, searchQuery])
 
   return (
-    <section id="skills" className="py-20 bg-[var(--bg-secondary)] relative overflow-hidden dark:bg-[var(--bg-primary)]">
+    <section id="skills" className="py-24 relative overflow-hidden bg-[var(--bg-primary)]">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 relative z-10">
 
-      {/* Background blobs */}
-      <div
-        className="blob-shape w-[500px] h-[500px]"
-        style={{
-          background: 'radial-gradient(circle, rgba(30,58,138,0.12), transparent)',
-          top: '-150px',
-          left: '-150px',
-          animationDuration: '20s',
-        }}
-      />
-      <div
-        className="blob-shape w-[350px] h-[350px]"
-        style={{
-          background: 'radial-gradient(circle, rgba(6,182,212,0.1), transparent)',
-          bottom: '-100px',
-          right: '-80px',
-          animationDelay: '-8s',
-          animationDuration: '15s',
-        }}
-      />
-
-      <div className="max-w-6xl mx-auto px-8 relative z-10">
-
-        {/* Section header */}
+        {/* Section Header */}
         <div
           ref={headerRef}
           className={`text-center mb-12 reveal ${headerVisible ? 'is-visible' : ''}`}
         >
-          <div className="inline-flex items-center gap-3 mb-3">
-            <div className="relative">
-              <div className="absolute inset-0 blur-xl bg-[var(--color-primary)] opacity-30 rounded-full" />
-              <FaWrench className="relative text-3xl text-[var(--color-primary)]" />
-            </div>
-            <h2
-              className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
-              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
-            >
-              Technical Expertise
-            </h2>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-xs font-semibold uppercase tracking-wider mb-3">
+            <FaCode className="text-xs" />
+            <span>Technical Capabilities</span>
           </div>
+          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--text-primary)]">
+            Skills & Tech Stack
+          </h2>
           <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
+          <p className="mt-4 text-base sm:text-lg text-[var(--text-secondary)] max-w-xl mx-auto">
+            Comprehensive toolkit spanning container orchestration, cloud platforms,
+            automation pipelines, and modern full-stack development.
+          </p>
+
+          {/* Interactive Search Bar & Filters */}
+          <div className="max-w-md mx-auto mt-8 relative">
+            <div className="relative flex items-center">
+              <FaSearch className="absolute left-4 text-slate-400 text-sm pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={`Search across ${totalSkillsCount}+ technologies (e.g. Tekton, Python, Docker)...`}
+                className="w-full pl-11 pr-10 py-2.5 rounded-full bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--border-color)] focus:border-sky-500/60 focus:ring-2 focus:ring-sky-500/20 outline-none text-xs sm:text-sm placeholder-[var(--text-secondary)] shadow-sm transition-all"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3.5 p-1 text-slate-400 hover:text-white"
+                  aria-label="Clear search"
+                >
+                  <FaTimes className="text-xs" />
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Category Tabs */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
+            <button
+              onClick={() => {
+                soundFx.tab()
+                setSelectedCategory('all')
+              }}
+              className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all cursor-pointer ${
+                selectedCategory === 'all'
+                  ? 'bg-sky-500 text-white shadow-md'
+                  : 'bg-[var(--card-bg)] text-[var(--text-secondary)] border border-[var(--border-color)] hover:border-sky-500/40 hover:text-[var(--text-primary)]'
+              }`}
+            >
+              All Skills ({totalSkillsCount})
+            </button>
+            {skillCategories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => {
+                  soundFx.tab()
+                  setSelectedCategory(cat.id)
+                }}
+                className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all cursor-pointer ${
+                  selectedCategory === cat.id
+                    ? 'bg-sky-500 text-white shadow-md'
+                    : 'bg-[var(--card-bg)] text-[var(--text-secondary)] border border-[var(--border-color)] hover:border-sky-500/40 hover:text-[var(--text-primary)]'
+                }`}
+              >
+                {cat.title} ({cat.skills.length})
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Cards grid */}
-        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {skillCategories.map((category, index) => {
+        {/* Skill Category Cards Grid */}
+        <div
+          ref={gridRef}
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal ${
+            gridVisible ? 'is-visible' : ''
+          }`}
+        >
+          {filteredCategories.map((category) => {
             const CatIcon = category.icon
+
             return (
               <div
-                key={category.title}
-                className={`reveal-scale shimmer-hover ${gridVisible ? 'is-visible' : ''}`}
-                style={{ transitionDelay: gridVisible ? `${index * 0.08}s` : '0s' }}
+                key={category.id}
+                className="bento-card p-6 flex flex-col justify-between shimmer-hover"
               >
-                <div className="bg-[var(--card-bg)] rounded-xl shadow-[0_2px_12px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(30,58,138,0.14)] transition-all duration-300 overflow-hidden h-full">
-                  {/* Card header */}
-                  <div className="px-4 pt-4 pb-3 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.06)] to-transparent">
-                    <div className="flex items-center gap-2.5">
-                      <div
-                        className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0"
-                        style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
-                      >
-                        <CatIcon className="text-white text-xs" />
-                      </div>
-                      <h3 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider leading-tight">
+                <div>
+                  {/* Category Header */}
+                  <div className="flex items-center gap-3 mb-5 pb-3 border-b border-[var(--border-color)]">
+                    <div className="w-9 h-9 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center text-base">
+                      <CatIcon />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold text-[var(--text-primary)]">
                         {category.title}
                       </h3>
+                      <span className="text-[11px] font-mono text-[var(--text-secondary)]">
+                        {category.skills.length} skills listed
+                      </span>
                     </div>
                   </div>
 
-                  {/* Skill pills */}
-                  <div className="px-4 py-3 flex flex-wrap gap-1.5">
-                    {category.skills.map((skill, skillIdx) => {
-                      const Icon = skill.icon
+                  {/* Skills Pills */}
+                  <div className="grid grid-cols-2 gap-2.5">
+                    {category.skills.map((skill) => {
+                      const SkillIcon = skill.icon
+
                       return (
-                        <span
+                        <div
                           key={skill.name}
-                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[var(--bg-secondary)] dark:bg-[rgba(255,255,255,0.04)] border border-[var(--border-color)] text-xs font-medium text-[var(--text-secondary)] hover:border-[rgba(30,58,138,0.35)] hover:text-[var(--text-primary)] hover:shadow-[0_2px_8px_rgba(30,58,138,0.1)] transition-all duration-200 cursor-default"
-                          style={{
-                            opacity: gridVisible ? 1 : 0,
-                            transform: gridVisible ? 'translateY(0)' : 'translateY(8px)',
-                            transition: `opacity 0.4s ease, transform 0.4s ease`,
-                            transitionDelay: gridVisible ? `${index * 0.08 + skillIdx * 0.04}s` : '0s',
-                          }}
+                          className="flex items-center gap-2.5 p-2 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] hover:border-sky-500/40 hover:scale-[1.02] transition-all group cursor-default"
                         >
-                          <Icon style={{ color: skill.color }} className="text-sm flex-shrink-0" />
-                          {skill.name}
-                        </span>
+                          <span
+                            className="text-base flex-shrink-0 transition-transform group-hover:scale-110"
+                            style={{ color: skill.color }}
+                          >
+                            <SkillIcon />
+                          </span>
+                          <span className="text-xs font-semibold text-[var(--text-primary)] truncate">
+                            {skill.name}
+                          </span>
+                        </div>
                       )
                     })}
                   </div>
@@ -231,6 +282,7 @@ function Skills() {
             )
           })}
         </div>
+
       </div>
     </section>
   )

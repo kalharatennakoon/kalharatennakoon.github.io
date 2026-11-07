@@ -1,164 +1,170 @@
-import { FaBriefcase, FaMapMarkerAlt, FaCalendarAlt, FaChevronRight } from 'react-icons/fa'
+import { FaBriefcase, FaMapMarkerAlt, FaCalendarAlt, FaCheck, FaBuilding } from 'react-icons/fa'
 import useScrollReveal from '../hooks/useScrollReveal'
 
-function Experience() {
-  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
+interface ExperienceItem {
+  title: string
+  company: string
+  location: string
+  period: string
+  type: string
+  summary: string
+  metricHighlight?: string
+  achievements: string[]
+  stack: string[]
+}
+
+const experiences: ExperienceItem[] = [
+  {
+    title: 'DevOps Engineering Intern',
+    company: 'IFS R&D International (Pvt) Ltd',
+    location: 'Colombo, Sri Lanka',
+    period: 'Jul 2024 – Oct 2024',
+    type: 'Internship',
+    metricHighlight: '~30% manual debugging reduced',
+    summary: 'Spearheaded Kubernetes-native CI/CD workflows and automated delivery pipelines for enterprise cloud services.',
+    achievements: [
+      'Automated cloud-native delivery pipelines with Tekton, accelerating deployment cycles for critical enterprise components',
+      'Integrated Behave behavioral testing directly into Tekton pipelines, reducing manual debugging overhead by ~30%',
+      'Diagnosed and eliminated recurring configuration bottlenecks, hardening build reproducibility across environments',
+      'Delivered a team-wide knowledge session on automated testing standards, uplifting pipeline engineering practices',
+    ],
+    stack: ['Kubernetes', 'Tekton', 'Docker', 'Azure DevOps', 'Python', 'CI/CD', 'Behave'],
+  },
+  {
+    title: 'Software Engineering Intern',
+    company: 'IFS R&D International (Pvt) Ltd',
+    location: 'Colombo, Sri Lanka',
+    period: 'Jul 2020 – Dec 2020',
+    type: 'Internship',
+    metricHighlight: 'Cloud security scanning engine',
+    summary: 'Contributed to cloud-native container security scanning tooling and container platform hardening.',
+    achievements: [
+      'Engineered a containerized cloud security scanning application with Docker and Kubernetes to protect the host container platform',
+      'Embedded security scanners into CI/CD pipelines, establishing continuous vulnerability detection before container promotion',
+      'Investigated runtime and orchestration incidents on AKS and GKE, authoring technical operational documentation for developer onboarding',
+    ],
+    stack: ['Kubernetes', 'Docker', 'Golang', 'AKS', 'GKE', 'ArgoCD', 'Azure DevOps', 'CI/CD'],
+  },
+]
+
+export function Experience() {
+  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>(0.1)
   const [timelineRef, timelineVisible] = useScrollReveal<HTMLDivElement>(0.05)
 
-  const experiences = [
-    {
-      title: 'DevOps Engineering Intern',
-      company: 'IFS R&D International (Pvt) Ltd',
-      location: 'Colombo, Sri Lanka',
-      period: 'Jul 2024 – Oct 2024',
-      type: 'Internship',
-      summary: 'Worked on Kubernetes-native CI/CD workflows and deployment automation for cloud-native services.',
-      achievements: [
-        'Automated CI/CD pipelines using Tekton, streamlining artifact packaging and deployment for critical services',
-        'Integrated Behave automated tests into Tekton pipelines, reducing manual debugging effort by ~30%',
-        'Optimized pipeline configurations, resolving persistent build issues for faster deployment cycles',
-        'Conducted a knowledge-sharing session on testing best practices to support team collaboration and code quality improvements',
-      ],
-      stack: ['Kubernetes', 'Tekton', 'Docker', 'Azure DevOps', 'CI/CD', 'Python'],
-    },
-    {
-      title: 'Software Engineering Intern',
-      company: 'IFS R&D International (Pvt) Ltd',
-      location: 'Colombo, Sri Lanka',
-      period: 'Jul 2020 – Dec 2020',
-      type: 'Internship',
-      summary: 'Contributed to cloud-native security tooling and container platform reliability improvements.',
-      achievements: [
-        'Built a cloud security scanning app using Docker and Kubernetes, improving container platform security posture',
-        'Integrated scanning tools into CI/CD pipelines, enhancing vulnerability detection across deployment stages',
-        'Diagnosed deployment and runtime issues while authoring technical documentation to support system reliability and onboarding',
-      ],
-      stack: ['Kubernetes', 'Docker', 'Golang', 'AKS', 'GKE', 'ArgoCD', 'CI/CD'],
-    },
-  ]
-
   return (
-    <section id="experience" className="py-20 bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]">
+    <section id="experience" className="py-24 relative overflow-hidden bg-[var(--bg-primary)]">
+      <div className="max-w-5xl mx-auto px-6 sm:px-8 relative z-10">
 
-      {/* Background blob */}
-      <div
-        className="blob-shape w-[450px] h-[450px]"
-        style={{
-          background: 'radial-gradient(circle, rgba(30,58,138,0.1), transparent)',
-          top: '-100px',
-          right: '-100px',
-          animationDuration: '17s',
-        }}
-      />
-
-      <div className="max-w-6xl mx-auto px-8 relative z-10">
-
-        {/* Section header */}
+        {/* Section Header */}
         <div
           ref={headerRef}
-          className={`text-center mb-12 reveal ${headerVisible ? 'is-visible' : ''}`}
+          className={`text-center mb-16 reveal ${headerVisible ? 'is-visible' : ''}`}
         >
-          <div className="inline-flex items-center gap-3 mb-3">
-            <div className="relative">
-              <div className="absolute inset-0 blur-xl bg-[var(--color-primary)] opacity-30 rounded-full" />
-              <FaBriefcase className="relative text-3xl text-[var(--color-primary)]" />
-            </div>
-            <h2
-              className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
-              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
-            >
-              Work Experience
-            </h2>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-3">
+            <FaBriefcase className="text-xs" />
+            <span>Career Milestones</span>
           </div>
+          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--text-primary)]">
+            Work Experience
+          </h2>
           <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
+          <p className="mt-4 text-base sm:text-lg text-[var(--text-secondary)] max-w-xl mx-auto">
+            Hands-on enterprise engineering experience in DevOps automation, Tekton pipelines,
+            and container platform security.
+          </p>
         </div>
 
-        {/* Timeline */}
+        {/* Timeline Container */}
         <div ref={timelineRef} className="relative max-w-4xl mx-auto">
-          {/* Animated vertical line */}
+          {/* Vertical Connecting Line */}
           <div
-            className="absolute left-6 top-0 bottom-0 w-px hidden sm:block"
+            className="absolute left-4 sm:left-6 top-3 bottom-3 w-0.5 hidden sm:block bg-gradient-to-b from-sky-400 via-indigo-500 to-transparent"
             style={{
-              background: 'linear-gradient(to bottom, var(--color-primary), rgba(30,58,138,0.25), transparent)',
               transformOrigin: 'top',
               transform: timelineVisible ? 'scaleY(1)' : 'scaleY(0)',
-              transition: 'transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)',
+              transition: 'transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
             }}
           />
 
-          <div className="space-y-10">
-            {experiences.map((exp, index) => (
+          <div className="space-y-12">
+            {experiences.map((exp, idx) => (
               <div
-                key={index}
-                className={`relative sm:pl-20 reveal-left ${timelineVisible ? 'is-visible' : ''}`}
-                style={{ transitionDelay: timelineVisible ? `${0.2 + index * 0.2}s` : '0s' }}
+                key={exp.title + exp.period}
+                className={`relative sm:pl-16 reveal-left ${timelineVisible ? 'is-visible' : ''}`}
+                style={{ transitionDelay: timelineVisible ? `${0.2 + idx * 0.2}s` : '0s' }}
               >
-                {/* Timeline dot with pulse */}
-                <div className="absolute left-0 top-6 hidden sm:flex items-center justify-center w-12 h-12 rounded-full shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)] pulse-dot"
-                  style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
-                >
-                  <FaBriefcase className="text-white text-base" />
+                {/* Timeline Pulsing Node */}
+                <div className="absolute left-1.5 sm:left-3.5 top-5 -translate-x-1/2 hidden sm:flex items-center justify-center w-6 h-6 rounded-full bg-sky-500 shadow-md shadow-sky-500/50">
+                  <div className="w-2.5 h-2.5 rounded-full bg-white" />
                 </div>
 
-                <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(30,58,138,0.14)] transition-all duration-300 overflow-hidden shimmer-hover">
-                  {/* Card header */}
-                  <div className="px-7 pt-6 pb-5 border-b border-[var(--border-color)] bg-gradient-to-r from-[rgba(30,58,138,0.06)] to-transparent">
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div>
-                        <h3 className="text-xl font-bold text-[var(--text-primary)] mb-1 leading-tight">
+                {/* Card */}
+                <div className="bento-card p-6 sm:p-8 shimmer-hover">
+                  {/* Top Bar: Role & Company */}
+                  <div className="flex flex-wrap items-start justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)]">
                           {exp.title}
                         </h3>
-                        <p className="text-base font-semibold text-[var(--color-primary)] m-0">
-                          {exp.company}
-                        </p>
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                          {exp.type}
+                        </span>
                       </div>
-                      <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full border border-[rgba(30,58,138,0.2)] text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] flex-shrink-0">
-                        {exp.type}
-                      </span>
+
+                      <div className="flex items-center gap-2 text-sm font-semibold text-sky-400">
+                        <FaBuilding className="text-xs" />
+                        <span>{exp.company}</span>
+                      </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-4 mt-3">
-                      <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
-                        <FaCalendarAlt className="text-[var(--color-primary)] text-xs" />
+                    <div className="flex flex-col sm:items-end gap-1.5">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-mono text-[var(--text-secondary)]">
+                        <FaCalendarAlt className="text-sky-400 text-xs" />
                         {exp.period}
                       </span>
-                      <span className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
-                        <FaMapMarkerAlt className="text-[var(--color-primary)] text-xs" />
+                      <span className="inline-flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
+                        <FaMapMarkerAlt className="text-sky-400 text-xs" />
                         {exp.location}
                       </span>
                     </div>
                   </div>
 
-                  <div className="px-7 py-5 space-y-4">
-                    <p className="text-sm italic text-[var(--text-secondary)] leading-relaxed m-0">{exp.summary}</p>
-
-                    {/* Achievements */}
-                    <ul className="space-y-3 list-none">
-                      {exp.achievements.map((achievement, idx) => (
-                        <li key={idx} className="flex gap-3 text-sm text-[var(--text-secondary)] leading-relaxed">
-                          <FaChevronRight className="text-[var(--color-primary)] text-xs mt-1 flex-shrink-0" />
-                          <span>{achievement}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Tech stack */}
-                    <div className="flex flex-wrap gap-1.5">
-                      {exp.stack.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2.5 py-0.5 bg-[rgba(30,58,138,0.07)] text-[var(--color-primary)] rounded-full text-xs font-medium border border-[rgba(30,58,138,0.15)] hover:bg-[rgba(30,58,138,0.14)] hover:border-[rgba(30,58,138,0.3)] transition-colors"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                  {/* Highlight Callout Pill */}
+                  {exp.metricHighlight && (
+                    <div className="my-4 inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span>Impact: {exp.metricHighlight}</span>
                     </div>
+                  )}
+
+                  {/* Summary & Bullet Points */}
+                  <div className="mt-3 space-y-2.5">
+                    {exp.achievements.map((item, itemIdx) => (
+                      <div key={itemIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+                        <FaCheck className="text-sky-400 text-xs mt-1 flex-shrink-0" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Stack Chips */}
+                  <div className="mt-6 pt-4 border-t border-[var(--border-color)] flex flex-wrap gap-2">
+                    {exp.stack.map((item) => (
+                      <span
+                        key={item}
+                        className="px-2.5 py-1 text-xs font-mono font-medium rounded-lg bg-[var(--bg-secondary)] text-[var(--text-primary)] border border-[var(--border-color)]"
+                      >
+                        {item}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
+
       </div>
     </section>
   )

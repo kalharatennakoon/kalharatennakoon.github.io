@@ -1,164 +1,162 @@
-import { FaTrophy } from 'react-icons/fa'
+import { FaTrophy, FaMedal, FaStar } from 'react-icons/fa'
 import useScrollReveal from '../hooks/useScrollReveal'
 
 interface Achievement {
   title: string
+  subtitle: string
   description: string
   date: string
-  highlight?: boolean
+  category: 'Global Scholarship' | 'National Finalist' | 'Academic Cohort' | 'Hackathon'
+  featured?: boolean
 }
 
-const achievements: Achievement[] = [
+const achievementsData: Achievement[] = [
   {
-    title: 'Top 10 Finalist - Ascentic AI Launch Pad',
-    description: 'Selected for the Top 10 of the Ascentic AI Launch Pad programme and invited to present VetCare Pro at Demo Day. VetCare Pro is an on-premise, AI-powered veterinary clinic management system. It was recognised for its local RAG assistant, ML forecasting models and companion iOS app, all built for a real working clinic.',
+    title: 'Top 10 Finalist — Ascentic AI Launch Pad',
+    subtitle: 'National AI Innovation Program & Demo Day Presentation',
+    description:
+      'Selected for the Top 10 of the Ascentic AI Launch Pad programme and invited to present VetCare Pro at Demo Day. Recognized for its on-premise local RAG assistant (Ollama & pgvector), ML demand forecasting models, and companion iOS app built for a real working veterinary clinic.',
     date: '2026',
-    highlight: true,
+    category: 'National Finalist',
+    featured: true,
   },
   {
-    title: 'Batch Top - Software Engineering, ESU Kandy',
-    description: 'Ranked first in the Software Engineering cohort of the BSc (Hons) Computer Science programme.',
+    title: 'Batch Top — Software Engineering',
+    subtitle: 'BSc (Hons) Computer Science, ESU Kandy',
+    description:
+      'Ranked #1 in the Software Engineering cohort of the BSc (Hons) Computer Science degree delivered in collaboration with Kingston University London.',
     date: '2026',
+    category: 'Academic Cohort',
+    featured: true,
   },
   {
-    title: 'Two-Time Dan Kohn Scholarship Recipient - KubeCon + CloudNativeCon',
-    description: 'Awarded the CNCF Dan Kohn Scholarship to attend KubeCon + CloudNativeCon. Recognised for contributions and potential in the cloud-native ecosystem.',
+    title: 'Two-Time Dan Kohn Scholarship Recipient',
+    subtitle: 'KubeCon + CloudNativeCon Europe (CNCF)',
+    description:
+      'Awarded the highly competitive Cloud Native Computing Foundation (CNCF) Dan Kohn Memorial Scholarship twice (2022 & 2025) recognizing contributions and community leadership in the cloud-native ecosystem.',
     date: '2025 & 2022',
+    category: 'Global Scholarship',
+    featured: true,
   },
   {
-    title: 'First Runner-Up - Hack:Bit Hackathon',
-    description: 'Secured First Runner-Up at the Hack:Bit national-level hackathon, organised in collaboration with Microsoft and Sarvodaya Fusion, competing against university and school teams across Sri Lanka.',
+    title: 'First Runner-Up — Hack:Bit Hackathon',
+    subtitle: 'National Collaboration with Microsoft & Sarvodaya Fusion',
+    description:
+      'Secured First Runner-Up at the Hack:Bit national-level hackathon, competing against top university and school development teams across Sri Lanka.',
     date: 'Jul 2019',
+    category: 'Hackathon',
   },
   {
-    title: 'Top 15 Finalist - HaXmas Hackathon',
-    description: 'Selected as one of the Top 15 finalists from 75+ competing teams at the HaXmas Hackathon, a national-level coding and innovation challenge.',
+    title: 'Top 15 Finalist — HaXmas Hackathon',
+    subtitle: '75+ Competing Engineering Teams Nationally',
+    description:
+      'Selected as one of the Top 15 finalists from 75+ competing teams at the HaXmas national-level coding and product innovation challenge.',
     date: 'Jan 2018',
+    category: 'Hackathon',
   },
   {
-    title: 'Finalist - Cisco Packet Riders',
-    description: 'Reached the national final of Cisco Packet Riders, a networking and troubleshooting competition open to students across Sri Lanka.',
+    title: 'National Finalist — Cisco Packet Riders',
+    subtitle: 'Advanced Networking & Troubleshooting Challenge',
+    description:
+      'Reached the national final of Cisco Packet Riders, a competitive networking protocol and troubleshooting challenge across Sri Lanka.',
     date: 'Jul 2018',
+    category: 'National Finalist',
   },
   {
-    title: '4th in Sri Lanka & 118th in Asia Pacific - Cisco NetRiders',
-    description: 'Ranked 4th in Sri Lanka and 118th in Asia Pacific at the Cisco NetRiders competition.',
+    title: '4th in Sri Lanka & 118th in Asia Pacific — Cisco NetRiders',
+    subtitle: 'Asia Pacific & Japan Regional Competition',
+    description:
+      'Ranked 4th nationally in Sri Lanka and 118th overall across the entire Asia Pacific & Japan (APJ) region in the Cisco NetRiders networking championship.',
     date: 'Sep 2017',
+    category: 'Global Scholarship',
   },
 ]
 
-function Achievements() {
-  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
-  const [timelineRef, timelineVisible] = useScrollReveal<HTMLDivElement>(0.05)
+export function Achievements() {
+  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>(0.1)
+  const [gridRef, gridVisible] = useScrollReveal<HTMLDivElement>(0.05)
 
   return (
-    <section id="achievements" className="py-20 bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]">
+    <section id="achievements" className="py-24 relative overflow-hidden bg-[var(--bg-primary)]">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 relative z-10">
 
-      {/* Background blobs */}
-      <div
-        className="blob-shape w-[400px] h-[400px]"
-        style={{
-          background: 'radial-gradient(circle, rgba(59,130,246,0.08), rgba(30,58,138,0.08), transparent)',
-          top: '-100px',
-          right: '-80px',
-          animationDuration: '20s',
-        }}
-      />
-
-      <div className="max-w-6xl mx-auto px-8 relative z-10">
-
-        {/* Section header */}
+        {/* Section Header */}
         <div
           ref={headerRef}
-          className={`text-center mb-12 reveal ${headerVisible ? 'is-visible' : ''}`}
+          className={`text-center mb-16 reveal ${headerVisible ? 'is-visible' : ''}`}
         >
-          <div className="inline-flex items-center gap-3 mb-3">
-            <div className="relative">
-              <div className="absolute inset-0 blur-xl bg-blue-400 opacity-30 rounded-full" />
-              <FaTrophy className="relative text-3xl text-[var(--color-primary)]" />
-            </div>
-            <h2
-              className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
-              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
-            >
-              Achievements
-            </h2>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-xs font-semibold uppercase tracking-wider mb-3">
+            <FaTrophy className="text-xs" />
+            <span>Honors & Accolades</span>
           </div>
+          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--text-primary)]">
+            Achievements & Recognition
+          </h2>
           <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
+          <p className="mt-4 text-base sm:text-lg text-[var(--text-secondary)] max-w-xl mx-auto">
+            Competitive honors spanning global cloud-native scholarships, national AI demo days, and hackathon podiums.
+          </p>
         </div>
 
-        {/* Timeline */}
-        <div ref={timelineRef} className="relative max-w-4xl mx-auto">
-          {/* Animated vertical line */}
-          <div
-            className="absolute left-6 top-0 bottom-0 w-px hidden sm:block"
-            style={{
-              background: 'linear-gradient(to bottom, var(--color-primary), rgba(30,58,138,0.25), transparent)',
-              transformOrigin: 'top',
-              transform: timelineVisible ? 'scaleY(1)' : 'scaleY(0)',
-              transition: 'transform 1.4s cubic-bezier(0.4, 0, 0.2, 1)',
-            }}
-          />
-
-          <div className="space-y-8">
-            {achievements.map((item, index) => (
-              <div
-                key={item.title}
-                className={`relative sm:pl-20 reveal-left ${timelineVisible ? 'is-visible' : ''}`}
-                style={{ transitionDelay: timelineVisible ? `${0.15 + index * 0.15}s` : '0s' }}
-              >
-                {/* Timeline dot */}
-                <div
-                  className="absolute left-0 top-5 hidden sm:flex items-center justify-center w-12 h-12 rounded-full shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)] pulse-dot"
-                  style={{
-                    background: item.highlight
-                      ? 'linear-gradient(135deg, var(--color-primary), #3b82f6)'
-                      : 'linear-gradient(135deg, var(--color-primary), #06b6d4)',
-                    animationDelay: `${index * 0.5}s`,
-                  }}
-                >
-                  <FaTrophy className="text-white text-base" />
-                </div>
-
-                <div className={`bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_15px_var(--shadow)] border transition-all duration-300 hover:-translate-y-1 overflow-hidden shimmer-hover ${
-                  item.highlight
-                    ? 'border-blue-400/30 hover:border-blue-400/50 hover:shadow-[0_12px_36px_rgba(30,58,138,0.14)]'
-                    : 'border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] hover:shadow-[0_12px_36px_rgba(30,58,138,0.14)]'
-                }`}>
-                  {/* Highlight accent */}
-                  {item.highlight && (
-                    <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, var(--color-primary), #3b82f6)' }} />
-                  )}
-
-                  {/* Header */}
-                  <div className={`px-7 pt-5 pb-4 border-b border-[var(--border-color)] ${
-                    item.highlight
-                      ? 'bg-gradient-to-r from-[rgba(30,58,138,0.06)] to-transparent'
-                      : 'bg-gradient-to-r from-[rgba(30,58,138,0.05)] to-transparent'
+        {/* Bento Trophy Room Grid */}
+        <div
+          ref={gridRef}
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal ${
+            gridVisible ? 'is-visible' : ''
+          }`}
+        >
+          {achievementsData.map((item) => (
+            <div
+              key={item.title}
+              className={`bento-card p-6 flex flex-col justify-between shimmer-hover ${
+                item.featured ? 'border-amber-500/30 shadow-lg' : ''
+              }`}
+            >
+              <div>
+                {/* Top Badge & Date */}
+                <div className="flex items-start justify-between gap-3 mb-4">
+                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-xl shadow-sm ${
+                    item.featured
+                      ? 'bg-gradient-to-tr from-amber-500 to-yellow-400 text-slate-950'
+                      : 'bg-sky-500/10 text-sky-400 border border-sky-500/20'
                   }`}>
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <h3 className="text-base font-bold text-[var(--text-primary)] leading-snug flex-1">
-                        {item.title}
-                      </h3>
-                      <span className={`text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap border flex-shrink-0 ${
-                        item.highlight
-                          ? 'text-white bg-blue-600 border-blue-700 shadow-[0_2px_8px_rgba(30,58,138,0.4)]'
-                          : 'text-[var(--color-primary)] bg-[rgba(30,58,138,0.08)] border-[rgba(30,58,138,0.15)]'
-                      }`}>
-                        {item.date}
-                      </span>
-                    </div>
+                    {item.featured ? <FaTrophy /> : <FaMedal />}
                   </div>
 
-                  {/* Body */}
-                  <div className="px-7 py-4">
-                    <p className="text-sm text-[var(--text-secondary)] leading-relaxed m-0">{item.description}</p>
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-secondary)]">
+                      {item.category}
+                    </span>
+                    <span className="text-xs font-mono text-amber-400 font-bold">
+                      {item.date}
+                    </span>
                   </div>
                 </div>
+
+                {/* Title */}
+                <h3 className="text-lg font-bold text-[var(--text-primary)] mb-1 leading-snug">
+                  {item.title}
+                </h3>
+                <div className="text-xs font-semibold text-sky-400 mb-3">
+                  {item.subtitle}
+                </div>
+
+                {/* Description */}
+                <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+                  {item.description}
+                </p>
               </div>
-            ))}
-          </div>
+
+              {item.featured && (
+                <div className="mt-5 pt-3 border-t border-[var(--border-color)] flex items-center gap-1.5 text-xs text-amber-400 font-semibold">
+                  <FaStar className="text-[10px]" />
+                  <span>Featured Milestone</span>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
+
       </div>
     </section>
   )

@@ -1,102 +1,206 @@
-import { FaTerminal } from 'react-icons/fa'
+import { useEffect, useState } from 'react'
+import {
+  FaUser, FaGraduationCap, FaTrophy, FaPenFancy,
+  FaClock, FaMapMarkerAlt, FaServer
+} from 'react-icons/fa'
+import { SiKubernetes, SiDocker, SiPython } from 'react-icons/si'
 import useScrollReveal from '../hooks/useScrollReveal'
-import Terminal from './Terminal'
+import { soundFx } from '../utils/sound'
 
-function About() {
-  const [ref, isVisible] = useScrollReveal<HTMLDivElement>(0.2)
-  const [termRef, termVisible] = useScrollReveal<HTMLDivElement>(0.05)
+export function About() {
+  const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>(0.1)
+  const [gridRef, gridVisible] = useScrollReveal<HTMLDivElement>(0.1)
+  const [currentTime, setCurrentTime] = useState('')
+
+  useEffect(() => {
+    const updateClock = () => {
+      // Sri Lanka is UTC+5:30
+      const now = new Date()
+      const options: Intl.DateTimeFormatOptions = {
+        timeZone: 'Asia/Colombo',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+      }
+      setCurrentTime(new Intl.DateTimeFormat('en-US', options).format(now))
+    }
+
+    updateClock()
+    const timer = setInterval(updateClock, 1000)
+    return () => clearInterval(timer)
+  }, [])
 
   return (
-    <section id="about" className="py-16 md:py-20 bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]" style={{ contain: 'paint' }}>
+    <section id="about" className="py-24 relative overflow-hidden bg-[var(--bg-primary)]">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 relative z-10">
 
-      {/* Subtle background blob — kept inside section bounds */}
-      <div
-        className="blob-shape w-[400px] h-[400px] pointer-events-none"
-        style={{
-          background: 'radial-gradient(circle, rgba(30,58,138,0.18), transparent)',
-          top: '0px',
-          right: '-80px',
-          animationDuration: '18s',
-        }}
-      />
-
-      <div className="max-w-5xl mx-auto px-6 md:px-8 relative z-10">
-
-        {/* Section header */}
+        {/* Section Header */}
         <div
-          ref={ref}
-          className={`text-center mb-10 reveal ${isVisible ? 'is-visible' : ''}`}
+          ref={headerRef}
+          className={`text-center mb-16 reveal ${headerVisible ? 'is-visible' : ''}`}
         >
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-3 inline-block bg-clip-text text-transparent animate-gradient-text pb-1"
-            style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
-          >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-semibold uppercase tracking-wider mb-3">
+            <FaUser className="text-xs" />
+            <span>Profile & Background</span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--text-primary)]">
             About Me
           </h2>
-          <div className={`section-underline ${isVisible ? 'is-visible' : ''}`} />
+          <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
+          <p className="mt-4 text-base sm:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
+            Software engineer operating at the convergence of cloud-native infrastructure,
+            automated deployment pipelines, and intelligent AI features.
+          </p>
         </div>
 
-        {/* Quote card */}
+        {/* Modern Bento Grid */}
         <div
-          className={`relative text-center px-4 md:px-10 reveal ${isVisible ? 'is-visible' : ''}`}
-          style={{ transitionDelay: '0.15s' }}
+          ref={gridRef}
+          className={`grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-5 reveal ${
+            gridVisible ? 'is-visible' : ''
+          }`}
         >
-          {/* Glassmorphism card */}
-          <div className="glass-card rounded-2xl px-8 md:px-14 py-10 shimmer-hover">
-            {/* Decorative blobs inside card */}
-            <div
-              className="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl pointer-events-none"
-              style={{ background: 'rgba(6,182,212,0.08)' }}
-            />
-            <div
-              className="absolute bottom-0 left-0 w-24 h-24 rounded-full blur-2xl pointer-events-none"
-              style={{ background: 'rgba(30,58,138,0.08)' }}
-            />
-
-            <p
-              className="text-lg md:text-xl leading-relaxed text-[var(--text-primary)] m-0 px-4 relative z-10"
-              style={{ fontFamily: '"Handlee", cursive', fontWeight: 400 }}
-            >
-              Software engineer working across DevOps, cloud-native platforms, and applied machine learning.
-              At IFS I automated Kubernetes-native CI/CD with Tekton, added automated testing that cut manual debugging by about 30%,
-              and integrated security scanning into delivery pipelines. I also build and ship full-stack products end to end,
-              from React and FastAPI apps deployed to Kubernetes with GitHub Actions and ArgoCD to ML forecasting and LLM features.
-              Open to software, DevOps, MLOps, and AI/ML engineering roles.
-            </p>
-          </div>
-        </div>
-
-        {/* Interactive shell */}
-        <div
-          ref={termRef}
-          className={`mt-14 reveal ${termVisible ? 'is-visible' : ''}`}
-          style={{ transitionDelay: '0.1s' }}
-        >
-          <div className="text-center mb-5">
-            <div
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-3"
-              style={{
-                background: 'rgba(30,58,138,0.1)',
-                border: '1px solid rgba(30,58,138,0.2)',
-                fontSize: '12px',
-                fontWeight: 600,
-                letterSpacing: '1.5px',
-                textTransform: 'uppercase',
-                color: 'var(--color-primary)',
-              }}
-            >
-              <FaTerminal />
-              Interactive shell
+          {/* Bento Item 1: Core Bio & Philosophy (Large - 8 cols) */}
+          <div className="md:col-span-3 lg:col-span-8 bento-card p-6 sm:p-8 flex flex-col justify-between shimmer-hover">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <span className="px-3 py-1 text-xs font-semibold rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                  Engineering DNA
+                </span>
+                <span className="text-xs font-mono text-[var(--text-secondary)]">
+                  Sri Lanka • Global Remote
+                </span>
+              </div>
+              <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-4">
+                Automating Cloud Platforms & Shipping Resilient Code
+              </h3>
+              <p className="text-[var(--text-secondary)] leading-relaxed text-base mb-4">
+                I am a software engineer with industry experience in DevOps and automation at <strong>IFS R&D</strong>.
+                My work centers around eliminating friction in deployment workflows: automating Kubernetes-native
+                pipelines with <strong>Tekton</strong>, integrating automated testing with Behave to cut manual debugging by ~30%,
+                and baking security scanning directly into container delivery lifecycles.
+              </p>
+              <p className="text-[var(--text-secondary)] leading-relaxed text-base">
+                Beyond infrastructure, I build complete end-to-end full-stack applications with <strong>React</strong> and <strong>FastAPI/Node.js</strong>,
+                integrated with cutting-edge AI architectures—such as local RAG with <strong>Ollama & pgvector</strong>,
+                and time-series energy forecasting with <strong>Prophet</strong> deployed via GitOps and ArgoCD.
+              </p>
             </div>
-            <p className="text-sm md:text-base text-[var(--text-secondary)] max-w-xl mx-auto m-0 leading-relaxed">
-              I automate infrastructure for a living, so this portfolio ships with a working shell.
-              Explore it like you would a cluster —{' '}
-              <span className="pointer-coarse:hidden">type a command, or click one below.</span>
-              <span className="hidden pointer-coarse:inline">tap a command below, or type your own.</span>
-            </p>
+
+            <div className="mt-6 pt-6 border-t border-[var(--border-color)] flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)]">
+                <SiKubernetes className="text-blue-400" /> Kubernetes & Tekton
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)]">
+                <SiDocker className="text-sky-400" /> Container Security
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)]">
+                <SiPython className="text-yellow-400" /> Applied ML & LLMs
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)]">
+                <FaServer className="text-emerald-400" /> GitOps & ArgoCD
+              </span>
+            </div>
           </div>
 
-          <Terminal />
+          {/* Bento Item 2: Live Time & Location Card (4 cols) */}
+          <div className="md:col-span-3 lg:col-span-4 bento-card p-6 flex flex-col justify-between shimmer-hover">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <span className="px-3 py-1 text-xs font-semibold rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                  Live Time
+                </span>
+                <FaClock className="text-emerald-400 text-sm" />
+              </div>
+
+              <div className="text-center py-5">
+                <div className="text-3xl sm:text-4xl font-extrabold text-[var(--text-primary)] font-mono tracking-wider">
+                  {currentTime || '07:30:00 PM'}
+                </div>
+                <div className="text-xs font-semibold text-emerald-400 mt-2">
+                  Sri Lanka Standard Time (UTC+5:30)
+                </div>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center gap-3">
+              <FaMapMarkerAlt className="text-sky-400 text-base flex-shrink-0" />
+              <div className="text-xs">
+                <div className="font-bold text-[var(--text-primary)]">Kurunegala, Sri Lanka</div>
+                <div className="text-[var(--text-secondary)] opacity-75">Available for on-site & remote global roles</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bento Item 3: Academic Excellence Card (4 cols) */}
+          <div className="md:col-span-1 lg:col-span-4 bento-card p-6 shimmer-hover flex flex-col justify-between">
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center text-lg mb-4">
+                <FaGraduationCap />
+              </div>
+              <h4 className="text-lg font-bold text-[var(--text-primary)] mb-1">First Class Honours</h4>
+              <p className="text-xs text-sky-400 font-semibold mb-3">Kingston University London</p>
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                BSc (Hons) Computer Science (Software Engineering). Awarded <strong>Batch Top</strong> honors.
+                Final year capstone VetCare Pro earned Grade A (76%).
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-[var(--border-color)] text-xs text-[var(--text-secondary)] font-mono flex items-center justify-between">
+              <span>Graduation: Sep 2026</span>
+              <span className="text-amber-400 font-bold">Grade A (76%)</span>
+            </div>
+          </div>
+
+          {/* Bento Item 4: Global Scholarships & Awards (4 cols) */}
+          <div className="md:col-span-1 lg:col-span-4 bento-card p-6 shimmer-hover flex flex-col justify-between">
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-lg mb-4">
+                <FaTrophy />
+              </div>
+              <h4 className="text-lg font-bold text-[var(--text-primary)] mb-1">2× KubeCon Scholar</h4>
+              <p className="text-xs text-purple-400 font-semibold mb-3">CNCF Dan Kohn Memorial Award</p>
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                Honored twice (2022 & 2025) by the Cloud Native Computing Foundation for cloud-native contributions.
+                Top 10 Finalist at Ascentic AI Launch Pad Demo Day.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-[var(--border-color)] text-xs text-[var(--text-secondary)] font-mono flex items-center justify-between">
+              <span>KubeCon Europe</span>
+              <span className="text-purple-400 font-bold">2022 & 2025</span>
+            </div>
+          </div>
+
+          {/* Bento Item 5: Technical Writing & Community (4 cols) */}
+          <div className="md:col-span-1 lg:col-span-4 bento-card p-6 shimmer-hover flex flex-col justify-between">
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center text-lg mb-4">
+                <FaPenFancy />
+              </div>
+              <h4 className="text-lg font-bold text-[var(--text-primary)] mb-1">150K+ Article Views</h4>
+              <p className="text-xs text-pink-400 font-semibold mb-3">Technical Author on Medium</p>
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                Authored 50+ deep-dive guides on Kubernetes CronJobs, Tekton Pipelines, Docker best practices, and IT ergonomics,
+                serving a worldwide engineering community.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-[var(--border-color)] text-xs text-[var(--text-secondary)] font-mono flex items-center justify-between">
+              <span>50+ Guides</span>
+              <a
+                href="https://kalharatennakoon.medium.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => soundFx.click()}
+                className="text-pink-400 font-bold hover:underline"
+              >
+                Read on Medium →
+              </a>
+            </div>
+          </div>
+
         </div>
+
       </div>
     </section>
   )

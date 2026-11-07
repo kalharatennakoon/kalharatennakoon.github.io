@@ -1,256 +1,289 @@
 import { useState, useEffect } from 'react'
-import { FaSun, FaMoon, FaBars, FaTimes } from 'react-icons/fa'
+import {
+  FaSun, FaMoon, FaBars, FaTimes, FaSearch, FaVolumeUp, FaVolumeMute
+} from 'react-icons/fa'
 import { useTheme } from '../hooks/useTheme'
+import { soundFx } from '../utils/sound'
+
+interface NavbarProps {
+  onOpenCommandPalette: () => void
+}
 
 const navLinks = [
   { label: 'About',          href: '#about' },
-  { label: 'Education',      href: '#education' },
+  { label: 'Terminal',       href: '#terminal' },
+  { label: 'Projects',       href: '#projects' },
   { label: 'Experience',     href: '#experience' },
   { label: 'Skills',         href: '#skills' },
-  { label: 'Projects',       href: '#projects' },
-  { label: 'Certifications', href: '#certifications' },
+  { label: 'Education',      href: '#education' },
   { label: 'Achievements',   href: '#achievements' },
-  { label: 'Activities',     href: '#activities' },
-  { label: 'Blog',           href: '#blog' },
+  { label: 'Writing',        href: '#blog' },
   { label: 'Contact',        href: '#contact' },
 ]
 
-function Navbar() {
+export function Navbar({ onOpenCommandPalette }: NavbarProps) {
   const { theme, toggleTheme } = useTheme()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [activeSection, setActiveSection] = useState('hero')
+  const [soundEnabled, setSoundEnabled] = useState(soundFx.isEnabled())
   const isDark = theme === 'dark'
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 60)
+      setScrolled(window.scrollY > 40)
       const docH = document.documentElement.scrollHeight - window.innerHeight
       setScrollProgress(docH > 0 ? (window.scrollY / docH) * 100 : 0)
+
+      // Scrollspy
+      const sections = ['hero', 'about', 'terminal', 'projects', 'experience', 'skills', 'education', 'certifications', 'achievements', 'activities', 'blog', 'contact']
+      const scrollPos = window.scrollY + 200
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i])
+        if (el && el.offsetTop <= scrollPos) {
+          setActiveSection(sections[i])
+          break
+        }
+      }
     }
-    window.addEventListener('scroll', onScroll)
+
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  /* ── Liquid Glass colours ─────────────────────────────────────────────
-   *  Light mode keeps a visible frosted pill with liquid-glass edges.
-   *  Dark mode keeps the deeper navy glass for contrast.
-   * ──────────────────────────────────────────────────────────────────── */
-  const pillBg = isDark
-    ? 'rgba(12, 22, 50, 0.65)'         // dark navy translucent glass
-    : 'linear-gradient(135deg, rgba(235,244,255,0.68), rgba(200,220,255,0.52))'
+  // Listen for global shortcut Cmd+K or Ctrl+K
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        onOpenCommandPalette()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [onOpenCommandPalette])
 
-  const pillBorder = isDark
-    ? '1.5px solid rgba(140, 170, 255, 0.25)'
-    : '1.5px solid rgba(255, 255, 255, 0.86)'
+  const handleToggleSound = () => {
+    const next = soundFx.toggle()
+    setSoundEnabled(next)
+  }
 
-  const pillShadow = scrolled
-    ? isDark
-      ? '0 8px 40px rgba(0,0,0,0.60), 0 2px 8px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.12)'
-      : '0 8px 40px rgba(80,110,220,0.20), 0 2px 8px rgba(80,110,220,0.11), inset 0 1px 0 rgba(255,255,255,0.92)'
-    : isDark
-      ? '0 4px 24px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.10)'
-      : '0 4px 24px rgba(80,110,220,0.15), inset 0 1px 0 rgba(255,255,255,0.88)'
-
-  /* ── mobile dropdown glass ────────────────────────────────────────── */
-  const dropBg = isDark
-    ? 'rgba(12, 22, 50, 0.75)'
-    : 'linear-gradient(135deg, rgba(235,244,255,0.76), rgba(210,228,255,0.64))'
+  const handleNavClick = (href: string) => {
+    soundFx.tab()
+    setMenuOpen(false)
+    const el = document.querySelector(href)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[999] flex flex-col items-center pointer-events-none">
-      {/* ── Floating pill ────────────────────────────────────────────── */}
+    <>
+      {/* ── Top Scroll Reading Progress Bar ────────────────────────────── */}
       <div
-        className="pointer-events-auto mt-3 w-[calc(100%-2rem)] max-w-5xl transition-all duration-500 relative overflow-hidden"
-        style={{
-          background:           pillBg,
-          border:               pillBorder,
-          borderRadius:         '9999px',
-          boxShadow:            pillShadow,
-          backdropFilter:       isDark ? 'blur(24px) saturate(1.8) brightness(1.05)' : 'blur(38px) saturate(1.9) brightness(1.06)',
-          WebkitBackdropFilter: isDark ? 'blur(24px) saturate(1.8) brightness(1.05)' : 'blur(38px) saturate(1.9) brightness(1.06)',
-        }}
+        className="fixed top-0 left-0 right-0 h-[2.5px] z-[10000] bg-transparent pointer-events-none"
+        aria-hidden="true"
       >
-        {/* ① Specular highlight — top half of pill */}
         <div
-          aria-hidden="true"
-          className="absolute inset-x-0 top-0 pointer-events-none"
-          style={{
-            height: '52%',
-            borderRadius: '9999px 9999px 0 0',
-            background: isDark
-              ? 'linear-gradient(180deg, rgba(255,255,255,0.09) 0%, transparent 100%)'
-              : 'linear-gradient(180deg, rgba(255,255,255,0.72) 0%, transparent 100%)',
-          }}
+          className="h-full bg-gradient-to-r from-sky-400 via-indigo-500 to-cyan-400 transition-all duration-150 ease-out"
+          style={{ width: `${scrollProgress}%` }}
         />
-
-        {/* ② Top rim — bright edge light */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-4 top-0 pointer-events-none"
-          style={{
-            height: '1.5px',
-            background: isDark
-              ? 'linear-gradient(90deg, transparent, rgba(180,210,255,0.50) 30%, rgba(220,235,255,0.65) 50%, rgba(180,210,255,0.50) 70%, transparent)'
-              : 'linear-gradient(90deg, transparent, rgba(255,255,255,0.86) 20%, rgba(255,255,255,1.00) 50%, rgba(255,255,255,0.86) 80%, transparent)',
-          }}
-        />
-
-        {/* ③ Bottom rim — glass thickness shadow */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-4 bottom-0 pointer-events-none"
-          style={{
-            height: '1px',
-            background: isDark
-              ? 'rgba(0,0,0,0.50)'
-              : 'rgba(90,120,220,0.18)',
-          }}
-        />
-
-        {/* Scroll progress bar inside pill bottom edge */}
-        <div
-          className="absolute bottom-0 left-0 h-[2.5px] pointer-events-none transition-[width] duration-100 ease-out"
-          style={{
-            width: `${scrollProgress}%`,
-            background: 'linear-gradient(90deg, #6366f1, #3b82f6, #06b6d4)',
-            borderRadius: '0 0 0 9999px',
-          }}
-        />
-
-        {/* ── Content row ────────────────────────────────────────────── */}
-        <div className="relative flex items-center justify-between px-5 py-2.5">
-
-          {/* Logo */}
-          <a
-            href="#"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="shrink-0 transition-opacity duration-200 text-[var(--color-primary)] hover:opacity-70"
-            style={{ fontFamily: '"Rouge Script", cursive', fontSize: '1.75rem', fontWeight: 400 }}
-          >
-            Kalhara
-          </a>
-
-          {/* Desktop links */}
-          <ul className="hidden md:flex items-center gap-0.5">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="relative px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 text-[var(--text-secondary)] hover:text-[var(--color-primary)] group"
-                  style={{ letterSpacing: '0.01em' }}
-                >
-                  {link.label}
-                  <span className="absolute bottom-0.5 left-3 right-3 h-[2px] rounded-full bg-[var(--color-primary)] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                </a>
-              </li>
-            ))}
-          </ul>
-
-          {/* Controls */}
-          <div className="flex items-center gap-2 shrink-0">
-            {/* Theme toggle — glass disc */}
-            <button
-              onClick={toggleTheme}
-              aria-label="Toggle theme"
-              title={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-              className="relative w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 text-[var(--color-primary)] overflow-hidden"
-              style={{
-                background: isDark ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.70)',
-                border: isDark ? '1px solid rgba(255,255,255,0.18)' : '1px solid rgba(255,255,255,0.95)',
-                boxShadow: isDark
-                  ? 'inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 8px rgba(0,0,0,0.35)'
-                  : 'inset 0 1px 0 rgba(255,255,255,1.00), 0 2px 8px rgba(80,110,220,0.18)',
-              }}
-            >
-              <span
-                aria-hidden="true"
-                className="absolute inset-x-0 top-0 h-1/2 pointer-events-none rounded-t-full"
-                style={{
-                  background: isDark
-                    ? 'linear-gradient(180deg, rgba(255,255,255,0.14) 0%, transparent 100%)'
-                    : 'linear-gradient(180deg, rgba(255,255,255,0.80) 0%, transparent 100%)',
-                }}
-              />
-              {isDark
-                ? <FaSun  size={12} className="relative z-10" />
-                : <FaMoon size={12} className="relative z-10" />}
-            </button>
-
-            {/* Hamburger (mobile) — glass disc */}
-            <button
-              onClick={() => setMenuOpen((v) => !v)}
-              aria-label="Toggle menu"
-              className="md:hidden relative w-8 h-8 rounded-full flex items-center justify-center transition-all text-[var(--text-primary)] overflow-hidden"
-              style={{
-                background: isDark ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.70)',
-                border: isDark ? '1px solid rgba(255,255,255,0.18)' : '1px solid rgba(255,255,255,0.95)',
-                boxShadow: isDark
-                  ? 'inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 8px rgba(0,0,0,0.35)'
-                  : 'inset 0 1px 0 rgba(255,255,255,1.00), 0 2px 8px rgba(80,110,220,0.18)',
-              }}
-            >
-              <span
-                aria-hidden="true"
-                className="absolute inset-x-0 top-0 h-1/2 pointer-events-none rounded-t-full"
-                style={{
-                  background: isDark
-                    ? 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%)'
-                    : 'linear-gradient(180deg, rgba(255,255,255,0.75) 0%, transparent 100%)',
-                }}
-              />
-              {menuOpen
-                ? <FaTimes size={12} className="relative z-10" />
-                : <FaBars  size={12} className="relative z-10" />}
-            </button>
-          </div>
-        </div>
       </div>
 
-      {/* ── Mobile dropdown — glass pill below ────────────────────────── */}
-      {menuOpen && (
+      {/* ── Floating Island Header ────────────────────────────────────────── */}
+      <header className="fixed top-0 left-0 right-0 z-[1000] flex flex-col items-center pointer-events-none px-4 pt-3 sm:pt-4">
         <div
-          className="pointer-events-auto mt-2 w-[calc(100%-2rem)] max-w-5xl overflow-hidden"
+          className={`pointer-events-auto w-full max-w-6xl transition-all duration-300 relative rounded-full ${
+            scrolled ? 'py-2 px-4 sm:px-6 shadow-2xl' : 'py-3 px-5 sm:px-7 shadow-lg'
+          }`}
           style={{
-            background:           dropBg,
-            border:               pillBorder,
-            borderRadius:         '24px',
-            boxShadow:            pillShadow,
-            backdropFilter:       'blur(40px) saturate(2.0)',
-            WebkitBackdropFilter: 'blur(40px) saturate(2.0)',
+            background: isDark
+              ? 'rgba(11, 18, 36, 0.78)'
+              : 'rgba(255, 255, 255, 0.82)',
+            backdropFilter: 'blur(20px) saturate(1.8)',
+            WebkitBackdropFilter: 'blur(20px) saturate(1.8)',
+            border: isDark
+              ? '1px solid rgba(255, 255, 255, 0.12)'
+              : '1px solid rgba(226, 232, 240, 0.9)',
+            boxShadow: isDark
+              ? '0 10px 30px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+              : '0 10px 30px -10px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95)',
           }}
         >
-          {/* specular on dropdown */}
-          <div
-            aria-hidden="true"
-            className="absolute inset-x-0 top-0 h-8 pointer-events-none"
-            style={{
-              background: isDark
-                ? 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 100%)'
-                : 'linear-gradient(180deg, rgba(255,255,255,0.55) 0%, transparent 100%)',
-            }}
-          />
-          <div className="px-4 py-3 grid grid-cols-2 gap-1 relative">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="px-4 py-2.5 rounded-xl text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--color-primary)] transition-all duration-200"
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = isDark
-                    ? 'rgba(255,255,255,0.08)'
-                    : 'rgba(255,255,255,0.60)'
+          <div className="flex items-center justify-between gap-4">
+            {/* Brand Logo & Status Beacon */}
+            <a
+              href="#hero"
+              onClick={(e) => {
+                e.preventDefault()
+                handleNavClick('#hero')
+              }}
+              className="flex items-center gap-2.5 text-base font-extrabold tracking-tight group"
+            >
+              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white font-mono text-xs shadow-md group-hover:scale-105 transition-transform">
+                KT
+              </div>
+              <span className="text-[var(--text-primary)] font-bold tracking-tight">
+                Kalhara
+                <span className="text-sky-500">.</span>
+              </span>
+              <div className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 ml-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Open for roles</span>
+              </div>
+            </a>
+
+            {/* Desktop Navigation Links (with Scrollspy) */}
+            <nav className="hidden lg:flex items-center gap-1">
+              {navLinks.map((link) => {
+                const sectionId = link.href.replace('#', '')
+                const isActive = activeSection === sectionId
+
+                return (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      handleNavClick(link.href)
+                    }}
+                    className={`px-3 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 relative ${
+                      isActive
+                        ? 'text-sky-400 bg-sky-500/12 shadow-sm font-bold'
+                        : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-slate-500/10'
+                    }`}
+                  >
+                    {link.label}
+                    {isActive && (
+                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-0.5 bg-sky-400 rounded-full" />
+                    )}
+                  </a>
+                )
+              })}
+            </nav>
+
+            {/* Action Tools Cluster: Command Palette, Sound FX, Theme Toggle, Mobile Menu */}
+            <div className="flex items-center gap-2">
+              {/* Quick Search / Command Palette Button */}
+              <button
+                onClick={() => {
+                  soundFx.click()
+                  onOpenCommandPalette()
                 }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+                className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 text-xs font-medium rounded-full bg-[var(--bg-secondary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-sky-500/40 border border-[var(--border-color)] transition-all shadow-sm"
+                title="Open Command Palette (⌘K)"
+                aria-label="Open Command Palette"
               >
-                {link.label}
-              </a>
-            ))}
+                <FaSearch className="text-[11px] text-sky-400" />
+                <span className="hidden md:inline text-[11px]">Search</span>
+                <kbd className="hidden sm:inline-block px-1.5 py-0.2 text-[10px] bg-slate-500/15 border border-[var(--border-color)] rounded font-mono text-[var(--text-secondary)]">
+                  ⌘K
+                </kbd>
+              </button>
+
+              {/* Sound FX Toggle */}
+              <button
+                onClick={handleToggleSound}
+                className={`p-2 rounded-full text-xs transition-all border ${
+                  soundEnabled
+                    ? 'text-sky-400 border-sky-400/30 bg-sky-500/10'
+                    : 'text-[var(--text-secondary)] border-transparent hover:bg-slate-500/10'
+                }`}
+                title={soundEnabled ? 'Mute sound effects' : 'Enable interface sound effects'}
+                aria-label="Toggle sound FX"
+              >
+                {soundEnabled ? <FaVolumeUp /> : <FaVolumeMute />}
+              </button>
+
+              {/* Theme Toggle Button */}
+              <button
+                onClick={() => {
+                  soundFx.click()
+                  toggleTheme()
+                }}
+                className="p-2 rounded-full text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-transparent hover:border-[var(--border-color)] hover:bg-slate-500/10 transition-all"
+                title={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+                aria-label="Toggle theme"
+              >
+                {isDark ? (
+                  <FaSun className="text-amber-400 hover:rotate-45 transition-transform" />
+                ) : (
+                  <FaMoon className="text-indigo-500 hover:-rotate-12 transition-transform" />
+                )}
+              </button>
+
+              {/* Mobile Drawer Trigger Button */}
+              <button
+                onClick={() => {
+                  soundFx.click()
+                  setMenuOpen(!menuOpen)
+                }}
+                className="lg:hidden p-2 text-base text-[var(--text-primary)] rounded-full hover:bg-slate-500/10 transition-colors"
+                aria-label="Toggle mobile menu"
+              >
+                {menuOpen ? <FaTimes /> : <FaBars />}
+              </button>
+            </div>
           </div>
         </div>
-      )}
-    </div>
+
+        {/* ── Mobile Drawer Dropdown ────────────────────────────────────────── */}
+        {menuOpen && (
+          <div
+            className="pointer-events-auto lg:hidden w-full max-w-6xl mt-2 rounded-2xl p-4 shadow-2xl transition-all duration-300 animate-fadeIn border"
+            style={{
+              background: isDark ? 'rgba(11, 18, 36, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+              backdropFilter: 'blur(24px)',
+              borderColor: isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(226, 232, 240, 0.95)',
+            }}
+          >
+            <div className="grid grid-cols-2 gap-2">
+              {navLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    handleNavClick(link.href)
+                  }}
+                  className={`px-3 py-2 text-xs font-semibold rounded-xl text-center transition-all ${
+                    activeSection === link.href.replace('#', '')
+                      ? 'bg-sky-500/15 text-sky-400 font-bold border border-sky-500/30'
+                      : 'text-[var(--text-primary)] hover:bg-slate-500/10'
+                  }`}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-[var(--border-color)] flex items-center justify-between">
+              <button
+                onClick={() => {
+                  soundFx.click()
+                  setMenuOpen(false)
+                  onOpenCommandPalette()
+                }}
+                className="flex items-center gap-2 text-xs font-semibold text-sky-400"
+              >
+                <FaSearch className="text-xs" />
+                <span>Open Command Palette</span>
+              </button>
+              <a
+                href="/Kalhara_Tennakoon_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-bold text-sky-400 underline underline-offset-4"
+              >
+                Download CV
+              </a>
+            </div>
+          </div>
+        )}
+      </header>
+    </>
   )
 }
 

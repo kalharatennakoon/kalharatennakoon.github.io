@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { FaCopy, FaCheck, FaTrash } from 'react-icons/fa'
 import { useTheme } from '../hooks/useTheme'
 import useScrollReveal from '../hooks/useScrollReveal'
 import { completableNames, parse, resolve } from '../terminal/commands'
 import { displayPath } from '../terminal/filesystem'
 import { flow, hint, line, s, setColumns } from '../terminal/format'
 import type { Line, Segment, TermColor } from '../terminal/types'
+import { soundFx } from '../utils/sound'
 
 /** ANSI-ish palette tuned for the dark navy terminal body. */
 const palette: Record<TermColor, string> = {
@@ -20,29 +22,27 @@ const palette: Record<TermColor, string> = {
 
 const PROMPT_USER = 'kalhara@portfolio'
 
-/** Chips shown under the terminal so visitors who won't type still get value. */
+/** Categorized chips for quick execution */
 const quickCommands = [
-  'whoami',
-  'ls',
-  'cd ~/projects',
-  'pipeline run',
-  'pipeline run --inject-exploit',
-  'kubectl get projects',
-  'git log',
-  'help',
+  { label: 'whoami', cmd: 'whoami' },
+  { label: 'pipeline run', cmd: 'pipeline run' },
+  { label: 'kubectl get projects', cmd: 'kubectl get projects' },
+  { label: 'git log', cmd: 'git log' },
+  { label: 'ls -la', cmd: 'ls' },
+  { label: 'cat skills.txt', cmd: 'cd ~/ && cat skills.txt' },
+  { label: 'help', cmd: 'help' },
 ]
 
 const bootSequence: { text: string; color?: TermColor; delay: number }[] = [
-  { text: 'Booting portfolio-sh 4.0 …', color: 'dim', delay: 180 },
-  { text: '✓ Connected to cluster: kalhara-portfolio (context: production)', color: 'green', delay: 260 },
-  { text: '✓ Loaded 9 projects, 11 certifications, 2 deployments', color: 'green', delay: 220 },
-  { text: '✓ All systems healthy', color: 'green', delay: 200 },
+  { text: 'Booting portfolio-sh 4.0 [Kubernetes Context: production] …', color: 'dim', delay: 180 },
+  { text: '✓ Connected to cluster: kalhara-k8s (Node: worker-01)', color: 'green', delay: 240 },
+  { text: '✓ Loaded 9 projects, 13 certifications, Tekton pipelines', color: 'green', delay: 200 },
+  { text: '✓ All systems healthy & ready', color: 'green', delay: 180 },
 ]
 
-/** Phones and tablets: tapping a chip is the main way in, typing the fallback. */
-const isTouchDevice = () => window.matchMedia('(pointer: coarse)').matches
+const isTouchDevice = () => typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
 
-function Terminal() {
+export function Terminal() {
   const { theme, toggleTheme } = useTheme()
   const [touch] = useState(isTouchDevice)
 
@@ -52,18 +52,15 @@ function Terminal() {
   const [booted, setBooted] = useState(false)
   const [history, setHistory] = useState<string[]>([])
   const [historyIndex, setHistoryIndex] = useState<number | null>(null)
-  /** Working directory as path segments below the home directory. */
+  const [copied, setCopied] = useState(false)
   const [cwd, setCwd] = useState<string[]>([])
 
-  /** The terminal sits below the fold, so hold the boot animation until it is seen. */
-  const [shellRef, inView] = useScrollReveal<HTMLDivElement>(0.15)
+  const [shellRef, inView] = useScrollReveal<HTMLDivElement>(0.1)
 
   const scrollRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const abortRef = useRef(false)
-  /** Per-instance so ids stay in step with `lines` across hot reloads. */
   const lineIdRef = useRef(0)
-  /** Mirrors `history` so command handlers read a fresh value, not a closure. */
   const historyRef = useRef<string[]>([])
 
   const append = useCallback((kind: Line['kind'], rows: Segment[][]) => {
@@ -73,7 +70,32 @@ function Terminal() {
     ])
   }, [])
 
-  /* Boot animation — runs once, the first time the terminal scrolls into view. */
+  /* Measure columns */
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+
+    const measure = () => {
+      const probe = document.createElement('span')
+      probe.textContent = '0'.repeat(50)
+      probe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre'
+      el.appendChild(probe)
+      const charWidth = probe.getBoundingClientRect().width / 50
+      probe.remove()
+
+      const style = getComputedStyle(el)
+      const inner = el.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)
+      if (charWidth > 0) setColumns(Math.floor(inner / charWidth))
+    }
+
+    measure()
+    void document.fonts.ready.then(measure)
+    const observer = new ResizeObserver(measure)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  /* Boot animation */
   useEffect(() => {
     if (!inView) return
     let cancelled = false
@@ -96,57 +118,31 @@ function Terminal() {
         append('output', [
           [],
           flow([
-            s('Welcome. ', 'white', true),
-            s(`This portfolio runs a real shell — ${touch ? 'tap a command below' : 'type a command'} to explore.`, 'dim'),
+            s('Welcome to Kalhara\'s Interactive Cloud Shell. ', 'white', true),
+            s('Type a command or click a chip below to run pipelines, query cluster resources, or explore projects.', 'dim'),
           ]),
-          hint(
-            touch
-              ? 'Or type your own: `help` lists everything.'
-              : 'Try `help` for everything, or `whoami` to start. Tab completes, ↑ recalls.',
-          ),
+          hint(touch ? 'Tap a command below to explore.' : 'Type `help` to list available commands.'),
           [],
         ])
         setBooted(true)
-      }, elapsed + 320),
+      }, elapsed + 300),
     )
 
     return () => {
       cancelled = true
       timers.forEach(clearTimeout)
     }
-  }, [append, inView, touch])
+  }, [inView, append, touch])
 
-  /* Tell the formatter how many columns fit, so prose wraps to the screen. */
   useEffect(() => {
-    const el = scrollRef.current
-    if (!el) return
-
-    const measure = () => {
-      const probe = document.createElement('span')
-      probe.textContent = '0'.repeat(50)
-      probe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre'
-      el.appendChild(probe)
-      const charWidth = probe.getBoundingClientRect().width / 50
-      probe.remove()
-
-      const style = getComputedStyle(el)
-      const inner = el.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)
-      if (charWidth > 0) setColumns(Math.floor(inner / charWidth))
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
     }
-
-    measure()
-    /* The monospace web font changes the character width once it loads. */
-    void document.fonts.ready.then(measure)
-    const observer = new ResizeObserver(measure)
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
-  /* Keep the newest output in view. */
-  useEffect(() => {
-    const el = scrollRef.current
-    if (el) el.scrollTop = el.scrollHeight
   }, [lines])
+
+  useEffect(() => {
+    historyRef.current = history
+  }, [history])
 
   const sleep = useCallback(
     (ms: number) => new Promise<void>((resolve_) => setTimeout(resolve_, ms)),
@@ -169,8 +165,6 @@ function Terminal() {
 
       if (!trimmed) return
 
-      /* Update the ref synchronously: a state updater would not have run by
-         the time the command below reads `history`. */
       historyRef.current = [...historyRef.current, trimmed]
       setHistory(historyRef.current)
 
@@ -212,18 +206,37 @@ function Terminal() {
     [append, cwd, sleep, theme, toggleTheme],
   )
 
-  const submit = useCallback(async () => {
-    if (busy) return
-    const value = input
-    setInput('')
-    setHistoryIndex(null)
-    await runCommand(value)
-  }, [busy, input, runCommand])
+  // Listen to external command palette events
+  useEffect(() => {
+    const handleCustomExec = (e: Event) => {
+      const customEvent = e as CustomEvent<{ command: string }>
+      if (customEvent.detail?.command) {
+        void runCommand(customEvent.detail.command)
+      }
+    }
+    window.addEventListener('portfolio:terminal-exec', handleCustomExec)
+    return () => window.removeEventListener('portfolio:terminal-exec', handleCustomExec)
+  }, [runCommand])
+
+  const copyScrollback = () => {
+    soundFx.success()
+    const text = lines
+      .map((l) => l.segments.map((s) => s.text).join(''))
+      .join('\n')
+    navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  const clearScreen = () => {
+    soundFx.click()
+    setLines([])
+  }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    /* Ctrl+C aborts a streaming command; Ctrl+L clears. */
-    if (e.ctrlKey && e.key.toLowerCase() === 'c') {
-      /* With text selected, Ctrl+C means copy — same as a real terminal. */
+    soundFx.terminalKey()
+
+    if (e.key === 'c' && e.ctrlKey) {
       if (window.getSelection()?.toString()) return
       e.preventDefault()
       abortRef.current = true
@@ -231,6 +244,7 @@ function Terminal() {
       setInput('')
       return
     }
+
     if (e.ctrlKey && e.key.toLowerCase() === 'l') {
       e.preventDefault()
       setLines([])
@@ -239,7 +253,11 @@ function Terminal() {
 
     if (e.key === 'Enter') {
       e.preventDefault()
-      void submit()
+      if (busy) return
+      const cmd = input
+      setInput('')
+      setHistoryIndex(null)
+      void runCommand(cmd)
       return
     }
 
@@ -272,7 +290,6 @@ function Terminal() {
     }
   }
 
-  /** Complete the command name, or the argument being typed. */
   const completeInput = () => {
     const parts = input.split(/\s+/)
     const isFirstWord = parts.length <= 1
@@ -295,7 +312,6 @@ function Terminal() {
 
     const matches = options.filter((o) => o.startsWith(prefix))
     if (matches.length === 1) {
-      /* No space after a directory, so the next Tab keeps descending into it. */
       setInput([...parts.slice(0, -1), matches[0]].join(' ') + (matches[0].endsWith('/') ? '' : ' '))
     } else if (matches.length > 1) {
       append('output', [[s(matches.join('   '), 'dim')]])
@@ -304,27 +320,71 @@ function Terminal() {
   }
 
   const focusInput = () => {
-    /* Don't steal focus mid-selection — the user may be copying output. */
     if (window.getSelection()?.toString()) return
-    /* preventScroll: focusing an off-screen input would otherwise make the
-       browser scroll the page to it. The shell never moves the page. */
     inputRef.current?.focus({ preventScroll: true })
   }
 
   return (
     <div className="terminal-shell" ref={shellRef}>
-      {/* Title bar */}
-      <div className="terminal-titlebar">
-        <div className="terminal-title">
-          {PROMPT_USER} — zsh — {busy ? 'running…' : '80×24'}
+      {/* Title bar with macOS traffic lights & action buttons */}
+      <div className="terminal-titlebar flex items-center justify-between">
+        {/* Left: Window Controls */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={clearScreen}
+            className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors shadow-sm cursor-pointer"
+            title="Clear output"
+            aria-label="Clear terminal"
+          />
+          <button
+            onClick={() => void runCommand('pipeline run')}
+            className="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-colors shadow-sm cursor-pointer"
+            title="Run pipeline"
+            aria-label="Run pipeline"
+          />
+          <button
+            onClick={() => void runCommand('help')}
+            className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-500 transition-colors shadow-sm cursor-pointer"
+            title="Show help"
+            aria-label="Show help"
+          />
+          <span className="ml-3 text-xs font-mono text-slate-400 font-semibold hidden sm:inline">
+            kalhara@cluster-prod : zsh
+          </span>
         </div>
-        <div className="terminal-badge">
-          <span className={`terminal-status-dot${busy ? ' is-busy' : ''}`} />
-          {busy ? 'busy' : 'ready'}
+
+        {/* Center / Right: Status & Quick Controls */}
+        <div className="flex items-center gap-3">
+          <div className="terminal-badge hidden xs:inline-flex">
+            <span className={`terminal-status-dot${busy ? ' is-busy' : ''}`} />
+            <span>{busy ? 'executing…' : 'cluster ready'}</span>
+          </div>
+
+          <button
+            onClick={copyScrollback}
+            className="p-1.5 text-xs text-slate-400 hover:text-white rounded bg-slate-800/40 hover:bg-slate-700/60 border border-slate-700/50 transition-all flex items-center gap-1.5 cursor-pointer"
+            title="Copy entire terminal text"
+            aria-label="Copy terminal text"
+          >
+            {copied ? <FaCheck className="text-emerald-400" /> : <FaCopy />}
+            <span className="text-[11px] font-mono hidden sm:inline">
+              {copied ? 'Copied' : 'Copy'}
+            </span>
+          </button>
+
+          <button
+            onClick={clearScreen}
+            className="p-1.5 text-xs text-slate-400 hover:text-white rounded bg-slate-800/40 hover:bg-slate-700/60 border border-slate-700/50 transition-all flex items-center gap-1.5 cursor-pointer"
+            title="Clear screen"
+            aria-label="Clear screen"
+          >
+            <FaTrash />
+            <span className="text-[11px] font-mono hidden sm:inline">Clear</span>
+          </button>
         </div>
       </div>
 
-      {/* Scrollback */}
+      {/* Scrollback Body */}
       <div
         ref={scrollRef}
         className="terminal-body"
@@ -370,7 +430,7 @@ function Terminal() {
           </div>
         ))}
 
-        {/* Prompt */}
+        {/* Input Prompt */}
         {booted && (
           <div className="terminal-prompt-row">
             <span style={{ color: palette.green, fontWeight: 700 }}>{PROMPT_USER}</span>
@@ -383,38 +443,35 @@ function Terminal() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              /* Deliberately not `disabled` while busy: a disabled input
-                 receives no key events, which would make Ctrl+C unable to
-                 abort a running command. `submit` guards against re-entry. */
               spellCheck={false}
               autoComplete="off"
               autoCapitalize="off"
               autoCorrect="off"
               aria-label="Terminal command input"
-              placeholder={busy ? '' : touch ? 'or type a command…' : 'type a command…'}
+              placeholder={busy ? '' : touch ? 'tap a command below or type…' : 'type a command (try: pipeline run)…'}
             />
           </div>
         )}
       </div>
 
-      {/* Quick commands for visitors who would rather click than type */}
+      {/* Quick Command Chips */}
       <div className="terminal-chips">
-        <span className="terminal-chips-label">{touch ? 'Tap:' : 'Try:'}</span>
-        {quickCommands.map((cmd) => (
+        <span className="terminal-chips-label">{touch ? 'Tap:' : 'Quick:'}</span>
+        {quickCommands.map((item) => (
           <button
-            key={cmd}
+            key={item.label}
             type="button"
-            className="terminal-chip"
+            className="terminal-chip flex items-center gap-1.5"
             disabled={busy}
             onClick={() => {
+              soundFx.click()
               setInput('')
               setHistoryIndex(null)
-              void runCommand(cmd)
-              /* Focusing on touch would pop the keyboard over the output. */
+              void runCommand(item.cmd)
               if (!touch) inputRef.current?.focus({ preventScroll: true })
             }}
           >
-            {cmd}
+            <span>{item.label}</span>
           </button>
         ))}
       </div>
@@ -422,7 +479,6 @@ function Terminal() {
   )
 }
 
-/** Longest shared prefix across matches, used for partial tab completion. */
 function commonPrefix(items: string[]): string {
   if (!items.length) return ''
   let prefix = items[0]
