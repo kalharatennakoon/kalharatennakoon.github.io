@@ -38,7 +38,7 @@ function Experience() {
   ]
 
   return (
-    <section id="experience" className="py-20 bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]">
+    <section id="experience" className="py-20 bg-[var(--bg-primary)] relative overflow-hidden">
 
       {/* Background blob */}
       <div
@@ -65,7 +65,7 @@ function Experience() {
             </div>
             <h2
               className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
-              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
+              style={{ backgroundImage: 'linear-gradient(135deg, var(--text-grad-from) 0%, var(--text-grad-to) 100%)', backgroundSize: '200% 200%' }}
             >
               Work Experience
             </h2>
@@ -95,7 +95,7 @@ function Experience() {
               >
                 {/* Timeline dot with pulse */}
                 <div className="absolute left-0 top-6 hidden sm:flex items-center justify-center w-12 h-12 rounded-full shadow-[0_0_0_4px_var(--bg-primary),0_0_0_5px_rgba(30,58,138,0.25)] pulse-dot"
-                  style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
+                  style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))' }}
                 >
                   <FaBriefcase className="text-white text-base" />
                 </div>

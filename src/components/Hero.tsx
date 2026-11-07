@@ -23,7 +23,7 @@ function Stat({ value, suffix, label, startDelay }: { value: number; suffix: str
 
   return (
     <div>
-      <div style={{ fontSize: '1.5rem', fontWeight: 800, background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', fontVariantNumeric: 'tabular-nums' }}>
+      <div style={{ fontSize: '1.5rem', fontWeight: 800, background: 'linear-gradient(135deg, var(--text-grad-from) 0%, var(--text-grad-to) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', fontVariantNumeric: 'tabular-nums' }}>
         {count}{suffix}
       </div>
       <div style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 500, marginTop: '2px' }}>{label}</div>
@@ -75,7 +75,7 @@ function Hero() {
           <h1 className="enter" style={{ ...delay(0.19), fontSize: 'clamp(2.5rem, 6vw, 3.75rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '16px' }}>
             <span
               className="animate-gradient-text"
-              style={{ background: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 45%, #06b6d4 100%)', backgroundSize: '200% 200%', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
+              style={{ background: 'linear-gradient(135deg, var(--text-grad-from) 0%, var(--text-grad-to) 100%)', backgroundSize: '200% 200%', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
             >
               Kalhara Tennakoon
             </span>
@@ -93,7 +93,7 @@ function Hero() {
           {/* CTA Buttons */}
           <div className="enter" style={{ ...delay(0.4), display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '40px' }}>
             <a href="#projects" className="glass-btn-primary px-7 py-3 font-semibold text-sm text-white"
-              style={{ background: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 100%)' }}>
+              style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))' }}>
               View Projects
             </a>
             <a href="#contact" className="glass-btn px-7 py-3 font-semibold text-sm" style={{ color: 'var(--color-primary)' }}>

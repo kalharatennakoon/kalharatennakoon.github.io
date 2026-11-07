@@ -146,7 +146,7 @@ function Certifications() {
             </div>
             <h2
               className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
-              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
+              style={{ backgroundImage: 'linear-gradient(135deg, var(--text-grad-from) 0%, var(--text-grad-to) 100%)', backgroundSize: '200% 200%' }}
             >
               Certifications
             </h2>
@@ -179,7 +179,7 @@ function Certifications() {
                   >
                     <div className="bg-[var(--card-bg)] rounded-xl border border-[var(--border-color)] hover:border-[rgba(30,58,138,0.4)] px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(30,58,138,0.12)] overflow-hidden">
                       {/* Badge */}
-                      <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[rgba(30,58,138,0.1)] to-[rgba(6,182,212,0.08)] flex items-center justify-center flex-shrink-0 overflow-hidden border border-[rgba(30,58,138,0.1)]">
+                      <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[rgba(30,58,138,0.1)] to-[rgba(23,37,84,0.08)] flex items-center justify-center flex-shrink-0 overflow-hidden border border-[rgba(30,58,138,0.1)]">
                         {cert.badgeImage ? (
                           <img src={cert.badgeImage} alt={cert.title} className="w-full h-full object-contain p-0.5" />
                         ) : (
@@ -203,7 +203,7 @@ function Certifications() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg text-white hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(30,58,138,0.35)] transition-all duration-200 whitespace-nowrap"
-                          style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
+                          style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))' }}
                         >
                           <FaExternalLinkAlt className="text-[10px]" /> View
                         </a>

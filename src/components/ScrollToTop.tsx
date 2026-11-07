@@ -24,7 +24,7 @@ function ScrollToTop() {
       className="glass-btn-primary fixed bottom-8 right-8 z-[1000] w-12 h-12 cursor-pointer transition-all duration-300 text-white"
       style={{
         position: 'fixed',
-        background: 'linear-gradient(135deg, var(--color-primary), #3b82f6, #06b6d4)',
+        background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))',
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.8)',
         pointerEvents: isVisible ? 'auto' : 'none',

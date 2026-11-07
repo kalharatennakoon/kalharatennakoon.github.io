@@ -50,7 +50,7 @@ function PostCard({ post, delay = 0, visible = true }: { post: BlogPost; delay?:
           href={post.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="block h-44 overflow-hidden flex-shrink-0 bg-gradient-to-br from-[rgba(30,58,138,0.08)] to-[rgba(6,182,212,0.1)]"
+          className="block h-44 overflow-hidden flex-shrink-0 bg-gradient-to-br from-[rgba(30,58,138,0.08)] to-[rgba(23,37,84,0.1)]"
         >
           {post.image ? (
             <img
@@ -104,7 +104,7 @@ function PostCard({ post, delay = 0, visible = true }: { post: BlogPost; delay?:
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold text-white hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(30,58,138,0.35)] transition-all duration-200 self-start"
-            style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
+            style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))' }}
           >
             <FaMedium className="text-sm" /> Read on Medium
           </a>
@@ -145,14 +145,14 @@ function Blog() {
             if (isNaN(db)) return -1
             return db - da
           })
-          setLatestPosts(sorted.slice(0, 3))
+          setLatestPosts(sorted)
         }
       })
       .catch(err => console.log('Could not fetch blog posts:', err))
   }, [])
 
   return (
-    <section id="blog" className="py-20 bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]">
+    <section id="blog" className="py-20 bg-[var(--bg-primary)] relative overflow-hidden">
 
       {/* Background blobs */}
       <div
@@ -180,7 +180,7 @@ function Blog() {
             </div>
             <h2
               className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
-              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
+              style={{ backgroundImage: 'linear-gradient(135deg, var(--text-grad-from) 0%, var(--text-grad-to) 100%)', backgroundSize: '200% 200%' }}
             >
               Writing
             </h2>
@@ -221,7 +221,7 @@ function Blog() {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3.5 text-white rounded-xl font-semibold text-sm transition-all duration-300 hover:shadow-[0_10px_30px_rgba(30,58,138,0.4)] hover:-translate-y-0.5"
-            style={{ background: 'linear-gradient(135deg, var(--color-primary), #3b82f6, #06b6d4)', backgroundSize: '200% 200%' }}
+            style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))', backgroundSize: '200% 200%' }}
           >
             <FaMedium /> View All Posts on Medium
           </a>

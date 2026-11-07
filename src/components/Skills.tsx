@@ -149,7 +149,7 @@ function Skills() {
       <div
         className="blob-shape w-[350px] h-[350px]"
         style={{
-          background: 'radial-gradient(circle, rgba(6,182,212,0.1), transparent)',
+          background: 'radial-gradient(circle, rgba(23,37,84,0.1), transparent)',
           bottom: '-100px',
           right: '-80px',
           animationDelay: '-8s',
@@ -171,7 +171,7 @@ function Skills() {
             </div>
             <h2
               className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
-              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
+              style={{ backgroundImage: 'linear-gradient(135deg, var(--text-grad-from) 0%, var(--text-grad-to) 100%)', backgroundSize: '200% 200%' }}
             >
               Technical Expertise
             </h2>
@@ -195,7 +195,7 @@ function Skills() {
                     <div className="flex items-center gap-2.5">
                       <div
                         className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0"
-                        style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
+                        style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))' }}
                       >
                         <CatIcon className="text-white text-xs" />
                       </div>

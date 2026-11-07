@@ -53,6 +53,11 @@ jobs:
       - name: Build industry site
         working-directory: industry
         run: npm run build
+        env:
+          # Contact form (EmailJS). Set under Settings → Secrets and variables → Actions → Variables.
+          VITE_EMAILJS_SERVICE_ID: ${{ vars.VITE_EMAILJS_SERVICE_ID }}
+          VITE_EMAILJS_TEMPLATE_ID: ${{ vars.VITE_EMAILJS_TEMPLATE_ID }}
+          VITE_EMAILJS_PUBLIC_KEY: ${{ vars.VITE_EMAILJS_PUBLIC_KEY }}
 
       - name: Install dependencies (academic)
         working-directory: academic

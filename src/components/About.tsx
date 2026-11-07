@@ -7,7 +7,7 @@ function About() {
   const [termRef, termVisible] = useScrollReveal<HTMLDivElement>(0.05)
 
   return (
-    <section id="about" className="py-16 md:py-20 bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]" style={{ contain: 'paint' }}>
+    <section id="about" className="py-16 md:py-20 bg-[var(--bg-primary)] relative overflow-hidden" style={{ contain: 'paint' }}>
 
       {/* Subtle background blob — kept inside section bounds */}
       <div
@@ -28,7 +28,7 @@ function About() {
           className={`text-center mb-10 reveal ${isVisible ? 'is-visible' : ''}`}
         >
           <h2 className="text-4xl md:text-5xl font-extrabold mb-3 inline-block bg-clip-text text-transparent animate-gradient-text pb-1"
-            style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
+            style={{ backgroundImage: 'linear-gradient(135deg, var(--text-grad-from) 0%, var(--text-grad-to) 100%)', backgroundSize: '200% 200%' }}
           >
             About Me
           </h2>
@@ -45,7 +45,7 @@ function About() {
             {/* Decorative blobs inside card */}
             <div
               className="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl pointer-events-none"
-              style={{ background: 'rgba(6,182,212,0.08)' }}
+              style={{ background: 'rgba(23,37,84,0.08)' }}
             />
             <div
               className="absolute bottom-0 left-0 w-24 h-24 rounded-full blur-2xl pointer-events-none"

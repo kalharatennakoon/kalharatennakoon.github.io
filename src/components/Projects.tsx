@@ -1,5 +1,6 @@
-import { FaCode, FaGithub, FaGlobe, FaBuilding, FaCalendarCheck, FaShieldAlt, FaBrain, FaPaw, FaCar, FaHospital, FaSun, FaFileAlt, FaClipboardList, FaEnvelopeOpenText } from 'react-icons/fa'
+import { FaCode, FaGithub, FaGlobe, FaBuilding, FaCalendarCheck, FaShieldAlt, FaBrain, FaPaw, FaCar, FaHospital, FaSun, FaFileAlt, FaClipboardList, FaEnvelopeOpenText, FaArrowRight } from 'react-icons/fa'
 import type { IconType } from 'react-icons'
+import { Link } from 'react-router-dom'
 import useScrollReveal from '../hooks/useScrollReveal'
 
 interface Project {
@@ -13,7 +14,8 @@ interface Project {
   subtitle?: string
 }
 
-function Projects() {
+/** `limit` shows only the first N projects plus a link to the full list. */
+function Projects({ limit }: { limit?: number } = {}) {
   const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
   const [gridRef, gridVisible] = useScrollReveal<HTMLDivElement>(0.05)
 
@@ -101,8 +103,11 @@ function Projects() {
     },
   ]
 
+  const shown = limit ? projects.slice(0, limit) : projects
+  const hasMore = shown.length < projects.length
+
   return (
-    <section id="projects" className="py-20 bg-[var(--bg-primary)] relative overflow-hidden dark:bg-[var(--bg-secondary)]">
+    <section id="projects" className="py-20 bg-[var(--bg-primary)] relative overflow-hidden">
 
       {/* Background blobs */}
       <div
@@ -117,7 +122,7 @@ function Projects() {
       <div
         className="blob-shape w-[300px] h-[300px]"
         style={{
-          background: 'radial-gradient(circle, rgba(6,182,212,0.08), transparent)',
+          background: 'radial-gradient(circle, rgba(23,37,84,0.08), transparent)',
           bottom: '-80px',
           left: '-60px',
           animationDelay: '-7s',
@@ -139,7 +144,7 @@ function Projects() {
             </div>
             <h2
               className="text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
-              style={{ backgroundImage: 'linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 50%, #06b6d4 100%)', backgroundSize: '200% 200%' }}
+              style={{ backgroundImage: 'linear-gradient(135deg, var(--text-grad-from) 0%, var(--text-grad-to) 100%)', backgroundSize: '200% 200%' }}
             >
               Projects
             </h2>
@@ -149,7 +154,7 @@ function Projects() {
 
         {/* Cards grid */}
         <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => {
+          {shown.map((project, index) => {
             const Icon = project.icon
             return (
               <div
@@ -161,7 +166,7 @@ function Projects() {
                   {/* Colored top accent */}
                   <div
                     className="h-1 w-full"
-                    style={{ background: 'linear-gradient(90deg, var(--color-primary), #06b6d4)' }}
+                    style={{ background: 'linear-gradient(90deg, var(--accent-bar-from), var(--accent-bar-to))' }}
                   />
 
                   {/* Header */}
@@ -169,7 +174,7 @@ function Projects() {
                     <div className="flex items-start gap-3 mb-3">
                       <div
                         className="w-9 h-9 rounded-lg flex items-center justify-center text-white text-sm flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-300"
-                        style={{ background: 'linear-gradient(135deg, var(--color-primary), #06b6d4)' }}
+                        style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))' }}
                       >
                         <Icon />
                       </div>
@@ -230,6 +235,18 @@ function Projects() {
             )
           })}
         </div>
+
+        {hasMore && (
+          <div className="text-center mt-12">
+            <Link
+              to="/projects/"
+              className="inline-flex items-center gap-2 px-8 py-3.5 text-white rounded-xl font-semibold text-sm transition-all duration-300 hover:shadow-[0_10px_30px_rgba(30,58,138,0.4)] hover:-translate-y-0.5"
+              style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))', backgroundSize: '200% 200%' }}
+            >
+              View all {projects.length} projects <FaArrowRight className="text-xs" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   )
