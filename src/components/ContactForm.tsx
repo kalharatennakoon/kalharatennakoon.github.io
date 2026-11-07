@@ -1,23 +1,41 @@
-import { useState, type FormEvent } from 'react'
-import emailjs from '@emailjs/browser'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { FaPaperPlane, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa'
 
 /*
- * Sends the message through EmailJS straight to the inbox configured on the
- * EmailJS template (kalhara@kalharatennakoon.com). The IDs are public by
- * design: EmailJS restricts use by allowed origin, not by secrecy.
- *
- * Template variables: {{name}}, {{email}}, {{subject}}, {{message}}.
- * Set the template's Reply-To to {{email}} so replies go to the sender.
+ * Posts the message to the Cloudflare Worker in /worker, which emails it to
+ * the site owner with Reply-To set to the visitor. Turnstile (Cloudflare's
+ * invisible spam check) runs when a site key is configured.
  */
-const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID as string | undefined
-const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string | undefined
-const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string | undefined
+const ENDPOINT =
+  (import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined) || 'https://api.kalharatennakoon.com/contact'
+const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined
 const CONTACT_EMAIL = 'kalhara@kalharatennakoon.com'
 
-const configured = Boolean(SERVICE_ID && TEMPLATE_ID && PUBLIC_KEY)
-
 type Status = 'idle' | 'sending' | 'sent' | 'error'
+
+interface TurnstileApi {
+  render(el: HTMLElement, opts: Record<string, unknown>): string
+  reset(id?: string): void
+  remove(id: string): void
+}
+declare global {
+  interface Window { turnstile?: TurnstileApi }
+}
+
+/** Loads Cloudflare's Turnstile script once and resolves when it's ready. */
+let turnstileLoader: Promise<TurnstileApi> | null = null
+function loadTurnstile(): Promise<TurnstileApi> {
+  if (window.turnstile) return Promise.resolve(window.turnstile)
+  turnstileLoader ??= new Promise((resolve, reject) => {
+    const script = document.createElement('script')
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
+    script.async = true
+    script.onload = () => (window.turnstile ? resolve(window.turnstile) : reject(new Error('Turnstile missing')))
+    script.onerror = () => { turnstileLoader = null; reject(new Error('Turnstile failed to load')) }
+    document.head.appendChild(script)
+  })
+  return turnstileLoader
+}
 
 const fieldClass =
   'w-full px-4 py-2.5 rounded-xl text-sm bg-[var(--bg-primary)] text-[var(--text-primary)] ' +
@@ -29,49 +47,84 @@ const labelClass = 'block text-xs font-semibold text-[var(--text-secondary)] mb-
 
 function ContactForm() {
   const [status, setStatus] = useState<Status>('idle')
+  const [errorText, setErrorText] = useState('')
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   // Hidden from people; bots that fill every field get silently dropped.
   const [honeypot, setHoneypot] = useState('')
 
+  const turnstileRef = useRef<HTMLDivElement>(null)
+  const widgetId = useRef<string | null>(null)
+  const tokenRef = useRef('')
+
+  const sent = status === 'sent'
+
+  // Mount the Turnstile widget while the form is on screen.
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY || sent) return
+    let cancelled = false
+    loadTurnstile()
+      .then((ts) => {
+        if (cancelled || !turnstileRef.current) return
+        widgetId.current = ts.render(turnstileRef.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          appearance: 'interaction-only', // invisible unless Cloudflare needs a click
+          theme: document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light',
+          callback: (token: string) => { tokenRef.current = token },
+          'expired-callback': () => { tokenRef.current = '' },
+          'error-callback': () => { tokenRef.current = '' },
+        })
+      })
+      .catch((err) => console.error(err))
+    return () => {
+      cancelled = true
+      if (widgetId.current && window.turnstile) window.turnstile.remove(widgetId.current)
+      widgetId.current = null
+      tokenRef.current = ''
+    }
+  }, [sent])
+
   const update = (field: keyof typeof form) => (e: { target: { value: string } }) =>
     setForm((f) => ({ ...f, [field]: e.target.value }))
+
+  const fail = (text: string) => {
+    setErrorText(text)
+    setStatus('error')
+    // Turnstile tokens are single-use; get a fresh one for the retry.
+    tokenRef.current = ''
+    if (widgetId.current) window.turnstile?.reset(widgetId.current)
+  }
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (status === 'sending') return
     if (honeypot) { setStatus('sent'); return }
-
-    if (!configured) {
-      // No EmailJS keys in this build (e.g. local dev): fall back to the mail app.
-      const body = `${form.message}\n\n${form.name} <${form.email}>`
-      window.location.href =
-        `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(form.subject || `Message from ${form.name}`)}` +
-        `&body=${encodeURIComponent(body)}`
+    if (TURNSTILE_SITE_KEY && !tokenRef.current) {
+      fail('The spam check is still running. Please try again in a moment.')
       return
     }
 
     setStatus('sending')
     try {
-      await emailjs.send(
-        SERVICE_ID!,
-        TEMPLATE_ID!,
-        {
-          name: form.name.trim(),
-          email: form.email.trim(),
-          subject: form.subject.trim() || `Message from ${form.name.trim()}`,
-          message: form.message.trim(),
-        },
-        { publicKey: PUBLIC_KEY! },
-      )
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, website: honeypot, turnstileToken: tokenRef.current }),
+      })
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string }
+      if (!res.ok || !data.ok) {
+        // 400s carry a message meant for the visitor (e.g. invalid email).
+        fail(res.status === 400 && data.error ? data.error : '')
+        return
+      }
       setStatus('sent')
       setForm({ name: '', email: '', subject: '', message: '' })
     } catch (err) {
       console.error('Contact form failed to send:', err)
-      setStatus('error')
+      fail('')
     }
   }
 
-  if (status === 'sent') {
+  if (sent) {
     return (
       <div role="status" className="text-center py-6">
         <FaCheckCircle className="mx-auto text-4xl text-emerald-500 mb-3" />
@@ -140,11 +193,14 @@ function ContactForm() {
         />
       </div>
 
+      {/* Turnstile mounts here; it stays empty unless a visitor needs to click. */}
+      <div ref={turnstileRef} />
+
       {status === 'error' && (
         <p role="alert" className="flex items-start gap-2 text-sm text-red-600 dark:text-red-400">
           <FaExclamationCircle className="mt-0.5 flex-shrink-0" />
           <span>
-            Your message couldn't be sent. Please try again, or email me at{' '}
+            {errorText || "Your message couldn't be sent. Please try again."} You can also email me at{' '}
             <a href={`mailto:${CONTACT_EMAIL}`} className="font-semibold underline">{CONTACT_EMAIL}</a>.
           </span>
         </p>

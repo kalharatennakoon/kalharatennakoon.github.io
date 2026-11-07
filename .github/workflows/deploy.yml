@@ -54,10 +54,9 @@ jobs:
         working-directory: industry
         run: npm run build
         env:
-          # Contact form (EmailJS). Set under Settings → Secrets and variables → Actions → Variables.
-          VITE_EMAILJS_SERVICE_ID: ${{ vars.VITE_EMAILJS_SERVICE_ID }}
-          VITE_EMAILJS_TEMPLATE_ID: ${{ vars.VITE_EMAILJS_TEMPLATE_ID }}
-          VITE_EMAILJS_PUBLIC_KEY: ${{ vars.VITE_EMAILJS_PUBLIC_KEY }}
+          # Contact form spam check (Cloudflare Turnstile site key, public).
+          # Set under Settings → Secrets and variables → Actions → Variables.
+          VITE_TURNSTILE_SITE_KEY: ${{ vars.VITE_TURNSTILE_SITE_KEY }}
 
       - name: Install dependencies (academic)
         working-directory: academic
