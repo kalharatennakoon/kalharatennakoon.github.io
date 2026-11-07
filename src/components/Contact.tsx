@@ -1,7 +1,7 @@
 import { FaEnvelope, FaGithub, FaLinkedin, FaMedium } from 'react-icons/fa'
 
 const contactLinks = [
-  { href: 'mailto:kalharatennakoonmck@gmail.com', icon: <FaEnvelope size={13} />, label: 'Email', value: 'kalharatennakoonmck@gmail.com', external: false },
+  { href: 'mailto:kalhara@kalharatennakoon.com', icon: <FaEnvelope size={13} />, label: 'Email', value: 'kalhara@kalharatennakoon.com', external: false },
   { href: 'https://www.linkedin.com/in/kalharatennakoon', icon: <FaLinkedin size={13} />, label: 'LinkedIn', value: 'linkedin.com/in/kalharatennakoon', external: true },
   { href: 'https://github.com/kalharatennakoon', icon: <FaGithub size={13} />, label: 'GitHub', value: 'github.com/kalharatennakoon', external: true },
   { href: 'https://kalharatennakoon.medium.com', icon: <FaMedium size={13} />, label: 'Medium', value: 'kalharatennakoon.medium.com', external: true },

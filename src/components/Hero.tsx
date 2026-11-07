@@ -61,7 +61,7 @@ function Hero() {
                 CV (PDF)
               </a>
               {[
-                { href: 'mailto:kalharatennakoonmck@gmail.com', icon: <FaEnvelope size={12} />, label: 'Email', external: false },
+                { href: 'mailto:kalhara@kalharatennakoon.com', icon: <FaEnvelope size={12} />, label: 'Email', external: false },
                 { href: 'https://github.com/kalharatennakoon', icon: <FaGithub size={12} />, label: 'GitHub', external: true },
                 { href: 'https://www.linkedin.com/in/kalharatennakoon', icon: <FaLinkedin size={12} />, label: 'LinkedIn', external: true },
               ].map((link) => (
