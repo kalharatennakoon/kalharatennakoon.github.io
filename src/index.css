@@ -366,6 +366,15 @@
   display: none;
 }
 
+/* Phones and tablets skip the blobs too. Each one re-rasterises a 64px blur
+   every frame (the border-radius morph can't be composited), and with a dozen
+   on the page mobile Safari's scrolling stuttered and lurched in light mode. */
+@media (hover: none) and (pointer: coarse) {
+  .blob-shape {
+    display: none;
+  }
+}
+
 :root[data-theme="dark"] .glass-btn {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
