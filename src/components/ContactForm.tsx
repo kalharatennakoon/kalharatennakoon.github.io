@@ -55,12 +55,16 @@ function ContactForm() {
   const turnstileRef = useRef<HTMLDivElement>(null)
   const widgetId = useRef<string | null>(null)
   const tokenRef = useRef('')
+  // Turnstile waits for the first focus in the form. Rendering it on page
+  // load let the widget pop in (and out again) while visitors were still
+  // scrolling, which shifted the page under their finger on phones.
+  const [armed, setArmed] = useState(false)
 
   const sent = status === 'sent'
 
-  // Mount the Turnstile widget while the form is on screen.
+  // Mount the Turnstile widget once the visitor starts using the form.
   useEffect(() => {
-    if (!TURNSTILE_SITE_KEY || sent) return
+    if (!TURNSTILE_SITE_KEY || sent || !armed) return
     let cancelled = false
     loadTurnstile()
       .then((ts) => {
@@ -81,7 +85,7 @@ function ContactForm() {
       widgetId.current = null
       tokenRef.current = ''
     }
-  }, [sent])
+  }, [sent, armed])
 
   const update = (field: keyof typeof form) => (e: { target: { value: string } }) =>
     setForm((f) => ({ ...f, [field]: e.target.value }))
@@ -144,7 +148,7 @@ function ContactForm() {
   const sending = status === 'sending'
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4 text-left">
+    <form onSubmit={onSubmit} onFocus={() => setArmed(true)} className="space-y-4 text-left">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label htmlFor="cf-name" className={labelClass}>Name</label>
