@@ -62,12 +62,6 @@ function Hero() {
         {/* Left: text */}
         <div style={{ flex: 1, minWidth: '280px' }}>
 
-          {/* Status badge */}
-          <div className="enter" style={{ ...delay(0.05), display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 16px', borderRadius: '9999px', background: 'rgba(30,58,138,0.1)', border: '1px solid rgba(30,58,138,0.2)', fontSize: '14px', fontWeight: 500, color: 'var(--color-primary)', marginBottom: '24px' }}>
-            <span className="animate-pulse-slow" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', display: 'inline-block', boxShadow: '0 0 8px rgba(16,185,129,0.9)' }} />
-            Available for opportunities
-          </div>
-
           <div className="enter" style={{ ...delay(0.12), fontSize: '16px', fontWeight: 300, color: 'var(--text-secondary)', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '4px' }}>
             Hello, I'm
           </div>

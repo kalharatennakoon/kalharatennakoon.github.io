@@ -35,11 +35,23 @@ const fly = (v: FlyVector, delay: number) => ({
   '--fly-delay': `${Math.round(delay * 1000) / 1000}s`,
 } as CSSProperties)
 
-/* The card sweeps in from off the top-left of the section. */
-const CARD_VECTOR: FlyVector = {
+/* The socials card sweeps in from off the top-left of the section, the form
+   card from the top-right, so the pair meets in the middle. */
+const SOCIAL_CARD_VECTOR: FlyVector = {
   x: '-125vw', y: '-70vh', rot: '-38deg',
   ox: '18px',  oy: '10px', orot: '3deg',
 }
+const FORM_CARD_VECTOR: FlyVector = {
+  x: '125vw', y: '-70vh', rot: '38deg',
+  ox: '-18px', oy: '10px', orot: '-3deg',
+}
+
+const CARD_CLASS =
+  'h-full bg-[var(--card-bg)] rounded-2xl shadow-[0_8px_32px_var(--shadow)] border border-[var(--border-color)] overflow-hidden shimmer-hover'
+
+const CardAccent = () => (
+  <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, var(--accent-bar-from), var(--accent-bar-to))' }} />
+)
 
 /* Social buttons alternate corners so the row assembles from every side.
    Travel is in px, not vw: these live inside the card, which clips its own
@@ -117,19 +129,16 @@ function Contact() {
             <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
           </div>
 
-          {/* Contact card: socials on the left, form on the right (stacked on phones) */}
+          {/* Two cards: socials on the left, form on the right (stacked on phones) */}
           <div
             ref={cardRef}
-            className="max-w-5xl mx-auto fly-in"
-            style={fly(CARD_VECTOR, 0)}
+            className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-6"
           >
-            <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_8px_32px_var(--shadow)] border border-[var(--border-color)] overflow-hidden shimmer-hover">
-              {/* Gradient accent top */}
-              <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, var(--accent-bar-from), var(--accent-bar-to))' }} />
-
-              <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr]">
-                {/* Left: intro + social links */}
-                <div className="px-8 py-7 border-b md:border-b-0 md:border-r border-[var(--border-color)] bg-gradient-to-br from-[rgba(30,58,138,0.05)] to-transparent">
+            {/* Socials card */}
+            <div className="fly-in" style={fly(SOCIAL_CARD_VECTOR, 0)}>
+              <div className={CARD_CLASS}>
+                <CardAccent />
+                <div className="h-full px-8 py-7 bg-gradient-to-br from-[rgba(30,58,138,0.05)] to-transparent">
                   <div
                     className="fly-in mb-7"
                     style={fly({ x: '-60px', y: '0px', rot: '-6deg', ox: '5px', oy: '0px', orot: '1deg' }, 0.5)}
@@ -181,11 +190,14 @@ function Contact() {
                   </div>
                 </div>
 
-                {/* Right: message form */}
-                <div
-                  className="relative px-8 py-7 fly-in"
-                  style={fly({ x: '60px', y: '0px', rot: '5deg', ox: '-5px', oy: '0px', orot: '-1deg' }, 0.6)}
-                >
+              </div>
+            </div>
+
+            {/* Form card */}
+            <div className="fly-in" style={fly(FORM_CARD_VECTOR, 0.15)}>
+              <div className={CARD_CLASS}>
+                <CardAccent />
+                <div className="relative px-8 py-7">
                   <h3 className="text-base font-bold text-[var(--text-primary)] mb-5">Send a Message</h3>
                   <ContactForm />
                 </div>
@@ -198,7 +210,7 @@ function Contact() {
       <footer className="bg-[var(--card-bg)] border-t border-[var(--border-color)] py-3 relative overflow-hidden">
         <div className="absolute inset-0 dot-grid opacity-30" />
         <div className="max-w-6xl mx-auto px-8 text-center relative z-10">
-          <p className="text-[var(--text-primary)] text-xs font-semibold m-0">
+          <p className="text-[var(--text-secondary)] text-xs font-normal m-0">
             © {currentYear} Kalhara Tennakoon. All Rights Reserved.
           </p>
         </div>

@@ -116,19 +116,6 @@ export const projects: Project[] = [
     site: 'https://kalharatennakoon.com/solarcast/',
   },
   {
-    id: 'strongcv',
-    name: 'strongcv',
-    tagline: 'AI-powered CV review & rewriting tool',
-    description:
-      'Web app that analyses a CV against a target role and job description, scores it section by ' +
-      'section, then rewrites it for download as Word or PDF. Two-model LLM pipeline on Ollama Cloud ' +
-      'with JSON-schema outputs validated by Zod, ATS checks, cover letters, and interview preparation.',
-    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Ollama', 'Zod', 'Upstash Redis', 'Vercel'],
-    status: 'Completed',
-    period: 'Sep 2026',
-    site: 'https://strongcv.vercel.app/',
-  },
-  {
     id: 'shortlisted',
     name: 'shortlisted',
     tagline: 'Job application tracking board',
@@ -140,6 +127,33 @@ export const projects: Project[] = [
     status: 'Completed',
     period: 'Sep 2026',
     site: 'https://kalharatennakoon.com/shortlisted/',
+  },
+  {
+    id: 'orderbook',
+    name: 'orderbook',
+    tagline: 'Order & payment tracker for social media sellers',
+    description:
+      'Web app for Facebook and WhatsApp sellers in Sri Lanka to keep orders, customers, advances, ' +
+      'and balances in one place, with invoices sent on WhatsApp in one tap. AI on Ollama fills in ' +
+      'orders from chat messages or screenshots and reads bank slips and SMS to record payments. ' +
+      'Sinhala, Tamil, and English.',
+    stack: ['Next.js', 'React', 'PostgreSQL', 'Neon', 'Ollama', 'Google OAuth', 'Vercel'],
+    status: 'Completed',
+    period: 'Oct 2026',
+    site: 'https://myorderbook.vercel.app/',
+  },
+  {
+    id: 'strongcv',
+    name: 'strongcv',
+    tagline: 'AI-powered CV review & rewriting tool',
+    description:
+      'Web app that analyses a CV against a target role and job description, scores it section by ' +
+      'section, then rewrites it for download as Word or PDF. Two-model LLM pipeline on Ollama Cloud ' +
+      'with JSON-schema outputs validated by Zod, ATS checks, cover letters, and interview preparation.',
+    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Ollama', 'Zod', 'Upstash Redis', 'Vercel'],
+    status: 'Completed',
+    period: 'Sep 2026',
+    site: 'https://strongcv.vercel.app/',
   },
   {
     id: 'know-your-letter',
@@ -359,6 +373,7 @@ export const community: CommunityRole[] = [
 
 /** Career timeline rendered as a commit log by the `git log` command. */
 export const timeline = [
+  { hash: '0d7c3e5', date: '2026-10', subject: 'feat(orderbook): ship order & payment tracker for social sellers' },
   { hash: 'b82d4e9', date: '2026-10', subject: 'feat(know-your-letter): ship plain-language letter explainer' },
   { hash: '5f0c7a1', date: '2026-10', subject: 'feat(solarcast): deploy to Kubernetes with Kustomize and ArgoCD' },
   { hash: 'a3f91c2', date: '2026-09', subject: 'release: BSc (Hons) Computer Science — First Class Honours' },
