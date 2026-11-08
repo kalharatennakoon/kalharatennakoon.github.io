@@ -1,12 +1,13 @@
-import type { CSSProperties } from 'react'
+import { useState, type CSSProperties, type ReactNode } from 'react'
 import {
   FaEnvelope, FaGithub, FaLinkedin, FaMedium,
-  FaStackOverflow,
+  FaStackOverflow, FaPhoneAlt, FaRegCopy, FaCheck,
 } from 'react-icons/fa'
-import { FaXTwitter } from 'react-icons/fa6'
+import { FaXTwitter, FaThreads } from 'react-icons/fa6'
 import { SiBluesky } from 'react-icons/si'
 import useScrollReveal from '../hooks/useScrollReveal'
 import ContactForm from './ContactForm'
+import { identity } from '../data/profile'
 
 /**
  * Start vector + overshoot for one fly-in. The animation itself lives in
@@ -65,17 +66,87 @@ const BUTTON_VECTORS: FlyVector[] = [
   { x:    '0px', y: '-125px', rot:  '24deg', ox:  '0px', oy:  '6px', orot: '-3deg' },
   { x: '-108px', y:  '100px', rot: '-35deg', ox:  '6px', oy: '-4px', orot:  '4deg' },
   { x:  '114px', y:  '-86px', rot:  '29deg', ox: '-6px', oy:  '4px', orot: '-4deg' },
+  { x: '-100px', y: '-110px', rot: '-26deg', ox:  '5px', oy:  '6px', orot:  '3deg' },
 ]
 
 const contactLinks = [
-  { href: 'mailto:kalhara@kalharatennakoon.com', icon: <FaEnvelope />, label: 'Email', external: false },
   { href: 'https://www.linkedin.com/in/kalharatennakoon', icon: <FaLinkedin />, label: 'LinkedIn', external: true },
   { href: 'https://github.com/kalharatennakoon', icon: <FaGithub />, label: 'GitHub', external: true },
   { href: 'https://kalharatennakoon.medium.com', icon: <FaMedium />, label: 'Medium', external: true },
   { href: 'https://x.com/_KalharaT', icon: <FaXTwitter />, label: 'X', external: true },
+  { href: 'https://www.threads.com/@kalharatennakoon', icon: <FaThreads />, label: 'Threads', external: true },
   { href: 'https://bsky.app/profile/kalharatennakoon.bsky.social', icon: <SiBluesky />, label: 'Bluesky', external: true },
   { href: 'https://stackoverflow.com/users/13018789/kalhara-tennakoon', icon: <FaStackOverflow />, label: 'Stack Overflow', external: true },
 ]
+
+interface DirectContact {
+  label: string
+  value: string
+  href: string
+  icon: ReactNode
+}
+
+/* Shown as rows above the social icons. Add a `phone` to `identity` in
+   src/data/profile.ts and a Phone row appears automatically. */
+const directContacts: DirectContact[] = [
+  { label: 'Email', value: identity.email, href: `mailto:${identity.email}`, icon: <FaEnvelope /> },
+  ...('phone' in identity && typeof identity.phone === 'string' && identity.phone
+    ? [{ label: 'Phone', value: identity.phone, href: `tel:${identity.phone.replace(/[^+\d]/g, '')}`, icon: <FaPhoneAlt /> }]
+    : []),
+]
+
+/** One contact row: icon, label + clickable value, and a copy button. */
+function DirectContactRow({ item, style }: { item: DirectContact; style: CSSProperties }) {
+  const [copied, setCopied] = useState(false)
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(item.value)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1800)
+    } catch {
+      // Clipboard can be blocked (e.g. insecure context); the link still works.
+    }
+  }
+
+  return (
+    <div className="fly-in flex items-center gap-2 sm:gap-3" style={style}>
+      <div
+        className="hidden sm:flex w-10 h-10 rounded-xl items-center justify-center text-white flex-shrink-0"
+        style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))' }}
+      >
+        {item.icon}
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-[var(--text-secondary)] m-0">
+          <span className="sm:hidden text-[var(--color-primary)] text-xs">{item.icon}</span>
+          {item.label}
+        </p>
+        <a
+          href={item.href}
+          className="block text-[clamp(12px,3.7vw,13px)] sm:text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--color-primary)] whitespace-nowrap overflow-hidden text-ellipsis transition-colors"
+          title={item.value}
+        >
+          {item.value}
+        </a>
+      </div>
+      <button
+        type="button"
+        onClick={copy}
+        aria-label={copied ? `${item.label} copied` : `Copy ${item.label.toLowerCase()}`}
+        title={copied ? 'Copied' : 'Copy'}
+        className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-xs border transition-colors ${
+          copied
+            ? 'text-emerald-600 border-emerald-500/40 bg-emerald-500/10'
+            : 'text-[var(--text-secondary)] border-[var(--border-color)] hover:text-[var(--color-primary)] hover:border-[rgba(30,58,138,0.4)]'
+        }`}
+      >
+        {copied ? <FaCheck /> : <FaRegCopy />}
+      </button>
+      <span className="sr-only" aria-live="polite">{copied ? `${item.label} copied` : ''}</span>
+    </div>
+  )
+}
 
 function Contact() {
   const currentYear = new Date().getFullYear()
@@ -107,7 +178,7 @@ function Contact() {
           }}
         />
 
-        <div className={`max-w-6xl mx-auto px-8 relative z-10 fly-stage ${cardVisible ? 'is-flying' : ''}`}>
+        <div className={`max-w-6xl mx-auto px-5 sm:px-8 relative z-10 fly-stage ${cardVisible ? 'is-flying' : ''}`}>
 
           {/* Section header */}
           <div
@@ -138,7 +209,7 @@ function Contact() {
             <div className="fly-in" style={fly(SOCIAL_CARD_VECTOR, 0)}>
               <div className={CARD_CLASS}>
                 <CardAccent />
-                <div className="h-full px-8 py-7 bg-gradient-to-br from-[rgba(30,58,138,0.05)] to-transparent">
+                <div className="h-full px-6 sm:px-8 py-7 bg-gradient-to-br from-[rgba(30,58,138,0.05)] to-transparent">
                   <div
                     className="fly-in mb-7"
                     style={fly({ x: '-60px', y: '0px', rot: '-6deg', ox: '5px', oy: '0px', orot: '1deg' }, 0.5)}
@@ -147,6 +218,16 @@ function Contact() {
                     <p className="text-sm text-[var(--text-secondary)] m-0 leading-relaxed">
                       Send me a message, or find me on any of these platforms.
                     </p>
+                  </div>
+
+                  <div className="flex flex-col gap-4 mb-7">
+                    {directContacts.map((item, i) => (
+                      <DirectContactRow
+                        key={item.label}
+                        item={item}
+                        style={fly({ x: '-60px', y: '0px', rot: '-4deg', ox: '5px', oy: '0px', orot: '1deg' }, 0.6 + i * 0.1)}
+                      />
+                    ))}
                   </div>
 
                   <p className="text-xs font-bold uppercase tracking-widest text-[var(--text-secondary)] mb-5 text-center md:text-left">Find me on</p>
@@ -158,7 +239,7 @@ function Contact() {
                       <div
                         key={link.label}
                         className="relative group fly-in"
-                        style={fly(BUTTON_VECTORS[i], 0.7 + i * 0.1)}
+                        style={fly(BUTTON_VECTORS[i % BUTTON_VECTORS.length], 0.7 + i * 0.1)}
                       >
                         <a
                           href={link.href}
@@ -197,7 +278,7 @@ function Contact() {
             <div className="fly-in" style={fly(FORM_CARD_VECTOR, 0.15)}>
               <div className={CARD_CLASS}>
                 <CardAccent />
-                <div className="relative px-8 py-7">
+                <div className="relative px-6 sm:px-8 py-7">
                   <h3 className="text-base font-bold text-[var(--text-primary)] mb-5">Send a Message</h3>
                   <ContactForm />
                 </div>
