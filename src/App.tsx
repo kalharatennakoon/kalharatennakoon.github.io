@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import CursorBubbles from './components/CursorBubbles'
 import ScrollToTop from './components/ScrollToTop'
+import SiteFooter from './components/SiteFooter'
 import ScrollManager from './components/ScrollManager'
 import HomePage from './pages/HomePage'
 import ProjectsPage from './pages/ProjectsPage'
@@ -29,6 +30,7 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
+      <SiteFooter />
       <ScrollToTop />
       <CursorBubbles />
     </div>

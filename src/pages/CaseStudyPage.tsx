@@ -276,7 +276,7 @@ function CaseStudyPage() {
           </ul>
         </section>
 
-        <footer className="pt-10 pb-24 border-t border-[var(--border-color)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <nav aria-label="More case studies" className="pt-10 pb-20 border-t border-[var(--border-color)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <Link
             to="/projects/"
             className={`${card} group flex items-center gap-4 px-6 py-5 hover:border-[rgba(30,58,138,0.4)] transition-colors`}
@@ -305,7 +305,7 @@ function CaseStudyPage() {
               <Link key={o.to} to={o.to} className={cls}>{body}</Link>
             )
           })}
-        </footer>
+        </nav>
       </div>
     </article>
   )
