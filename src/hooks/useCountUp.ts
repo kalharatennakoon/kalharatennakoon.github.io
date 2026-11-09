@@ -18,7 +18,11 @@ const prefersReducedMotion = () =>
 function useCountUp(target: number, { duration = 1600, delay = 0 }: CountUpOptions = {}) {
   // Seeded rather than assigned in the effect, so the reduced-motion case
   // renders the final number on the very first paint — no flash of zero.
-  const [value, setValue] = useState(() => (prefersReducedMotion() ? target : 0))
+  // At build time (no window) render the final number, so the prerendered
+  // HTML says "8", not "0"; the browser still animates from zero.
+  const [value, setValue] = useState(() =>
+    typeof window === 'undefined' || prefersReducedMotion() ? target : 0,
+  )
   const frame = useRef(0)
 
   useEffect(() => {

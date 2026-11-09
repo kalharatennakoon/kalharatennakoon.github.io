@@ -40,7 +40,8 @@ const bootSequence: { text: string; color?: TermColor; delay: number }[] = [
 ]
 
 /** Phones and tablets: tapping a chip is the main way in, typing the fallback. */
-const isTouchDevice = () => window.matchMedia('(pointer: coarse)').matches
+const isTouchDevice = () =>
+  typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
 
 function Terminal() {
   const { theme, toggleTheme } = useTheme()

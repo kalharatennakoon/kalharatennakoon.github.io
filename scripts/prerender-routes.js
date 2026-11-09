@@ -1,11 +1,17 @@
 // Writes dist/<route>/index.html for each page, plus dist/404.html.
 //
+// Each page's <div id="root"> is filled with that page rendered to HTML
+// (via the SSR build of src/entry-server.tsx in dist-ssr/), so crawlers that
+// don't run JavaScript still see the full content.
+//
 // GitHub Pages only serves real files, so without these a refresh on
 // /projects/ would 404. Each copy also gets its own title, description,
 // canonical URL and Open Graph/Twitter tags, so search results and link
 // previews show the right page instead of the home page.
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { join } from 'node:path'
+
+const { render } = await import(new URL('../dist-ssr/entry-server.js', import.meta.url).href)
 
 const SITE = 'https://kalharatennakoon.com'
 const NAME = 'Kalhara Tennakoon'
@@ -57,12 +63,20 @@ function pageHtml(base, { path, title, description }) {
   return html
 }
 
+/** Fill the empty #root with the server-rendered page for `url`. */
+function withBody(html, url) {
+  return swap(html, /<div id="root"><\/div>/, `<div id="root">${render(url)}</div>`, 'empty <div id="root">')
+}
+
 const base = readFileSync(join(DIST, 'index.html'), 'utf8')
+
+writeFileSync(join(DIST, 'index.html'), withBody(base, '/'))
+console.log(`prerender-routes: wrote ${join(DIST, 'index.html')}`)
 
 for (const route of routes) {
   const dir = join(DIST, route.path)
   mkdirSync(dir, { recursive: true })
-  writeFileSync(join(dir, 'index.html'), pageHtml(base, route))
+  writeFileSync(join(dir, 'index.html'), withBody(pageHtml(base, route), `/${route.path}`))
   console.log(`prerender-routes: wrote ${join(dir, 'index.html')}`)
 }
 

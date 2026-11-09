@@ -3,6 +3,7 @@ import { ThemeContext, type Theme } from './theme-context'
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'light' // build-time prerender
     const savedTheme = localStorage.getItem('theme') as Theme
     return savedTheme || 'light'
   })
