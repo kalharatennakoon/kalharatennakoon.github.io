@@ -16,7 +16,7 @@ function Node({ node }: { node: ArchNode }) {
 
 function Column({ column }: { column: ArchColumn }) {
   return (
-    <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-secondary)] p-4 h-full">
+    <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-secondary)] p-4 sm:p-5 h-full">
       <p className="m-0 mb-3 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--text-secondary)]">{column.title}</p>
       {column.nodes && (
         <ul className="m-0 p-0 list-none flex flex-col gap-2">
