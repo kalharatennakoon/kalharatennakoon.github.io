@@ -136,5 +136,21 @@
       <p><a href="/academic/">Academic CV</a> · <a href="https://github.com/kalharatennakoon">GitHub</a> · <a href="https://www.linkedin.com/in/kalharatennakoon">LinkedIn</a></p>
     </noscript>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Cloudflare Web Analytics (cookie-free). Loads only on the live site, so
+         the dev server and Lighthouse CI on localhost don't count as visits.
+         To stop counting your own visits, run this once in your browser's
+         console on kalharatennakoon.com: localStorage.setItem('analytics-off', '1') -->
+    <script>
+      (function () {
+        if (location.hostname !== 'kalharatennakoon.com') return
+        try { if (localStorage.getItem('analytics-off') === '1') return } catch (e) {}
+        var s = document.createElement('script')
+        s.type = 'module'
+        s.src = 'https://static.cloudflareinsights.com/beacon.min.js'
+        s.setAttribute('data-cf-beacon', '{"token": "32a910bc296e47d99dff01d4be97ec52"}')
+        document.body.appendChild(s)
+      })()
+    </script>
   </body>
 </html>
