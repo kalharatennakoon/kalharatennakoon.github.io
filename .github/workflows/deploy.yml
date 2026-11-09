@@ -40,10 +40,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: npm
+          cache-dependency-path: industry/package-lock.json
 
+      # npm ci installs exactly what package-lock.json pins, so deploys
+      # match local builds. (academic-cv has no lockfile yet, so it keeps
+      # npm install below.)
       - name: Install dependencies (industry)
         working-directory: industry
-        run: npm install
+        run: npm ci
 
       - name: Fetch Medium posts (industry)
         working-directory: industry
