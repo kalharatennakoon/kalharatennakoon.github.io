@@ -14,8 +14,7 @@ function SiteFooter() {
         <p className="m-0 text-xs text-[var(--text-secondary)] sm:whitespace-nowrap sm:flex-shrink-0">
           © {year} Kalhara Tennakoon. All Rights Reserved.
         </p>
-        <p className="m-0 text-xs text-[var(--text-secondary)]">
-          Built with React and Vite, prerendered for search, and deployed by GitHub Actions with weekly link checks and Lighthouse CI.{' '}
+        <p className="m-0 text-xs">
           <a
             href={README}
             target="_blank"
