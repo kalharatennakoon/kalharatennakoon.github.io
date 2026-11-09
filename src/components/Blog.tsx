@@ -2,6 +2,17 @@ import { useEffect, useState } from 'react'
 import { FaPen, FaMedium, FaCalendarAlt, FaFire, FaClock } from 'react-icons/fa'
 import useScrollReveal from '../hooks/useScrollReveal'
 
+/**
+ * Medium serves cover images at full size (up to 5 MB each). Ask its image
+ * CDN for an 800px-wide WebP instead, which is what a card actually needs.
+ * Other image URLs are left as they are.
+ */
+function coverUrl(image: string): string {
+  const url = image.startsWith('//') ? `https:${image}` : image
+  const m = url.match(/^https:\/\/(?:miro|cdn-images-1)\.medium\.com\/.*?([^/]+\.(?:jpe?g|png|gif|webp))$/i)
+  return m ? `https://miro.medium.com/v2/resize:fit:800/format:webp/${m[1]}` : url
+}
+
 interface BlogPost {
   title: string
   excerpt: string
@@ -54,8 +65,14 @@ function PostCard({ post, delay = 0, visible = true }: { post: BlogPost; delay?:
         >
           {post.image ? (
             <img
-              src={post.image.startsWith('//') ? `https:${post.image}` : post.image}
+              src={coverUrl(post.image)}
               alt={post.title}
+              width={800}
+              height={450}
+              loading="lazy"
+              decoding="async"
+              // Anonymous mode stops Medium's CDN setting a third-party cookie.
+              crossOrigin="anonymous"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108"
               style={{ '--tw-scale-x': '1.08', '--tw-scale-y': '1.08' } as React.CSSProperties}
             />
