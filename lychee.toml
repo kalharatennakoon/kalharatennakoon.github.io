@@ -31,5 +31,13 @@ exclude = [
   '^https://(www\.)?(x|twitter)\.com/',
   '^https://(www\.)?threads\.(com|net)/',
 
+  # Medium and its publications answer bots with 403 Forbidden. The blog
+  # posts are read from Medium's own feed at build time, so they exist.
+  # (Article images on miro.medium.com are still checked.)
+  '^https://medium\.com/',
+  '^https://kalharatennakoon\.medium\.com/',
+  '^https://faun\.pub/',
+  '^https://levelup\.gitconnected\.com/',
+
   'mailto:',
 ]
