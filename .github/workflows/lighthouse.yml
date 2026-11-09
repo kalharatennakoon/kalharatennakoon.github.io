@@ -25,7 +25,8 @@ jobs:
 
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '20'
+          # Lighthouse CI 0.16 needs Node 22.19 or newer.
+          node-version: '22'
           cache: npm
 
       - name: Install dependencies
@@ -45,5 +46,7 @@ jobs:
         with:
           name: lighthouse-reports
           path: .lighthouseci/
+          # The folder name starts with a dot, which upload-artifact skips by default.
+          include-hidden-files: true
           retention-days: 14
           if-no-files-found: ignore
