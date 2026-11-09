@@ -1,0 +1,35 @@
+# Link checker settings, used by .github/workflows/links.yml.
+# It runs against the built site in dist/, so it sees every link a visitor
+# can click: project demos, GitHub repos, certificates, articles and socials.
+
+# Resolve root-relative links (/projects/, /profile.png) against the build.
+root_dir = "dist"
+
+# Some sites answer bots with errors; look like a normal browser.
+user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36"
+
+# 429 means "slow down", not "gone".
+accept = ["200..=299", "429"]
+
+max_retries = 3
+retry_wait_time = 5
+timeout = 30
+max_concurrency = 8
+
+exclude = [
+  # These pages are built from this repo and checked as local files above.
+  # Checking them live would fail for a page that is not deployed yet.
+  '^https://kalharatennakoon\.com/$',
+  '^https://kalharatennakoon\.com/(projects|achievements|blog)/',
+  '^https://kalharatennakoon\.com/(og-image\.jpg|profile\.png|project-covers/)',
+
+  # Preconnect hints and the font stylesheet base URL are not pages.
+  '^https://fonts\.(googleapis|gstatic)\.com',
+
+  # Social networks that refuse automated requests even when the page exists.
+  '^https://(www\.)?linkedin\.com/',
+  '^https://(www\.)?(x|twitter)\.com/',
+  '^https://(www\.)?threads\.(com|net)/',
+
+  'mailto:',
+]
