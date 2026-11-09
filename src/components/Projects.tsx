@@ -22,6 +22,8 @@ interface Project {
   cover?: string
   /** Slug of a long-form case study at /projects/<slug>/. */
   caseStudy?: string
+  /** A case study hosted with the project itself, e.g. /vetcareone/case-study/. */
+  caseStudyUrl?: string
 }
 
 /** How many technology chips a card shows before collapsing the rest into "+N". */
@@ -40,6 +42,7 @@ const projects: Project[] = [
     icon: FaPaw,
     website: 'https://kalharatennakoon.com/vetcareone/',
     cover: '/project-covers/vetcareone.jpg',
+    caseStudyUrl: '/vetcareone/case-study/',
     date: 'Oct 2025 – Aug 2026',
     subtitle: 'Final Year Project · AI Launch Pad',
   },
@@ -314,7 +317,7 @@ function ProjectDialog({ project, onClose }: { project: Project; onClose: () => 
         </div>
 
         {/* Footer links */}
-        {(project.website || project.github || project.caseStudy) && (
+        {(project.website || project.github || project.caseStudy || project.caseStudyUrl) && (
           <div className="flex flex-wrap gap-3 px-6 sm:px-8 py-4 border-t border-[var(--border-color)]">
             {project.caseStudy && (
               <Link
@@ -325,6 +328,15 @@ function ProjectDialog({ project, onClose }: { project: Project; onClose: () => 
               >
                 <FaBookOpen /> Read the case study
               </Link>
+            )}
+            {project.caseStudyUrl && (
+              <a
+                href={project.caseStudyUrl}
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-white rounded-xl font-semibold text-sm transition-all duration-300 hover:shadow-[0_8px_24px_rgba(30,58,138,0.35)] hover:-translate-y-0.5"
+                style={GRADIENT}
+              >
+                <FaBookOpen /> Read the case study
+              </a>
             )}
             {project.website && (
               <a
@@ -477,7 +489,16 @@ function Projects({ limit }: { limit?: number } = {}) {
 
                   {/* Footer: details button + quick links */}
                   <div className="px-6 py-4 border-t border-[var(--border-color)] flex items-center justify-between gap-3">
-                    {project.caseStudy ? (
+                    {project.caseStudyUrl ? (
+                      <a
+                        href={project.caseStudyUrl}
+                        className="inline-flex items-center gap-2 px-4 py-2 text-white rounded-lg font-semibold text-sm transition-all duration-300 hover:shadow-[0_8px_20px_rgba(30,58,138,0.35)] group/btn"
+                        style={GRADIENT}
+                      >
+                        Case study
+                        <FaArrowRight className="text-xs transition-transform duration-300 group-hover/btn:translate-x-1" />
+                      </a>
+                    ) : project.caseStudy ? (
                       <Link
                         to={`/projects/${project.caseStudy}/`}
                         className="inline-flex items-center gap-2 px-4 py-2 text-white rounded-lg font-semibold text-sm transition-all duration-300 hover:shadow-[0_8px_20px_rgba(30,58,138,0.35)] group/btn"

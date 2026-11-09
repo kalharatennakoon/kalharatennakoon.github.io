@@ -11,7 +11,7 @@ import {
   FaUser,
 } from 'react-icons/fa'
 import ArchitectureDiagram from '../components/case-study/ArchitectureDiagram'
-import { caseStudies, findCaseStudy } from '../data/caseStudies'
+import { caseStudies, findCaseStudy, hostedCaseStudies } from '../data/caseStudies'
 import usePageTitle from '../hooks/usePageTitle'
 import NotFoundPage from './NotFoundPage'
 
@@ -54,7 +54,10 @@ function CaseStudyPage() {
 
   if (!study) return <NotFoundPage />
 
-  const others = caseStudies.filter((c) => c.slug !== study.slug)
+  const others = [
+    ...caseStudies.filter((c) => c.slug !== study.slug).map((c) => ({ name: c.name, to: `/projects/${c.slug}/`, hosted: false })),
+    ...hostedCaseStudies.map((c) => ({ name: c.name, to: c.href, hosted: true })),
+  ]
   const [lead, ...rest] = study.problem
 
   return (
@@ -273,7 +276,7 @@ function CaseStudyPage() {
           </ul>
         </section>
 
-        <footer className="pt-10 pb-24 border-t border-[var(--border-color)] grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <footer className="pt-10 pb-24 border-t border-[var(--border-color)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <Link
             to="/projects/"
             className={`${card} group flex items-center gap-4 px-6 py-5 hover:border-[rgba(30,58,138,0.4)] transition-colors`}
@@ -284,19 +287,24 @@ function CaseStudyPage() {
               <span className="text-base font-semibold text-[var(--text-primary)]">All projects</span>
             </span>
           </Link>
-          {others.map((o) => (
-            <Link
-              key={o.slug}
-              to={`/projects/${o.slug}/`}
-              className={`${card} group flex items-center justify-between gap-4 px-6 py-5 hover:border-[rgba(30,58,138,0.4)] transition-colors`}
-            >
-              <span className="flex flex-col">
-                <span className="text-xs text-[var(--text-secondary)]">Next case study</span>
-                <span className="text-base font-semibold text-[var(--text-primary)]">{o.name}</span>
-              </span>
-              <FaArrowRight className="text-sm text-[var(--color-primary)] transition-transform group-hover:translate-x-1" />
-            </Link>
-          ))}
+          {others.map((o, i) => {
+            const cls = `${card} group flex items-center justify-between gap-4 px-6 py-5 hover:border-[rgba(30,58,138,0.4)] transition-colors`
+            const body = (
+              <>
+                <span className="flex flex-col">
+                  <span className="text-xs text-[var(--text-secondary)]">{i === 0 ? 'Next case study' : 'Case study'}</span>
+                  <span className="text-base font-semibold text-[var(--text-primary)]">{o.name}</span>
+                </span>
+                <FaArrowRight className="text-sm text-[var(--color-primary)] transition-transform group-hover:translate-x-1" />
+              </>
+            )
+            // A hosted case study is a separate site on the same domain, so it needs a full page load.
+            return o.hosted ? (
+              <a key={o.to} href={o.to} className={cls}>{body}</a>
+            ) : (
+              <Link key={o.to} to={o.to} className={cls}>{body}</Link>
+            )
+          })}
         </footer>
       </div>
     </article>
