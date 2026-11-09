@@ -22,7 +22,7 @@ interface Project {
   cover?: string
   /** Slug of a long-form case study at /projects/<slug>/. */
   caseStudy?: string
-  /** A case study hosted with the project itself, e.g. /vetcareone/case-study/. */
+  /** A case study hosted with the project itself, as a full URL so it also works from the dev server. */
   caseStudyUrl?: string
 }
 
@@ -42,7 +42,7 @@ const projects: Project[] = [
     icon: FaPaw,
     website: 'https://kalharatennakoon.com/vetcareone/',
     cover: '/project-covers/vetcareone.jpg',
-    caseStudyUrl: '/vetcareone/case-study/',
+    caseStudyUrl: 'https://kalharatennakoon.com/vetcareone/case-study/',
     date: 'Oct 2025 – Aug 2026',
     subtitle: 'Final Year Project · AI Launch Pad',
   },

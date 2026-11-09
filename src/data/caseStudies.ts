@@ -349,7 +349,7 @@ export const caseStudies: CaseStudy[] = [
 
 /** Case studies hosted with the project itself, linked from the pages above. */
 export const hostedCaseStudies: { name: string; href: string }[] = [
-  { name: 'VetCare One', href: '/vetcareone/case-study/' },
+  { name: 'VetCare One', href: 'https://kalharatennakoon.com/vetcareone/case-study/' },
 ]
 
 export function findCaseStudy(slug: string | undefined): CaseStudy | undefined {
