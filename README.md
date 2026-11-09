@@ -1,73 +1,54 @@
-# React + TypeScript + Vite
+# kalharatennakoon.com
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Source for [kalharatennakoon.com](https://kalharatennakoon.com), the portfolio of Kalhara Tennakoon, a Software, DevOps & AI/ML Engineer.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19 + TypeScript**, built with **Vite** and styled with **Tailwind CSS**
+- **React Router** for the `/`, `/projects/`, `/achievements/` and `/blog/` pages
+- **Build-time prerendering**: each route is server-rendered to static HTML (`src/entry-server.tsx` + `scripts/prerender-routes.js`), so search engines and link previews get full content, per-page titles, canonical URLs and Open Graph tags without running JavaScript
+- **Cloudflare Worker** (`worker/`) at `api.kalharatennakoon.com` handling the contact form, with Turnstile spam protection and delivery through Cloudflare Email Routing
+- **Medium feed** pulled at build time into `public/blog-posts.json` (`scripts/fetch-medium-posts.js`)
 
-## React Compiler
+## Deployment
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+GitHub Actions (`.github/workflows/deploy.yml`) builds and deploys to GitHub Pages on every push to `main`, and weekly to refresh blog posts. One Pages site serves two branches:
 
-## Expanding the ESLint configuration
+| Branch | Path |
+|---|---|
+| `main` | `/` |
+| `academic-cv` | `/academic/` |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+DNS and email routing run on Cloudflare.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Local development
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev        # http://localhost:5173
+npm run build      # type-check, client build, SSR build, prerender
+npm run preview    # serve the production build
+npm run lint
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+To test the contact form locally, copy `.env.example` to `.env.local` and run the Worker:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+cd worker
+npm install
+npm run dev        # http://localhost:8787
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project layout
+
+```
+src/
+  pages/           route-level pages
+  components/      page sections (Hero, Projects, Experience, ...)
+  data/profile.ts  profile content
+  terminal/        interactive terminal commands
+  entry-server.tsx SSR entry used for prerendering
+scripts/           build-time scripts (prerender, Medium feed)
+worker/            contact form Cloudflare Worker
+public/            static assets, CV, sitemap, robots.txt
 ```

@@ -31,3 +31,8 @@ package-lock.json
 # Cloudflare Worker local state and secrets
 .wrangler/
 .dev.vars
+
+# Xcode user state (never commit)
+xcuserdata/
+*.xcuserstate
+DerivedData/
