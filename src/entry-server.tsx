@@ -19,3 +19,6 @@ export function render(url: string): string {
     </StrictMode>,
   )
 }
+
+// The prerender script builds one page per case study from the same data.
+export { caseStudies } from './data/caseStudies'

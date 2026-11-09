@@ -11,7 +11,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { join } from 'node:path'
 
-const { render } = await import(new URL('../dist-ssr/entry-server.js', import.meta.url).href)
+const { render, caseStudies } = await import(new URL('../dist-ssr/entry-server.js', import.meta.url).href)
 
 const SITE = 'https://kalharatennakoon.com'
 const NAME = 'Kalhara Tennakoon'
@@ -38,6 +38,49 @@ const routes = [
   },
 ]
 
+// One page per case study, from the same data the pages render
+// (src/data/caseStudies.ts). Each gets its project screenshot as the link
+// preview and Article structured data naming Kalhara as the author.
+for (const study of caseStudies) {
+  const url = `${SITE}/projects/${study.slug}/`
+  const image = `${SITE}${study.cover}`
+  routes.push({
+    path: `projects/${study.slug}/`,
+    title: `${study.name} case study | ${NAME}`,
+    description: study.description,
+    type: 'article',
+    image: { url: image, width: 960, height: 600, alt: `Screenshot of ${study.name}` },
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'TechArticle',
+          '@id': `${url}#article`,
+          headline: study.title,
+          description: study.description,
+          url,
+          image,
+          datePublished: study.published,
+          inLanguage: 'en',
+          author: { '@id': `${SITE}/#person` },
+          publisher: { '@id': `${SITE}/#person` },
+          isPartOf: { '@id': `${SITE}/#website` },
+          mainEntityOfPage: url,
+          keywords: study.stack.join(', '),
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+            { '@type': 'ListItem', position: 2, name: 'Projects', item: `${SITE}/projects/` },
+            { '@type': 'ListItem', position: 3, name: study.name, item: url },
+          ],
+        },
+      ],
+    },
+  })
+}
+
 const escapeAttr = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
 
 /** Replace the content of one tag, failing loudly if index.html changes shape. */
@@ -46,7 +89,7 @@ function swap(html, pattern, replacement, label) {
   return html.replace(pattern, replacement)
 }
 
-function pageHtml(base, { path, title, description }) {
+function pageHtml(base, { path, title, description, type = 'website', image, jsonLd }) {
   const url = `${SITE}/${path}`
   const t = escapeAttr(title)
   const d = escapeAttr(description)
@@ -55,11 +98,26 @@ function pageHtml(base, { path, title, description }) {
   html = swap(html, /(<meta name="description" content=")[^"]*/, `$1${d}`, 'meta description')
   html = swap(html, /(<link rel="canonical" href=")[^"]*/, `$1${url}`, 'canonical')
   html = swap(html, /(<meta property="og:url" content=")[^"]*/, `$1${url}`, 'og:url')
-  html = swap(html, /(<meta property="og:type" content=")[^"]*/, '$1website', 'og:type')
+  html = swap(html, /(<meta property="og:type" content=")[^"]*/, `$1${type}`, 'og:type')
   html = swap(html, /(<meta property="og:title" content=")[^"]*/, `$1${t}`, 'og:title')
   html = swap(html, /(<meta property="og:description" content=")[^"]*/, `$1${d}`, 'og:description')
   html = swap(html, /(<meta name="twitter:title" content=")[^"]*/, `$1${t}`, 'twitter:title')
   html = swap(html, /(<meta name="twitter:description" content=")[^"]*/, `$1${d}`, 'twitter:description')
+  if (image) {
+    const alt = escapeAttr(image.alt)
+    html = swap(html, /(<meta property="og:image" content=")[^"]*/, `$1${image.url}`, 'og:image')
+    html = swap(html, /(<meta property="og:image:secure_url" content=")[^"]*/, `$1${image.url}`, 'og:image:secure_url')
+    html = swap(html, /(<meta property="og:image:width" content=")[^"]*/, `$1${image.width}`, 'og:image:width')
+    html = swap(html, /(<meta property="og:image:height" content=")[^"]*/, `$1${image.height}`, 'og:image:height')
+    html = swap(html, /(<meta property="og:image:alt" content=")[^"]*/, `$1${alt}`, 'og:image:alt')
+    html = swap(html, /(<meta name="twitter:image" content=")[^"]*/, `$1${image.url}`, 'twitter:image')
+    html = swap(html, /(<meta name="twitter:image:alt" content=")[^"]*/, `$1${alt}`, 'twitter:image:alt')
+  }
+  if (jsonLd) {
+    // Escape "<" so text in the data can never close the script tag.
+    const json = JSON.stringify(jsonLd).replace(/</g, '\\u003c')
+    html = swap(html, /<\/head>/, `<script type="application/ld+json">${json}</script>\n  </head>`, '</head>')
+  }
   return html
 }
 

@@ -5,6 +5,7 @@ import ScrollToTop from './components/ScrollToTop'
 import ScrollManager from './components/ScrollManager'
 import HomePage from './pages/HomePage'
 import ProjectsPage from './pages/ProjectsPage'
+import CaseStudyPage from './pages/CaseStudyPage'
 import AchievementsPage from './pages/AchievementsPage'
 import BlogPage from './pages/BlogPage'
 import NotFoundPage from './pages/NotFoundPage'
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/projects/:slug" element={<CaseStudyPage />} />
           <Route path="/achievements" element={<AchievementsPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="*" element={<NotFoundPage />} />
