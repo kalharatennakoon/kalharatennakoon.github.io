@@ -149,7 +149,6 @@ function DirectContactRow({ item, style }: { item: DirectContact; style: CSSProp
 }
 
 function Contact() {
-  const currentYear = new Date().getFullYear()
   const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
   const [cardRef, cardVisible] = useScrollReveal<HTMLDivElement>(0.15)
 
@@ -244,6 +243,7 @@ function Contact() {
                         <a
                           href={link.href}
                           {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                          aria-label={link.label}
                           className="glass-btn w-12 h-12 text-lg text-[var(--color-primary)] transition-all duration-300"
                           onMouseEnter={(e) => {
                             const el = e.currentTarget
@@ -258,7 +258,7 @@ function Contact() {
                             el.style.borderColor = ''
                           }}
                         >
-                          {link.icon}
+                          <span aria-hidden="true" className="contents">{link.icon}</span>
                         </a>
                         <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs font-medium text-white rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg"
                           style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))' }}
@@ -288,14 +288,6 @@ function Contact() {
         </div>
       </section>
 
-      <footer className="bg-[var(--card-bg)] border-t border-[var(--border-color)] py-3 relative overflow-hidden">
-        <div className="absolute inset-0 dot-grid opacity-30" />
-        <div className="max-w-6xl mx-auto px-8 text-center relative z-10">
-          <p className="text-[var(--text-secondary)] text-xs font-normal m-0">
-            © {currentYear} Kalhara Tennakoon. All Rights Reserved.
-          </p>
-        </div>
-      </footer>
     </>
   )
 }

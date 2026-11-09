@@ -1,0 +1,52 @@
+name: Check links
+
+# A dead demo link hurts more than no demo. This builds the site and checks
+# every link on it: project demos, GitHub repos, certificates, articles,
+# and the site's own pages and files. Settings are in lychee.toml.
+
+on:
+  schedule:
+    # Mondays 03:17 UTC (08:47 in Sri Lanka). Off the hour to avoid queues.
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'index.html'
+      - 'README.md'
+      - 'lychee.toml'
+      - '.github/workflows/links.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: links-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  links:
+    name: Links · build and check
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # Fails the run on any broken link; the job summary lists them.
+      - name: Check links
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: --config lychee.toml --no-progress 'dist/**/*.html' README.md
+          fail: true

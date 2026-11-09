@@ -197,7 +197,7 @@ function Skills() {
                         className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0"
                         style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))' }}
                       >
-                        <CatIcon className="text-white text-xs" />
+                        <CatIcon aria-hidden="true" className="text-white text-xs" />
                       </div>
                       <h3 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider leading-tight">
                         {category.title}
@@ -220,7 +220,7 @@ function Skills() {
                             transitionDelay: gridVisible ? `${index * 0.08 + skillIdx * 0.04}s` : '0s',
                           }}
                         >
-                          <Icon style={{ color: skill.color }} className="text-sm flex-shrink-0" />
+                          <Icon aria-hidden="true" style={{ color: skill.color }} className="text-sm flex-shrink-0" />
                           {skill.name}
                         </span>
                       )

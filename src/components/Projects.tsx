@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
-import { FaCode, FaGithub, FaGlobe, FaBuilding, FaCalendarCheck, FaShieldAlt, FaBrain, FaPaw, FaCar, FaHospital, FaSun, FaFileAlt, FaClipboardList, FaEnvelopeOpenText, FaReceipt, FaArrowRight, FaTimes, FaExternalLinkAlt } from 'react-icons/fa'
+import { FaCode, FaGithub, FaGlobe, FaBuilding, FaCalendarCheck, FaShieldAlt, FaBrain, FaPaw, FaCar, FaHospital, FaSun, FaFileAlt, FaClipboardList, FaEnvelopeOpenText, FaReceipt, FaArrowRight, FaTimes, FaExternalLinkAlt, FaBookOpen } from 'react-icons/fa'
 import type { IconType } from 'react-icons'
 import { Link } from 'react-router-dom'
 import useScrollReveal from '../hooks/useScrollReveal'
@@ -20,6 +20,10 @@ interface Project {
   subtitle?: string
   /** Screenshot of the deployed site, served from public/project-covers/. */
   cover?: string
+  /** Slug of a long-form case study at /projects/<slug>/. */
+  caseStudy?: string
+  /** A case study hosted with the project itself, as a full URL so it also works from the dev server. */
+  caseStudyUrl?: string
 }
 
 /** How many technology chips a card shows before collapsing the rest into "+N". */
@@ -38,6 +42,7 @@ const projects: Project[] = [
     icon: FaPaw,
     website: 'https://kalharatennakoon.com/vetcareone/',
     cover: '/project-covers/vetcareone.jpg',
+    caseStudyUrl: 'https://kalharatennakoon.com/vetcareone/case-study/',
     date: 'Oct 2025 – Aug 2026',
     subtitle: 'Final Year Project · AI Launch Pad',
   },
@@ -47,12 +52,14 @@ const projects: Project[] = [
       'Forecasts monthly solar generation, grid export, and payouts with Prophet, shipped to Kubernetes through a GitOps pipeline.',
     details: [
       'Full-stack ML app that forecasts monthly solar generation, grid export, and cash payouts from residential inverter data using Meta\'s Prophet with 90% confidence intervals (about 8% error on unseen months).',
-      'FastAPI backend with Prometheus metrics and an interactive React dashboard, packaged as multi-stage, non-root Docker images and shipped through GitHub Actions CI/CD (linting, 39 automated tests, Trivy scans) to Kubernetes dev and prod environments managed with Kustomize and ArgoCD.',
+      'FastAPI backend and an interactive React dashboard, packaged as multi-stage, non-root Docker images and shipped through GitHub Actions CI/CD (linting, 39 automated tests, Trivy scans) to Kubernetes dev and prod environments managed with Kustomize and ArgoCD.',
     ],
-    technologies: ['Python', 'FastAPI', 'React', 'Prophet', 'Machine Learning', 'Pandas', 'Docker', 'Kubernetes', 'Kustomize', 'ArgoCD', 'GitOps', 'GitHub Actions', 'nginx', 'Prometheus', 'Trivy'],
+    technologies: ['Python', 'FastAPI', 'React', 'Prophet', 'Machine Learning', 'Pandas', 'Docker', 'Kubernetes', 'Kustomize', 'ArgoCD', 'GitOps', 'GitHub Actions', 'nginx', 'Trivy'],
     icon: FaSun,
     website: 'https://kalharatennakoon.com/solarcast/',
+    github: 'https://github.com/kalharatennakoon/solarcast',
     cover: '/project-covers/solarcast.jpg',
+    caseStudy: 'solarcast',
     date: 'Apr 2026 – Oct 2026',
   },
   {
@@ -109,6 +116,7 @@ const projects: Project[] = [
     icon: FaEnvelopeOpenText,
     website: 'https://know-your-letter.vercel.app',
     cover: '/project-covers/know-your-letter.jpg',
+    caseStudy: 'know-your-letter',
     date: 'Oct 2026',
   },
   {
@@ -309,8 +317,27 @@ function ProjectDialog({ project, onClose }: { project: Project; onClose: () => 
         </div>
 
         {/* Footer links */}
-        {(project.website || project.github) && (
+        {(project.website || project.github || project.caseStudy || project.caseStudyUrl) && (
           <div className="flex flex-wrap gap-3 px-6 sm:px-8 py-4 border-t border-[var(--border-color)]">
+            {project.caseStudy && (
+              <Link
+                to={`/projects/${project.caseStudy}/`}
+                onClick={onClose}
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-white rounded-xl font-semibold text-sm transition-all duration-300 hover:shadow-[0_8px_24px_rgba(30,58,138,0.35)] hover:-translate-y-0.5"
+                style={GRADIENT}
+              >
+                <FaBookOpen /> Read the case study
+              </Link>
+            )}
+            {project.caseStudyUrl && (
+              <a
+                href={project.caseStudyUrl}
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-white rounded-xl font-semibold text-sm transition-all duration-300 hover:shadow-[0_8px_24px_rgba(30,58,138,0.35)] hover:-translate-y-0.5"
+                style={GRADIENT}
+              >
+                <FaBookOpen /> Read the case study
+              </a>
+            )}
             {project.website && (
               <a
                 href={project.website}
@@ -462,16 +489,36 @@ function Projects({ limit }: { limit?: number } = {}) {
 
                   {/* Footer: details button + quick links */}
                   <div className="px-6 py-4 border-t border-[var(--border-color)] flex items-center justify-between gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setOpenProject(project)}
-                      aria-haspopup="dialog"
-                      className="inline-flex items-center gap-2 px-4 py-2 text-white rounded-lg font-semibold text-sm transition-all duration-300 hover:shadow-[0_8px_20px_rgba(30,58,138,0.35)] group/btn"
-                      style={GRADIENT}
-                    >
-                      View details
-                      <FaArrowRight className="text-xs transition-transform duration-300 group-hover/btn:translate-x-1" />
-                    </button>
+                    {project.caseStudyUrl ? (
+                      <a
+                        href={project.caseStudyUrl}
+                        className="inline-flex items-center gap-2 px-4 py-2 text-white rounded-lg font-semibold text-sm transition-all duration-300 hover:shadow-[0_8px_20px_rgba(30,58,138,0.35)] group/btn"
+                        style={GRADIENT}
+                      >
+                        Case study
+                        <FaArrowRight className="text-xs transition-transform duration-300 group-hover/btn:translate-x-1" />
+                      </a>
+                    ) : project.caseStudy ? (
+                      <Link
+                        to={`/projects/${project.caseStudy}/`}
+                        className="inline-flex items-center gap-2 px-4 py-2 text-white rounded-lg font-semibold text-sm transition-all duration-300 hover:shadow-[0_8px_20px_rgba(30,58,138,0.35)] group/btn"
+                        style={GRADIENT}
+                      >
+                        Case study
+                        <FaArrowRight className="text-xs transition-transform duration-300 group-hover/btn:translate-x-1" />
+                      </Link>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => setOpenProject(project)}
+                        aria-haspopup="dialog"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-white rounded-lg font-semibold text-sm transition-all duration-300 hover:shadow-[0_8px_20px_rgba(30,58,138,0.35)] group/btn"
+                        style={GRADIENT}
+                      >
+                        View details
+                        <FaArrowRight className="text-xs transition-transform duration-300 group-hover/btn:translate-x-1" />
+                      </button>
+                    )}
                     <div className="flex items-center gap-2">
                       {project.website && (
                         <IconLink href={project.website} label={`Visit ${project.title.split(' – ')[0]} site`}>

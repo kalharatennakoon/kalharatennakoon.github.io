@@ -110,9 +110,10 @@ export const projects: Project[] = [
       'on unseen months). FastAPI backend and React dashboard, shipped through GitHub Actions CI/CD ' +
       '(39 automated tests, Trivy scans) to Kubernetes dev and prod environments managed with ' +
       'Kustomize and ArgoCD.',
-    stack: ['Python', 'FastAPI', 'React', 'Prophet', 'Docker', 'Kubernetes', 'Kustomize', 'ArgoCD', 'GitHub Actions', 'Prometheus', 'Trivy'],
+    stack: ['Python', 'FastAPI', 'React', 'Prophet', 'Docker', 'Kubernetes', 'Kustomize', 'ArgoCD', 'GitHub Actions', 'Trivy'],
     status: 'Completed',
     period: 'Apr 2026 – Oct 2026',
+    github: 'https://github.com/kalharatennakoon/solarcast',
     site: 'https://kalharatennakoon.com/solarcast/',
   },
   {
