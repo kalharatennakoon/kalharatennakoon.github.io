@@ -49,38 +49,34 @@ function Recommendations() {
           <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
         </div>
 
-        <div ref={bodyRef} className={`max-w-3xl mx-auto flex flex-col gap-6 reveal ${bodyVisible ? 'is-visible' : ''}`}>
+        <div ref={bodyRef} className={`max-w-2xl mx-auto flex flex-col gap-6 reveal ${bodyVisible ? 'is-visible' : ''}`}>
           {recommendations.map((r) => (
             <figure
               key={r.name}
-              className="m-0 relative overflow-hidden rounded-2xl border border-[var(--border-color)] bg-[var(--card-bg)] shadow-[0_4px_15px_var(--shadow)] px-6 sm:px-10 pt-9 pb-8"
+              className="m-0 glass-card shimmer-hover relative overflow-hidden rounded-2xl p-6 sm:p-8"
             >
-              <span
-                aria-hidden="true"
-                className="absolute top-0 inset-x-0 h-1"
-                style={{ background: 'linear-gradient(90deg, var(--accent-bar-from), var(--accent-bar-to))' }}
-              />
-              <FaQuoteLeft aria-hidden="true" className="block mb-4 text-2xl text-[var(--color-primary)] opacity-25" />
-
               <blockquote cite={RECOMMENDATIONS_URL} className="m-0">
-                <p className="m-0 text-[17px] sm:text-lg leading-relaxed text-[var(--text-primary)]">
+                <p className="m-0 text-[15px] sm:text-base leading-relaxed text-[var(--text-primary)]">
                   &ldquo;{r.quote}&rdquo;
                 </p>
               </blockquote>
 
-              <figcaption className="mt-7 pt-6 border-t border-[var(--border-color)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <figcaption className="mt-6 pt-5 border-t border-[var(--border-color)] flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
                 <span className="flex flex-col">
-                  <span className="font-semibold text-[var(--text-primary)]">{r.name}</span>
-                  <span className="text-sm text-[var(--text-secondary)]">{r.role}</span>
-                  <span className="text-sm text-[var(--text-secondary)]">{r.context} · {r.date}</span>
+                  <span className="text-sm font-semibold text-[var(--text-primary)]">{r.name}</span>
+                  <span className="text-xs text-[var(--text-secondary)]">{r.role} · {r.date}</span>
+                  <span className="mt-1 text-xs text-[var(--text-secondary)] opacity-80">
+                    {r.context}
+                  </span>
                 </span>
                 <a
                   href={RECOMMENDATIONS_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 self-start sm:self-auto text-sm font-semibold text-[var(--color-primary)] hover:underline underline-offset-2"
+                  className="group inline-flex items-center gap-1.5 self-start sm:self-auto text-xs font-semibold text-[var(--color-primary)] hover:underline underline-offset-2"
                 >
-                  <FaLinkedin aria-hidden="true" /> Read the full recommendation
+                  <FaLinkedin aria-hidden="true" className="text-sm" /> Read on LinkedIn
+                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">&rarr;</span>
                 </a>
               </figcaption>
             </figure>
