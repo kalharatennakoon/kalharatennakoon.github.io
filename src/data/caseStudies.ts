@@ -345,6 +345,149 @@ export const caseStudies: CaseStudy[] = [
     },
     stack: ['Next.js', 'React', 'Gemma (vision LLM)', 'Ollama Cloud', 'JSON Schema', 'pdf.js', 'Upstash Redis', 'Vercel', 'Web Speech API', 'Node test runner'],
   },
+  {
+    slug: 'orderbook',
+    name: 'OrderBook',
+    title: 'OrderBook: the paper order book, rebuilt for WhatsApp sellers',
+    tagline:
+      'Orders, advances, balances, couriers and invoices in one phone app for small Facebook and WhatsApp sellers in Sri Lanka, in Sinhala, Tamil or English, with AI that reads chats and bank slips but never decides on its own.',
+    description:
+      'Case study: how Kalhara Tennakoon built OrderBook, a Next.js and Postgres app for Sri Lankan social media sellers, with AI that reads WhatsApp orders and bank slips under checks the app controls.',
+    period: 'Oct 2026 – Nov 2026',
+    kind: 'Personal project · Product and applied AI',
+    published: '2026-11-12',
+    cover: '/project-covers/orderbook.jpg',
+    live: { href: 'https://myorderbook.vercel.app/', label: 'Open OrderBook' },
+    facts: [
+      { value: '3', label: 'languages, about 620 interface strings each' },
+      { value: '3', label: 'AI features, every answer checked before it is used' },
+      { value: '30', label: 'orders a month on the free plan' },
+      { value: 'Rs. 0', label: 'WhatsApp API cost: messages go out from the seller’s own number' },
+    ],
+    problem: [
+      'Many small businesses in Sri Lanka sell through Facebook pages and WhatsApp: home bakers, clothing sellers, people making crafts. Orders arrive as chat messages, customers pay an advance by bank transfer and send a photo of the slip, and the rest is collected on delivery or through a courier. Most of it is tracked in a paper book or in the seller’s memory.',
+      'That breaks down in predictable places: who still owes money, which slip belongs to which order, what has to be baked or packed for tomorrow, and which courier still has the cash-on-delivery money. The sellers work on their phones, often in Sinhala or Tamil, and will not pay for software that is slower than the book.',
+      'So the goal was a phone-first app that is quicker than writing an order down, speaks the seller’s language, and works with how they already sell: WhatsApp, bank transfers and couriers.',
+    ],
+    architecture: {
+      intro:
+        'One Next.js app on Vercel’s Singapore region, close to Sri Lanka, with Postgres on Neon in the same region. Sellers sign in to the app; their customers use two public pages that need no account.',
+      columns: [
+        {
+          title: 'On the phone',
+          nodes: [
+            { label: 'Seller app (PWA)', detail: 'Installable, with an offline page; bottom tabs on phones, a sidebar on desktop' },
+            { label: 'Order link /s/…', detail: 'Customers pick products and send an order request' },
+            { label: 'Order page /t/…', detail: 'Progress, balance, bank details and slip upload, behind a random 32-character token' },
+            { label: 'Invoices', detail: 'Drawn on a canvas in the browser and shared as a picture' },
+          ],
+        },
+        {
+          title: 'Next.js on Vercel',
+          nodes: [
+            { label: 'Server actions', detail: 'Every query scoped to the signed-in seller’s shop' },
+            { label: 'Better Auth', detail: 'Email and password, optional Google sign-in' },
+            { label: 'AI checks', detail: 'Clean model output field by field before the form or page sees it' },
+            { label: 'Slip matcher', detail: 'Plain scoring rules that suggest which unpaid order a payment is for' },
+          ],
+        },
+        {
+          title: 'Services',
+          nodes: [
+            { label: 'Neon Postgres', detail: '21 tables, order numbers from a trigger, balances from a view' },
+            { label: 'Ollama Cloud', detail: 'Gemma model, constrained to a JSON schema for each task' },
+            { label: 'Billing', detail: 'Bank QR with admin approval, or Payments.lk' },
+          ],
+        },
+      ],
+      links: ['forms and photos', 'SQL and one model call'],
+      footnote:
+        'WhatsApp is reached through wa.me links that open the seller’s own chat with the message filled in, so there is no WhatsApp Business API account, approval or per-message charge.',
+    },
+    flow: {
+      title: 'A payment, from bank slip to balance',
+      intro: 'Working out which order a bank transfer belongs to is fiddly by hand, so each step has a check and the seller always has the last word.',
+      steps: [
+        {
+          title: 'Customer uploads the slip',
+          detail:
+            'On their order page the customer adds a photo of the transfer. The page needs no sign-in, so uploads are limited per visitor by a hashed IP address, to 6 an hour and 3 waiting per order, and a hidden field catches simple bots.',
+        },
+        {
+          title: 'Read with AI',
+          detail:
+            'The seller taps “Read with AI”. One AI use is reserved from the shop’s monthly allowance first and given back if the call fails. The model returns the amount, date, reference, payer and bank as JSON, and returns nothing it cannot see.',
+        },
+        {
+          title: 'Check against the order',
+          detail:
+            'Plain rules, not the model, score the unpaid orders: the order number in the reference, the payer’s name, the exact amount due, or an amount that looks like a usual advance. The reasons are shown next to the photo.',
+        },
+        {
+          title: 'Warn about repeats',
+          detail: 'Each slip gets a fingerprint, so the seller is warned before the same payment is recorded twice.',
+        },
+        {
+          title: 'Seller confirms',
+          detail:
+            'Only the seller’s tap saves the payment. The balance is not stored; it is calculated from the order and its payments by a database view, so it cannot drift out of step.',
+        },
+      ],
+    },
+    decisions: [
+      {
+        title: 'AI reads, the app decides',
+        why:
+          'The model only turns a chat, screenshot or slip into fields. Dates outside a sensible window, impossible amounts and malformed phone numbers are dropped, and the seller reviews the filled form before anything is saved.',
+        cost: 'The seller still has to check each result, so AI saves typing rather than removing the step.',
+      },
+      {
+        title: 'Summaries may only use numbers they were given',
+        why:
+          'The weekly summary on the dashboard is rewritten by the model in the seller’s language. Any number in it that is not in the facts the app supplied, or any link, gets the text thrown away and the app’s own sentences shown instead.',
+        cost: 'Some correct summaries are rejected, for example when the model writes a total in a different form.',
+      },
+      {
+        title: 'wa.me links instead of the WhatsApp Business API',
+        why: 'No approval, no monthly fee and no per-message charge, and customers see the message come from the number they already know.',
+        cost: 'The seller taps Send for each message, and the app cannot know whether it was delivered.',
+      },
+      {
+        title: 'Invoices drawn in the browser',
+        why:
+          'Sinhala and Tamil letters need proper text shaping. Drawing the invoice on a canvas with the Noto fonts the page already loads gets that right without a server-side PDF tool.',
+        cost: 'The invoice is a picture, not a searchable PDF.',
+      },
+      {
+        title: 'Shop scoping in code instead of row-level security',
+        why: 'A plain Postgres pool with one rule, every query filtered by the seller’s shop, kept the app simple to build and to read.',
+        cost: 'The database will not stop a query that forgets the rule. A single missed filter would show one shop’s data to another, so every new query has to be reviewed for it.',
+      },
+      {
+        title: 'Pro paid by bank QR, approved by hand',
+        why:
+          'Sellers already pay by bank app. A fixed-amount LankaQR code with their phone number in the remarks costs nothing to accept and needs no gateway account. Payments.lk is wired in as the automatic option.',
+        cost: 'Each payment is checked and approved by hand on an admin page, and QR plans do not renew by themselves.',
+      },
+    ],
+    results: [
+      'Live, with the full order cycle working: orders with items, delivery fee, discount and advance; status from new to delivered; payments and balances; customers with what they owe; and WhatsApp messages and invoice pictures in one tap.',
+      'Beyond the paper book: courier parcels with cash-on-delivery tracking and what each courier still owes, printable waybills and packing slips, a “what to make” list that adds up every item due tomorrow, and payment reminders in a friendly or firm tone.',
+      'Customers can order through the shop’s link and pay against their own order page, and those requests count towards the plan only when the seller accepts them.',
+      'Three AI features run on one model behind monthly allowances (15 uses free, 500 on Pro): filling an order from a pasted chat or screenshot, reading bank slips and bank SMS, and the weekly summary.',
+    ],
+    next: {
+      intro: 'OrderBook has been built quickly, and some of the groundwork has not caught up yet. In this order:',
+      items: [
+        'Automated tests and CI, starting with the slip matcher, money formatting and the AI clean-up, which are plain functions and easy to test. There are none yet.',
+        'Row-level security in Postgres as a second line behind the shop filter in code.',
+        'Have native speakers review the Sinhala and Tamil text, and fill the few strings that are still missing from the Sinhala set.',
+        'Measure how often the AI order and slip readers get each field right, on a set of real anonymised chats and slips.',
+        'Courier tracking through their APIs, where couriers offer one.',
+      ],
+    },
+    stack: ['Next.js', 'React', 'JavaScript', 'PostgreSQL', 'Neon', 'Better Auth', 'Ollama Cloud', 'Gemma (vision LLM)', 'JSON Schema', 'Tailwind CSS', 'Canvas API', 'PWA', 'i18n', 'Vercel'],
+  },
 ]
 
 /** Case studies hosted with the project itself, linked from the pages above. */

@@ -88,7 +88,8 @@ const projects: Project[] = [
     icon: FaReceipt,
     website: 'https://myorderbook.vercel.app/',
     cover: '/project-covers/orderbook.jpg',
-    date: 'Oct 2026',
+    caseStudy: 'orderbook',
+    date: 'Oct 2026 – Nov 2026',
   },
   {
     title: 'StrongCV – AI-Powered CV Review & Rewriting Tool',
