@@ -25,13 +25,6 @@ const recommendations: Recommendation[] = [
   },
 ]
 
-const initials = (name: string) =>
-  name
-    .split(' ')
-    .map((part) => part[0])
-    .join('')
-    .slice(0, 2)
-
 function Recommendations() {
   const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
   const [bodyRef, bodyVisible] = useScrollReveal<HTMLDivElement>(0.1)
@@ -76,20 +69,11 @@ function Recommendations() {
               </blockquote>
 
               <figcaption className="mt-7 pt-6 border-t border-[var(--border-color)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div className="flex items-center gap-4">
-                  <span
-                    aria-hidden="true"
-                    className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
-                    style={{ background: 'linear-gradient(135deg, var(--fill-from), var(--fill-to))' }}
-                  >
-                    {initials(r.name)}
-                  </span>
-                  <span className="flex flex-col">
-                    <span className="font-semibold text-[var(--text-primary)]">{r.name}</span>
-                    <span className="text-sm text-[var(--text-secondary)]">{r.role}</span>
-                    <span className="text-sm text-[var(--text-secondary)]">{r.context} · {r.date}</span>
-                  </span>
-                </div>
+                <span className="flex flex-col">
+                  <span className="font-semibold text-[var(--text-primary)]">{r.name}</span>
+                  <span className="text-sm text-[var(--text-secondary)]">{r.role}</span>
+                  <span className="text-sm text-[var(--text-secondary)]">{r.context} · {r.date}</span>
+                </span>
                 <a
                   href={RECOMMENDATIONS_URL}
                   target="_blank"
