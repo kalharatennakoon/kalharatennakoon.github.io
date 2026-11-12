@@ -17,9 +17,9 @@ function HomePage() {
       <About />
       <Education />
       <Experience />
-      <Recommendations />
       <Skills />
       <Projects limit={3} />
+      <Recommendations />
       <Contact />
     </>
   )
