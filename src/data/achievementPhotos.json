@@ -1,0 +1,124 @@
+{
+  "ai-launchpad": [
+    {
+      "name": "01-vetcare-pro-on-stage",
+      "src": "/achievements/ai-launchpad/01-vetcare-pro-on-stage.webp",
+      "thumb": "/achievements/ai-launchpad/01-vetcare-pro-on-stage-thumb.webp",
+      "width": 1600,
+      "height": 1067
+    },
+    {
+      "name": "02-presenting-the-pipeline",
+      "src": "/achievements/ai-launchpad/02-presenting-the-pipeline.webp",
+      "thumb": "/achievements/ai-launchpad/02-presenting-the-pipeline-thumb.webp",
+      "width": 1483,
+      "height": 1600
+    },
+    {
+      "name": "03-presenting",
+      "src": "/achievements/ai-launchpad/03-presenting.webp",
+      "thumb": "/achievements/ai-launchpad/03-presenting-thumb.webp",
+      "width": 1067,
+      "height": 1600
+    },
+    {
+      "name": "05-cohort",
+      "src": "/achievements/ai-launchpad/05-cohort.webp",
+      "thumb": "/achievements/ai-launchpad/05-cohort-thumb.webp",
+      "width": 1600,
+      "height": 1067
+    }
+  ],
+  "batch-top": [
+    {
+      "name": "01-top-performer",
+      "src": "/achievements/batch-top/01-top-performer.webp",
+      "thumb": "/achievements/batch-top/01-top-performer-thumb.webp",
+      "width": 1080,
+      "height": 1080
+    },
+    {
+      "name": "02-receiving-award",
+      "src": "/achievements/batch-top/02-receiving-award.webp",
+      "thumb": "/achievements/batch-top/02-receiving-award-thumb.webp",
+      "width": 1600,
+      "height": 1105
+    },
+    {
+      "name": "03-graduation-stage",
+      "src": "/achievements/batch-top/03-graduation-stage.webp",
+      "thumb": "/achievements/batch-top/03-graduation-stage-thumb.webp",
+      "width": 1600,
+      "height": 1066
+    }
+  ],
+  "hackbit": [
+    {
+      "name": "01-first-runner-up",
+      "src": "/achievements/hackbit/01-first-runner-up.webp",
+      "thumb": "/achievements/hackbit/01-first-runner-up-thumb.webp",
+      "width": 960,
+      "height": 640
+    },
+    {
+      "name": "02-winners",
+      "src": "/achievements/hackbit/02-winners.webp",
+      "thumb": "/achievements/hackbit/02-winners-thumb.webp",
+      "width": 1600,
+      "height": 1067
+    },
+    {
+      "name": "03-team",
+      "src": "/achievements/hackbit/03-team.webp",
+      "thumb": "/achievements/hackbit/03-team-thumb.webp",
+      "width": 1600,
+      "height": 1202
+    },
+    {
+      "name": "04-hacking",
+      "src": "/achievements/hackbit/04-hacking.webp",
+      "thumb": "/achievements/hackbit/04-hacking-thumb.webp",
+      "width": 1600,
+      "height": 1068
+    }
+  ],
+  "haxmas": [
+    {
+      "name": "01-team",
+      "src": "/achievements/haxmas/01-team.webp",
+      "thumb": "/achievements/haxmas/01-team-thumb.webp",
+      "width": 960,
+      "height": 720
+    }
+  ],
+  "packet-riders": [
+    {
+      "name": "01-team-at-final",
+      "src": "/achievements/packet-riders/01-team-at-final.webp",
+      "thumb": "/achievements/packet-riders/01-team-at-final-thumb.webp",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "name": "02-at-the-final",
+      "src": "/achievements/packet-riders/02-at-the-final.webp",
+      "thumb": "/achievements/packet-riders/02-at-the-final-thumb.webp",
+      "width": 960,
+      "height": 960
+    },
+    {
+      "name": "03-team",
+      "src": "/achievements/packet-riders/03-team.webp",
+      "thumb": "/achievements/packet-riders/03-team-thumb.webp",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "name": "04-team",
+      "src": "/achievements/packet-riders/04-team.webp",
+      "thumb": "/achievements/packet-riders/04-team-thumb.webp",
+      "width": 960,
+      "height": 718
+    }
+  ]
+}

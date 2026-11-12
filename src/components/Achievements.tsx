@@ -1,53 +1,160 @@
+import { useCallback, useState } from 'react'
 import { FaTrophy } from 'react-icons/fa'
 import useScrollReveal from '../hooks/useScrollReveal'
+import PhotoViewer, { type ViewerPhoto } from './PhotoViewer'
+import photoManifest from '../data/achievementPhotos.json'
+
+interface StoredPhoto {
+  name: string
+  src: string
+  thumb: string
+  width: number
+  height: number
+}
+
+/** Written by `npm run photos` from photos/achievements/<id>/. Do not edit by hand. */
+const photosById = photoManifest as Record<string, StoredPhoto[] | undefined>
+
+/** How many thumbnails a card shows; the last one says "+N" when there are more. */
+const STRIP_MAX = 4
 
 interface Achievement {
+  /** Folder name under photos/achievements/ and public/achievements/. */
+  id: string
   title: string
   description: string
   date: string
   highlight?: boolean
+  /** Caption per photo, keyed by its file name without extension (e.g. "01-stage"). */
+  captions?: Record<string, string>
 }
 
 const achievements: Achievement[] = [
   {
+    id: 'ai-launchpad',
     title: 'Top 10 Finalist - Ascentic AI Launch Pad',
     description: 'Selected for the Top 10 of the Ascentic AI Launch Pad programme and invited to present VetCare Pro at Demo Day. VetCare Pro is an on-premise, AI-powered veterinary clinic management system. It was recognised for its local RAG assistant, ML forecasting models and companion iOS app, all built for a real working clinic.',
     date: '2026',
     highlight: true,
+    captions: {
+      '01-vetcare-pro-on-stage': 'Presenting VetCare Pro at the Ascentic AI Launch Pad Demo Day',
+      '02-presenting-the-pipeline': 'Walking through how clinic records become a trained dataset',
+      '03-presenting': 'On stage at Demo Day',
+      '05-cohort': 'The AI Launch Pad cohort at Demo Day',
+    },
   },
   {
+    id: 'batch-top',
     title: 'Batch Top - Software Engineering, ESU Kandy',
     description: 'Ranked first in the Software Engineering cohort of the BSc (Hons) Computer Science programme.',
     date: '2026',
+    captions: {
+      '01-top-performer': 'Named Top Performer, ESOFT Uni Kandy',
+      '02-receiving-award': 'Receiving the award at the ESU Graduation 2026 ceremony',
+      '03-graduation-stage': 'ESU Graduation 2026, September 2026',
+    },
   },
   {
+    id: 'kubecon',
     title: 'Two-Time Dan Kohn Scholarship Recipient - KubeCon + CloudNativeCon',
     description: 'Awarded the CNCF Dan Kohn Scholarship to attend KubeCon + CloudNativeCon. Recognised for contributions and potential in the cloud-native ecosystem.',
     date: '2025 & 2022',
   },
   {
+    id: 'hackbit',
     title: 'First Runner-Up - Hack:Bit Hackathon',
     description: 'Secured First Runner-Up at the Hack:Bit national-level hackathon, organised in collaboration with Microsoft and Sarvodaya Fusion, competing against university and school teams across Sri Lanka.',
     date: 'Jul 2019',
+    captions: {
+      '01-first-runner-up': 'Receiving First Runner-Up at the Micro:bit Hackathon (Hack:Bit)',
+      '02-winners': 'The winning and runner-up teams with the organisers',
+      '03-team': 'Our team at Hack:Bit',
+      '04-hacking': 'Working on our entry during the hackathon',
+    },
   },
   {
+    id: 'haxmas',
     title: 'Top 15 Finalist - HaXmas Hackathon',
     description: 'Selected as one of the Top 15 finalists from 75+ competing teams at the HaXmas Hackathon, a national-level coding and innovation challenge.',
     date: 'Jan 2018',
+    captions: {
+      '01-team': 'With my team at the HaXmas Hackathon',
+    },
   },
   {
+    id: 'packet-riders',
     title: 'Finalist - Cisco Packet Riders',
     description: 'Reached the national final of Cisco Packet Riders, a networking and troubleshooting competition open to students across Sri Lanka.',
     date: 'Jul 2018',
+    captions: {
+      '01-team-at-final': 'At the Cisco Packet Riders 2018 national final',
+      '02-at-the-final': 'At the Packet Riders final',
+      '03-team': 'With other finalists',
+      '04-team': 'With other finalists',
+    },
   },
   {
+    id: 'netriders',
     title: '4th in Sri Lanka & 118th in Asia Pacific - Cisco NetRiders',
     description: 'Ranked 4th in Sri Lanka and 118th in Asia Pacific at the Cisco NetRiders competition.',
     date: 'Sep 2017',
   },
 ]
 
+function photosFor(item: Achievement): ViewerPhoto[] {
+  return (photosById[item.id] ?? []).map((p, i) => ({
+    src: p.src,
+    width: p.width,
+    height: p.height,
+    caption: item.captions?.[p.name],
+    alt: item.captions?.[p.name] ?? `${item.title}, photo ${i + 1}`,
+  }))
+}
+
+function PhotoStrip({ item, onOpen }: { item: Achievement; onOpen: (index: number) => void }) {
+  const stored = photosById[item.id]
+  if (!stored?.length) return null
+  const shown = stored.slice(0, STRIP_MAX)
+  const extra = stored.length - shown.length
+
+  return (
+    <ul className="list-none m-0 p-0 mt-4 grid grid-cols-4 gap-2" aria-label="Photos">
+      {shown.map((p, i) => {
+        const more = i === shown.length - 1 && extra > 0
+        const caption = item.captions?.[p.name]
+        return (
+          <li key={p.name}>
+            <button
+              type="button"
+              onClick={() => onOpen(i)}
+              aria-label={more ? `Open photos, ${extra} more` : `Open photo ${i + 1}${caption ? `: ${caption}` : ''}`}
+              className="group relative block w-full aspect-[4/3] overflow-hidden rounded-lg border border-[var(--border-color)] bg-[rgba(30,58,138,0.06)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-primary)]"
+            >
+              <img
+                src={p.thumb}
+                alt=""
+                width={480}
+                height={360}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              {more && (
+                <span className="absolute inset-0 flex items-center justify-center bg-black/55 text-white text-sm font-semibold">
+                  +{extra}
+                </span>
+              )}
+            </button>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
 function Achievements() {
+  const [viewer, setViewer] = useState<{ item: Achievement; index: number } | null>(null)
+  const closeViewer = useCallback(() => setViewer(null), [])
   const [headerRef, headerVisible] = useScrollReveal<HTMLDivElement>()
   const [timelineRef, timelineVisible] = useScrollReveal<HTMLDivElement>(0.05)
 
@@ -153,6 +260,7 @@ function Achievements() {
                   {/* Body */}
                   <div className="px-7 py-4">
                     <p className="text-sm text-[var(--text-secondary)] leading-relaxed m-0">{item.description}</p>
+                    <PhotoStrip item={item} onOpen={(index) => setViewer({ item, index })} />
                   </div>
                 </div>
               </div>
@@ -160,6 +268,15 @@ function Achievements() {
           </div>
         </div>
       </div>
+
+      {viewer && (
+        <PhotoViewer
+          photos={photosFor(viewer.item)}
+          startIndex={viewer.index}
+          label={viewer.item.title}
+          onClose={closeViewer}
+        />
+      )}
     </section>
   )
 }

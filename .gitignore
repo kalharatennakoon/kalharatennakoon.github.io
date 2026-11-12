@@ -38,3 +38,6 @@ DerivedData/
 
 # Lighthouse CI local results
 .lighthouseci/
+
+# Original achievement photos (resized copies go to public/achievements/)
+/photos/
