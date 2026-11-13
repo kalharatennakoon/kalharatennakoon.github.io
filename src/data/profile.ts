@@ -19,6 +19,18 @@ export const identity = {
   focus: ['Software Engineering', 'DevOps & Cloud-Native', 'Machine Learning & MLOps', 'DevSecOps'],
 }
 
+/**
+ * The "Now" line: what Kalhara is doing this month. Shown as a pill in the hero
+ * and in the terminal's `whoami`. Update `updated` whenever the text changes,
+ * so visitors can see it is current.
+ */
+export const now = {
+  text: 'Looking for software, DevOps, MLOps and AI/ML engineering roles',
+  /** Where the pill links to. */
+  href: '#contact',
+  updated: 'Nov 2026',
+}
+
 export const links = [
   { label: 'GitHub', url: 'https://github.com/kalharatennakoon' },
   { label: 'LinkedIn', url: 'https://www.linkedin.com/in/kalharatennakoon' },

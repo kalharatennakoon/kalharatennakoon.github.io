@@ -1006,3 +1006,98 @@
 .project-dialog-panel {
   animation: dialog-panel-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+/* ==========================================
+   Hero "Now" pill
+   ========================================== */
+
+.now-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  margin-top: 28px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(30, 58, 138, 0.2);
+  background: rgba(30, 58, 138, 0.06);
+  color: var(--text-primary);
+  font-size: 13px;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.now-pill:hover {
+  border-color: rgba(30, 58, 138, 0.45);
+  background: rgba(30, 58, 138, 0.1);
+}
+
+.now-pill:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+:root[data-theme="dark"] .now-pill {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+:root[data-theme="dark"] .now-pill:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.now-pill-label {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.now-pill-date {
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* On narrow screens the text wraps, so use a rounded box instead of a pill
+   and keep the dot beside the first line. */
+@media (max-width: 640px) {
+  .now-pill {
+    align-items: flex-start;
+    border-radius: 14px;
+    padding: 8px 12px;
+  }
+
+  .now-pill-dot {
+    margin-top: 6px;
+  }
+}
+
+/* Green "available" dot with a soft ring that pulses outwards. */
+.now-pill-dot {
+  position: relative;
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.now-pill-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: now-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes now-ping {
+  0%        { transform: scale(1); opacity: 0.6; }
+  75%, 100% { transform: scale(2.4); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .now-pill-dot::after {
+    animation: none;
+  }
+}
