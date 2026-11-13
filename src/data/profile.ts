@@ -162,8 +162,8 @@ export const projects: Project[] = [
     description:
       'Web app that analyses a CV against a target role and job description, scores it section by ' +
       'section, then rewrites it for download as Word or PDF. Two-model LLM pipeline on Ollama Cloud ' +
-      'with JSON-schema outputs validated by Zod, ATS checks, cover letters, and interview preparation.',
-    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Ollama', 'Zod', 'Upstash Redis', 'Vercel'],
+      'with JSON-schema outputs checked and repaired in code, rule-based ATS checks, cover letters, and interview preparation.',
+    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Ollama', 'JSON Schema', 'Upstash Redis', 'Vercel'],
     status: 'Completed',
     period: 'Sep 2026',
     site: 'https://strongcv.vercel.app/',

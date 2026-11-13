@@ -488,6 +488,147 @@ export const caseStudies: CaseStudy[] = [
     },
     stack: ['Next.js', 'React', 'JavaScript', 'PostgreSQL', 'Neon', 'Better Auth', 'Ollama Cloud', 'Gemma (vision LLM)', 'JSON Schema', 'Tailwind CSS', 'Canvas API', 'PWA', 'i18n', 'Vercel'],
   },
+  {
+    slug: 'strongcv',
+    name: 'StrongCV',
+    title: 'StrongCV: CV feedback and rewriting that never invents a fact',
+    tagline:
+      'Upload a CV and the role you want. Two language models score it, explain what is missing and rewrite it for applicant tracking systems, while rules in the code keep the result honest, English and parseable.',
+    description:
+      'Case study: how Kalhara Tennakoon built StrongCV, a Next.js app on Ollama Cloud that reviews a CV against a role, rewrites it for ATS and re-scores the result, with nothing stored.',
+    period: 'Sep 2026 – Oct 2026',
+    kind: 'Personal project · Applied AI',
+    published: '2026-11-13',
+    cover: '/project-covers/strongcv.jpg',
+    live: { href: 'https://strongcv.vercel.app/', label: 'Try it live' },
+    facts: [
+      { value: '2', label: 'models: one reviews, one writes' },
+      { value: '10', label: 'ATS checks run by plain rules, not the model' },
+      { value: '6', label: 'AI steps, from review to interview prep' },
+      { value: '0', label: 'CVs or job descriptions stored' },
+    ],
+    problem: [
+      'Many employers screen CVs with an applicant tracking system before a person reads them, often only briefly. It is common, especially for graduates, to send one CV to every role, with tables, icons and unusual headings that ATS software cannot read, and with achievements that do not match the words in the job description.',
+      'An AI chatbot can rewrite a CV, but it happily invents numbers, tools and job titles, which is worse than a weak CV because it falls apart at interview. The goal was a tool that says clearly what is wrong for a specific role, then fixes it using only what the candidate has actually done, and leaves a gap where a real figure belongs.',
+    ],
+    architecture: {
+      intro:
+        'One Next.js app on Vercel. Files are read on the server and thrown away, each AI step is its own API route with a 60-second limit, and the browser builds the Word and PDF downloads itself.',
+      columns: [
+        {
+          title: 'In the browser',
+          nodes: [
+            { label: 'Form', detail: 'CV file, target role, and a job description or a link to the posting' },
+            { label: 'Results', detail: 'Scores, gaps, rewritten CV, cover letter and interview prep' },
+            { label: 'Downloads', detail: '.docx and .pdf built on the device with docx and jsPDF' },
+            { label: 'Hand-off', detail: 'Opened from Shortlisted with the role and CV filled in' },
+          ],
+        },
+        {
+          title: 'Next.js API routes',
+          nodes: [
+            { label: 'Read the CV', detail: 'PDF, Word or text, up to 4 MB, layout noted for the ATS checks' },
+            { label: 'Fetch the job', detail: 'Prefers the page’s JobPosting data; refuses private addresses' },
+            { label: 'ATS rules', detail: 'Contact details, headings, dates, symbols, length, tables, images' },
+            { label: 'Normalisers', detail: 'Check and repair every model reply before the page sees it' },
+          ],
+        },
+        {
+          title: 'Services',
+          nodes: [
+            { label: 'Ollama Cloud', detail: 'gpt-oss 120B reviews and scores; Gemma 4 31B writes' },
+            { label: 'Upstash Redis', detail: 'Per-visitor hourly limits and a daily cap on AI calls' },
+          ],
+        },
+      ],
+      links: ['CV file and role', 'one model call per step'],
+      footnote:
+        'The CV text and job description go back to the browser after the first step, so later steps reuse them without another upload. Nothing is written to a database or a log.',
+    },
+    flow: {
+      title: 'From uploaded CV to a better one',
+      intro: 'Each step can be run on its own, and each model reply is checked before it is shown.',
+      steps: [
+        {
+          title: 'Read and check',
+          detail:
+            'The CV is turned into text and the job posting is fetched or pasted. Ten ATS checks run as plain code first, so missing contact details or a table in a Word file are caught without asking a model.',
+        },
+        {
+          title: 'Review',
+          detail:
+            'gpt-oss scores the CV against the role, overall and section by section, and lists strengths, weaknesses, missing keywords and prioritised suggestions, as JSON that must match a schema.',
+        },
+        {
+          title: 'Rewrite',
+          detail:
+            'Gemma rewrites the CV, weakest sections first. It may only use facts from the original, may add a keyword only when the CV already shows that skill, and writes a placeholder such as [X%] where a number is missing.',
+        },
+        {
+          title: 'Clean up',
+          detail:
+            'Code, not the model, forces standard headings, plain text and consistent dates, strips risky symbols, and rejects any CV or cover letter containing Sinhala or Tamil script, which makes the model try again.',
+        },
+        {
+          title: 'Re-score',
+          detail:
+            'The improved CV is scored against the same role and put through the same ATS checks, so the page can show a before and after for the match score and the checks passed.',
+        },
+      ],
+    },
+    decisions: [
+      {
+        title: 'Two models, each for what it is good at',
+        why: 'A large reasoning model is steadier at strict scoring and long JSON; a smaller writing model produces more natural CV wording, faster.',
+        cost: 'Two models to watch for quota, timeouts and changes in output, and two sets of prompts to keep in step.',
+      },
+      {
+        title: 'Rules for ATS, the model only for judgement',
+        why:
+          'Whether a CV has an email address, standard headings or a table is a fact the code can check every time. The model is kept for what needs judgement, such as how well an achievement fits the role.',
+        cost: 'The rules only cover common problems; an unusual layout can pass every check and still parse badly.',
+      },
+      {
+        title: 'Placeholders instead of invented numbers',
+        why: 'A rewritten CV has to survive an interview. A bracket such as [N users] tells the candidate exactly where a real figure would help.',
+        cost: 'The download is not finished until the candidate fills the gaps, and honesty is enforced by the prompt, not checked in code.',
+      },
+      {
+        title: 'Lenient normalisers instead of a strict validator',
+        why:
+          'A model can return the right content under a different name, such as bullets as "points" or "highlights". Each reply is read field by field, common variations are accepted and repaired where that is safe, and the call is retried once if the reply is still unusable.',
+        cost: 'More hand-written code per feature, and a repaired reply can hide a model that is drifting.',
+      },
+      {
+        title: 'Free, with limits instead of accounts',
+        why:
+          'No sign-up keeps it quick to try. Each visitor gets three uses of each feature an hour, all AI calls together stop at 300 a day, and a bad file or an unreachable job link does not use up an allowance.',
+        cost: 'Limits are by IP address, so people sharing a network share an allowance; without Redis the fallback count is easy to reset.',
+      },
+      {
+        title: 'Build the documents in the browser',
+        why: 'Word and PDF files are generated on the device on demand, so no file is ever created or kept on the server.',
+        cost: 'The PDF is plain and single-column by design, which suits ATS but limits how the CV can look.',
+      },
+    ],
+    results: [
+      'Live and free: upload a PDF, Word or text CV, add a role and a job description or link, and get a scored review, an ATS-clean rewrite as Word or PDF, and a before and after score.',
+      'Beyond the review: a tailored cover letter with tone options, and interview preparation with 10 to 12 likely questions, what each one tests, and answer outlines built from the CV.',
+      'The feedback can be explained in Sinhala or Tamil, while the CV, keywords and cover letter always stay in English, as employers expect.',
+      'Works as the CV check for Shortlisted, my job application tracker: its button opens StrongCV with the role and CV filled in, using the URL fragment so the private CV link never reaches a server log.',
+    ],
+    next: {
+      intro: 'StrongCV works, but some of what it promises is only enforced by prompts so far. Next:',
+      items: [
+        'Check in code that the rewrite introduces no new employers, dates, degrees or numbers, rather than relying on the prompt alone.',
+        'Score the before and after with a model or rubric other than the one that wrote the rewrite, so the improvement is not self-graded.',
+        'Add tests for the ATS rules and normalisers, and run them in CI on every pull request. There are none yet.',
+        'Re-check the address after every redirect when fetching a job link, and store hashed rather than raw IP addresses for the limits.',
+        'Stream results so the first feedback appears in seconds rather than after the whole review.',
+      ],
+    },
+    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Ollama Cloud', 'gpt-oss', 'Gemma', 'JSON Schema', 'Upstash Redis', 'unpdf', 'mammoth', 'docx', 'jsPDF', 'Vercel'],
+  },
 ]
 
 /** Case studies hosted with the project itself, linked from the pages above. */

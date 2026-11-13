@@ -97,13 +97,14 @@ const projects: Project[] = [
       'Scores a CV against a target role, points out gaps and missing keywords, and rewrites it for download as Word or PDF.',
     details: [
       'Web app that analyses a CV against a target role and job description, scores it overall and section by section, highlights strengths, gaps, and missing keywords, then rewrites it for download as Word or PDF.',
-      'Runs a two-model LLM pipeline on Ollama Cloud with JSON-schema outputs validated by Zod, plus ATS checks, tailored cover letters, interview preparation, feedback in Sinhala or Tamil, and per-visitor rate limiting with Upstash Redis.',
+      'Runs a two-model LLM pipeline on Ollama Cloud with JSON-schema outputs checked and repaired in code, plus rule-based ATS checks, tailored cover letters, interview preparation, feedback in Sinhala or Tamil, and per-visitor rate limiting with Upstash Redis.',
     ],
-    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Ollama', 'LLMs', 'Zod', 'Upstash Redis', 'Vercel'],
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Ollama', 'LLMs', 'JSON Schema', 'Upstash Redis', 'Vercel'],
     icon: FaFileAlt,
     website: 'https://strongcv.vercel.app/',
     cover: '/project-covers/strongcv.jpg',
-    date: 'Sep 2026',
+    caseStudy: 'strongcv',
+    date: 'Sep 2026 – Oct 2026',
   },
   {
     title: 'Know Your Letter – Plain-Language Explainer for Official Letters',
