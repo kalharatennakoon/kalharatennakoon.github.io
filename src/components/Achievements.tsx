@@ -89,8 +89,8 @@ const achievements: Achievement[] = [
     captions: {
       '01-team-at-final': 'At the Cisco Packet Riders 2018 national final',
       '02-at-the-final': 'At the Packet Riders final',
-      '03-team': 'With other finalists',
-      '04-team': 'With other finalists',
+      '03-team': 'My team with the competition officials',
+      '04-team': 'With my team and the officials at the final',
     },
   },
   {
