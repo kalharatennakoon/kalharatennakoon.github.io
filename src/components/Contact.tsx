@@ -3,7 +3,7 @@ import {
   FaEnvelope, FaGithub, FaLinkedin, FaMedium,
   FaStackOverflow, FaPhoneAlt, FaRegCopy, FaCheck,
 } from 'react-icons/fa'
-import { FaXTwitter, FaThreads } from 'react-icons/fa6'
+import { FaXTwitter } from 'react-icons/fa6'
 import { SiBluesky } from 'react-icons/si'
 import useScrollReveal from '../hooks/useScrollReveal'
 import ContactForm from './ContactForm'
@@ -74,7 +74,6 @@ const contactLinks = [
   { href: 'https://github.com/kalharatennakoon', icon: <FaGithub />, label: 'GitHub', external: true },
   { href: 'https://kalharatennakoon.medium.com', icon: <FaMedium />, label: 'Medium', external: true },
   { href: 'https://x.com/_KalharaT', icon: <FaXTwitter />, label: 'X', external: true },
-  { href: 'https://www.threads.com/@kalharatennakoon', icon: <FaThreads />, label: 'Threads', external: true },
   { href: 'https://bsky.app/profile/kalharatennakoon.bsky.social', icon: <SiBluesky />, label: 'Bluesky', external: true },
   { href: 'https://stackoverflow.com/users/13018789/kalhara-tennakoon', icon: <FaStackOverflow />, label: 'Stack Overflow', external: true },
 ]
