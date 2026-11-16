@@ -1,7 +1,6 @@
 import { useEffect, useState, type CSSProperties } from 'react'
 import { FaArrowDown, FaEnvelope } from 'react-icons/fa'
 import useCountUp from '../hooks/useCountUp'
-import { now } from '../data/profile'
 
 const roles = [
   'DevSecOps & Cloud-Native',
@@ -119,15 +118,6 @@ function Hero() {
               <Stat key={s.label} value={s.value} suffix={s.suffix} label={s.label} startDelay={700 + i * 120} />
             ))}
           </div>
-
-          {/* "Now" status pill: what I'm doing this month (src/data/profile.ts) */}
-          <a href={now.href} className="now-pill enter" style={delay(0.54)}>
-            <span className="now-pill-dot" aria-hidden="true" />
-            <span>
-              <span className="now-pill-label">Now:</span> {now.text}{' '}
-              <span className="now-pill-date">· {now.updated}</span>
-            </span>
-          </a>
         </div>
 
         {/* Right: profile photo */}
