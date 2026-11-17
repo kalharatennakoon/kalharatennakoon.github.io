@@ -9,7 +9,7 @@ import { FaPaperPlane, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa
 const ENDPOINT =
   (import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined) || 'https://api.kalharatennakoon.com/contact'
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined
-const CONTACT_EMAIL = 'kalharatennakoonmck@gmail.com'
+const CONTACT_EMAIL = 'kalhara@kalharatennakoon.com'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 

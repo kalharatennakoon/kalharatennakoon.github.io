@@ -24,7 +24,7 @@
     "FROM_ADDRESS": "contact@kalharatennakoon.com",
     "FROM_NAME": "Portfolio Contact Form",
     // Address shown in the email's To line. Delivery goes to CONTACT_TO.
-    "DISPLAY_TO": "kalharatennakoonmck@gmail.com",
+    "DISPLAY_TO": "kalhara@kalharatennakoon.com",
     "ALLOWED_ORIGINS": "https://kalharatennakoon.com,https://www.kalharatennakoon.com,http://localhost:5173,http://localhost:4173"
   }
 }
