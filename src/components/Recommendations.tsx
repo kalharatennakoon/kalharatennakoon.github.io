@@ -43,7 +43,7 @@ function Recommendations() {
               className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent animate-gradient-text pb-1"
               style={{ backgroundImage: 'linear-gradient(135deg, var(--text-grad-from) 0%, var(--text-grad-to) 100%)', backgroundSize: '200% 200%' }}
             >
-              Recommendations
+              Testimonials
             </h2>
           </div>
           <div className={`section-underline ${headerVisible ? 'is-visible' : ''}`} />
