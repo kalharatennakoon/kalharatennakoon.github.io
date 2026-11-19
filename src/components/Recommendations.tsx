@@ -19,8 +19,8 @@ const recommendations: Recommendation[] = [
       'I had the pleasure of mentoring him through the Ascentic AI LaunchPad programme, where I got to see his ' +
       'problem-solving skills, adaptability, and commitment to improving his technical capabilities.',
     name: 'Nuwan Wijethilaka',
-    role: 'Senior Technical Lead',
-    context: 'Mentor, Ascentic AI LaunchPad',
+    role: 'Senior Technical Lead - Ascentic',
+    context: 'Mentor, AI LaunchPad',
     date: 'November 2026',
   },
 ]
@@ -64,9 +64,10 @@ function Recommendations() {
               <figcaption className="mt-6 pt-5 border-t border-[var(--border-color)] flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
                 <span className="flex flex-col">
                   <span className="text-sm font-semibold text-[var(--text-primary)]">{r.name}</span>
-                  <span className="text-xs text-[var(--text-secondary)]">{r.role} · {r.date}</span>
-                  <span className="mt-1 text-xs text-[var(--text-secondary)] opacity-80">
-                    {r.context}
+                  <span className="text-xs text-[var(--text-secondary)]">{r.role}</span>
+                  <span className="text-xs text-[var(--text-secondary)]">{r.context}</span>
+                  <span className="mt-1 text-[11px] text-[var(--text-secondary)] opacity-70">
+                    {r.date}
                   </span>
                 </span>
                 <a
